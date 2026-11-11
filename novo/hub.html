@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#080808">
+<title>Dr. Fabio Schmidt — Médico · CRM-SP 183549</title>
+<meta name="description" content="Atendimento médico, cursos e materiais clínicos para quem convive com Borderline e desregulação emocional. Por Dr. Fabio Schmidt, Médico CRM-SP 183549.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,3[...]" rel="stylesheet">
+<style>
+/* ============ RESET TOTAL DE COR DE LINK (Safari iOS fix) ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+a{color:inherit !important;text-decoration:none !important;-webkit-text-decoration-color:transparent !important}
+a:link,a:visited,a:hover,a:active{color:inherit !important;text-decoration:none !important}
+
+:root{
+color-scheme:light only;
+–black:#080808;
+–black-2:#141414;
+–black-3:#1a1a1a;
+–red-ember:#c83c1e;
+–red-deep:#8b1a1a;
+–gold:#d4a853;
+–gold-light:#e5be7a;
+–cream:#F5F0EB;
+–bone:#FBF8F1;
+–grey-line:rgba(255,255,255,.08);
+–grey-line-2:rgba(255,255,255,.14);
+–grey-soft:#bdb7ad;
+–grey-dim:rgba(255,255,255,.5);
+–grey-muted:rgba(255,255,255,.35);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;background-color:#080808 !important;color-scheme:light}
+body{background-color:#080808 !important;color:#F5F0EB !important;font-family:'DM Sans',system-ui,sans-serif;line-height:1.55}
+
+/* ============ FORÇA BRUTA Safari iOS ============ */
+@media (prefers-color-scheme: dark){
+html,body{background-color:#080808 !important;color:#F5F0EB !important}
+}
+header,.hero,.s,footer,.divider{background-color:#080808 !important}
+.feat{background:linear-gradient(135deg,#1a0d08 0%,#0a0a0a 60%,#120815 100%) !important}
+.lib-card,.con-card{background-color:#141414 !important}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:200;height:64px;padding:0 clamp(20px,5.5vw,72px);display:flex;align-items:center;justify-content:space-between;background-color:rgba(8,8,8,.96) !important;-web[...]}
+.h-brand{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;font-weight:700;letter-spacing:-.01em;color:#F5F0EB !important}
+.h-nav{display:flex;gap:4px;align-items:center}
+.h-nav a{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.5) !important;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;border-radius:2px;transitio[...]}
+.h-nav a:hover{color:#F5F0EB !important;background:rgba(255,255,255,.04)}
+.h-cta{font-family:'Bebas Neue',sans-serif;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;background-color:#c83c1e !important;color:#ffffff !important;padding:10px 22px;border-[...]}
+.h-cta:hover{background-color:#a33218 !important}
+.h-crm{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:rgba(255,255,255,.35) !important;letter-spacing:.22em;text-transform:uppercase}
+
+/* HERO */
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding:80px clamp(20px,5.5vw,72px) 64px;background-color:#080808 !important;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:
+linear-gradient(180deg,rgba(8,8,8,.1) 0%,rgba(8,8,8,.4) 40%,rgba(8,8,8,.85) 65%,#080808 100%),
+url('hoje3.PNG');
+background-size:cover;background-position:center top;background-repeat:no-repeat;
+z-index:0}
+.hero::after{content:"";position:absolute;inset:0;background:
+radial-gradient(circle at 80% 30%,rgba(200,60,30,.10) 0%,transparent 40%),
+radial-gradient(circle at 20% 70%,rgba(212,168,83,.08) 0%,transparent 40%);
+pointer-events:none;z-index:1}
+.hero>*{position:relative;z-index:2}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:#d4a853 !important;margin-bottom:20px;display:inline-flex;align-items:c[...]}
+.hero-eyebrow::before{content:"";width:24px;height:1px;background-color:#d4a853}
+.hero-name{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(72px,11vw,148px);font-weight:900;line-height:.85;letter-spacing:-.03em;margin-bottom:32px;color:#F5F0EB !impor[...]}
+.hero-name em{font-style:italic;font-weight:400;color:#e5be7a !important}
+.hero-desc{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:clamp(15px,1.6vw,18px);color:#bdb7ad !important;max-width:520px;line-height:1.7;margin-bottom:40px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+
+/* ============ BOTÕES — TUDO FORÇADO ============ */
+.btn{display:inline-flex !important;align-items:center;gap:8px;font-family:'Bebas Neue',sans-serif !important;font-size:.84rem !important;letter-spacing:.22em !important;text-transform:upperca[...]}
+.btn-red,a.btn-red,a.btn-red:link,a.btn-red:visited{background-color:#c83c1e !important;color:#ffffff !important;border-color:#c83c1e !important}
+.btn-red:hover,a.btn-red:hover{background-color:#a33218 !important;border-color:#a33218 !important;color:#ffffff !important}
+.btn-glass,a.btn-glass,a.btn-glass:link,a.btn-glass:visited{background-color:rgba(245,240,235,.08) !important;color:#F5F0EB !important;border-color:rgba(245,240,235,.2) !important;-webkit-backdrop[...]}
+.btn-glass:hover,a.btn-glass:hover{background-color:rgba(245,240,235,.16) !important;border-color:rgba(245,240,235,.35) !important;color:#F5F0EB !important}
+.btn-dim,a.btn-dim,a.btn-dim:link,a.btn-dim:visited{background-color:transparent !important;color:#bdb7ad !important;border-color:rgba(255,255,255,.22) !important}
+.btn-dim:hover,a.btn-dim:hover{color:#F5F0EB !important;border-color:rgba(255,255,255,.45) !important}
+.btn-gold,a.btn-gold,a.btn-gold:link,a.btn-gold:visited{background-color:#d4a853 !important;color:#080808 !important;border-color:#d4a853 !important}
+.btn-gold:hover,a.btn-gold:hover{background-color:#e5be7a !important;border-color:#e5be7a !important;color:#080808 !important}
+.btn-sm{font-size:.74rem !important;padding:10px 18px !important}
+
+/* HERO STATS */
+.hero-stats{display:flex;gap:48px;flex-wrap:wrap;padding-top:36px;border-top:1px solid rgba(255,255,255,.08)}
+.stat-n{font-family:'Playfair Display',serif;font-style:italic;font-size:2.6rem;font-weight:700;line-height:1;display:block;color:#F5F0EB !important}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:rgba(255,255,255,.35) !important;text-transform:uppercase;letter-spacing:.18em;margin-top:8px;display:block;line-height:1.[...]}
+
+/* SECTIONS */
+.s{padding:80px clamp(20px,5.5vw,72px);background-color:#080808 !important;color:#F5F0EB !important}
+.s+.s{padding-top:0}
+.s-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:#d4a853 !important;display:block;margin-bottom:14px}
+.s-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;flex-wrap:wrap;gap:12px}
+.s-title{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(28px,3.4vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:#F5F0EB !important}
+.s-title em{color:#c83c1e !important;font-style:italic;font-weight:400}
+.s-sub{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.35) !important;text-transform:uppercase;letter-spacing:.22em}
+.divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:0 clamp(20px,5.5vw,72px);background-color:transparent !important}
+
+/* FEATURED COURSE */
+.feat{position:relative;overflow:hidden;background:linear-gradient(135deg,#1a0d08 0%,#0a0a0a 60%,#120815 100%) !important;border:1px solid rgba(255,255,255,.08);border-radius:2px;padding:52px;dis[...]}
+.feat:hover{border-color:rgba(212,168,83,.35)}
+.feat::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(212,168,83,.10) 0%,transparent 55%);pointer-events:none}
+.feat-badge{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background-col[...]}
+.feat-title{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(44px,6vw,84px);font-weight:900;letter-spacing:-.025em;line-height:.92;margin-bottom:20px;color:#ffffff !impo[...]}
+.feat-title em{font-style:italic;color:#e5be7a !important;font-weight:400}
+.feat-desc{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:1rem;color:rgba(255,255,255,.72) !important;line-height:1.7;max-width:480px;margin-bottom:28px}
+.feat-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6) !important;border:1px solid rgba(255,255,[...]}
+.feat-price{text-align:center;position:relative;z-index:1}
+.price-was{font-family:'JetBrains Mono',monospace;font-size:.95rem;color:rgba(255,255,255,.4) !important;text-decoration:line-through;text-decoration-color:#c83c1e;display:block;margin-bottom[...]}
+.price-now{font-family:'Playfair Display',serif;font-style:italic;font-size:4rem;font-weight:900;color:#d4a853 !important;display:block;line-height:1;letter-spacing:-.03em}
+.price-note{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:rgba(255,255,255,.4) !important;text-transform:uppercase;letter-spacing:.2em;display:block;margin-top:8px;margin-bott[...]}
+
+/* LIBRARY */
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.lib-card{background-color:#141414 !important;border:1px solid rgba(255,255,255,.08);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s ease,border-col[...]}
+.lib-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.14);box-shadow:0 24px 64px rgba(0,0,0,.55)}
+.lib-top{height:200px;position:relative;overflow:hidden}
+
+/* Vol 00 — capa real */
+.lib-top-00{background-image:url('0A29D7DE-6CF5-4419-AAE7-EA81AAE1B223.png');background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#1a0d08 !important}
+.lib-top-00 .lib-vol{position:absolute;top:14px;left:14px;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,[...]}
+
+/* Vol 01 — vermelho profundo */
+.lib-top-01{background:linear-gradient(150deg,#3a0d0d 0%,#1c0606 55%,#0e0303 100%) !important;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;position:relative}
+.lib-top-01::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c83c1e,transparent)}
+.lib-top-01::after{content:"";position:absolute;top:0;right:0;bottom:0;width:40%;background:radial-gradient(ellipse at right center,rgba(200,60,30,.18) 0%,transparent 70%);pointer-events:none[...]}
+
+/* Vol 02 — dourado profundo */
+.lib-top-02{background:linear-gradient(150deg,#2a1f0a 0%,#181006 55%,#0c0703 100%) !important;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;position:relative}
+.lib-top-02::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#d4a853,transparent)}
+.lib-top-02::after{content:"";position:absolute;top:0;right:0;bottom:0;width:40%;background:radial-gradient(ellipse at right center,rgba(212,168,83,.18) 0%,transparent 70%);pointer-events:non[...]}
+
+.cover-art{position:relative;z-index:1}
+.cover-vol{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.42) !important;display:block;margin-bot[...]}
+.cover-ttl{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;font-weight:700;color:rgba(255,255,255,.95) !important;line-height:1;display:block;margin-bottom:8px;letter-[...]}
+.cover-auth{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.38) !important;letter-spacing:.2em;text-transform:uppercase;display:block}
+.cover-new{position:absolute;top:14px;right:14px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;background-colo[...]}
+
+.lib-body{padding:24px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lib-serie{font-family:'JetBrains Mono',monospace;font-size:.66rem;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.4) !important}
+.lib-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;font-weight:700;line-height:1.15;color:#F5F0EB !important}
+.lib-desc{font-family:'DM Sans',sans-serif;font-size:.86rem;color:#bdb7ad !important;line-height:1.6;flex:1}
+.lib-foot{padding:16px 24px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lib-price{font-family:'Playfair Display',serif;font-style:italic;font-size:1.8rem;font-weight:900;color:#F5F0EB !important}
+
+/* CONSULTAS */
+.con-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.con-card{background-color:#141414 !important;border:1px solid rgba(255,255,255,.08);border-radius:2px;padding:36px;display:flex;flex-direction:column;gap:16px;transition:all .25s;position:relati[...]}
+.con-card,a.con-card,a.con-card:link,a.con-card:visited{color:#F5F0EB !important}
+.con-card::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#d4a853,transparent);opacity:0;transition:opacity .25s}
+.con-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.14);box-shadow:0 20px 52px rgba(0,0,0,.5)}
+.con-card:hover::after{opacity:1}
+.con-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#d4a853 !important}
+.con-name{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(34px,4.2vw,52px);font-weight:700;line-height:1.02;letter-spacing:-.02em;color:#F5F0EB !important}
+.con-name em{color:#e5be7a !important;font-style:italic;font-weight:400}
+.con-info{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4) !important;letter-spacing:.14em;text-transform:uppercase}
+.con-row{display:flex;align-items:baseline;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+.con-price{font-family:'Playfair Display',serif;font-style:italic;font-size:2.6rem;font-weight:900;line-height:1;color:#F5F0EB !important}
+.con-arrow{font-size:1.4rem;color:rgba(255,255,255,.35) !important;transition:transform .2s,color .2s}
+.con-card:hover .con-arrow{transform:translateX(6px);color:#d4a853 !important}
+
+/* SOBRE */
+.sobre-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:start}
+.sobre-title{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(36px,4.5vw,64px);font-weight:700;line-height:1.05;letter-spacing:-.025em;margin-bottom:24px;color:#F5F0EB ![...]}
+.sobre-title em{font-style:italic;color:#c83c1e !important;font-weight:400;display:block}
+.sobre-text{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:1.05rem;line-height:1.85;color:#bdb7ad !important;margin-bottom:36px;max-width:520px}
+.creds{list-style:none}
+.creds li{font-family:'DM Sans',sans-serif;font-size:.95rem;color:#bdb7ad !important;line-height:1.55;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:fle[...]}
+.creds li:first-child{border-top:1px solid rgba(255,255,255,.08)}
+.cred-icon{color:#d4a853 !important;font-size:.95rem;flex-shrink:0;margin-top:2px;font-family:'Playfair Display',serif}
+
+.midia-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4) !important;display:block;margin-top:40px;margin-b[...]}
+.midia-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.midia-img{width:100%;height:200px;object-fit:cover;object-position:center top;border-radius:2px;border:1px solid rgba(255,255,255,.08);filter:grayscale(20%) contrast(1.05);transition:filter .3s,[...]}
+.midia-img:hover{filter:grayscale(0%) contrast(1.05);transform:scale(1.02)}
+
+/* FOOTER */
+footer{padding:48px clamp(20px,5.5vw,72px);border-top:1px solid rgba(255,255,255,.08);background-color:#050505 !important;color:#bdb7ad !important}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.f-brand{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;font-weight:700;color:#F5F0EB !important;margin-bottom:4px}
+.f-copy{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:rgba(255,255,255,.35) !important;letter-spacing:.18em;text-transform:uppercase}
+.f-links{display:flex;gap:28px}
+.f-links a{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4) !important;letter-spacing:.22em;text-transform:uppercase;transition:color .2s}
+.f-links a:hover{color:#e5be7a !important}
+
+/* RESPONSIVE */
+@media (max-width:960px){
+.feat{grid-template-columns:1fr;padding:36px 28px}
+.feat-price{text-align:left;display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
+.price-note{margin-bottom:0}
+.con-grid{grid-template-columns:1fr}
+.sobre-grid{grid-template-columns:1fr;gap:40px}
+.h-desk{display:none}
+}
+@media (max-width:640px){
+.hero-stats{gap:28px}
+.stat-n{font-size:2rem}
+.lib-grid{grid-template-columns:1fr}
+.midia-img{height:160px}
+.hero-name{font-size:clamp(64px,16vw,96px)}
+.feat{padding:28px 20px}
+.feat-title{font-size:clamp(40px,12vw,64px)}
+}
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+
+<header>
+  <div class="h-brand">Dr. Fabio Schmidt</div>
+  <nav class="h-nav">
+    <a href="#curso" class="h-desk">Curso</a>
+    <a href="#biblioteca" class="h-desk">Biblioteca</a>
+    <a href="#consultas" class="h-desk">Consultas</a>
+    <a href="#sobre" class="h-desk">Sobre</a>
+    <a href="https://cal.com/drfabioschmidt/consulta" class="h-cta" target="_blank" rel="noopener">Agendar →</a>
+  </nav>
+  <div class="h-crm">CRM-SP 183549</div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">Medicina &amp; Saúde Mental · Médico</p>
+    <h1 class="hero-name">Fabio<br><em>Schmidt</em></h1>
+    <p class="hero-desc">Uma abordagem clínica, humana e técnica para quem vive com intensidade — e para quem ama alguém assim.</p>
+    <div class="hero-btns">
+      <a href="#curso" class="btn btn-red">Ver o Curso</a>
+      <a href="https://cal.com/drfabioschmidt/consulta" class="btn btn-glass" target="_blank" rel="noopener">Agendar Consulta</a>
+      <a href="https://www.instagram.com/drfabioschmidt" class="btn btn-dim" target="_blank" rel="noopener">Instagram ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-n">+90k</span><span class="stat-l">Familiares<br>orientados</span></div>
+      <div><span class="stat-n">100%</span><span class="stat-l">Foco<br>em Borderline</span></div>
+      <div><span class="stat-n">TPB</span><span class="stat-l">Referência<br>nacional</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CURSO -->
+
+<section id="curso" class="s">
+  <span class="s-num">01 — Curso</span>
+  <div class="s-row">
+    <h2 class="s-title">Em <em>Destaque</em></h2>
+    <span class="s-sub">Mais acessado</span>
+  </div>
+  <div class="feat">
+    <div>
+      <span class="feat-badge">★ Mais Acessado</span>
+      <h3 class="feat-title">Protocolo<br>7 <em>Dias</em></h3>
+      <p class="feat-desc">O mapa clínico que transforma exaustão em estratégia — para mães, pais, cônjuges e irmãos de pessoas com Borderline. 7 aulas, scripts prontos e acesso vitalíci[...]</p>
+      <div class="feat-tags">
+        <span class="tag">7 aulas em vídeo</span>
+        <span class="tag">Acesso vitalício</span>
+        <span class="tag">Garantia 7 dias</span>
+      </div>
+      <a href="https://pay.hotmart.com/S104212285E" class="btn btn-red" target="_blank" rel="noopener">Acessar o Curso →</a>
+    </div>
+    <div class="feat-price">
+      <span class="price-was">R$ 297</span>
+      <span class="price-now">R$&thinsp;219</span>
+      <span class="price-note">Pagamento único</span>
+      <a href="https://pay.hotmart.com/S104212285E" class="btn btn-red btn-sm" target="_blank" rel="noopener" style="width:100%;justify-content:center;">Quero o Curso →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- BIBLIOTECA -->
+
+<section id="biblioteca" class="s">
+  <span class="s-num">02 — Biblioteca</span>
+  <div class="s-row">
+    <h2 class="s-title">Biblioteca <em>Clínica</em></h2>
+    <span class="s-sub">Guias &amp; Kits</span>
+  </div>
+  <div class="lib-grid">
+
+<div class="lib-card">
+  <div class="lib-top lib-top-00">
+    <span class="lib-vol">Vol. 00</span>
+  </div>
+  <div class="lib-body">
+    <h3 class="lib-title">Quando Escolher Não É Possível</h3>
+    <p class="lib-desc">Guia de convivência para quem vive ao lado de alguém com desregulação emocional intensa.</p>
+  </div>
+  <div class="lib-foot">
+    <span class="lib-price">R$ 69</span>
+    <a href="https://pay.hotmart.com/U103950622S?off=3xv992tf" class="btn btn-glass btn-sm" target="_blank" rel="noopener">Comprar →</a>
+  </div>
+</div>
+
+<div class="lib-card">
+  <div class="lib-top lib-top-01">
+    <span class="cover-new">Novo</span>
+    <div class="cover-art">
+      <span class="cover-vol">Vol. 01 · Guia Clínico</span>
+      <span class="cover-ttl">Protocolo<br>da Crise</span>
+      <span class="cover-auth">Dr. Fabio Schmidt</span>
+    </div>
+  </div>
+  <div class="lib-body">
+    <span class="lib-serie">Borderline · Guia Clínico</span>
+    <h3 class="lib-title">Protocolo da Crise</h3>
+    <p class="lib-desc">O que fazer nos 60 minutos mais difíceis — para parceiros e familiares de pessoas com TPB.</p>
+  </div>
+  <div class="lib-foot">
+    <span class="lib-price">R$ 27</span>
+    <a href="https://pay.hotmart.com/H105440271K" class="btn btn-glass btn-sm" target="_blank" rel="noopener">Acessar →</a>
+  </div>
+</div>
+
+<div class="lib-card">
+  <div class="lib-top lib-top-02">
+    <span class="cover-new">Novo</span>
+    <div class="cover-art">
+      <span class="cover-vol">Vol. 02 · Kit de Regulação</span>
+      <span class="cover-ttl">Kit de<br>Regulação</span>
+      <span class="cover-auth">Dr. Fabio Schmidt</span>
+    </div>
+  </div>
+  <div class="lib-body">
+    <span class="lib-serie">Borderline · Kit de Regulação</span>
+    <h3 class="lib-title">Kit de Regulação</h3>
+    <p class="lib-desc">10 ferramentas DBT para usar sozinho — antes que a crise chegue.</p>
+  </div>
+  <div class="lib-foot">
+    <span class="lib-price">R$ 27</span>
+    <a href="https://pay.hotmart.com/M105447307K" class="btn btn-glass btn-sm" target="_blank" rel="noopener">Acessar →</a>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONSULTAS -->
+
+<section id="consultas" class="s">
+  <span class="s-num">03 — Consultas Online</span>
+  <div class="s-row">
+    <h2 class="s-title">Agendamento <em>Médico</em></h2>
+    <span class="s-sub">Sem convênio · 100% online</span>
+  </div>
+  <div class="con-grid">
+    <a href="https://cal.com/drfabioschmidt/consulta" class="con-card" target="_blank" rel="noopener">
+      <span class="con-label">Novos pacientes</span>
+      <div class="con-name">Primeira<br><em>Consulta</em></div>
+      <span class="con-info">Sem convênio · Confirmação após pagamento</span>
+      <div class="con-row">
+        <span class="con-price">R$&thinsp;700</span>
+        <span class="con-arrow">→</span>
+      </div>
+    </a>
+    <a href="https://cal.com/drfabioschmidt/consulta" class="con-card" target="_blank" rel="noopener">
+      <span class="con-label">Pacientes ativos</span>
+      <div class="con-name">Consulta<br><em>de Retorno</em></div>
+      <span class="con-info">Apenas pacientes ativos · Sem convênio</span>
+      <div class="con-row">
+        <span class="con-price">R$&thinsp;650</span>
+        <span class="con-arrow">→</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SOBRE -->
+
+<section id="sobre" class="s">
+  <span class="s-num">04 — O Método</span>
+  <div class="sobre-grid">
+    <div>
+      <h2 class="sobre-title">Clínica sem rodeio.<em>Resultado real.</em></h2>
+      <p class="sobre-text">Minha prática foca na redução do estigma e na aplicação de limites saudáveis. O objetivo é transformar a crise em estabilidade através do conhecimento clínico[...]</p>
+      <a href="https://cal.com/drfabioschmidt/consulta" class="btn btn-red" target="_blank" rel="noopener">Agendar consulta →</a>
+      <span class="midia-label">Mídia</span>
+      <div class="midia-row">
+        <img src="foto1.png" alt="" class="midia-img">
+        <img src="foto2.png" alt="" class="midia-img">
+      </div>
+    </div>
+    <ul class="creds">
+      <li><span class="cred-icon">◈</span>Referência nacional no transtorno Borderline</li>
+      <li><span class="cred-icon">◈</span>Médico — CRM-SP 183549</li>
+      <li><span class="cred-icon">◈</span>Mais de 90 mil familiares acompanhados</li>
+      <li><span class="cred-icon">◈</span>Atendimento 100% online, sem convênio</li>
+      <li><span class="cred-icon">◈</span>Conteúdo clínico direto e aplicável</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="f-brand">Dr. Fabio Schmidt</div>
+      <span class="f-copy">© 2026 · CRM-SP 183549</span>
+    </div>
+    <div class="f-links">
+      <a href="https://www.instagram.com/drfabioschmidt" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="https://cal.com/drfabioschmidt/consulta" target="_blank" rel="noopener">Agendar ↗</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

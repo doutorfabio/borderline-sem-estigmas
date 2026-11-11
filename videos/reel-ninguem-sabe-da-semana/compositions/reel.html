@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="../assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Anton";
+        src: url("../assets/fonts/anton.woff2") format("woff2");
+      }
+      :root {
+        --fundo: #050505;
+        --branco: #f2f2f2;
+        --cinza: #8a8a8a;
+        --cinza-claro: #bdbdbd;
+        --vermelho: #c83c1e;
+        --vermelho-texto: #e2502e;
+        --balao: #2a2a2a;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--fundo); }
+      #stage {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        background: var(--fundo);
+        font-family: "Anton", sans-serif;
+      }
+      #cena { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+
+      /* Cartões de texto: área de leitura no terço superior */
+      .cartao {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1060px;
+        padding: 300px 100px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        text-align: center;
+        color: var(--branco);
+        font-size: 100px;
+        line-height: 1.06;
+        text-transform: uppercase;
+        visibility: hidden;
+      }
+      .cartao.centro { justify-content: center; padding-top: 0; height: 1920px; }
+      .cartao .linha { display: block; }
+      .cartao .media { font-size: 82px; }
+      .cartao .menor { font-size: 76px; color: var(--cinza-claro); }
+      .vermelho { color: var(--vermelho-texto); }
+
+      .faixa {
+        background: var(--vermelho);
+        color: var(--branco);
+        padding: 20px 40px 24px;
+        font-size: 84px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .balao {
+        align-self: flex-end;
+        margin-right: 40px;
+        background: var(--balao);
+        color: var(--branco);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 58px;
+        line-height: 1.2;
+        text-transform: none;
+        padding: 30px 44px;
+        border-radius: 44px 44px 10px 44px;
+      }
+      .balao-hora {
+        align-self: flex-end;
+        margin-right: 52px;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 30px;
+        color: var(--cinza);
+        text-transform: none;
+      }
+
+      .assinatura .nome { font-size: 96px; }
+      .assinatura .cargo,
+      .assinatura .crm {
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 40px;
+        color: var(--cinza-claro);
+        text-transform: none;
+        line-height: 1.4;
+      }
+      .assinatura .traco { width: 120px; height: 6px; background: var(--vermelho); margin: 28px 0; }
+
+      /* Diagrama da distância, na metade de baixo */
+      #diagrama {
+        position: absolute;
+        left: 0;
+        top: 1000px;
+        width: 1080px;
+        height: 640px;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage" data-composition-id="reel" data-start="0" data-duration="55" data-width="1080" data-height="1920">
+      <div id="cena" class="clip" data-start="0" data-duration="55" data-track-index="0">
+        <div class="cartao" id="c1"><span class="linha">Você tem amigos</span><span class="linha">há anos.</span></div>
+        <div class="cartao" id="c2"><span class="linha">E <span class="vermelho">nenhum</span> deles sabe</span><span class="linha">como foi a sua</span><span class="linha">última semana.</span></div>
+        <div class="cartao" id="c3"><span class="linha" id="c3a">Trabalha.</span><span class="linha" id="c3b">Paga as contas.</span><span class="linha menor" id="c3c">Por fora, está tudo bem.</span></div>
+        <div class="cartao" id="c4"><span class="linha">E decidiu até onde</span><span class="linha">cada pessoa</span><span class="linha">pode chegar.</span></div>
+        <div class="cartao" id="c5"><span class="linha menor">Tem quem chame isso de</span><span class="linha">borderline de</span><span class="linha">alto funcionamento.</span></div>
+        <div class="cartao" id="c6"><span class="faixa" id="c6f">Não é diagnóstico oficial</span></div>
+        <div class="cartao" id="c7"><span class="linha">É quem sente tudo</span><span class="linha media">o que o borderline sente</span><span class="linha menor">e mantém a vida de pé.</span></div>
+        <div class="cartao" id="c8"><span class="linha">Se ninguém</span><span class="linha">chega perto,</span><span class="linha">ninguém te machuca</span><span class="linha">de verdade.</span></div>
+        <div class="cartao" id="c9"><span class="linha" id="c9a">Funciona.</span><span class="linha vermelho" id="c9b">Até o dia ruim.</span></div>
+        <div class="cartao" id="c10"><span class="linha">A dor vem.</span><span class="linha">E ninguém sabe</span><span class="linha">que ela existe.</span></div>
+        <div class="cartao" id="c11"><span class="linha">Precisa ser assim?</span></div>
+        <div class="cartao" id="c12"><span class="linha">Não precisa ser</span><span class="linha">tudo ou nada.</span></div>
+        <div class="cartao" id="c13"><span class="linha" id="c13a">Uma pessoa.</span><span class="linha" id="c13b">Uma coisa <span class="vermelho">pequena.</span></span></div>
+        <div class="cartao" id="c14"><span class="balao" id="c14b">Essa semana não foi boa.</span><span class="balao-hora" id="c14h">enviada</span></div>
+        <div class="cartao" id="c15"><span class="linha">Se ela cuidar bem,</span><span class="linha">dá para chegar</span><span class="linha">mais perto.</span></div>
+        <div class="cartao" id="c16"><span class="linha">Se não cuidar,</span><span class="linha">você descobriu isso</span><span class="linha vermelho">perdendo pouco.</span></div>
+        <div class="cartao centro" id="c17"><span class="linha">Manda este vídeo</span><span class="linha">para a pessoa</span><span class="linha">que seria <span class="vermelho">a primeira.</span></span></div>
+        <div class="cartao centro" id="c18"><span class="linha">Já conta como</span><span class="linha">a coisa pequena.</span></div>
+        <div class="cartao centro assinatura" id="c19"><span class="linha nome">Dr. Fabio Schmidt</span><span class="traco"></span><span class="linha cargo">Médico com foco em transtorno de personalidade borderline</span><span class="linha crm">CRM-SP 183549 · conteúdo educativo</span></div>
+
+        <svg id="diagrama" data-layout-allow-overflow="true" viewBox="0 0 1080 640" width="1080" height="640">
+          <circle id="anel" cx="540" cy="320" r="190" fill="none" stroke="#8a8a8a" stroke-width="4" stroke-dasharray="14 16" />
+          <circle class="pessoa" id="p0" cx="540" cy="320" r="22" fill="#bdbdbd" />
+          <circle class="pessoa" id="p1" cx="540" cy="320" r="22" fill="#bdbdbd" />
+          <circle class="pessoa" id="p2" cx="540" cy="320" r="22" fill="#bdbdbd" />
+          <circle class="pessoa" id="p3" cx="540" cy="320" r="22" fill="#bdbdbd" />
+          <circle class="pessoa" id="p4" cx="540" cy="320" r="22" fill="#bdbdbd" />
+          <circle class="pessoa" id="p5" cx="540" cy="320" r="22" fill="#bdbdbd" />
+          <circle id="voce" cx="540" cy="320" r="34" fill="#c83c1e" />
+        </svg>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Cartões: [id, início, fim]
+      const cartoes = [
+        ["#c1", 0.0, 2.4], ["#c2", 2.4, 5.6], ["#c3", 5.6, 8.6], ["#c4", 8.6, 11.8],
+        ["#c5", 11.8, 15.0], ["#c6", 15.0, 17.2], ["#c7", 17.2, 21.0], ["#c8", 21.0, 24.4],
+        ["#c9", 24.4, 26.8], ["#c10", 26.8, 30.0], ["#c11", 30.0, 32.2], ["#c12", 32.2, 34.8],
+        ["#c13", 34.8, 37.6], ["#c14", 37.6, 40.4], ["#c15", 40.4, 43.4], ["#c16", 43.4, 46.8],
+        ["#c17", 46.8, 50.0], ["#c18", 50.0, 52.4], ["#c19", 52.4, 55.0],
+      ];
+      cartoes.forEach(([id, ini, fim], i) => {
+        tl.fromTo(id, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ini);
+        if (i < cartoes.length - 1) {
+          tl.fromTo(id, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.2, ease: "power1.in", immediateRender: false }, fim - 0.2);
+        }
+      });
+
+      // Detalhes dentro dos cartões
+      tl.fromTo(["#c3a", "#c3b", "#c3c"], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.25, stagger: 0.55, ease: "power2.out" }, 5.65);
+      tl.fromTo("#c6f", { scaleX: 0 }, { scaleX: 1, duration: 0.32, ease: "power3.out", transformOrigin: "left center" }, 15.0);
+      tl.fromTo("#c9b", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" }, 25.3);
+      tl.fromTo("#c13b", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" }, 35.6);
+      tl.fromTo("#c14b", { scale: 0.6, transformOrigin: "right bottom" }, { scale: 1, duration: 0.35, ease: "back.out(1.6)" }, 37.6);
+      tl.fromTo("#c14h", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2 }, 38.4);
+
+      // Diagrama: posições das pessoas em volta de você
+      const cx = 540, cy = 320;
+      const angulos = [-90, -30, 30, 90, 150, 210];
+      const pos = (a, r) => ({ attr: { cx: cx + r * Math.cos(a * Math.PI / 180), cy: cy + r * Math.sin(a * Math.PI / 180) } });
+      const pessoas = angulos.map((_, i) => "#p" + i);
+
+      // Entra com o cartão 4: as pessoas vêm de longe e param no anel
+      tl.fromTo("#diagrama", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 8.7);
+      pessoas.forEach((p, i) => {
+        tl.fromTo(p, pos(angulos[i], 470), { ...pos(angulos[i], 250), duration: 1.4, ease: "power3.out" }, 8.9 + i * 0.08);
+      });
+      tl.fromTo("#anel", { attr: { "stroke-width": 4 } }, { attr: { "stroke-width": 8 }, duration: 0.25, yoyo: true, repeat: 1 }, 10.4);
+
+      // Termo clínico: diagrama recua
+      tl.fromTo("#diagrama", { autoAlpha: 1 }, { autoAlpha: 0.25, duration: 0.4, immediateRender: false }, 11.8);
+      tl.fromTo("#diagrama", { autoAlpha: 0.25 }, { autoAlpha: 1, duration: 0.4, immediateRender: false }, 21.0);
+
+      // Dia ruim: você pulsa, as pessoas somem
+      tl.fromTo("#voce", { attr: { r: 34 } }, { attr: { r: 52 }, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, 26.9);
+      tl.fromTo(pessoas, { autoAlpha: 1 }, { autoAlpha: 0.12, duration: 0.8, immediateRender: false }, 27.4);
+
+      // Uma pessoa volta e atravessa o anel
+      tl.fromTo("#p1", { autoAlpha: 0.12 }, { autoAlpha: 1, duration: 0.4, immediateRender: false }, 35.0);
+      tl.fromTo("#p1", pos(angulos[1], 250), { ...pos(angulos[1], 130), duration: 1.2, ease: "power2.inOut", immediateRender: false }, 35.6);
+      // Cuidou bem: chega mais perto
+      tl.fromTo("#p1", pos(angulos[1], 130), { ...pos(angulos[1], 80), duration: 1.0, ease: "power2.out", immediateRender: false }, 40.8);
+      // Não cuidou: volta para o anel, sem levar o resto junto
+      tl.fromTo("#p1", pos(angulos[1], 80), { ...pos(angulos[1], 250), duration: 1.0, ease: "power2.inOut", immediateRender: false }, 44.2);
+      tl.fromTo(["#p0", "#p2", "#p3", "#p4", "#p5"], { autoAlpha: 0.12 }, { autoAlpha: 0.5, duration: 0.6, immediateRender: false }, 44.6);
+
+      // Sai antes da chamada final
+      tl.fromTo("#diagrama", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.4, immediateRender: false }, 46.6);
+
+      window.__timelines["reel"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "novo-plugins",
+  "owner": { "name": "Fabio Schmidt" },
+  "plugins": [
+    {
+      "name": "budgeting",
+      "source": { "source": "github", "repo": "danielrosehill/Claude-Budgeting-Plugin" },
+      "description": "Orçamento pessoal: registro e categorização de transações, criação de orçamento, análise de gastos, metas e previsão."
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# Cole esta linha no arquivo .htaccess da pasta public_html na Hostinger.
+# Se o .htaccess já existir, acrescente a linha no final. Não apague o que já está lá.
+ErrorDocument 404 /404.html

@@ -1,0 +1,11 @@
+# Reel Cinco minutos de espera duram mais por dentro (teste)
+
+Seedance 2.5, t2v, 1080p, 9:16, 20 s, áudio desligado. Referências de estilo de 10/11: relógio em espiral com figuras andando; figuras recortadas antigas com rabiscos vermelhos sobre papel creme; olhos recortados com figura vermelha sobre preto; círculos vermelhos sobre fotos de filme. Só o estilo, sem copiar composição.
+
+Vertical 9:16 editorial paper collage animation with a stop-motion feel. Vintage black-and-white photo cutouts of people with clean cut edges and a thin white paper border, on aged cream paper with fine grain. One accent color only: deep red, used for hand-drawn scribbles, circles and one red paper silhouette. Clock faces have only tick marks, never numerals. Silent. No text, letters, numbers, words, captions or logos anywhere.
+[0-3s] A vintage cutout of an adult woman in a dark coat stands still beside a closed door, arms crossed, looking at it. Behind her, a large plain clock face with only tick marks; its minute hand moves one small tick. A thin red hand-drawn circle wobbles around the hand.
+[3-6s] Cut: the same woman repeated many times as small cutouts walking in a spiral around the clock face, like a path that never ends, each copy slightly different in pose. Slow rotation of the spiral.
+[6-9s] Cut: two plain clock faces side by side on cream paper. The left one ticks slowly and calmly. The right one, drawn with a red outline, spins its hands fast. Red scribbles vibrate around the right clock.
+[9-12s] Cut: the woman cutout paces back and forth on cream paper, then sits on a small cutout chair, then stands up again, in jerky stop-motion steps. A loose red scribble hovers over her head like a knot.
+[12-16s] Cut to deep black paper: a red paper silhouette of a person stands in the center, surrounded by eight cutout clock faces with white paper borders, each ticking at a different speed. The camera slowly pushes in on the red silhouette.
+[16-20s] Cut back to cream paper: the door opens and a second vintage cutout adult in a grey coat steps in. The woman uncrosses her arms. Behind them the large clock slows to a calm tick and a soft red circle settles behind both of them. Empty cream paper in the top third of the frame. Slow pull-out to the end.

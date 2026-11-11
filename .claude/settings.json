@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "novo-plugins": {
+      "source": {
+        "source": "directory",
+        "path": "/home/user/Novo"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "budgeting@novo-plugins": true
+  }
+}

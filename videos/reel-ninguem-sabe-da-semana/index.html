@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #050505; }
+      #stage { position: relative; width: 1080px; height: 1920px; }
+      .camada { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+    </style>
+  </head>
+  <body>
+    <div id="stage" data-composition-id="principal" data-start="0" data-duration="55" data-width="1080" data-height="1920">
+      <div id="reel-host" class="clip camada" data-composition-id="reel" data-composition-src="compositions/reel.html" data-start="0" data-duration="55" data-track-index="0"></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["principal"] = gsap.timeline({ paused: true });
+      window.__timelines["principal"].seek(0);
+    </script>
+  </body>
+</html>
