@@ -97,3 +97,19 @@ O que separa, segundo o Vamos (observação, não regra):
 - Rosto, edição e duração não separam os grupos.
 - Dois pares com fala quase igual tiveram alcance muito diferente (Te chamou de tudo ontem 103 mil x 66 mil; Some do nada 163 mil x 20 mil). Roteiro forte não garante o alcance; não inventar causa.
 - Título, legenda e fala não são o mesmo gancho. Comparar gancho falado com gancho falado.
+
+## Transcrições dos Reels virais (arquivo dele de 12/11/2026)
+
+Ele mandou as falas de 12 Reels virais em `raw/transcricoes-reels-virais-2026-11-12.txt`, depois de perguntar "Quer que mande pela oxtagesima vez as capas gigantes?". As capas gigantes estão em `capas-gigantes.md`; as falas agora estão no cofre. Não pedir de novo. O arquivo não traz data nem views de cada um.
+
+Os 12, pelo gancho falado: O borderline escolhe muito bem a hora que ele vai surtar (acusações na voz de quem convive, uma a uma, cada uma respondida); Autismo em mulheres é confundido com sensibilidade; Coisas que o borderline sente que muita gente nem imagina (Ele não consegue te falar, mas...); Borderline e traços autistas; Seis dicas rápidas pra não irritar o borderline; Três coisas que o borderline quer falar para os familiares e não sabe como; Tem um sintoma do borderline que ninguém vê (vazio); Amar alguém com borderline (pediu pra ficar e fez tudo pra você ir); O borderline surta, mas se culpa demais depois, e ninguém fala disso; Por que quando tá mal o borderline prefere sumir?; 3 frases que parecem ajuda, mas são veneno; Por que se cortar?
+
+Moldes de gancho que se repetem nas falas (observação, não regra):
+1. Lista com número e promessa na primeira frase (6 dicas, 3 coisas, 3 frases, 4 motivos).
+2. Informação escondida: ninguém vê, ninguém fala disso, muita gente nem imagina.
+3. A acusação dita na voz de quem acusa (Ah, mas ele faz pra manipular) e respondida em seguida.
+4. Por que o borderline, seguido de um ato.
+5. Dar voz ao que a pessoa não consegue dizer para quem convive.
+6. Dois deles são borderline e autismo, mesmo tema do carrossel de 27/10 (121.892 views).
+
+Conflitos com regras atuais dele: vários abrem frase com ele, usam neurobiologia (sistema límbico, endorfinas, opioides), a palavra dicas e pedido de like no começo. Reaproveitar o molde, não essas partes. Três desses temas já foram refeitos em novembro (3 frases, autolesão, amar alguém com borderline).
