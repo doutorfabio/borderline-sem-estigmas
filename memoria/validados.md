@@ -222,3 +222,28 @@ Vamos viu no perfil as capas da avó e do autismo; das novas recebeu só texto e
 - Ordem do painel: trauma complexo, janela, filha, saudade, palavra, camiseta, dormiu, primeiro encontro, dos 25, achava normal. Sem erro de ortografia em nenhuma. Alertas: beca é formatura e passou em primeiro é aprovação; tampa some na miniatura; mão com dedos estranhos no primeiro encontro; dos 25 tem duas leituras (o transtorno some ou a pessoa não vive); rabiscos da folha denunciam IA no achava normal; espiral precisa ser decifrada.
 - Vizinhos apontados pelo Vamos: alto funcionamento em 01/09 (https://www.instagram.com/p/DcuV9fiRmAC/) para a filha; voz que não sai em 16/09 (https://www.instagram.com/p/DdXbgdFORK3/) para a palavra. Ele afirma que trauma complexo já entrou na lista de temas publicados; a memória só registra o Reel proposto em 03/11, sem confirmação de postagem.
 - 2026-11-11, fonte para mortalidade. Segundo o PubMed: Temes e colegas 2019, J Clin Psychiatry, DOI 10.4088/JCP.18m12436. 290 pacientes com TPB (recrutados em internação, McLean) e 72 comparações, 24 anos. Suicídio: 5,9% no TPB e 1,4% nas comparações. Outras causas: 14,0% e 5,5%. Entre os que morreram, 87,5% (suicídio) e 88% (outras causas) não estavam recuperados. Sustenta: risco elevado, concentrado em quem não se recuperou. Não sustenta: que tratamento reduz o risco (o estudo não testa isso).
+
+## 2026-11-12: Reels falados que superem os gigantes tecnicamente (Vamos, chats b7534ca0 e 82ade217, 29 + 60 créditos)
+
+Pedido dele: "pesquise mais preciso de 5 que superem os gigantes tecnicamente / Aí roda nos funils". Duas pesquisas, 90 dias, português e inglês: (A) contradição no vínculo com acusação desfeita até 9 s e tema de peso alto; (B) lista falada de atos visíveis e pergunta-tabu. As duas com a lista do que ele já fez.
+
+Resultado: nenhum vídeo de fora cumpriu todos os filtros com tema novo. O Vamos não preencheu a lista.
+
+Vistos e excluídos (servem de registro, não de molde):
+- [@dragraziellachavesribeiro, animação sobre emoções e abandono](https://www.instagram.com/p/De_qi3-oPOU/): 824.396 views, cerca de 221x, 10.335 envios (27/10). Animação, sem fala.
+- [@clairejia23, splitting vivido por dentro](https://www.instagram.com/p/Dd0-9CDPAPX/): 2.961.077 views, cerca de 66x, 56.083 envios (28/09). 96 s.
+- [@softcomplexities, o outro lado de namorar alguém com BPD](https://www.instagram.com/p/DexBPmQCAxw/): 638.787 views, 14x, 8.649 envios (21/10). Animação de 97 s; clivagem e confirmação do amor.
+- [@draanabeatriz11, vazio e validação](https://www.tiktok.com/@draanabeatriz11/video/7686660439115074834): 315.775, 14,7x (18/09). Tema já feito.
+- [@megzeenatwamithi, apoio quando deixa de estar bem](https://www.tiktok.com/@megzeenatwamithi/video/7694244448565218582): 252.636, 12x (08/10). Acusa quem convive.
+- [@kaelmors, Vc namoraria uma border?](https://www.instagram.com/p/DfNmIY0IFl7/): 17.160, cerca de 1x (01/11). Único tabu falado no formato dele; não é outlier.
+
+O que se repete: os números grandes de fora vêm de animação, texto na tela ou vídeo acima de 90 s. No formato falado de 30 a 60 s, o Vamos não achou ninguém acima dele mesmo (parte 2 das cinco coisas, 29/10, 2,3x a mediana pública de 11.923).
+
+Perguntas que o público deixou sem resposta nos comentários (leitura do Vamos, não outlier): namorar alguém com TPB sabendo do custo; como saber se o afastamento é clivagem ou se a pessoa não quer mais ficar ([@splittingseason](https://www.instagram.com/p/De4Za4iRcWy/)); clivagem depois que o parceiro segurou um limite ([@drkibby](https://www.instagram.com/p/Dd5QgiXMUnX/)); isso é TPB ou é só ser humano.
+
+Temas montados pelo Claude a partir dos gigantes dele e passados pelo funil (hipótese editorial, sem outlier de fora, exceto o primeiro):
+1. Saudade que chega como cobrança (gigante 14/04, 139.254 views e 3.342 envios; fora @stickmationn_ 1,14 mi). Radar 25, saldo 5.
+2. Ciúme do passado em Reel (carrossel de 11/08, 53.223 e 726 envios; ciúme é medo de não bastar, 13/09, 46.994 e 754; o único Reel de ciúme tinha legenda genérica, 347 views). Radar 24, saldo 5.
+3. Acusação de traição que não houve (critério 9 do DSM-5-TR; pergunta de comentário no @drkibby registrada em 04/11; vizinhos Borderline tem delírio?, 12.648, e Te chamou de tudo ontem, 95.241). Radar 27, saldo 4.
+4. Faz o melhor que pode e precisa fazer melhor (pressupostos da DBT, Linehan 1993; vizinho: homenagem a Marsha Linehan, 11/11, 21.807 views em 1 dia). Radar 26, saldo 4.
+Faltou o quinto: ruminação passa no limite e não fica lado a lado; namorar sabendo do custo está perto demais do Reel de 08/11; clivagem ou fim de verdade não tem prova; borderline ou só intensidade não fecha o termômetro em Reel.
