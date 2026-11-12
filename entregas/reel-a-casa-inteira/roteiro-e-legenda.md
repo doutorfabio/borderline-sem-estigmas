@@ -63,3 +63,11 @@ Narração (voz clonada, take único, job e638b19b): Quando alguém da casa tem 
 | 18,2 a 33,2 s | Congela 3 (pais sozinhos) | DÁ PRA APRENDER O QUE FAZER NESSA HORA; ícone e PROTOCOLO 7 DIAS; cartões PRA QUEM MORA COM ALGUÉM COM BORDERLINE e UM PROCEDIMENTO POR DIA (grade 1 a 7); PRA RECEBER, COMENTA + COMEÇAR |
 
 A mesma legenda serve, trocando o primeiro parágrafo por: Quando alguém da casa tem borderline, a crise pega a casa inteira. Um grita. A outra tenta segurar. Cada um faz o que consegue.
+
+## Versão v2 do clipe único (12/11, pedido dele: "Tente ainda mais profissional")
+
+Arquivo: `reel-mae-no-meio-v2-foto-impressa-33s.mp4` (substitui o anterior). Mesma narração e mesmos tempos. O que mudou:
+- Movimento: clipe ampliado por IA no Higgsfield (bytedance, 1080p, job 21980c9b) em vez de ampliação por código.
+- Congelamentos: o quadro encolhe em 0,3 s e vira foto impressa em meio-tom P&B, com borda de papel e sombra, sobre papel creme; volta a vídeo em 0,2 s. Títulos em tiras coladas (preto e vermelho), etiquetas vermelhas, cartões do Protocolo e COMEÇAR no papel.
+- Som de obturador baixo em cada congelamento.
+- Recorte de pessoas por remoção de fundo foi testado e descartado: o removedor apagava a filha.

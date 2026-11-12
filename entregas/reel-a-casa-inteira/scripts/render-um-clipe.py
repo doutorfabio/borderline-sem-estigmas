@@ -152,7 +152,7 @@ def paper(color, size, seed=1, amt=10):
 
 def halftone(img, step=8):
     g = ImageOps.grayscale(img); g = ImageOps.autocontrast(g, cutoff=1)
-    g = g.point(lambda v: int(255 * (v / 255) ** 0.55)); g = ImageEnhance.Contrast(g).enhance(1.25)
+    g = g.point(lambda v: int(255 * (v / 255) ** 0.42)); g = ImageEnhance.Contrast(g).enhance(1.15)
     g = g.filter(ImageFilter.GaussianBlur(1.5))
     Wd, Hd = g.size; px = g.load()
     ht = Image.new('L', (Wd, Hd), 255); d = ImageDraw.Draw(ht)
@@ -323,98 +323,146 @@ class Col:
 
 
 def seg_frames(ss, dur):
-    src = os.path.join(CL, 'c06.mp4')
-    vf = "minterpolate=fps=30:mi_mode=blend,scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,unsharp=5:5:0.6:5:5:0.0,eq=saturation=0.94"
+    src = os.path.join(CL, 'c06up.mp4')
+    vf = "minterpolate=fps=30:mi_mode=blend,scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,eq=saturation=0.94"
     p = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(max(0, ss - 0.5)), '-i', src, '-ss', str(min(0.5, ss)), '-t', str(dur), '-vf', vf, '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True).stdout
     n = len(p) // (W * H * 3)
     return [Image.frombytes('RGB', (W, H), p[i * W * H * 3:(i + 1) * W * H * 3]) for i in range(n)]
 
-def zoomed(img, z, ay):
-    if abs(z - 1) < 1e-4: return img
-    cw, ch = W / z, H / z
-    x0 = (W - cw) / 2; y0 = (H - ch) * ay
-    return img.transform((W, H), Image.AFFINE, (1 / z, 0, x0, 0, 1 / z, y0), resample=Image.BICUBIC)
-
-def tagcard(txt, size, rot, seed):
-    f = anton(size); d = ImageDraw.Draw(Image.new('RGB', (10, 10))); bb = d.textbbox((0, 0), txt, font=f)
-    c = card(bb[2] - bb[0] + 44, bb[3] - bb[1] + 30, RED, seed); ImageDraw.Draw(c).text((22 - bb[0], 15 - bb[1]), txt, font=f, fill=(250, 245, 233, 255))
-    c = c.rotate(rot, resample=Image.BICUBIC, expand=True)
-    return with_shadow(c, (5, 8), 8, 0.35) + (c.size,)
-
 def fade(im, a):
     if a >= 1: return im
-    o = im.copy(); o.putalpha(im.split()[3].point(lambda v: int(v * a))); return o
+    o = im.copy(); o.putalpha(im.split()[3].point(lambda v: int(v * max(0, a)))); return o
+
+def strip(txt, kind, size, bg, fg, rot, seed, padx=26, pady=16):
+    f = anton(size) if kind == 'a' else mont(size, 800)
+    d = ImageDraw.Draw(Image.new('RGB', (10, 10))); bb = d.textbbox((0, 0), txt, font=f)
+    c = card(bb[2] - bb[0] + 2 * padx, bb[3] - bb[1] + 2 * pady, bg, seed)
+    ImageDraw.Draw(c).text((padx - bb[0], pady - bb[1]), txt, font=f, fill=fg + (255,))
+    c = c.rotate(rot, resample=Image.BICUBIC, expand=True)
+    sh, pad = with_shadow(c, (5, 8), 9, 0.32)
+    return sh, pad, c.size
+
+class Strip:
+    def __init__(s, txt, kind, size, bg, fg, rot, seed, pos, tag):
+        s.im, s.pad, s.size = strip(txt, kind, size, bg, fg, rot, seed); s.pos = pos
+        check((pos[0], pos[1], pos[0] + s.size[0], pos[1] + s.size[1] + 16), tag)
+    def draw(s, fr, a):
+        if a <= 0: return
+        k = ease_out(a)
+        fr.alpha_composite(fade(s.im, k), (s.pos[0] - s.pad, int(s.pos[1] - s.pad + 16 * (1 - k))))
+
+CREAMT = (246, 240, 228)
+class Print:
+    """freeze frame as a halftone photo print on paper"""
+    def __init__(s, frame, crop, dest, rot, seed):
+        s.frame = frame; s.crop = crop; s.dest = dest; s.rot = rot
+        x0, y0, x1, y1 = crop; dw, dh = dest[2], dest[3]
+        c = frame.crop(crop).resize((dw * 2, dh * 2), Image.LANCZOS)
+        s.ht = halftone(c, 9).resize((dw, dh), Image.LANCZOS)
+        s.col = frame.crop(crop).resize((dw, dh), Image.LANCZOS)
+        B = 16
+        pr = Image.new('RGBA', (dw + 2 * B, dh + 2 * B), (252, 248, 238, 255)); pr.paste(s.ht, (B, B))
+        pr = pr.rotate(rot, resample=Image.BICUBIC, expand=True)
+        s.pr, s.ppad = with_shadow(pr, (10, 16), 18, 0.35); s.B = B
+        s.cx = dest[0] + dw / 2; s.cy = dest[1] + dh / 2
+    def draw_final(s, fr, scale=1.0):
+        im = s.pr
+        if abs(scale - 1) > 1e-4:
+            im = im.resize((int(im.width * scale), int(im.height * scale)), Image.BICUBIC)
+        fr.alpha_composite(im, (int(s.cx - im.width / 2), int(s.cy - im.height / 2)))
+    def draw_trans(s, fr, k):
+        # k: 0 = full-frame live image, 1 = final print
+        x0, y0, x1, y1 = s.crop; dx, dy, dw, dh = s.dest
+        cb = (x0 * k, y0 * k, W + (x1 - W) * k, H + (y1 - H) * k)
+        rx = dx * k; ry = dy * k; rw = W + (dw - W) * k; rh = H + (dh - H) * k
+        im = s.frame.crop(tuple(int(v) for v in cb)).resize((int(rw), int(rh)), Image.BILINEAR)
+        hb = s.ht.resize((int(rw), int(rh)), Image.BILINEAR)
+        im = Image.blend(im, hb, max(0, min(1, (k - 0.35) / 0.65)))
+        B = int(s.B * k)
+        pr = Image.new('RGBA', (int(rw) + 2 * B, int(rh) + 2 * B), (252, 248, 238, 255)); pr.paste(im, (B, B))
+        if k > 0.02: pr = pr.rotate(s.rot * k, resample=Image.BICUBIC, expand=True)
+        cx = rx + rw / 2; cy = ry + rh / 2
+        fr.alpha_composite(pr, (int(cx - pr.width / 2), int(cy - pr.height / 2)))
 
 def main():
     col = Col()
-    big = {k: text_layer(v, BIG_Y[k], 'grande:' + k) for k, v in BIG.items()}
-    # timeline: (kind, clip_ss, dur, t0)
-    M1 = (1.20, 1.63); M2 = (5.96, 2.08); M3 = (11.375, 2.70)
-    T = [0, 1.63, 6.50, 8.58, 15.50, 18.20, TOTAL]  # M1 F1 M2 F2 M3 F3
+    M1 = (1.32, 1.63); M2 = (6.08, 2.08); M3 = (11.50, 2.70)
+    T = [0, 1.63, 6.50, 8.58, 15.50, 18.20, TOTAL]
     m1 = seg_frames(*M1); m2 = seg_frames(*M2); m3 = seg_frames(*M3)
-    tg1, p1, s1 = tagcard('UM GRITA', 60, -2.0, 61); pos1 = (560, 640)
-    tg2, p2, s2 = tagcard('A OUTRA TENTA SEGURAR', 54, 1.6, 62); pos2 = (60, 830)
-    check((pos1[0], pos1[1], pos1[0] + s1[0], pos1[1] + s1[1] + 12), 'tag grita'); check((pos2[0], pos2[1], pos2[0] + s2[0], pos2[1] + s2[1] + 12), 'tag segurar')
-    ic = Image.open(ICON).convert('RGBA'); ic = ic.resize((150, int(150 * ic.height / ic.width)), Image.LANCZOS)
-    hl = text_layer([('@drfabioschmidt', 'm', 40, WHITE)], 240, 'arroba')
-    hl2 = Image.new('RGBA', (W, H), (0, 0, 0, 0)); hl2.paste(hl, (170, 0)); hl2.alpha_composite(ic, (60, 172))
-    f = anton(210); dd = ImageDraw.Draw(Image.new('RGB', (10, 10))); bb = dd.textbbox((0, 0), 'COMEÇAR', font=f)
-    cw, chh = bb[2] - bb[0] + 70, bb[3] - bb[1] + 60
-    blk = card(cw, chh, RED, 55); ImageDraw.Draw(blk).text((35 - bb[0], 30 - bb[1]), 'COMEÇAR', font=f, fill=(250, 245, 233, 255))
-    blk, bpad = with_shadow(blk, (8, 12), 14, 0.4); CTA_POS = (60, 1040)
+    paper_bg = paper(CREAM, (W, H), 7, 7).convert('RGBA')
+    P1 = Print(m1[-1], (0, 60, 1080, 1410), (108, 185, 864, 1080), -1.4, 1)
+    P2 = Print(m2[-1], (0, 60, 1080, 1410), (108, 185, 864, 1080), 1.2, 2)
+    P3 = Print(m3[-1], (0, 60, 1080, 885), (108, 185, 864, 660), -1.0, 3)
+    # opening title over live video (white, shadow)
+    open_txt = text_layer([('QUANDO ALGUÉM', 'm', 62, WHITE), ('DA CASA TEM', 'm', 62, WHITE), ('BORDERLINE', 'a', 196, WHITE)], 960, 'abertura')
+    A1 = Strip('QUANDO ALGUÉM DA CASA TEM', 'm', 46, INK, CREAMT, -1.4, 11, (60, 1012), 'f1a')
+    A2 = Strip('BORDERLINE', 'a', 186, RED, (250, 245, 233), -1.4, 12, (60, 1092), 'f1b')
+    B1 = Strip('NA HORA, CADA UM', 'm', 46, INK, CREAMT, 1.2, 13, (60, 1060), 'f2a')
+    B2 = Strip('FAZ O QUE CONSEGUE', 'a', 108, INK, CREAMT, 1.2, 14, (60, 1136), 'f2b')
+    G1 = Strip('UM GRITA', 'a', 60, RED, (250, 245, 233), -2.0, 61, (610, 745), 'tag grita')
+    G2 = Strip('A OUTRA TENTA SEGURAR', 'a', 54, RED, (250, 245, 233), 1.6, 62, (60, 945), 'tag segurar')
+    C1 = Strip('DÁ PRA APRENDER', 'm', 46, INK, CREAMT, -1.0, 15, (60, 905), 'f3a')
+    C2 = Strip('O QUE FAZER NESSA HORA', 'a', 88, INK, CREAMT, -1.0, 16, (60, 980), 'f3b')
+    f = mont(46, 800); dd = ImageDraw.Draw(Image.new('RGB', (10, 10)))
+    cta_txt = Image.new('RGBA', (W, H), (0, 0, 0, 0)); ImageDraw.Draw(cta_txt).text((66, 1034), 'PRA RECEBER, COMENTA', font=f, fill=INK + (255,))
+    bb = dd.textbbox((66, 1034), 'PRA RECEBER, COMENTA', font=f); check(bb, 'cta txt')
+    f = anton(168); bb = dd.textbbox((0, 0), 'COMEÇAR', font=f)
+    cw, chh = bb[2] - bb[0] + 70, bb[3] - bb[1] + 56
+    blk = card(cw, chh, RED, 55); ImageDraw.Draw(blk).text((35 - bb[0], 28 - bb[1]), 'COMEÇAR', font=f, fill=(250, 245, 233, 255))
+    blk, bpad = with_shadow(blk, (8, 12), 14, 0.35); CTA_POS = (60, 1106)
     check((CTA_POS[0], CTA_POS[1] - 16, CTA_POS[0] + cw, CTA_POS[1] + chh), 'COMEÇAR')
-    # protocol strip (icon + title) placed low, cards at s.card_pos
-    STRIP_Y = 940
+    STRIP_Y = 884
     check((258, STRIP_Y, 258 + col.title.width - 2 * col.tpad, STRIP_Y + col.title.height - 2 * col.tpad), 'faixa protocolo')
     for gi in range(len(cap_spans)): cap_layer(gi, 1)
     if violations: print('FORA DA AREA SEGURA:', violations); sys.exit(1)
-    print('area segura ok;', len(cap_spans), 'legendas', len(m1), len(m2), len(m3))
+    print('area segura ok;', len(cap_spans), 'legendas', len(m1), len(m2), len(m3), flush=True)
     out = None
-    if PREVIEW: os.makedirs(os.path.join(ROOT, 'prev3'), exist_ok=True)
+    if PREVIEW: os.makedirs(os.path.join(ROOT, 'prev4'), exist_ok=True)
     else:
         out = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
-                                '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-maxrate', '6500k', '-bufsize', '13M', '-pix_fmt', 'yuv420p', os.path.join(ROOT, 'video3.mp4')], stdin=subprocess.PIPE)
+                                '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-maxrate', '7000k', '-bufsize', '14M', '-pix_fmt', 'yuv420p', os.path.join(ROOT, 'video4.mp4')], stdin=subprocess.PIPE)
     want = set(int(float(x) * FPS) for x in sys.argv[2:]) if PREVIEW else None
     TCOME = nt(27.17) - 0.05
+    TIN, TOUT = 0.30, 0.20
+    def freeze(fr, P, t, t0, t1, last):
+        """returns base composed; k progress"""
+        l = t - t0
+        if l < TIN:
+            k = ease_out(l / TIN); fr.alpha_composite(paper_bg); P.draw_trans(fr, k); return k
+        if (not last) and t > t1 - TOUT:
+            k = 1 - ease_out((t - (t1 - TOUT)) / TOUT); fr.alpha_composite(paper_bg); P.draw_trans(fr, k); return k
+        fr.alpha_composite(paper_bg); P.draw_final(fr, 1.0 + 0.025 * (l / (t1 - t0))); return 1.0
     for fi in range(int(round(TOTAL * FPS))):
         t = fi / FPS
         if PREVIEW and fi not in want: continue
-        if t < T[1]: src = m1[min(len(m1) - 1, fi)]; z = 1.0
-        elif t < T[2]: src = m1[-1]; z = 1.0 + 0.07 * (t - T[1]) / (T[2] - T[1])
-        elif t < T[3]: src = m2[min(len(m2) - 1, int(round((t - T[2]) * FPS)))]; z = 1.0
-        elif t < T[4]: src = m2[-1]; z = 1.0 + 0.08 * (t - T[3]) / (T[4] - T[3])
-        elif t < T[5]: src = m3[min(len(m3) - 1, int(round((t - T[4]) * FPS)))]; z = 1.0
-        else: src = m3[-1]; z = 1.0 + 0.09 * (t - T[5]) / (T[6] - T[5])
-        fr = zoomed(src, z, 0.3).convert('RGBA')
-        # big texts
-        if t < T[2]:
-            a = 1 if t < T[2] - 0.2 else max(0, (T[2] - t) / 0.2); paste_fade(fr, big['f1'], a)
-        elif T[3] <= t < T[4]:
-            l = t - T[3]; a = ease_out((l - 0.05) / 0.2)
-            if t > T[4] - 0.2: a = max(0, (T[4] - t) / 0.2)
-            paste_fade(fr, big['f2'], a, dy=22 * (1 - ease_out((l - 0.05) / 0.2)))
+        fr = Image.new('RGBA', (W, H), (0, 0, 0, 255))
+        if t < T[1]:
+            fr = m1[min(len(m1) - 1, fi)].convert('RGBA'); paste_fade(fr, open_txt, 1)
+        elif t < T[2]:
+            k = freeze(fr, P1, t, T[1], T[2], False); l = t - T[1]
+            if k < 1 and l < TIN: paste_fade(fr, open_txt, 1 - k)
+            a = (l - 0.22) / 0.2 if t < T[2] - TOUT else k
+            A1.draw(fr, a); A2.draw(fr, a - 0.3 if t < T[2] - TOUT else k)
+        elif t < T[3]:
+            fr = m2[min(len(m2) - 1, int(round((t - T[2]) * FPS)))].convert('RGBA')
+        elif t < T[4]:
+            k = freeze(fr, P2, t, T[3], T[4], False); l = t - T[3]
+            endp = t >= T[4] - TOUT
+            B1.draw(fr, k if endp else (l - 0.22) / 0.2); B2.draw(fr, k if endp else (l - 0.36) / 0.2)
             ta = nt(9.48) - 0.05; tb = nt(10.72) - 0.05
-            if t >= ta:
-                k = ease_out((t - ta) / 0.18); fr.alpha_composite(fade(tg1, k), (pos1[0] - p1, int(pos1[1] - p1 + 12 * (1 - k))))
-            if t >= tb:
-                k = ease_out((t - tb) / 0.18); fr.alpha_composite(fade(tg2, k), (pos2[0] - p2, int(pos2[1] - p2 + 12 * (1 - k))))
-        elif t >= T[5]:
-            l = t - T[5]
-            if l < 4.1:
-                a = ease_out((l - 0.1) / 0.2)
-                if l > 3.85: a = max(0, (4.1 - l) / 0.25)
-                paste_fade(fr, big['f3'], a, dy=22 * (1 - ease_out((l - 0.1) / 0.2)))
-            # soft darkening for the offer part
-            if l > 4.0:
-                dk = 0.28 * ease_out((l - 4.0) / 0.5)
-                fr = Image.blend(fr, Image.new('RGBA', (W, H), (0, 0, 0, 255)), dk)
-            tP = nt(17.88) - T[5] - 0.15   # 'O Protocolo'
-            tA = nt(19.28) - T[5] - 0.1    # 'pra quem mora'
-            tB = nt(22.43) - T[5] - 0.15   # 'um procedimento'
-            tC = nt(24.67) - T[5] - 0.2    # 'pra receber'
-            if tP <= l < tC + 0.25:
+            if t >= ta: G1.draw(fr, k if endp else (t - ta) / 0.18)
+            if t >= tb: G2.draw(fr, k if endp else (t - tb) / 0.18)
+        elif t < T[5]:
+            fr = m3[min(len(m3) - 1, int(round((t - T[4]) * FPS)))].convert('RGBA')
+        else:
+            k = freeze(fr, P3, t, T[5], T[6], True); l = t - T[5]
+            tP = nt(17.88) - T[5] - 0.15; tA = nt(19.28) - T[5] - 0.1; tB = nt(22.43) - T[5] - 0.15; tC = nt(24.67) - T[5] - 0.2
+            if l < tP + 0.05:
+                o = 1 if l < tP - 0.2 else max(0, (tP - l) / 0.2) * 1.0
+                C1.draw(fr, min((l - 0.25) / 0.2, 1) * o if o < 1 else (l - 0.25) / 0.2)
+                C2.draw(fr, min((l - 0.4) / 0.2, 1) * o if o < 1 else (l - 0.4) / 0.2)
+            if l >= tP:
                 a = ease_out((l - tP) / 0.3)
-                if l > tC: a = 1 - ease_out((l - tC) / 0.25)
                 fr.alpha_composite(fade(col.icon, a), (60, int(STRIP_Y - 35 + 16 * (1 - a))))
                 fr.alpha_composite(fade(col.title, a), (258 - col.tpad, int(STRIP_Y - col.tpad + 16 * (1 - a))))
             def put(cardimg, tin, tout):
@@ -426,20 +474,18 @@ def main():
             put(col.cardA, tA, tB - 0.3)
             if tB - 0.05 <= l <= tC + 0.3: put(col.cardB_frame(l - tB + 4.05), tB, tC)
             if l >= tC + 0.2:
-                a = ease_out((l - tC - 0.2) / 0.25)
-                paste_fade(fr, big['cta'], a); paste_fade(fr, hl2, a)
+                paste_fade(fr, cta_txt, ease_out((l - tC - 0.2) / 0.25))
             if t >= TCOME:
-                k = ease_back((t - TCOME) / 0.25); a2 = ease_out((t - TCOME) / 0.12)
-                fr.alpha_composite(fade(blk, a2), (CTA_POS[0] - bpad, int(CTA_POS[1] - bpad + 16 * (1 - k))))
+                kk = ease_back((t - TCOME) / 0.25); a2 = ease_out((t - TCOME) / 0.12)
+                fr.alpha_composite(fade(blk, a2), (CTA_POS[0] - bpad, int(CTA_POS[1] - bpad + 16 * (1 - kk))))
         draw_caption(fr, t)
-        # short white flash at each freeze start
         for tf in (T[1], T[3], T[5]):
             if 0 <= t - tf < 0.1:
-                fr = Image.blend(fr, Image.new('RGBA', (W, H), (255, 255, 255, 255)), 0.55 * (1 - (t - tf) / 0.1))
+                fr = Image.blend(fr, Image.new('RGBA', (W, H), (255, 255, 255, 255)), 0.6 * (1 - (t - tf) / 0.1))
         if t > TOTAL - 0.1:
             fr = Image.blend(fr, Image.new('RGBA', (W, H), (0, 0, 0, 255)), min(1, (t - (TOTAL - 0.1)) / 0.1))
         rgb = fr.convert('RGB')
-        if PREVIEW: rgb.resize((360, 640), Image.LANCZOS).save(os.path.join(ROOT, 'prev3', f'f{fi:04d}.jpg'), quality=85)
+        if PREVIEW: rgb.resize((360, 640), Image.LANCZOS).save(os.path.join(ROOT, 'prev4', f'f{fi:04d}.jpg'), quality=88)
         else: out.stdin.write(rgb.tobytes())
     if out: out.stdin.close(); out.wait()
     print('ok')
