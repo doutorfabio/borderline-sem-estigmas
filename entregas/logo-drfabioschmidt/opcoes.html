@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Corm;font-weight:500;src:url(fonts/cormorant-garamond-latin-500-normal.woff2)}
+@font-face{font-family:Corm;font-weight:600;src:url(fonts/cormorant-garamond-latin-600-normal.woff2)}
+@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-600-italic.woff2)}
+@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+:root{--ink:#141414;--paper:#F7F1E6;--red:#CC0000}
+body{margin:0;background:#888;font-variant-ligatures:none}
+.ab{position:relative;width:2048px;height:2048px;overflow:hidden;background:var(--paper);color:var(--ink)}
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.nm{font:600 46px/1 Mont;letter-spacing:.42em;margin-right:-.42em}
+/* 1 linha */
+.o1 .m{position:relative;font:600 900px/1 Corm;letter-spacing:-.02em;isolation:isolate}
+.o1 .m:before{content:"";position:absolute;left:-220px;right:-220px;top:calc(50% + .262em);height:.014em;min-height:9px;background:var(--red);z-index:-1}
+.o1 .m{z-index:1}
+/* 2 borda aberta */
+.o2 svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.o2 .m{font:500 640px/1 Corm;letter-spacing:-.01em;transform:translateY(-20px)}
+/* 3 pontos */
+.o3 .m{font:500 300px/1 Corm;letter-spacing:-.005em;text-align:center}
+.o3 .m .d{position:relative;display:inline-block}
+.o3 .m .d:after{content:"";position:absolute;left:50%;top:.13em;width:.15em;height:.15em;margin-left:-.075em;border-radius:50%;background:var(--red)}
+/* 4 dois lados */
+.o4 .half{position:absolute;top:0;bottom:0;width:50%}
+.o4 .r{right:0;background:var(--red)}
+.o4 .m{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 980px/1 Corm}
+.o4 .m span{width:50%;text-align:center;transform:translateY(-30px)}
+.o4 .m .s{color:var(--paper)}
+</style></head><body>
+<div id="o1a" class="ab o1"><div class="c"><div class="m">FS</div></div></div>
+<div id="o1b" class="ab o1"><div class="c"><div class="m" style="font-size:560px">FS</div><div class="nm" style="margin-top:120px">DR. FABIO SCHMIDT</div></div></div>
+<div id="o2a" class="ab o2"><svg width="1700" height="1700" viewBox="0 0 1700 1700"><path d="M850 70 A780 780 0 1 1 298 298" fill="none" stroke="#141414" stroke-width="14"/><circle cx="452" cy="176" r="22" fill="#CC0000"/></svg><div class="c"><div class="m">FS</div></div></div>
+<div id="o2b" class="ab o2"><svg width="1150" height="1150" viewBox="0 0 1700 1700" style="top:44%"><path d="M850 70 A780 780 0 1 1 298 298" fill="none" stroke="#141414" stroke-width="18"/><circle cx="452" cy="176" r="30" fill="#CC0000"/></svg><div class="c"><div class="m" style="font-size:430px;transform:translateY(-110px)">FS</div><div class="nm" style="position:absolute;bottom:250px">DR. FABIO SCHMIDT</div></div></div>
+<div id="o3a" class="ab o3"><div class="c"><div class="m" style="font-size:560px">fs<span style="color:var(--red)">.</span></div></div></div>
+<div id="o3b" class="ab o3"><div class="c"><div class="m">fab<span class="d">ı</span>o<br>schm<span class="d">ı</span>dt</div></div></div>
+<div id="o4a" class="ab o4"><div class="half r"></div><div class="m"><span>F</span><span class="s">S</span></div></div>
+<div id="o4b" class="ab o4" style="background:var(--paper)"><div class="c"><div style="position:relative;width:720px;height:720px;overflow:hidden"><div class="half r"></div><div class="m" style="font-size:560px"><span style="transform:translateY(-18px)">F</span><span class="s" style="transform:translateY(-18px)">S</span></div></div><div class="nm" style="margin-top:110px">DR. FABIO SCHMIDT</div></div></div>
+</body></html>
