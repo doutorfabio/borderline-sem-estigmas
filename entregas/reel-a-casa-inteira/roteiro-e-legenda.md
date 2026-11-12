@@ -1,4 +1,4 @@
-# Reel A casa inteira, versão Protocolo 7 Dias (31 s, 1080x1920, 30 fps, -14 LUFS)
+# Reel A casa inteira, versão Protocolo 7 Dias (32,3 s, 1080x1920, 30 fps, -14 LUFS)
 
 Público: quem mora com alguém com borderline, principalmente mães. Função: venda (divulgar o Protocolo 7 Dias), com COMEÇAR.
 Correção dele em 12/11/2026: "Mas a intenção era divulgar o protocolo 7 dias / E o 12 semanas vai confundir". A primeira versão tinha o estudo de Hoffman 2005 (12 semanas) e foi descartada. Nenhum outro número de duração aparece na peça.
@@ -15,11 +15,13 @@ Take anterior (job b036cbc3) descartado inteiro: a palavra COMEÇAR saiu engolid
 | 3,4 a 4,55 s | Irmão põe o fone | TEM QUEM PÕE O FONE |
 | 4,55 a 5,7 s | Prato no micro-ondas | TEM QUEM ESPERA ACORDADA |
 | 5,7 a 7,85 s | Bolo com uma vela | TEM DATA QUE PASSA SEM NINGUÉM VER |
-| 7,85 a 10,55 s | Crise na sala | NA HORA DA CRISE, cada um faz o que consegue |
-| 10,55 a 14,15 s | Pai se inclina: Tô aqui. Me conta. (áudio do clipe) | sem texto grande |
-| 14,15 a 16,3 s | Pai e filha no sofá | DÁ PRA APRENDER O QUE FAZER NESSA HORA |
-| 16,3 a 27,9 s | Colagem: ícone dele, PROTOCOLO 7 DIAS, quatro recortes em meio-tom, cartões PRA QUEM MORA COM ALGUÉM COM BORDERLINE, UM PROCEDIMENTO POR DIA (grade de 1 a 7, etiqueta FRASE DE PRESENÇA), NÃO PRECISA ASSISTIR NEM CONCORDAR | |
-| 27,9 a 31 s | Mãe bate na porta do quarto; ícone e arroba | PRA RECEBER, COMENTA + COMEÇAR em bloco vermelho |
+| 7,85 a 11,85 s | Clipe da mãe no meio (pedido dele em 12/11): 1,3 s de grito com o som do clipe, a imagem congela e a narração entra por cima | NA HORA DA CRISE, cada um faz o que consegue (entra no congelamento) |
+| 11,85 a 15,45 s | Pai se inclina: Tô aqui. Me conta. (áudio do clipe) | sem texto grande |
+| 15,45 a 17,6 s | Pai e filha no sofá | DÁ PRA APRENDER O QUE FAZER NESSA HORA |
+| 17,6 a 29,2 s | Colagem: ícone dele, PROTOCOLO 7 DIAS, quatro recortes em meio-tom, cartões PRA QUEM MORA COM ALGUÉM COM BORDERLINE, UM PROCEDIMENTO POR DIA (grade de 1 a 7, etiqueta FRASE DE PRESENÇA), NÃO PRECISA ASSISTIR NEM CONCORDAR | |
+| 29,2 a 32,3 s | Mãe bate na porta do quarto; ícone e arroba | PRA RECEBER, COMENTA + COMEÇAR em bloco vermelho |
+
+A narração (take único) tem duas pausas abertas em silêncio medido (-63 dB): 1,3 s antes de E na hora da crise e 3,6 s para a fala do pai.
 
 Tudo que a peça afirma sobre o Protocolo vem de `memoria/conta.md` (fatos informados por ele). Sem preço.
 
@@ -43,4 +45,4 @@ Dr. Fabio Schmidt, médico, CRM-SP 183549.
 - Área segura conferida por código antes do render (5% laterais, 12% à direita, 20% embaixo), inclusive nas entradas animadas.
 - Efeitos da biblioteca `memoria/sfx/editorpro` (Whoosh_Swipe9, Shutter_Camera, HUD_Pop-Up2, Futurista_Click4), picos entre -21 e -25 dBFS antes do ganho final. Sem trilha.
 - Ícone: `entregas/icone-fabio/icone-fabio-2k.png`, feito da foto real `site-curso/foto-dr-fabio.jpg`.
-- Trilha: From Tension to Hope (Suno, dele, 12/11). Usados os primeiros 27,95 s, esticados para 31 s (atempo 0,90). Fica de 8 a 20 dB abaixo da voz; mais baixa na fala do pai; sobe no acorde final sob o COMEÇAR.
+- Trilha: From Tension to Hope (Suno, dele, 12/11), sem esticar o andamento. O trecho quieto da faixa (9,3 a 13,9 s) toca duas vezes, emendado com crossfade, para cobrir a fala do pai; a subida da faixa cai no começo do grito e a virada para o tom maior, na entrada do Protocolo. Fica de 10 a 20 dB abaixo da voz.

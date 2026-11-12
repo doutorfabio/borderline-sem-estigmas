@@ -24,19 +24,19 @@ def mono(size): return ImageFont.truetype('/mnt/skills/examples/canvas-design/ca
 
 # ---------------- timeline ----------------
 GAP0, GAP = 10.55, 3.60
-def nt(t): return t if t < GAP0 else t + GAP   # narration time -> output time
+def nt(t): return t if t < 7.84 else (t + 1.3 if t < 10.6 else t + 4.9)   # narration time -> output time
 SEG = [
     ('teto',  'c01', 0.40, 0.00, 3.40, 1.11, 1.17, 1.0),
     ('fone',  'c08', 6.00, 3.40, 4.55, 1.00, 1.04, 0.5),
     ('micro', 'c03', 6.00, 4.55, 5.70, 1.00, 1.05, 0.5),
     ('bolo',  'c04', 0.50, 5.70, 7.85, 1.00, 1.05, 0.6),
-    ('crise', 'c09', 2.20, 7.85, 10.55, 1.04, 1.12, 0.35),
-    ('pai',   'c10', 9.20, 10.55, 14.15, 1.00, 1.03, 0.45),
-    ('sofa',  'c07', 0.40, 14.15, 16.30, 1.00, 1.04, 0.45),
-    ('colagem', None, 0, 16.30, 27.90, 1, 1, .5),
-    ('cta',   'c07', 10.08, 27.90, 31.00, 1.00, 1.05, 0.5),
+    ('crise', 'c06', 6.75, 7.85, 11.85, 1.00, 1.08, 0.3),
+    ('pai',   'c10', 9.20, 11.85, 15.45, 1.00, 1.03, 0.45),
+    ('sofa',  'c07', 0.40, 15.45, 17.60, 1.00, 1.04, 0.45),
+    ('colagem', None, 0, 17.60, 29.20, 1, 1, .5),
+    ('cta',   'c07', 10.08, 29.20, 32.30, 1.00, 1.05, 0.5),
 ]
-TOTAL = 31.0
+TOTAL = 32.3
 NF = int(TOTAL * FPS)
 
 BIG = {  # scene -> list of (text, fontkind, size, color)
@@ -48,8 +48,8 @@ BIG = {  # scene -> list of (text, fontkind, size, color)
     'sofa':  [('DÁ PRA APRENDER', 'm', 62, WHITE), ('O QUE FAZER NESSA HORA', 'a', 110, WHITE)],
     'cta':   [('PRA RECEBER, COMENTA', 'm', 62, WHITE)],
 }
-BIG_Y = {'teto': 250, 'fone': 250, 'micro': 250, 'bolo': 250, 'crise': 250, 'sofa': 250, 'cta': 950}
-BIG_DELAY = {'teto': 0.0}
+BIG_Y = {'teto': 250, 'fone': 250, 'micro': 250, 'bolo': 250, 'crise': 1090, 'sofa': 250, 'cta': 950}
+BIG_DELAY = {'teto': 0.0, 'crise': 1.32}
 
 WORDS = json.load(open(os.path.join(ROOT, 'words3.json')))
 FIX = {'12': '12', '6': 'seis', 'para': 'pra'}
@@ -59,7 +59,7 @@ def build_caps():
     for i, (a, b, w) in enumerate(WORDS):
         ws.append((nt(a), nt(b), w))
     # father lines (original clip audio)
-    ws += [(10.85, 11.2, 'Tô'), (11.2, 11.7, 'aqui.'), (13.05, 13.4, 'Me'), (13.4, 14.0, 'conta.')]
+    ws += [(12.15, 12.5, 'Tô'), (12.5, 13.0, 'aqui.'), (14.35, 14.7, 'Me'), (14.7, 14.95, 'conta.')]
     ws.sort()
     ws = [(a, b, 'Tem' if (w == 'tem' and ws[k-1][2].endswith('.')) else w) for k, (a, b, w) in enumerate(ws)]
     sizes = [2,3,1,3,2,2,2,3,3,1,2,2,3,3,2,3,3, 2,2, 3,3,2, 2,2,3,3,2, 2,2, 2,3,2, 2,2,3,2, 2,3,1]
@@ -386,8 +386,8 @@ def main():
                     paste_fade(fr, big_layers[name], a, dy=22 * (1 - a))
                 if name == 'cta':
                     a = ease_out((l - 0.2) / 0.25); paste_fade(fr, sofa_extra, a)
-                    if t >= 29.85:
-                        k = ease_back((t - 29.85) / 0.25); a2 = ease_out((t - 29.85) / 0.12)
+                    if t >= 31.15:
+                        k = ease_back((t - 31.15) / 0.25); a2 = ease_out((t - 31.15) / 0.12)
                         b2 = blk if a2 >= 1 else blk.copy()
                         if a2 < 1: b2.putalpha(blk.split()[3].point(lambda v: int(v * a2)))
                         fr.alpha_composite(b2, (CTA_POS[0] - bpad, int(CTA_POS[1] - bpad + 16 * (1 - k))))
