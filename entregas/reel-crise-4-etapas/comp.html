@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colagem-base/base.css"><style>
+#por{left:470px;top:800px;width:400px;height:510px}
+.st{font-size:38px;padding:5px 16px 5px;line-height:1.05}
+.st em{font-size:22px;color:var(--cream);opacity:.92}
+.st b{color:#ff5a4d;font-weight:400}
+.st.r b{color:var(--cream)}
+</style></head><body><script src="../colagem-base/base.js"></script><script>document.write(GRAIN)</script>
+<div id="head" class="abs"><div class="b txt">Borderline</div><div class="l txt">a crise tem</div><div class="l txt">4 etapas.</div></div>
+<div id="por" class="abs cut" style="background-image:url(assets/retrato.png)"></div>
+<div id="card" class="abs">
+ <svg width="880" height="648" viewBox="0 0 880 648">
+  <line x1="150" y1="90" x2="150" y2="510" stroke="#161413" stroke-width="4"/><line x1="150" y1="510" x2="840" y2="510" stroke="#161413" stroke-width="4"/>
+  <line x1="150" y1="432" x2="840" y2="432" stroke="#161413" stroke-width="2" stroke-dasharray="6 9" opacity=".45"/>
+  <text class="ax txt" x="52" y="130">ALTA</text><text class="ax txt" x="34" y="446">BASE</text>
+  <text class="lg txt" x="150" y="548">TEMPO</text>
+  <path id="cv" d="M160 432 L215 432 C240 432 248 396 270 396 C292 396 300 420 322 414 C360 402 372 190 430 165 C470 150 480 200 510 180 C540 160 550 205 580 185 C610 168 628 190 648 200 C700 230 700 470 740 485 C775 498 800 455 825 440" stroke="#CC0000" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle id="pin" cx="825" cy="440" r="17" fill="#fff" stroke="#CC0000" stroke-width="8" style="transform-origin:825px 440px"/>
+  <text id="foot" class="foot txt" x="150" y="626">Um jeito de organizar a crise.</text>
+ </svg>
+ <div id="t1" class="ptag st txt" style="left:160px;top:288px"><b>1.</b> ALERTA<em>sinal pequeno</em></div>
+ <div id="t2" class="ptag st txt" style="left:160px;top:98px"><b>2.</b> SEQUESTRO<em>a emoção no comando</em></div>
+ <div id="t3" class="ptag st r txt" style="left:470px;top:60px"><b>3.</b> PROTESTO<em>grita, cobra, pede</em></div>
+ <div id="t4" class="ptag st txt" style="left:446px;top:330px"><b>4.</b> RESSACA<em>vergonha e cansaço</em></div>
+ <div id="t5" class="ptag w txt" style="left:520px;top:522px">CONVERSA DIFÍCIL<em>só depois da ressaca</em></div>
+</div>
+<script>document.write(FOOTER)</script>
+<script>
+const W=__WORDS__;
+const G=[[0,1],[2,3],[4,5],[6,7],[8,8],[9,11],[12,14],[15,15],[16,17],[18,20],[21,21],[22,23],[24,25],[26,27],[28,28],[29,31],[32,33],[34,35]];
+const HI=new Set([7,8,15,21,28,35]);
+$('cta').innerHTML='Manda pra quem precisa<br>entender a sua crise';
+const cv=$('cv'),L=cv.getTotalLength();
+function fx(x){for(let i=0;i<=2000;i++){if(cv.getPointAtLength(L*i/2000).x>=x)return i/2000}return 1}
+const F=[0,fx(322),fx(450),fx(650),1];
+const S=[[2.34,4.5],[4.64,6.5],[6.6,9.0],[9.08,10.4]];
+const T={out:2.0,card:2.1,tags:[2.34,4.64,6.6,9.08],end:10.42,cta:11.9};
+window.seek=function(t){
+ headShrink(t,T.out);
+ const sl=eo(pr(t,T.out,.5));$('por').style.opacity=1-sl;$('por').style.transform=`translateY(${Math.sin(t*1.3)*4-60*sl}px) rotate(${3-6*sl}deg) scale(${lerp(1,.8,sl)*lerp(1,1.03,pr(t,0,3))})`;
+ cardIn(t,T.card);
+ let f=0;S.forEach(([a,b],i)=>{f+= (F[i+1]-F[i])*eio(pr(t,a,b-a))});draw(cv,f);cv.style.opacity=t>=S[0][0]?1:0;
+ ['t1','t2','t3','t4'].forEach((id,i)=>pop($(id),t,T.tags[i],[-3,2,-2,3][i]));
+ pop($('t5'),t,T.end,-2);pop($('pin'),t,T.end);
+ $('foot').style.opacity=pr(t,T.card+.6,.3);
+ cta(t,T.cta);speaker(t,W,G,HI);
+};
+</script></body></html>
