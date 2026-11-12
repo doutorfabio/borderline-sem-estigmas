@@ -18,6 +18,35 @@ Conector `instagram`, conta 17841401503370732. Janela de até 14 dias por chamad
 - Retenção, em chamada separada: `media_permalink, media_reel_avg_watch_time, media_reel_skip_rate`.
 - Curtidas e comentários vieram vazios em 26/10. Se precisar deles, pedir print a ele.
 
+## Leitura de 12/11/2026 (Windsor, posts de 30/10 a 12/11)
+
+37 publicações (27 Reels, 10 carrosséis). Posts de 08/11 em diante têm menos de 7 dias e ainda acumulam. Ret = tempo médio assistido em segundos. Pulo = saída nos 3 primeiros segundos. Puxada para comparar 10 temas de Reel falado propostos por um painel de 10 leituras.
+
+Reels acima de 9 mil views:
+
+| Data | Tema | Views | Alcance | Envios | Salvos | Ret s | Pulo |
+|---|---|---|---|---|---|---|---|
+| 08/11 | Quem namora alguém com borderline às vezes pensa em ir embora; ficar é escolha | 49.569 | 37.637 | 1.487 | 863 | 22,6 | 0,39 |
+| 01/11 | Sem tratamento perde numa ordem: sono, trabalho, quem ama | 28.058 | 21.194 | 380 | 396 | 14,9 | 0,42 |
+| 30/10 | Pede um tempo depois da briga e o borderline vai atrás (resolver a briga agora) | 24.360 | 16.986 | 422 | 407 | 12,1 | 0,44 |
+| 11/11 | Marsha Linehan, homenagem (1 dia de vida) | 21.807 | 15.620 | 292 | 143 | 10,1 | 0,60 |
+| 10/11 | Indireta na reunião, você mudou de assunto, silêncio na volta | 18.638 | 14.583 | 422 | 327 | 17,8 | 0,42 |
+| 01/11 | Depois da crise, cinco gestos lidos ao contrário | 16.090 | 12.112 | 265 | 234 | 21,2 | 0,45 |
+| 04/11 | Abraçou e não sentiu nada | 9.168 | 6.388 | 87 | 97 | 13,4 | 0,46 |
+
+Reels abaixo de 3 mil no mesmo período: crítica do chefe e sensibilidade à rejeição (140), dissociação com legenda genérica (194), promessa de não gritar com o filho (380), direção perigosa no manual (606), Chupim senso de justiça (587), relato fictício (876), trecho do Chupim (1.003), direção depois da briga (1.303), dissociação na briga (1.371), calmante em gotas (1.395), dependência emocional em colagem (1.411, pulo 0,69), competência aparente (1.429), remédios na versão dos cachorros (1.468), semana cutucada e o grito (1.909), 3 frases que pioram a crise em colagem (2.313), putz exagerei (2.650), etapas do grito (2.656).
+
+Carrosséis do período: autolesão não é pra chamar atenção (02/11) 94.808 views, 1.318 envios; mãe com borderline e guarda (06/11) 36.211, 154; filha passou em primeiro (11/11, 1 dia) 32.489, 56; FRÁGIL (31/10) 32.322, 136; sinceridade no jantar (08/11) 16.566, 86; direito de sofrer (07/11) 16.502, 55; se trancou (04/11) 16.490, 32; raiva não prova piora (10/11) 14.881, 102; dependência ou borderline (03/11) 10.128, 34.
+
+Atualização de posts de leituras anteriores (mesma fonte): borderline ou autismo 121.892 views e 2.448 envios; almoço de domingo 101.035; vazio do sábado 99.496 e 1.246 envios; parte 2 das cinco coisas 26.611 e 639 envios.
+
+Observações (fato dos números, não regra):
+- O maior Reel das duas semanas fala com quem namora alguém com borderline e dá permissão para pensar em ir embora. É o terceiro Reel desse lado com mais de 49 mil views e mais de mil envios: Entrar na relação (06/05, 57.768, 1.616) e Amar um borderline cansa (15/09, 50.432, 1.051).
+- Os Reels de 18 a 28 mil abrem com um ato visto no vínculo (vai atrás depois da briga, silêncio depois de não ser defendido) ou com consequência em ordem (sem tratamento).
+- Explicação de diferença ou de conceito em Reel ficou abaixo de 3 mil (calmante, dependência, competência aparente, direção no manual). A mesma função em carrossel rendeu (autismo, 121.892).
+- As duas colagens com voz clonada publicadas no período ficaram em 1.411 e 2.313 views.
+- Pulo dos sete maiores entre 0,39 e 0,46, exceto a homenagem (0,60). É correlação.
+
 ## Leitura de 03/11/2026, noite (print dele, Insights do app, Conteúdo > Seguidores, 180 dias)
 
 Ranking do app por seguidores ganhos nos últimos 180 dias, os 11 primeiros da tela. Todos carrosséis; nenhum Reel entre eles (o ranking de 26/10, em outro período, tinha 4 Reels impulsionados). Esta tela não traz views, então não dá para calcular seguidores por mil views. Colunas do app: curtidas, comentários, repostagens, envios. Pedido dele junto com o print: "Qual deles ou quais mais faz sentido refazer melhor".
