@@ -10,12 +10,12 @@ function draw(path,frac){const L=path.getTotalLength();path.style.strokeDasharra
 function cardIn(t,a){const c=$('card');const ci=eo(pr(t,a,.55));c.style.opacity=cl(ci*1.6);c.style.transform=`translateY(${lerp(40,0,ci)}px) rotate(${lerp(-4,-1.2,ci)}deg) scale(${lerp(.9,1,ci)})`}
 function headShrink(t,a){$('head').style.transform=`scale(${lerp(1,.5,eio(pr(t,a,.55)))})`}
 function cta(t,a){const ct=$('cta');const cp=pr(t,a,.32);ct.style.opacity=cp>0?1:0;ct.style.transform=`rotate(-1.5deg) scaleX(${lerp(.2,1,eo(cp))}) scale(${1+.012*Math.sin((t-a)*5)*(cp>=1)})`;$('cred').style.opacity=pr(t,a,.3)}
-function speaker(t,W,G,HI){ // legenda de até 3 palavras + ícone que pulsa quando há fala
+function speaker(t,W,G,HI,REAL){ // legenda de até 3 palavras + ícone que pulsa quando há fala
  let gi=-1;for(let i=0;i<G.length;i++){if(t>=W[G[i][0]][1]-.04)gi=i}
  let html='',speaking=false;
  if(gi>=0){const[g0,g1]=G[gi];const endT=(gi+1<G.length?W[G[gi+1][0]][1]-.04:W[g1][2]+.5);
   if(t<Math.min(endT,W[g1][2]+.6))for(let k=g0;k<=g1;k++)html+=`<span class="txt ${HI.has(k)?'hi':''}" style="opacity:${t>=W[k][1]-.04?1:.28}">${W[k][0]}</span>`}
- for(const w of W)if(t>=w[1]&&t<=w[2]+.06)speaking=true;
+ W.forEach((w,k)=>{if((!REAL||REAL.has(k))&&t>=w[1]&&t<=w[2]+.06)speaking=true});
  $('cap').innerHTML=html;
  const rp=speaking?(.5+.5*Math.sin(t*22)):0;$('ring').style.transform=`scale(${1+.07*rp})`;$('ring').style.opacity=speaking?.9:0;
  $('ico').style.transform=`rotate(${Math.sin(t*1.7)*1.5-2}deg)`}

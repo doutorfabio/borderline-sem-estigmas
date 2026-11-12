@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colagem-base/base.css"><style>
+.ptag.s{font-size:44px}.ptag.s em{font-size:26px;color:var(--cream)}
+#vid{left:300px;top:768px;width:500px;height:590px;background:#f4eee2;padding:12px;box-shadow:0 12px 20px rgba(0,0,0,.6)}
+#vid img{width:100%;height:100%;object-fit:cover;display:block}
+</style></head><body><script src="../colagem-base/base.js"></script><script>document.write(GRAIN)</script>
+<div id="head" class="abs"><div class="b txt">Borderline</div><div class="l txt">a compulsão</div><div class="l txt">funciona.</div><div class="l txt">por isso repete.</div></div>
+<div id="vid" class="abs"><img id="vf"></div>
+<div id="o1" class="abs cut" style="left:90px;top:960px;width:300px;height:274px;background-image:url(assets/obj1.png)"></div>
+<div id="o2" class="abs cut" style="left:400px;top:900px;width:300px;height:338px;background-image:url(assets/obj2.png)"></div>
+<div id="o3" class="abs cut" style="left:735px;top:900px;width:170px;height:338px;background-image:url(assets/obj3.png)"></div>
+<div id="card" class="abs">
+ <svg width="880" height="648" viewBox="0 0 880 648">
+  <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#CC0000"/></marker></defs>
+  <line x1="150" y1="110" x2="150" y2="510" stroke="#161413" stroke-width="4"/><line x1="150" y1="510" x2="840" y2="510" stroke="#161413" stroke-width="4"/>
+  <text class="ax txt" x="52" y="158">MAIS</text><text class="ax txt" x="30" y="504">MENOS</text>
+  <g class="ax" text-anchor="middle"><text class="txt" x="235" y="556">NA HORA</text><text class="txt" x="460" y="556">MINUTOS</text><text class="txt" x="730" y="556">DEPOIS</text></g>
+  <path id="al" d="M165 495 C190 495 200 150 235 150 C275 150 300 440 430 492" stroke="#161413" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <path id="cu" d="M330 495 C420 495 470 215 590 198 C680 186 760 184 825 182" stroke="#CC0000" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path id="lo" d="M822 150 C700 30 430 26 262 112" stroke="#CC0000" stroke-width="7" fill="none" stroke-dasharray="14 12" marker-end="url(#ah)"/>
+  <text id="foot" class="foot txt" x="150" y="626">Critério do DSM-5-TR. Sozinho, não fecha diagnóstico.</text>
+ </svg>
+ <div id="ta" class="ptag s txt" style="left:300px;top:150px">ALÍVIO<em>dura minutos</em></div>
+ <div id="tc" class="ptag s r txt" style="left:590px;top:240px">CULPA<em>chega e fica</em></div>
+ <div id="tn" class="ptag w txt" style="left:470px;top:20px">DE NOVO</div>
+</div>
+<script>document.write(FOOTER)</script>
+<script>
+const W=__WORDS__;
+const G=[[0,1],[2,3],[4,4],[5,7],[8,10],[11,12],[13,15],[16,18],[19,21],[22,23],[24,25],[26,28],[29,30],[31,32],[33,34]];
+const HI=new Set([4,9,15,17,30,34]);const REAL=new Set([0,1,2,3,4,31,32,33,34]);
+$('cta').innerHTML='Manda pra quem você quer<br>que entenda esse ciclo';
+const al=$('al'),cu=$('cu'),lo=$('lo');
+let pk=0;{const L=al.getTotalLength();for(let i=0;i<=1000;i++){if(al.getPointAtLength(L*i/1000).x>=235){pk=i/1000;break}}}
+const T={vout:2.55,obj:[2.75,3.15,3.55],out:3.9,card:4.0,rise:4.35,fall:5.55,fallEnd:6.45,culpa:6.65,culpaEnd:7.95,loop:8.35,loopEnd:10.0,novo:10.05,cout:10.45,vin:10.7,cta:11.5};
+const pad=n=>String(n).padStart(3,'0');
+window.seek=function(t){
+ // cabeçalho: grande com ele, pequeno no gráfico, grande de novo no fecho
+ const hs=eio(pr(t,T.out,.5));$('head').style.transform=`scale(${lerp(1,.5,hs)})`;
+ // vídeo dele
+ const v=$('vid');const a=1-eo(pr(t,T.vout,.3)), b=eo(pr(t,T.vin,.3));const on=t<T.vin?a:b;
+ v.style.opacity=on>0?1:0;v.style.transform=`rotate(${t<T.vin?2.5:-2}deg) scale(${lerp(.6,1,t<T.vin?on:back(b))})`;
+ const E=t>=T.vin;v.style.left=(E?240:300)+'px';v.style.top=(E?528:768)+'px';v.style.width=(E?560:500)+'px';v.style.height=(E?672:590)+'px';
+ const f=t<T.vin?Math.min(96,Math.floor(t*30)+1):Math.min(63,Math.max(1,Math.floor((t-T.vin)*30)+1));
+ $('vf').src='assets/'+(t<T.vin?'fa/':'fb/')+pad(f)+'.jpg';
+ // objetos
+ ['o1','o2','o3'].forEach((id,i)=>{const e=$(id);const o=eo(pr(t,T.out,.4));pop(e,t,T.obj[i],[-6,4,7][i]);if(o>0){e.style.opacity=1-o;e.style.transform=`translateY(${-50*o}px) rotate(${[-6,4,7][i]}deg) scale(${lerp(1,.8,o)})`}});
+ // cartão
+ cardIn(t,T.card);const co=eo(pr(t,T.cout,.35));if(co>0){const c=$('card');c.style.opacity=1-co;c.style.transform=`translateY(${-40*co}px) rotate(-1.2deg) scale(${lerp(1,.88,co)})`}
+ draw(al,eo(pr(t,T.rise,T.fall-T.rise-.3))*pk+eio(pr(t,T.fall,T.fallEnd-T.fall))*(1-pk));al.style.opacity=t>=T.rise?1:0;
+ draw(cu,eio(pr(t,T.culpa,T.culpaEnd-T.culpa)));cu.style.opacity=t>=T.culpa?1:0;
+ const lp=eio(pr(t,T.loop,T.loopEnd-T.loop));lo.style.opacity=lp>0?1:0;lo.style.clipPath=`inset(0 0 0 ${100-100*lp}%)`;
+ pop($('ta'),t,T.fall+.4,-3);pop($('tc'),t,T.culpaEnd-.2,2);pop($('tn'),t,T.novo,-2);
+ $('foot').style.opacity=pr(t,T.card+.6,.3);
+ cta(t,T.cta);speaker(t,W,G,HI,REAL);
+ $('ico').style.opacity=1-on;$('cap').style.left=lerp(266,70,on)+'px';$('cred').style.left=lerp(266,70,on)+'px'; // com ele na tela, o ícone sai
+};
+</script></body></html>
