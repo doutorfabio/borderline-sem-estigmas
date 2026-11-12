@@ -1,0 +1,137 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Anton;src:url(../assets/fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../assets/fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../assets/fonts/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../assets/fonts/inter-latin-800-normal.woff2)}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:600;src:url(../assets/fonts/fraunces-latin-600-italic.woff2)}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#131211;--cream:#F1EADB;--red:#CC0000;--ink:#161413;--paper:#EFE7D6}
+body{width:1080px;height:1920px;background:var(--bg);overflow:hidden;position:relative;font-family:Inter}
+.abs{position:absolute;will-change:transform,opacity}
+#grain{inset:0;opacity:.10;mix-blend-mode:screen;pointer-events:none}
+#head{left:70px;top:226px;transform-origin:0 0;font-family:Anton;text-transform:uppercase;line-height:1.02;text-shadow:0 3px 10px rgba(0,0,0,.45)}
+#head .b{font-size:182px;color:var(--red);letter-spacing:1px}
+#head .l{font-size:106px;color:var(--cream);white-space:nowrap}
+#por{left:440px;top:792px;width:410px;height:529px}
+#por .h{position:absolute;inset:0;background:url(../assets/retrato.png) center/contain no-repeat;filter:drop-shadow(0 10px 14px rgba(0,0,0,.55))}
+.heart{width:120px;height:120px}
+.tagday{font-family:Anton;font-size:54px;color:var(--ink);background:var(--paper);padding:6px 22px 4px;box-shadow:0 6px 10px rgba(0,0,0,.5);white-space:nowrap}
+.tagday i{font-style:normal;display:block;font:800 20px Inter;letter-spacing:3px;color:var(--red);margin-bottom:-4px}
+#card{left:70px;top:536px;width:880px;height:648px;background:var(--paper);box-shadow:0 14px 26px rgba(0,0,0,.6);transform-origin:50% 50%}
+#card svg{position:absolute;inset:0}
+.ax{font-family:Anton;font-size:36px;fill:#161413}
+.lg{font:800 26px Inter;fill:#161413;letter-spacing:.5px}
+.foot{font:600 italic 23px Fraunces;fill:#4a443c}
+.ptag{position:absolute;white-space:nowrap;box-shadow:0 5px 9px rgba(0,0,0,.35)}
+#tgat{left:316px;top:28px;background:#fff;border:3px solid var(--red);padding:8px 16px 9px;color:var(--red);font-family:Anton;font-size:35px;line-height:1.05}
+#tgat em{font:600 italic 30px Fraunces;color:var(--ink);display:block;text-transform:none}
+#tide,#tdes{background:var(--ink);color:var(--cream);font-family:Anton;font-size:50px;padding:5px 18px 3px;letter-spacing:.5px}
+#tide{left:92px;top:176px}#tdes{left:330px;top:424px;background:var(--red)}
+#av{position:absolute;left:754px;top:262px;width:112px;height:112px;border-radius:50%;border:6px solid #fff;background:#d9a441 url(../assets/retrato.png) 50% 18%/170% no-repeat;box-shadow:0 5px 9px rgba(0,0,0,.4)}
+#cta{left:70px;top:1216px;background:var(--red);color:var(--cream);font-family:Anton;font-size:55px;line-height:1.08;padding:12px 26px 10px;text-transform:uppercase;white-space:nowrap;box-shadow:0 8px 14px rgba(0,0,0,.5);transform-origin:0 50%}
+#ico{left:70px;top:1346px;width:168px;height:179px}
+#ico img{width:100%;position:relative}
+#ring{position:absolute;left:50%;top:52%;width:176px;height:176px;margin:-88px;border-radius:50%;border:5px solid var(--red)}
+#cap{left:266px;top:1362px;width:684px;height:110px;display:flex;align-items:center;gap:15px;white-space:nowrap;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+#cap span{font:800 52px Inter;color:var(--cream)}
+#cap span.hi{font:400 80px Anton;color:#E11B1B;text-transform:uppercase;line-height:1}
+#cred{left:266px;top:1478px;line-height:1.3;font:500 20px Inter;color:#9a9388;white-space:nowrap}
+</style></head><body>
+<svg id="grain" class="abs" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+<div id="head" class="abs"><div class="b txt">Borderline</div><div class="l txt">de amor da vida</div><div class="l txt">a pior pessoa</div><div class="l txt">em três dias.</div></div>
+<div id="por" class="abs"><div class="h" id="h1"></div><div class="h" id="h2"></div></div>
+<div id="d1" class="abs tagday txt"><i>DIA</i>SEGUNDA</div>
+<div id="d2" class="abs tagday txt"><i>DIA</i>QUINTA</div>
+<svg class="abs heart" id="he1" viewBox="0 0 100 100"><path d="M50 88C18 62 6 44 10 28c4-16 26-20 40-4 14-16 36-12 40 4 4 16-8 34-40 60z" fill="#CC0000" stroke="#fff" stroke-width="7" stroke-linejoin="round"/></svg>
+<svg class="abs heart" id="he2" viewBox="0 0 100 100"><path d="M50 88C18 62 6 44 10 28c4-16 26-20 40-4 14-16 36-12 40 4 4 16-8 34-40 60z" fill="#CC0000" stroke="#fff" stroke-width="7" stroke-linejoin="round"/></svg>
+<svg class="abs heart" id="he3" viewBox="0 0 100 100"><path d="M50 88C18 62 6 44 10 28c4-16 26-20 40-4 14-16 36-12 40 4 4 16-8 34-40 60z" fill="#CC0000" stroke="#fff" stroke-width="7" stroke-linejoin="round"/></svg>
+<div id="card" class="abs">
+ <svg width="880" height="640" viewBox="0 0 880 640">
+  <line x1="150" y1="110" x2="150" y2="510" stroke="#161413" stroke-width="4"/><line x1="150" y1="510" x2="830" y2="510" stroke="#161413" stroke-width="4"/>
+  <text class="ax txt" x="22" y="164">MELHOR</text><text class="ax txt" x="68" y="504">PIOR</text>
+  <g class="ax" text-anchor="middle"><text class="txt" x="190" y="556">SEG</text><text class="txt" x="390" y="556">TER</text><text class="txt" x="590" y="556">QUA</text><text class="txt" x="790" y="556">QUI</text></g>
+  <path id="lv" d="M170 318 H800" stroke="#161413" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path id="lr" d="M170 150 C300 144 470 146 590 150 C640 152 648 300 690 400 C720 470 760 488 800 492" stroke="#CC0000" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle id="pin" cx="590" cy="150" r="17" fill="#fff" stroke="#CC0000" stroke-width="8"/>
+  <text id="lgv" class="lg txt" x="170" y="296">VOCÊ</text>
+  <g id="leg"><rect x="150" y="584" width="44" height="14" fill="#CC0000"/><text class="lg txt" x="206" y="600">COMO O BORDERLINE TE VÊ</text></g>
+  <text id="foot" class="foot txt" x="150" y="630">Critério do DSM-5-TR. Sozinho, não fecha diagnóstico.</text>
+ </svg>
+ <div id="av"></div>
+ <div id="tgat" class="ptag txt">GATILHO<em>uma resposta seca</em></div>
+ <div id="tide" class="ptag txt">IDEALIZAÇÃO</div><div id="tdes" class="ptag txt">DESVALORIZAÇÃO</div>
+</div>
+<div id="cta" class="abs txt">Manda pra quem ficou<br>sem entender a virada</div>
+<div id="ico" class="abs"><div id="ring"></div><img src="../assets/icone-fabio.png"></div>
+<div id="cap" class="abs"></div>
+<div id="cred" class="abs txt">Dr. Fabio Schmidt, médico, pós-graduado em psiquiatria.<br>Conteúdo educativo.</div>
+<script>
+const W=__WORDS__;
+const G=[[0,2],[3,5],[6,8],[9,11],[12,13],[14,15],[16,18],[19,21],[22,24],[25,27],[28,30],[31,33],[34,35],[36,37],[38,40]];
+const HI=new Set([18,21,23,35,37,40]);
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const pr=(t,a,d)=>cl((t-a)/d);
+const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const lerp=(a,b,x)=>a+(b-a)*x;
+const T={hearts:[1.6,1.78,1.94],flip:3.08,tear:4.81,out:5.2,card:5.3,lv:5.57,lr:5.95,gat:6.92,drop:7.6,dropEnd:9.3,ide:10.64,des:11.66,foot:10.3,cta:12.55,end:15};
+const lr=$('lr'),lv=$('lv');const LR=lr.getTotalLength(),LV=lv.getTotalLength();
+// fraction of red path at the pin
+let pinF=0;for(let i=0;i<=1000;i++){const p=lr.getPointAtLength(LR*i/1000);if(p.x>=590){pinF=i/1000;break}}
+lr.style.strokeDasharray=LR;lv.style.strokeDasharray=LV;
+function pop(el,t,a,rot=0,extra=''){const p=pr(t,a,.28);el.style.opacity=p>0?1:0;el.style.transform=`${extra} rotate(${rot}deg) scale(${p>0?lerp(.55,1,back(p)):0})`}
+window.seek=function(t){
+ // header
+ const hs=eio(pr(t,T.out,.55));$('head').style.transform=`scale(${lerp(1,.5,hs)})`;
+ // portrait
+ const po=$('por');const sl=eo(pr(t,T.out,.5));
+ po.style.opacity=1-sl;po.style.transform=`translate(0,${Math.sin(t*1.3)*4-60*sl}px) rotate(${3+sl*-6}deg) scale(${lerp(1.0,1.03,pr(t,0,5))*lerp(1,.8,sl)})`;
+ const tr=eo(pr(t,T.tear,.3));
+ $('h1').style.clipPath='polygon(0 0,58% 0,49% 22%,57% 41%,44% 60%,52% 80%,41% 100%,0 100%)';
+ $('h2').style.clipPath='polygon(58% 0,100% 0,100% 100%,41% 100%,52% 80%,44% 60%,57% 41%,49% 22%)';
+ $('h1').style.transform=`translate(${-26*tr}px,${10*tr}px) rotate(${-5*tr}deg)`;
+ $('h2').style.transform=`translate(${30*tr}px,${-6*tr}px) rotate(${6*tr}deg)`;
+ $('h1').style.filter=$('h2').style.filter=`drop-shadow(0 10px 14px rgba(0,0,0,.55)) saturate(${1-.75*tr})`;
+ // day tags
+ const f=pr(t,T.flip,.36);const d1=$('d1'),d2=$('d2');
+ d1.style.left=d2.style.left='360px';d1.style.top=d2.style.top='812px';
+ const vis=1-eo(pr(t,T.out,.4));
+ d1.style.opacity=(f<.5?1:0)*vis;d2.style.opacity=(f>=.5?1:0)*vis;
+ d1.style.transform=`rotate(-7deg) scaleY(${Math.cos(Math.min(f,.5)*Math.PI)})`;
+ d2.style.transform=`rotate(-5deg) scaleY(${Math.abs(Math.cos(Math.max(f,.5)*Math.PI))})`;
+ // hearts
+ const HP=[[770,800,12],[395,1010,-14],[790,1150,-8]];
+ ['he1','he2','he3'].forEach((id,i)=>{const el=$(id);el.style.left=HP[i][0]+'px';el.style.top=HP[i][1]+'px';
+  const fall=pr(t,T.tear+i*.06,.6);
+  if(fall>0){el.style.opacity=1-fall;el.style.transform=`translate(${(i-1)*30*fall}px,${420*fall*fall}px) rotate(${HP[i][2]+fall*80*(i%2?1:-1)}deg)`}
+  else pop(el,t,T.hearts[i],HP[i][2])});
+ // card
+ const c=$('card');const ci=eo(pr(t,T.card,.55));
+ c.style.opacity=cl(ci*1.6);c.style.transform=`translateY(${lerp(40,0,ci)}px) rotate(${lerp(-4,-1.2,ci)}deg) scale(${lerp(.9,1,ci)})`;
+ lv.style.strokeDashoffset=LV*(1-eo(pr(t,T.lv,.8)));
+ $('lgv').style.opacity=pr(t,T.lv,.2);
+ $('av').style.opacity=pr(t,T.lv+.7,.01);$('av').style.transform=`scale(${lerp(.5,1,back(pr(t,T.lv+.7,.3)))})`;
+ const a=eo(pr(t,T.lr,T.gat-T.lr))*pinF, b=eio(pr(t,T.drop,T.dropEnd-T.drop))*(1-pinF);
+ lr.style.strokeDashoffset=LR*(1-(a+b));lr.style.opacity=t>=T.lr?1:0;
+ $('leg').style.opacity=pr(t,T.lr,.25);
+ pop($('pin'),t,T.gat);$('pin').style.transformOrigin='590px 150px';
+ pop($('tgat'),t,T.gat,2.5);pop($('tide'),t,T.ide,-3);pop($('tdes'),t,T.des,2);
+ $('foot').style.opacity=pr(t,T.foot,.3);
+ // cta
+ const ct=$('cta');const cp=pr(t,T.cta,.32);ct.style.opacity=cp>0?1:0;ct.style.transform=`rotate(-1.5deg) scaleX(${lerp(.2,1,eo(cp))}) scale(${1+.012*Math.sin((t-T.cta)*5)*(cp>=1)})`;
+ // captions + icon
+ let gi=-1;for(let i=0;i<G.length;i++){if(t>=W[G[i][0]][1]-.04)gi=i}
+ const cap=$('cap');let html='';let speaking=false;
+ if(gi>=0){const[g0,g1]=G[gi];const endT=(gi+1<G.length?W[G[gi+1][0]][1]-.04:W[g1][2]+.5);
+  if(t<Math.min(endT,W[g1][2]+.6)){for(let k=g0;k<=g1;k++){const on=t>=W[k][1]-.04;const txt=W[k][0];html+=`<span class="txt ${HI.has(k)?'hi':''}" style="opacity:${on?1:.28}">${txt}</span>`}}}
+ for(const w of W){if(t>=w[1]&&t<=w[2]+.06)speaking=true}
+ cap.innerHTML=html;
+ const rp=speaking?(.5+.5*Math.sin(t*22)):0;$('ring').style.transform=`scale(${1+.07*rp})`;$('ring').style.opacity=speaking?.9:.0;
+ $('ico').style.transform=`rotate(${Math.sin(t*1.7)*1.5-2}deg) scale(${lerp(.6,1,back(pr(t,-.3,.3)))})`;
+ $('cred').style.opacity=pr(t,T.cta,.3);
+ // final fade
+ document.body.style.opacity=1;
+};
+window.boxes=function(){const out=[];document.querySelectorAll('.txt').forEach(e=>{let o=1,n=e;while(n&&n!==document.body){o*=parseFloat(getComputedStyle(n).opacity);n=n.parentElement}if(o<.05)return;const r=e.getBoundingClientRect();if(r.width<2)return;out.push([e.textContent.slice(0,24),Math.round(r.left),Math.round(r.top),Math.round(r.right),Math.round(r.bottom)])});return out};
+</script></body></html>
