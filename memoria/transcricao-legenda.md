@@ -30,3 +30,15 @@ Registrado em 12/11/2026. A transcrição travou cerca de 40 minutos por bloquei
 - Som: voz com compressor leve e ganho até -14 LUFS (pico -1,3 dBFS); 15 efeitos de memoria/sfx/editorpro (Swipe9 e Fino6 nas trocas de lugar, Click4 nos números, HUD_Pop-Up2 nos destaques fortes, Riser_Ouro_Curto baixo antes da pergunta central); pico dos efeitos sozinhos em -15,9 dBFS. Pedido dele: "Sfx ponderados".
 - Dos efeitos de referência do charliehills (12/11, "só se couber"): entrou só a lógica do Words kinetic e do contador. Partículas, líquido, gráfico, cartões, órbita e celular ficaram fora por não terem ligação com a fala.
 - Fonte do projeto: `videos/reel-pergunta-do-passado/` no branch claude/blissful-gates-p0qnng.
+
+## Quadro solto nos cortes (correção dele em 12/11)
+
+- Ele: "Verifique as transições as vezes aparece um frame errado e some".
+- Causa: a montagem dele (gravação original) trazia 1 quadro de outra tomada em dois cortes (8,53 s e 21,57 s). A v1 saiu com eles porque só conferi os cortes pela folha de 1 quadro por segundo.
+- Correção: cada quadro solto trocado pelo quadro seguinte, sem mudar duração nem áudio.
+- Regra: antes de legendar gravação já cortada por ele, tirar a nota de cena de todos os quadros (`select='gte(scene,0)',metadata=print`) e olhar os 6 quadros em volta de cada corte. Dois saltos altos em quadros seguidos é quadro solto. Avisar e corrigir na primeira entrega.
+
+## Música (12/11)
+
+- Ele pediu prompt para o Suno com até 400 caracteres e recusou a primeira sugestão (violão abafado, sem bateria): "Mas quero estilo indie". Prompt indie aceito: indie bedroom pop, guitarra limpa com chorus, baixo quente, bateria lo-fi de vassourinha, pad, 88 BPM, lá menor resolvendo em dó maior. Gerou A Minor Resolves (102 s).
+- Mixagem usada: trecho final da faixa (61,13 s até o fim) para o encerramento natural cair no fim do vídeo; passa-altas 130 Hz; ducking pela voz; música sozinha em -32,5 LUFS, 18,6 LU abaixo da voz; total -14 LUFS.
