@@ -46,3 +46,20 @@ Dr. Fabio Schmidt, médico, CRM-SP 183549.
 - Efeitos da biblioteca `memoria/sfx/editorpro` (Whoosh_Swipe9, Shutter_Camera, HUD_Pop-Up2, Futurista_Click4), picos entre -21 e -25 dBFS antes do ganho final. Sem trilha.
 - Ícone: `entregas/icone-fabio/icone-fabio-2k.png`, feito da foto real `site-curso/foto-dr-fabio.jpg`.
 - Trilha: From Tension to Hope (Suno, dele, 12/11), sem esticar o andamento. O trecho quieto da faixa (9,3 a 13,9 s) toca duas vezes, emendado com crossfade, para cobrir a fala do pai; a subida da faixa cai no começo do grito e a virada para o tom maior, na entrada do Protocolo. Fica de 10 a 20 dB abaixo da voz.
+
+# Versão só com o clipe da mãe no meio (33,2 s), pedido dele em 12/11
+
+Arquivo: `reel-mae-no-meio-um-clipe-33s.mp4`. Só o clipe que congela; a narração entra nos três congelamentos, esticados para caber a fala. Texto aprovado por ele ("Sim").
+
+Narração (voz clonada, take único, job e638b19b): Quando alguém da casa tem borderline, a crise pega a casa inteira. Na hora, cada um faz o que consegue. Um grita. A outra tenta segurar. Dá pra aprender o que fazer nessa hora. O Protocolo 7 Dias é pra quem mora com alguém com borderline. Um procedimento por dia. Pra receber, comenta a palavra: COMEÇAR.
+
+| Tempo | Imagem | Na tela |
+|---|---|---|
+| 0 a 1,6 s | Movimento: a filha se vira entre os dois | QUANDO ALGUÉM DA CASA TEM BORDERLINE |
+| 1,6 a 6,5 s | Congela 1 | mesma frase, narração |
+| 6,5 a 8,6 s | Movimento: o pai grita (som do clipe) | |
+| 8,6 a 15,5 s | Congela 2 | NA HORA, CADA UM FAZ O QUE CONSEGUE; etiquetas UM GRITA e A OUTRA TENTA SEGURAR |
+| 15,5 a 18,2 s | Movimento: a filha sai | |
+| 18,2 a 33,2 s | Congela 3 (pais sozinhos) | DÁ PRA APRENDER O QUE FAZER NESSA HORA; ícone e PROTOCOLO 7 DIAS; cartões PRA QUEM MORA COM ALGUÉM COM BORDERLINE e UM PROCEDIMENTO POR DIA (grade 1 a 7); PRA RECEBER, COMENTA + COMEÇAR |
+
+A mesma legenda serve, trocando o primeiro parágrafo por: Quando alguém da casa tem borderline, a crise pega a casa inteira. Um grita. A outra tenta segurar. Cada um faz o que consegue.
