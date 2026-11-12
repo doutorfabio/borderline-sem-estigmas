@@ -27,7 +27,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@400;500;600&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
 
 <script>
 document.documentElement.className='js';
@@ -108,7 +108,7 @@ var PRODUTOS = [
     video: 'videos/protocolo-da-crise.mp4',
     poster: 'videos/protocolo-da-crise.jpg',
     corAcento: '#9a3a26',
-    formato: 'guia',
+    formato: 'pdf',
     seguranca: true,
     gratuito: false
   },
@@ -132,7 +132,7 @@ var PRODUTOS = [
     video: 'videos/kit-de-regulacao.mp4',
     poster: 'videos/kit-de-regulacao.jpg',
     corAcento: '#c9a24f',
-    formato: 'guia',
+    formato: 'pdf',
     seguranca: true,
     gratuito: false
   },
@@ -282,8 +282,12 @@ nav a.cta:hover{background:rgba(245,240,235,.1);border-color:var(--dim)}
 /* ---------- TOPO DA LOJA ---------- */
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 .intro{padding:clamp(18px,4.4vw,60px) 0 clamp(4px,1.4vw,14px)}
-.intro h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(42px,7.4vw,88px);line-height:.98;letter-spacing:-.035em}
-.intro p{margin-top:14px;font-size:clamp(17px,1.6vw,20px);color:rgba(245,240,235,.88);max-width:34ch;line-height:1.5}
+.intro h1{font-weight:500;line-height:1;text-transform:uppercase}
+.l-loja{display:flex;align-items:center;gap:14px;font-size:.78rem;font-weight:500;letter-spacing:.42em;color:var(--ouro)}
+.l-loja::after{content:"";width:64px;height:1px;background:linear-gradient(90deg,var(--ouro),transparent)}
+.l-bord{display:block;margin-top:14px;font-family:'Cormorant Garamond','Fraunces',serif;font-size:clamp(40px,12.4vw,96px);letter-spacing:.06em}
+.l-sem{display:block;margin-top:.6em;font-size:clamp(13px,3.7vw,24px);font-weight:400;letter-spacing:.5em;color:rgba(245,240,235,.88)}
+.intro p{margin-top:20px;font-size:clamp(17px,1.6vw,20px);color:rgba(245,240,235,.88);max-width:34ch;line-height:1.5}
 
 /* ---------- FILTRO: abas de vidro ---------- */
 .filtro{margin-top:20px}
@@ -555,7 +559,7 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
 <main>
   <div class="wrap">
     <section class="intro">
-      <h1 class="surge">Loja Borderline<br>Sem Estigma</h1>
+      <h1 class="logo surge"><span class="l-loja">Loja</span> <span class="l-bord">Borderline</span> <span class="l-sem">Sem Estigma</span></h1>
       <p class="surge" style="--i:1">Materiais para quem vive com TPB e para quem convive.</p>
 
       <div class="filtro surge" style="--i:2">
