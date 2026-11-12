@@ -31,7 +31,7 @@ const HI=new Set([4,9,15,17,30,34]);const REAL=new Set([0,1,2,3,4,31,32,33,34]);
 $('cta').innerHTML='Manda pra quem você quer<br>que entenda esse ciclo';
 const al=$('al'),cu=$('cu'),lo=$('lo');
 let pk=0;{const L=al.getTotalLength();for(let i=0;i<=1000;i++){if(al.getPointAtLength(L*i/1000).x>=235){pk=i/1000;break}}}
-const T={vout:2.55,obj:[2.75,3.15,3.55],out:3.9,card:4.0,rise:4.35,fall:5.55,fallEnd:6.45,culpa:6.65,culpaEnd:7.95,loop:8.35,loopEnd:10.0,novo:10.05,cout:10.45,vin:10.7,cta:11.5};
+const T={vout:2.55,obj:[2.81,3.44,3.99],out:4.35,card:4.45,rise:4.64,fall:5.84,fallEnd:6.91,culpa:7.61,culpaEnd:8.93,loop:9.3,loopEnd:11.0,novo:11.03,cout:11.15,vin:11.35,cta:12.15};
 const pad=n=>String(n).padStart(3,'0');
 window.seek=function(t){
  // cabeçalho: grande com ele, pequeno no gráfico, grande de novo no fecho
@@ -51,7 +51,7 @@ window.seek=function(t){
  const lp=eio(pr(t,T.loop,T.loopEnd-T.loop));lo.style.opacity=lp>0?1:0;lo.style.clipPath=`inset(0 0 0 ${100-100*lp}%)`;
  pop($('ta'),t,T.fall+.4,-3);pop($('tc'),t,T.culpaEnd-.2,2);pop($('tn'),t,T.novo,-2);
  $('foot').style.opacity=pr(t,T.card+.6,.3);
- cta(t,T.cta);speaker(t,W,G,HI,REAL);
+ cta(t,T.cta);speaker(t,W,G,HI);
  $('ico').style.opacity=1-on;$('cap').style.left=lerp(266,70,on)+'px';$('cred').style.left=lerp(266,70,on)+'px'; // com ele na tela, o ícone sai
 };
 </script></body></html>

@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colagem-base/base.css"><style>
+.ptag.s{font-size:44px}.ptag.s em{font-size:26px;color:var(--cream)}
+#vid{left:300px;top:768px;width:500px;height:590px;background:#f4eee2;padding:12px;box-shadow:0 12px 20px rgba(0,0,0,.6)}
+#rk{position:absolute;left:8px;top:50%;height:5px;background:var(--red);width:0}
+#vid img{width:100%;height:100%;object-fit:cover;display:block}
+</style></head><body><script src="../colagem-base/base.js"></script><script>document.write(GRAIN)</script>
+<div id="head" class="abs"><div class="b txt">Borderline</div><div class="l txt">a compulsão</div><div class="l txt">funciona.</div><div class="l txt">por isso repete.</div></div>
+<div id="vid" class="abs"><img id="vf"></div>
+<div id="o1" class="abs cut" style="left:90px;top:960px;width:300px;height:274px;background-image:url(assets/obj1.png)"></div>
+<div id="o2" class="abs cut" style="left:400px;top:900px;width:300px;height:338px;background-image:url(assets/obj2.png)"></div>
+<div id="o3" class="abs cut" style="left:735px;top:900px;width:170px;height:338px;background-image:url(assets/obj3.png)"></div>
+<div id="card" class="abs">
+ <svg width="880" height="648" viewBox="0 0 880 648">
+  <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#CC0000"/></marker></defs>
+  <line x1="150" y1="110" x2="150" y2="510" stroke="#161413" stroke-width="4"/><line x1="150" y1="510" x2="840" y2="510" stroke="#161413" stroke-width="4"/>
+  <text class="ax txt" x="52" y="158">MAIS</text><text class="ax txt" x="30" y="504">MENOS</text>
+  <g class="ax" text-anchor="middle"><text class="txt" x="235" y="556">NA HORA</text><text class="txt" x="460" y="556">MINUTOS</text><text class="txt" x="730" y="556">DEPOIS</text></g>
+  <path id="al" d="M165 495 C190 495 200 150 235 150 C275 150 300 440 430 492" stroke="#161413" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <path id="cu" d="M330 495 C420 495 470 215 590 198 C680 186 760 184 825 182" stroke="#CC0000" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path id="lo" d="M822 150 C700 30 430 26 262 112" stroke="#CC0000" stroke-width="7" fill="none" stroke-dasharray="14 12" marker-end="url(#ah)"/>
+  <text id="foot" class="foot txt" x="150" y="626">Critério do DSM-5-TR. Sozinho, não fecha diagnóstico.</text>
+ </svg>
+ <div id="ta" class="ptag s txt" style="left:300px;top:150px">ALÍVIO<em>dura minutos</em></div>
+ <div id="tc" class="ptag s r txt" style="left:590px;top:240px">CULPA<em>chega e fica</em></div>
+ <div id="tn" class="ptag w txt" style="left:470px;top:20px">DE NOVO</div>
+ <div id="tf" class="ptag w txt" style="left:548px;top:352px;font-size:33px">FALTA DE CONTROLE<i id="rk"></i></div>
+ <div id="ti" class="ptag r txt" style="left:548px;top:420px;font-size:44px">IMPULSIVIDADE</div>
+ <div id="tb" class="ptag txt" style="left:668px;top:96px;font-size:40px">BRONCA <span style="color:#ff5a4d">&#8595;</span></div>
+ <div id="tq" class="ptag w txt" style="left:206px;top:286px;font-size:46px;border-width:5px;padding:12px 20px">OUTRO JEITO<br>DE BAIXAR A DOR</div>
+</div>
+<script>document.write(FOOTER)</script>
+<script>
+const W=__WORDS__;
+const N=5,E=74;
+const G=[[0,1],[2,3],[4,4]].concat([[0,2],[3,5],[6,7],[8,10],[11,13],[14,16],[17,18],[19,20],[21,23],[24,25],[26,27],[28,29],[30,31],[32,34],[35,37],[38,38],[39,41],[42,43],[44,46],[47,48],[49,51],[52,52],[53,55],[56,58],[59,61],[62,64],[65,66],[67,68]].map(g=>[g[0]+N,g[1]+N]),[[E,E+1],[E+2,E+3]]);
+const HI=new Set([4,E+3].concat([4,10,12,25,34,38,44,58].map(k=>k+N)));
+$('cta').innerHTML='Manda pra quem você quer<br>que entenda esse ciclo';
+const al=$('al'),cu=$('cu'),lo=$('lo');
+let pk=0;{const L=al.getTotalLength();for(let i=0;i<=1000;i++){if(al.getPointAtLength(L*i/1000).x>=235){pk=i/1000;break}}}
+const w=k=>W[k+N][1], we=k=>W[k+N][2];
+const VIN=we(68)+.45;
+const T={vout:2.55,obj:[w(0),w(1),w(2)],out:w(3)-.3,card:w(3)-.2,rise:w(3),fall:w(8),fallEnd:we(10),culpa:w(11),culpaEnd:we(16),loop:w(17),loopEnd:we(25)-.1,novo:w(25),
+ falta:w(32),imp:w(38),bronca:w(44),prox:w(53),quebra:w(58),outro:w(63),cout:we(68)+.25,vin:VIN,cta:VIN+.8};
+const pad=n=>String(n).padStart(3,'0');
+window.seek=function(t){
+ // cabeçalho: grande com ele, pequeno no gráfico, grande de novo no fecho
+ const hs=eio(pr(t,T.out,.5));$('head').style.transform=`scale(${lerp(1,.5,hs)})`;
+ // vídeo dele
+ const v=$('vid');const a=1-eo(pr(t,T.vout,.3)), b=eo(pr(t,T.vin,.3));const on=t<T.vin?a:b;
+ v.style.opacity=on>0?1:0;v.style.transform=`rotate(${t<T.vin?2.5:-2}deg) scale(${lerp(.6,1,t<T.vin?on:back(b))})`;
+ const E=t>=T.vin;v.style.left=(E?240:300)+'px';v.style.top=(E?528:768)+'px';v.style.width=(E?560:500)+'px';v.style.height=(E?672:590)+'px';
+ const f=t<T.vin?Math.min(96,Math.floor(t*30)+1):Math.min(63,Math.max(1,Math.floor((t-T.vin)*30)+1));
+ $('vf').src='assets/'+(t<T.vin?'fa/':'fb/')+pad(f)+'.jpg';
+ // objetos
+ ['o1','o2','o3'].forEach((id,i)=>{const e=$(id);const o=eo(pr(t,T.out,.4));pop(e,t,T.obj[i],[-6,4,7][i]);if(o>0){e.style.opacity=1-o;e.style.transform=`translateY(${-50*o}px) rotate(${[-6,4,7][i]}deg) scale(${lerp(1,.8,o)})`}});
+ // cartão
+ cardIn(t,T.card);const co=eo(pr(t,T.cout,.35));if(co>0){const c=$('card');c.style.opacity=1-co;c.style.transform=`translateY(${-40*co}px) rotate(-1.2deg) scale(${lerp(1,.88,co)})`}
+ draw(al,eo(pr(t,T.rise,T.fall-T.rise-.3))*pk+eio(pr(t,T.fall,T.fallEnd-T.fall))*(1-pk));al.style.opacity=t>=T.rise?1:0;
+ draw(cu,eio(pr(t,T.culpa,T.culpaEnd-T.culpa)));cu.style.opacity=t>=T.culpa?1:0;
+ const lp=eio(pr(t,T.loop,T.loopEnd-T.loop));lo.style.opacity=lp>0?1:0;lo.style.clipPath=`inset(0 0 0 ${100-100*lp}%)`;
+ pop($('ta'),t,T.fall+.4,-3);pop($('tc'),t,T.culpaEnd-.2,2);pop($('tn'),t,T.novo,-2);
+ pop($('tf'),t,T.falta,-2);$('rk').style.width=`calc(${100*eo(pr(t,T.imp-.1,.3))}% - 16px)`;pop($('ti'),t,T.imp,2);
+ pop($('tb'),t,T.bronca,3);cu.style.strokeWidth=12+7*Math.sin(Math.PI*pr(t,T.bronca,1.2));
+ const q=pr(t,T.quebra,.5);if(q>0){lo.style.opacity=lerp(1,.15,q);$('tn').style.opacity=lerp(1,.25,q)}else{const pu=Math.sin(Math.PI*pr(t,T.prox,.7));lo.style.strokeWidth=7+5*pu}
+ pop($('tq'),t,T.outro,-3);
+ $('foot').style.opacity=pr(t,T.card+.6,.3);
+ cta(t,T.cta);speaker(t,W,G,HI);
+ $('ico').style.opacity=1-on;$('cap').style.left=lerp(266,70,on)+'px';$('cred').style.left=lerp(266,70,on)+'px'; // com ele na tela, o ícone sai
+};
+</script></body></html>
