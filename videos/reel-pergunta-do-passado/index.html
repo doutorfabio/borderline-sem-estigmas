@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Mont;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:Mont;font-weight:900;src:url(fonts/montserrat-latin-900-normal.woff2)}
+@font-face{font-family:Frau;font-weight:900;font-style:italic;src:url(fonts/fraunces-latin-900-italic.woff2)}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000}
+#bg{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:50% 36%;will-change:transform}
+#cap{position:absolute;left:540px;top:1368px;width:0;height:0}
+#blk{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;white-space:nowrap}
+.ln{display:flex;align-items:baseline;justify-content:center;gap:.26em;font-size:var(--fs)}
+.w{display:inline-block;font:800 1em/1.12 Mont;color:#fff;letter-spacing:.005em;-webkit-text-stroke:2px rgba(0,0,0,.5);paint-order:stroke fill;text-shadow:0 5px 16px rgba(0,0,0,.7),0 1px 3px rgba(0,0,0,.65);transform-origin:50% 80%}
+.w.hl{font:italic 900 1.52em/1.02 Frau;color:#EE2A22;-webkit-text-stroke:0;letter-spacing:0;text-shadow:0 6px 22px rgba(0,0,0,.85),0 2px 5px rgba(0,0,0,.8);padding:0 .04em}
+#chip{position:absolute;left:540px;top:1168px;transform:translate(-50%,-50%);display:flex;align-items:center;gap:22px;padding:14px 30px 14px 28px;border-radius:999px;background:rgba(12,12,12,.72);box-shadow:0 8px 28px rgba(0,0,0,.45);opacity:0}
+#num{font:900 58px/1 Mont;color:#fff;display:flex;align-items:baseline;overflow:hidden;white-space:nowrap}
+#num small{font:800 30px/1 Mont;color:rgba(255,255,255,.6);margin-left:6px}
+#bars{display:flex;align-items:center}
+.bar{width:64px;height:12px;border-radius:6px;background:rgba(255,255,255,.28)}
+.bar.on{background:#EE2A22}
+#fade{position:absolute;inset:0;background:#000;opacity:0}
+</style></head><body><div id="stage"><img id="bg"><div id="cap"><div id="blk"></div></div>
+<div id="chip"><div id="num"><span id="n">1</span><small>/3</small></div><div id="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
+<div id="fade"></div></div>
+<script src="data.js"></script><script>
+const D=window.DATA,bg=document.getElementById('bg'),blk=document.getElementById('blk'),chip=document.getElementById('chip');
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),oc=p=>1-Math.pow(1-p,3),ob=p=>{const c=1.9;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2)};
+const STRONG=[6.7333,8.5333,17.8333,21.5667,30.6];
+let cur=-1,els=[];
+function build(i){blk.innerHTML='';els=[];const c=D.chunks[i];const fs=c.hero?92:68;blk.style.setProperty('--fs',fs+'px');
+ for(const L of c.lines){const d=document.createElement('div');d.className='ln';for(const w of L){const s=document.createElement('span');s.className='w'+(w.hl?' hl':'');s.textContent=w.w;d.appendChild(s);els.push([s,w])}blk.appendChild(d)}
+ let mw=0;for(const d of blk.children)mw=Math.max(mw,d.getBoundingClientRect().width);if(mw>760)blk.style.setProperty("--fs",(fs*760/mw).toFixed(2)+'px')}
+window.setT=async function(t,frame){
+ if(frame){bg.src='frames/'+String(frame).padStart(4,'0')+'.jpg';await bg.decode()}
+ let z=1;for(const [a,b,z0,z1] of D.zooms)if(t>=a&&t<b){const p=(t-a)/(b-a);z=z0+(z1-z0)*(p*p*(3-2*p))}
+ for(const c of STRONG)if(t>=c&&t<c+0.3)z+=0.03*Math.pow(1-(t-c)/0.3,2);
+ bg.style.transform='scale('+z.toFixed(5)+')';
+ let i=-1;for(let k=0;k<D.chunks.length;k++){const c=D.chunks[k];if(t>=c.t0-0.03&&t<c.t1)i=k}
+ if(i!==cur){cur=i;if(i>=0)build(i);else{blk.innerHTML='';els=[]}}
+ for(const [s,w] of els){const p=cl((t-(w.s-0.03))/(w.hl?0.2:0.16));
+  if(p<=0){s.style.opacity=0;continue}
+  s.style.opacity=cl(p*3);
+  if(w.hl){const e=oc(p);s.style.transform='translateY('+((1-e)*10).toFixed(2)+'px) scale('+(1.2-0.2*e).toFixed(4)+')'}
+  else{const e=ob(p);s.style.transform='translateY('+((1-e)*24).toFixed(2)+'px) scale('+(0.92+0.08*e).toFixed(4)+')'}}
+ // chip
+ let ch=null;for(const c of D.chip)if(t>=c.t0&&t<c.t1)ch=c;
+ const c0=D.chip[0].t0,c1=D.chip[D.chip.length-1].t1;
+ if(t<c0-0.02||t>=c1){chip.style.opacity=0}else{
+  const pin=oc(cl((t-c0)/0.2)),pout=cl((c1-t)/0.18);chip.style.opacity=Math.min(pin,pout);
+  const n=ch?ch.n:1,bars=document.querySelectorAll('.bar'),num=document.getElementById('num');
+  let pop=1;if(ch&&ch.n<=3){const pp=cl((t-ch.t0)/0.18);pop=1.25-0.25*oc(pp)}
+  chip.style.transform='translate(-50%,-50%) translateY('+((1-pin)*26).toFixed(2)+'px)';
+  document.getElementById('n').textContent=Math.min(n,3);document.getElementById('n').style.display='inline-block';document.getElementById('n').style.transform='scale('+pop.toFixed(3)+')';
+  let m=0;if(ch&&ch.merge!==undefined)m=oc(cl((t-ch.merge)/0.35));
+  num.style.maxWidth=((1-m)*120).toFixed(1)+'px';num.style.opacity=(1-m);chip.style.gap=((1-m)*22)+'px';
+  bars.forEach((b,k)=>{b.className='bar'+(k<Math.min(n,3)?' on':'');b.style.marginLeft=k?((1-m)*10).toFixed(2)+'px':'0';const r=6;
+   b.style.borderRadius=(k==0?r:r*(1-m))+'px '+(k==2?r:r*(1-m))+'px '+(k==2?r:r*(1-m))+'px '+(k==0?r:r*(1-m))+'px'})}
+ document.getElementById('fade').style.opacity=cl((t-(D.dur-0.1))/0.1);
+ // bbox of visible text
+ let b=null;for(const [s] of els){if(+s.style.opacity<=0)continue;const r=s.getBoundingClientRect();b=b?[Math.min(b[0],r.left),Math.min(b[1],r.top),Math.max(b[2],r.right),Math.max(b[3],r.bottom)]:[r.left,r.top,r.right,r.bottom]}
+ if(+chip.style.opacity>0){const r=chip.getBoundingClientRect();b=b?[Math.min(b[0],r.left),Math.min(b[1],r.top),Math.max(b[2],r.right),Math.max(b[3],r.bottom)]:[r.left,r.top,r.right,r.bottom]}
+ return b};
+</script></body></html>

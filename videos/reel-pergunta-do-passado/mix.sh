@@ -1,0 +1,6 @@
+set -e
+VG=${1:-9.5}
+ev=( "0.30 Futurista_Click4 -19 0" "6.53 Whoosh_Swipe9 -12.8 0" "8.33 Whoosh_Fino6 -10.1 0" "11.14 Futurista_Click4 -19 0" "13.06 Futurista_Click4 -19 0" "15.48 Futurista_Click4 -19 0" "17.63 Whoosh_Swipe9 -12.8 0" "17.95 Riser_Ouro_Curto -21.4 0.6" "20.12 HUD_Pop-Up2 -10.9 0" "21.37 Whoosh_Fino6 -10.1 0" "26.68 HUD_Pop-Up2 -11.9 0" "30.40 Whoosh_Swipe9 -12.8 0" "32.54 Futurista_Click7 -19 0" "35.24 HUD_Pop-Up2 -12.9 0" "38.28 HUD_Pop-Up2 -11.9 0" )
+in="-i /tmp/claude-0/-home-user-borderline-sem-estigmas/31cfddec-dd90-51da-80b8-2752c8d43352/scratchpad/in/src.mov"; fc="[0:a]aresample=48000,highpass=f=70,acompressor=threshold=-22dB:ratio=3:attack=8:release=120:makeup=1,volume=${VG}dB[v];"; mixin="[v]"; n=1
+for e in "${ev[@]}"; do set -- $e; in="$in -ss $4 -i /home/user/borderline-sem-estigmas/memoria/sfx/editorpro/$2.mp3"; d=$(python3 -c "print(int($1*1000))"); fc="$fc[$n:a]aresample=48000,aformat=channel_layouts=stereo,volume=$3dB,afade=t=in:d=0.02,adelay=$d|$d[s$n];"; sfx="$sfx[s$n]"; n=$((n+1)); done
+ffmpeg -v error -y $in -filter_complex "$fc${sfx}amix=inputs=$((n-1)):normalize=0[fx];[v]aformat=channel_layouts=stereo[vs];[vs][fx]amix=inputs=2:normalize=0,alimiter=limit=-1.5dB:level=false:attack=3:release=60,atrim=0:41.2667[o]" -map "[o]" -ar 48000 mix.wav 2>&1 | head -5 || true
