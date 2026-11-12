@@ -23,18 +23,18 @@ def anton(size): return ImageFont.truetype(os.path.join(FD, 'Anton.ttf'), size)
 def mono(size): return ImageFont.truetype('/mnt/skills/examples/canvas-design/canvas-fonts/IBMPlexMono-Regular.ttf', size)
 
 # ---------------- timeline ----------------
-GAP0, GAP = 11.95, 3.60
+GAP0, GAP = 10.55, 3.60
 def nt(t): return t if t < GAP0 else t + GAP   # narration time -> output time
-SEG = [  # name, clip, ss, t0, t1, zoom0, zoom1, anchor_y
-    ('teto',  'c01', 0.40, 0.00, 4.10, 1.11, 1.17, 1.0),
-    ('fone',  'c08', 6.00, 4.10, 5.30, 1.00, 1.04, 0.5),
-    ('micro', 'c03', 6.00, 5.30, 6.85, 1.00, 1.05, 0.5),
-    ('bolo',  'c04', 0.50, 6.85, 9.05, 1.00, 1.05, 0.6),
-    ('crise', 'c09', 2.20, 9.05, 11.95, 1.04, 1.12, 0.35),
-    ('pai',   'c10', 9.20, 11.95, 15.55, 1.00, 1.03, 0.45),
-    ('louca', 'c07', 5.30, 15.55, 17.50, 1.00, 1.05, 0.3),
-    ('colagem', None, 0, 17.50, 29.00, 1, 1, .5),
-    ('sofa',  'c07', 0.40, 29.00, 31.00, 1.00, 1.04, 0.45),
+SEG = [
+    ('teto',  'c01', 0.40, 0.00, 3.40, 1.11, 1.17, 1.0),
+    ('fone',  'c08', 6.00, 3.40, 4.55, 1.00, 1.04, 0.5),
+    ('micro', 'c03', 6.00, 4.55, 5.70, 1.00, 1.05, 0.5),
+    ('bolo',  'c04', 0.50, 5.70, 7.85, 1.00, 1.05, 0.6),
+    ('crise', 'c09', 2.20, 7.85, 10.55, 1.04, 1.12, 0.35),
+    ('pai',   'c10', 9.20, 10.55, 14.15, 1.00, 1.03, 0.45),
+    ('sofa',  'c07', 0.40, 14.15, 16.30, 1.00, 1.04, 0.45),
+    ('colagem', None, 0, 16.30, 27.90, 1, 1, .5),
+    ('cta',   'c07', 10.08, 27.90, 31.00, 1.00, 1.05, 0.5),
 ]
 TOTAL = 31.0
 NF = int(TOTAL * FPS)
@@ -45,31 +45,24 @@ BIG = {  # scene -> list of (text, fontkind, size, color)
     'micro': [('TEM QUEM', 'm', 62, WHITE), ('ESPERA ACORDADA', 'a', 128, WHITE)],
     'bolo':  [('TEM DATA QUE PASSA', 'm', 62, WHITE), ('SEM NINGUÉM VER', 'a', 128, WHITE)],
     'crise': [('NA HORA DA CRISE', 'a', 128, WHITE), ('cada um faz o que consegue', 'm', 50, WHITE)],
-    'louca': [('QUEM CONVIVE', 'm', 62, WHITE), ('TAMBÉM CANSA', 'a', 150, WHITE)],
-    'sofa':  [('MANDA PRA QUEM', 'm', 62, WHITE), ('SEGURA A SUA CASA', 'a', 118, WHITE)],
+    'sofa':  [('DÁ PRA APRENDER', 'm', 62, WHITE), ('O QUE FAZER NESSA HORA', 'a', 110, WHITE)],
+    'cta':   [('PRA RECEBER, COMENTA', 'm', 62, WHITE)],
 }
-BIG_Y = {'teto': 250, 'fone': 250, 'micro': 250, 'bolo': 250, 'crise': 250, 'louca': 250, 'sofa': 430}
+BIG_Y = {'teto': 250, 'fone': 250, 'micro': 250, 'bolo': 250, 'crise': 250, 'sofa': 250, 'cta': 950}
 BIG_DELAY = {'teto': 0.0}
 
-WORDS = json.load(open(os.path.join(ROOT, 'words.json')))
+WORDS = json.load(open(os.path.join(ROOT, 'words3.json')))
 FIX = {'12': '12', '6': 'seis', 'para': 'pra'}
 caps = []  # (t0,t1,[ (word, tstart) ])
 def build_caps():
     ws = []
     for i, (a, b, w) in enumerate(WORDS):
-        if w == 'a' and abs(a - 20.76) < 0.05: continue
-        if w == 'para' and a > 25: w = 'pra'
-        if w == '6': w = 'seis'
-        if w == 'fone,': w = 'fone.'
-        if w == 'acordada,': w = 'acordada.'
-        if w == 'caiu': w = 'caiu,'
-        if w == 'pequeno': w = 'pequeno,'
         ws.append((nt(a), nt(b), w))
     # father lines (original clip audio)
-    ws += [(12.25, 12.6, 'Tô'), (12.6, 13.1, 'aqui.'), (14.45, 14.8, 'Me'), (14.8, 15.4, 'conta.')]
+    ws += [(10.85, 11.2, 'Tô'), (11.2, 11.7, 'aqui.'), (13.05, 13.4, 'Me'), (13.4, 14.0, 'conta.')]
     ws.sort()
     ws = [(a, b, 'Tem' if (w == 'tem' and ws[k-1][2].endswith('.')) else w) for k, (a, b, w) in enumerate(ws)]
-    sizes = [2,3,1,3,2,2,2,3,3,1,2,2,3,3,2,3,3, 2,2, 2,2,3,2,2,3,2,3,3,3,3,1,3,3,4]
+    sizes = [2,3,1,3,2,2,2,3,3,1,2,2,3,3,2,3,3, 2,2, 3,3,2, 2,2,3,3,2, 2,2, 2,3,2, 2,2,3,2, 2,3,1]
     assert sum(sizes) == len(ws), (sum(sizes), len(ws))
     i = 0
     for n in sizes:
@@ -218,10 +211,10 @@ def card(w, h, color, seed, rot=0, keyline=None):
 class Col:
     def __init__(s):
         s.bg = paper(CREAM, (W, H), 7, 7)
-        defs = [('k_mae.png', (0.00, 0.09, 0.55, 0.34), 5, -3.0, (60, 400), 0.55, 'L'),
-                ('k_irmao.png', (0.15, 0.20, 0.95, 0.563), 9, 2.2, (505, 425), 0.85, 'R'),
-                ('k_pai.png', (0.62, 0.185, 1.0, 0.357), 13, 2.6, (75, 740), 1.15, 'L'),
-                ('k_filha.png', (0.02, 0.215, 0.44, 0.405), 17, -2.2, (500, 760), 1.45, 'R')]
+        defs = [('k_mae.png', (0.00, 0.09, 0.55, 0.34), 5, -3.0, (60, 400), 0.50, 'L'),
+                ('k_irmao.png', (0.15, 0.20, 0.95, 0.563), 9, 2.2, (505, 425), 0.80, 'R'),
+                ('k_pai.png', (0.62, 0.185, 1.0, 0.357), 13, 2.6, (75, 740), 1.10, 'L'),
+                ('k_filha.png', (0.02, 0.215, 0.44, 0.405), 17, -2.2, (500, 760), 1.40, 'R')]
         s.cuts = []
         for (f, box, seed, rot, pos, t0, side) in defs:
             c = cutout(os.path.join(ROOT, f), box, 420, 338, seed, rot)
@@ -233,8 +226,8 @@ class Col:
         # icon
         ic = Image.open(ICON).convert('RGBA'); ic = ic.resize((176, int(176 * ic.height / ic.width)), Image.LANCZOS); s.icon = ic
         # title strip
-        f = anton(72); d = ImageDraw.Draw(Image.new('RGB', (10, 10)))
-        txt = 'ISSO JÁ FOI ESTUDADO'; bb = d.textbbox((0, 0), txt, font=f)
+        f = anton(88); d = ImageDraw.Draw(Image.new('RGB', (10, 10)))
+        txt = 'PROTOCOLO 7 DIAS'; bb = d.textbbox((0, 0), txt, font=f)
         tw, th = bb[2] - bb[0], bb[3] - bb[1]
         st = card(tw + 64, th + 52, INK, 21)
         ImageDraw.Draw(st).text((32 - bb[0], 26 - bb[1]), txt, font=f, fill=(246, 240, 228, 255))
@@ -246,42 +239,35 @@ class Col:
         CW, CH = 884, 252
         def base_card(seed):
             return card(CW - 16, CH - 16, (252, 248, 238), seed, keyline=INK)
-        # A
         a = base_card(31); d = ImageDraw.Draw(a)
-        d.text((40, 14), '12 SEMANAS', font=anton(128), fill=RED + (255,))
-        d.text((44, 178), 'programa para familiares', font=mont(40, 700), fill=INK + (255,))
+        d.text((40, 20), 'PRA QUEM MORA COM ALGUÉM', font=mont(44, 800), fill=INK + (255,))
+        d.text((40, 78), 'COM BORDERLINE', font=anton(124), fill=RED + (255,))
         s.cardA = a
-        # B is animated: base + bar drawn per frame
         s.cardB = base_card(32)
-        # C
         c = base_card(33); d = ImageDraw.Draw(c)
-        d.text((40, 22), 'ESTUDO PEQUENO', font=anton(96), fill=INK + (255,))
-        d.text((44, 142), '44 familiares, sem grupo de comparação', font=mont(34, 700), fill=INK + (255,))
-        d.text((44, 196), 'Hoffman et al., Family Process, 2005', font=mono(27), fill=(90, 84, 78, 255))
+        d.text((40, 20), 'A pessoa com borderline', font=mont(40, 700), fill=INK + (255,))
+        d.text((40, 70), 'NÃO PRECISA ASSISTIR', font=anton(74), fill=INK + (255,))
+        d.text((40, 152), 'NEM CONCORDAR', font=anton(74), fill=RED + (255,))
         s.cardC = c
         s.card_pos = (60, 1100)
         check((60, 1100, 60 + CW, 1100 + CH + 20), 'colagem:cartoes')
         s.tag = None
-        f = anton(50); tg = card(372, 80, RED, 41); ImageDraw.Draw(tg).text((22, 6), '6 MESES DEPOIS', font=f, fill=(250, 245, 233, 255))
+        f = anton(50); tg = card(418, 80, RED, 41); ImageDraw.Draw(tg).text((22, 6), 'FRASE DE PRESENÇA', font=f, fill=(250, 245, 233, 255))
         s.tag = tg.rotate(2.0, resample=Image.BICUBIC, expand=True)
 
     def cardB_frame(s, l):
         c = s.cardB.copy(); d = ImageDraw.Draw(c)
-        d.text((40, 20), 'SOBRECARGA', font=anton(76), fill=INK + (255,))
-        k = ease_out((l - 5.45) / 0.9)
-        full, small = 780, 400
-        wbar = full - (full - small) * k
-        y0 = 132
-        d.rectangle([40, y0, 40 + full, y0 + 44], outline=INK + (255,), width=3)
-        d.rectangle([40, y0, 40 + int(wbar), y0 + 44], fill=INK + (255,))
-        if k > 0.05:  # red arrow pointing left at the bar end
-            ax = 40 + int(wbar) + 14
-            d.polygon([(ax, y0 + 22), (ax + 30, y0 + 2), (ax + 30, y0 + 42)], fill=RED + (255,))
-            d.rectangle([ax + 28, y0 + 14, ax + 28 + int(60 * k), y0 + 30], fill=RED + (255,))
-        if l > 6.75:
-            a = ease_out((l - 6.75) / 0.25)
-            t = Image.new('RGBA', c.size, (0, 0, 0, 0)); ImageDraw.Draw(t).text((44, 190), 'e continuava menor', font=mont(38, 700), fill=INK + (int(255 * a),))
-            c.alpha_composite(t)
+        d.text((40, 16), 'UM PROCEDIMENTO POR DIA', font=anton(64), fill=INK + (255,))
+        f = anton(72)
+        for k in range(7):
+            tk = 4.35 + k * 0.13
+            if l < tk: break
+            sc = ease_back((l - tk) / 0.2)
+            cx = 40 + 52 + k * 114; cy = 160; r = int(48 * sc)
+            d.rounded_rectangle([cx - r, cy - r, cx + r, cy + r], radius=10, fill=INK + (255,))
+            if sc > 0.8:
+                t = str(k + 1); bb = d.textbbox((0, 0), t, font=f)
+                d.text((cx - (bb[2] + bb[0]) / 2, cy - (bb[3] + bb[1]) / 2), t, font=f, fill=(246, 240, 228, 255))
         return c
 
     def frame(s, l):
@@ -328,15 +314,15 @@ class Col:
             ci, pad = with_shadow(cardimg)
             if a < 1: ci.putalpha(ci.split()[3].point(lambda v: int(v * a)))
             fr.alpha_composite(ci, (s.card_pos[0] - pad, int(s.card_pos[1] - pad + 20 * (1 - a))))
-        put(s.cardA, 2.15, 4.75)
-        if 4.95 <= l <= 8.55: put(s.cardB_frame(l), 5.0, 8.2)
-        put(s.cardC, 8.45, 99)
-        if 6.45 < l < 8.45:
-            a = ease_out((l - 6.45) / 0.22)
-            if l > 8.2: a = 1 - ease_out((l - 8.2) / 0.25)
+        put(s.cardA, 1.75, 3.85)
+        if 4.0 <= l <= 7.95: put(s.cardB_frame(l), 4.05, 7.6)
+        put(s.cardC, 7.8, 99)
+        if 5.45 < l < 7.85:
+            a = ease_out((l - 5.45) / 0.22)
+            if l > 7.6: a = 1 - ease_out((l - 7.6) / 0.25)
             tg, pad = with_shadow(s.tag, (5, 8), 8, 0.3)
             if a < 1: tg.putalpha(tg.split()[3].point(lambda v: int(v * a)))
-            fr.alpha_composite(tg, (556 - pad, int(1272 - pad + 12 * (1 - a))))
+            fr.alpha_composite(tg, (506 - pad, int(1004 - pad + 12 * (1 - a))))
         return fr
 
 # ---------------- video base ----------------
@@ -357,20 +343,27 @@ def main():
     big_layers = {k: text_layer(v, BIG_Y[k], 'grande:' + k) for k, v in BIG.items()}
     # final-scene icon + handle
     ic = Image.open(ICON).convert('RGBA'); ic = ic.resize((150, int(150 * ic.height / ic.width)), Image.LANCZOS)
-    sofa_extra = Image.new('RGBA', (W, H), (0, 0, 0, 0)); sofa_extra.alpha_composite(ic, (60, 232))
-    hl = text_layer([('@drfabioschmidt', 'm', 40, WHITE)], 300, 'arroba');
+    sofa_extra = Image.new('RGBA', (W, H), (0, 0, 0, 0)); sofa_extra.alpha_composite(ic, (60, 172))
+    hl = text_layer([('@drfabioschmidt', 'm', 40, WHITE)], 240, 'arroba');
     tmp = Image.new('RGBA', (W, H), (0, 0, 0, 0)); tmp.paste(hl, (170, 0)); sofa_extra.alpha_composite(tmp)
-    check((60, 232, 60 + 150, 232 + ic.height), 'icone final')
+    check((60, 172, 60 + 150, 172 + ic.height), 'icone final')
+    # COMEÇAR block
+    f = anton(210); dd = ImageDraw.Draw(Image.new('RGB', (10, 10))); bb = dd.textbbox((0, 0), 'COMEÇAR', font=f)
+    cw, chh = bb[2] - bb[0] + 70, bb[3] - bb[1] + 60
+    blk = card(cw, chh, RED, 55); ImageDraw.Draw(blk).text((35 - bb[0], 30 - bb[1]), 'COMEÇAR', font=f, fill=(250, 245, 233, 255))
+    blk, bpad = with_shadow(blk, (8, 12), 14, 0.4)
+    CTA_POS = (60, 1040)
+    check((CTA_POS[0], CTA_POS[1] - 16, CTA_POS[0] + cw, CTA_POS[1] + chh), 'COMEÇAR')
     for gi in range(len(cap_spans)): cap_layer(gi, 1)
     if violations:
         print('FORA DA AREA SEGURA:', violations); sys.exit(1)
     print('area segura ok;', len(cap_spans), 'legendas')
     if PREVIEW:
-        os.makedirs(os.path.join(ROOT, 'prev'), exist_ok=True)
+        os.makedirs(os.path.join(ROOT, 'prev2'), exist_ok=True)
     out = None
     if not PREVIEW:
         out = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
-                                '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-maxrate', '6500k', '-bufsize', '13M', '-pix_fmt', 'yuv420p', os.path.join(ROOT, 'video.mp4')], stdin=subprocess.PIPE)
+                                '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-maxrate', '6500k', '-bufsize', '13M', '-pix_fmt', 'yuv420p', os.path.join(ROOT, 'video2.mp4')], stdin=subprocess.PIPE)
     want = set(int(float(x) * FPS) for x in sys.argv[2:]) if PREVIEW else None
     fi = 0
     for (name, clip, ss, t0, t1, z0, z1, ay) in SEG:
@@ -391,20 +384,25 @@ def main():
                     d0 = BIG_DELAY.get(name, 0.05)
                     a = ease_out((l - d0) / 0.2)
                     paste_fade(fr, big_layers[name], a, dy=22 * (1 - a))
-                if name == 'sofa':
-                    a = ease_out((l - 0.25) / 0.25); paste_fade(fr, sofa_extra, a)
+                if name == 'cta':
+                    a = ease_out((l - 0.2) / 0.25); paste_fade(fr, sofa_extra, a)
+                    if t >= 29.85:
+                        k = ease_back((t - 29.85) / 0.25); a2 = ease_out((t - 29.85) / 0.12)
+                        b2 = blk if a2 >= 1 else blk.copy()
+                        if a2 < 1: b2.putalpha(blk.split()[3].point(lambda v: int(v * a2)))
+                        fr.alpha_composite(b2, (CTA_POS[0] - bpad, int(CTA_POS[1] - bpad + 16 * (1 - k))))
             else:
                 fr = col.frame(l)
             draw_caption(fr, t)
             # white flash into/out of collage, fade to black at end
             if name == 'colagem' and l < 0.1:
                 fr = Image.blend(fr, Image.new('RGBA', (W, H), (255, 255, 255, 255)), 0.75 * (1 - l / 0.1))
-            if name == 'sofa' and l < 0.1:
+            if name == 'cta' and l < 0.1:
                 fr = Image.blend(fr, Image.new('RGBA', (W, H), (255, 255, 255, 255)), 0.75 * (1 - l / 0.1))
             if t > TOTAL - 0.1:
                 fr = Image.blend(fr, Image.new('RGBA', (W, H), (0, 0, 0, 255)), min(1, (t - (TOTAL - 0.1)) / 0.1))
             rgb = fr.convert('RGB')
-            if PREVIEW: rgb.resize((360, 640), Image.LANCZOS).save(os.path.join(ROOT, 'prev', f'f{f:04d}.jpg'), quality=85)
+            if PREVIEW: rgb.resize((360, 640), Image.LANCZOS).save(os.path.join(ROOT, 'prev2', f'f{f:04d}.jpg'), quality=85)
             else: out.stdin.write(rgb.tobytes())
         if rd: rd.kill()
         print(name, 'ok', flush=True)
