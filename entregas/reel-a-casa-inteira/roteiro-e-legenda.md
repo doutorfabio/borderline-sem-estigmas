@@ -43,3 +43,4 @@ Dr. Fabio Schmidt, médico, CRM-SP 183549.
 - Área segura conferida por código antes do render (5% laterais, 12% à direita, 20% embaixo), inclusive nas entradas animadas.
 - Efeitos da biblioteca `memoria/sfx/editorpro` (Whoosh_Swipe9, Shutter_Camera, HUD_Pop-Up2, Futurista_Click4), picos entre -21 e -25 dBFS antes do ganho final. Sem trilha.
 - Ícone: `entregas/icone-fabio/icone-fabio-2k.png`, feito da foto real `site-curso/foto-dr-fabio.jpg`.
+- Trilha: From Tension to Hope (Suno, dele, 12/11). Usados os primeiros 27,95 s, esticados para 31 s (atempo 0,90). Fica de 8 a 20 dB abaixo da voz; mais baixa na fala do pai; sobe no acorde final sob o COMEÇAR.
