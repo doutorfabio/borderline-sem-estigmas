@@ -5,7 +5,7 @@
 #vid img{width:100%;height:100%;object-fit:cover;display:block}
 </style></head><body><script src="../colagem-base/base.js"></script><script>document.write(GRAIN)</script>
 <div id="head" class="abs"><div class="b txt">Borderline</div><div class="l txt">a compulsão</div><div class="l txt">funciona.</div><div class="l txt">por isso repete.</div></div>
-<div id="vid" class="abs"><img id="vf"></div>
+<div id="vid" class="abs"><div style="width:100%;height:100%;overflow:hidden"><img id="vf"></div></div>
 <div id="o1" class="abs cut" style="left:90px;top:960px;width:300px;height:274px;background-image:url(assets/obj1.png)"></div>
 <div id="o2" class="abs cut" style="left:400px;top:900px;width:300px;height:338px;background-image:url(assets/obj2.png)"></div>
 <div id="o3" class="abs cut" style="left:735px;top:900px;width:170px;height:338px;background-image:url(assets/obj3.png)"></div>
@@ -50,11 +50,12 @@ window.seek=function(t){
  v.style.opacity=on>0?1:0;v.style.transform=`rotate(${t<T.vin?2.5:-2}deg) scale(${lerp(.6,1,t<T.vin?on:back(b))})`;
  const E=t>=T.vin;v.style.left=(E?240:300)+'px';v.style.top=(E?528:768)+'px';v.style.width=(E?560:500)+'px';v.style.height=(E?672:590)+'px';
  const f=t<T.vin?Math.min(96,Math.floor(t*30)+1):Math.min(63,Math.max(1,Math.floor((t-T.vin)*30)+1));
+ $('vf').style.transform=`scale(${t<T.vin?lerp(1,1.07,pr(t,0,2.8)):lerp(1.07,1,pr(t,T.vin,3.2))})`;
  $('vf').src='assets/'+(t<T.vin?'fa/':'fb/')+pad(f)+'.jpg';
  // objetos
  ['o1','o2','o3'].forEach((id,i)=>{const e=$(id);const o=eo(pr(t,T.out,.4));pop(e,t,T.obj[i],[-6,4,7][i]);if(o>0){e.style.opacity=1-o;e.style.transform=`translateY(${-50*o}px) rotate(${[-6,4,7][i]}deg) scale(${lerp(1,.8,o)})`}});
  // cartão
- cardIn(t,T.card);const co=eo(pr(t,T.cout,.35));if(co>0){const c=$('card');c.style.opacity=1-co;c.style.transform=`translateY(${-40*co}px) rotate(-1.2deg) scale(${lerp(1,.88,co)})`}
+ cardIn(t,T.card);const co=eo(pr(t,T.cout,.35));if(co>0){const c=$('card');c.style.opacity=1-co;c.style.transform+=` translateY(${-40*co}px) scale(${lerp(1,.88,co)})`}
  draw(al,eo(pr(t,T.rise,T.fall-T.rise-.3))*pk+eio(pr(t,T.fall,T.fallEnd-T.fall))*(1-pk));al.style.opacity=t>=T.rise?1:0;
  draw(cu,eio(pr(t,T.culpa,T.culpaEnd-T.culpa)));cu.style.opacity=t>=T.culpa?1:0;
  const lp=eio(pr(t,T.loop,T.loopEnd-T.loop));lo.style.opacity=lp>0?1:0;lo.style.clipPath=`inset(0 0 0 ${100-100*lp}%)`;

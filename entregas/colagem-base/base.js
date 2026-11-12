@@ -5,9 +5,11 @@ const pr=(t,a,d)=>cl((t-a)/d);
 const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 const back=x=>{const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
 const lerp=(a,b,x)=>a+(b-a)*x;
-function pop(el,t,a,rot=0){const p=pr(t,a,.28);el.style.opacity=p>0?1:0;el.style.transform=`rotate(${rot}deg) scale(${p>0?lerp(.55,1,back(p)):0})`}
+function pop(el,t,a,rot=0){const p=pr(t,a,.28);const z=el.classList&&el.classList.contains('ptag')&&el.parentElement.id==='card'?64:0;el.style.opacity=p>0?1:0;el.style.transform=`translateZ(${z}px) rotate(${rot}deg) scale(${p>0?lerp(.55,1,back(p)):0})`}
 function draw(path,frac){const L=path.getTotalLength();path.style.strokeDasharray=L;path.style.strokeDashoffset=L*(1-cl(frac))}
-function cardIn(t,a){const c=$('card');const ci=eo(pr(t,a,.55));c.style.opacity=cl(ci*1.6);c.style.transform=`translateY(${lerp(40,0,ci)}px) rotate(${lerp(-4,-1.2,ci)}deg) scale(${lerp(.9,1,ci)})`}
+// cartão em 3D: giro lento e zoom leve contínuo (entra e sai), pedido dele em 12/11
+function card3d(u){return `rotateY(${7*Math.sin(u*.55)}deg) rotateX(${3+3.5*Math.cos(u*.43)}deg) scale(${.925+.055*(.5-.5*Math.cos(u*.5))})`}
+function cardIn(t,a){const c=$('card');const ci=eo(pr(t,a,.55));c.style.opacity=cl(ci*1.6);c.style.transform=`perspective(1500px) translateY(${lerp(40,0,ci)}px) rotate(${lerp(-4,-1.2,ci)}deg) ${card3d(Math.max(0,t-a))} scale(${lerp(.9,1,ci)})`}
 function headShrink(t,a){$('head').style.transform=`scale(${lerp(1,.5,eio(pr(t,a,.55)))})`}
 function cta(t,a){const ct=$('cta');const cp=pr(t,a,.32);ct.style.opacity=cp>0?1:0;ct.style.transform=`rotate(-1.5deg) scaleX(${lerp(.2,1,eo(cp))}) scale(${1+.012*Math.sin((t-a)*5)*(cp>=1)})`;$('cred').style.opacity=pr(t,a,.3)}
 function speaker(t,W,G,HI,REAL){ // legenda de até 3 palavras + ícone que pulsa quando há fala
