@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#0a0a0a">
-<title>Lojinha TPB | Dr. Fabio Schmidt</title>
+<title>Loja Borderline Sem Estigma | Dr. Fabio Schmidt</title>
 <meta name="description" content="Materiais para quem vive com TPB e para quem convive. Curso, guias clínicos, livro e materiais gratuitos do Dr. Fabio Schmidt, médico, CRM-SP 183549.">
 <link rel="canonical" href="https://drfabioschmidt.net/loja/">
 
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Dr. Fabio Schmidt">
-<meta property="og:title" content="Lojinha TPB">
+<meta property="og:title" content="Loja Borderline Sem Estigma">
 <meta property="og:description" content="Materiais para quem vive com TPB e para quem convive.">
 <meta property="og:url" content="https://drfabioschmidt.net/loja/">
 <meta property="og:image" content="https://drfabioschmidt.net/loja/capas/og-loja.jpg">
@@ -21,7 +21,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Prateleira com os materiais do Dr. Fabio Schmidt sobre transtorno de personalidade borderline">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Lojinha TPB">
+<meta name="twitter:title" content="Loja Borderline Sem Estigma">
 <meta name="twitter:description" content="Materiais para quem vive com TPB e para quem convive.">
 <meta name="twitter:image" content="https://drfabioschmidt.net/loja/capas/og-loja.jpg">
 
@@ -43,7 +43,12 @@ document.documentElement.className='js';
    - para (opcional): para quem é, na etiqueta do cartão.
    - quem:   'familia', 'tpb' ou 'todos'. É o que o filtro do topo usa.
              'todos' aparece nas duas abas.
-   - formato (opcional): 'caixa' (curso), 'livro' ou 'guia' (mais fino).
+   - formato: a cara do material na vitrine.
+             'curso' = tela com botão de play
+             'livro' = livro com lombada
+             'guia'  = folha com canto dobrado
+             'pdf'   = a mesma folha, com o selo PDF
+             'app'   = celular
    - corAcento: cor da capa em CSS, da luz do cartão e do fundo da janela.
    - seguranca: true mostra o bloco 188 / 192 na janela.
    - botao (opcional): texto do botão nos gratuitos. Padrão: Baixar grátis.
@@ -80,7 +85,7 @@ var PRODUTOS = [
     video: 'videos/protocolo-7-dias.mp4',
     poster: 'videos/protocolo-7-dias.jpg',
     corAcento: '#e9e1d6',
-    formato: 'caixa',
+    formato: 'curso',
     seguranca: false,
     gratuito: false
   },
@@ -170,7 +175,7 @@ var PRODUTOS = [
     video: '',
     poster: '',
     corAcento: '#2f5a55',
-    formato: 'guia',
+    formato: 'pdf',
     seguranca: false,
     gratuito: true
   },
@@ -216,7 +221,7 @@ var PRODUTOS = [
     video: 'videos/radar-de-crise.mp4',
     poster: 'videos/radar-de-crise.jpg',
     corAcento: '#0f2a22',
-    formato: 'guia',
+    formato: 'app',
     seguranca: true,
     gratuito: true
   }
@@ -277,8 +282,7 @@ nav a.cta:hover{background:rgba(245,240,235,.1);border-color:var(--dim)}
 /* ---------- TOPO DA LOJA ---------- */
 .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
 .intro{padding:clamp(18px,4.4vw,60px) 0 clamp(4px,1.4vw,14px)}
-.intro .eyebrow{display:block;font-size:.76rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2);margin-bottom:12px}
-.intro h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(44px,8.4vw,96px);line-height:.95;letter-spacing:-.035em}
+.intro h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(42px,7.4vw,88px);line-height:.98;letter-spacing:-.035em}
 .intro p{margin-top:14px;font-size:clamp(17px,1.6vw,20px);color:rgba(245,240,235,.88);max-width:34ch;line-height:1.5}
 
 /* ---------- FILTRO: abas de vidro ---------- */
@@ -325,12 +329,9 @@ nav a.cta:hover{background:rgba(245,240,235,.1);border-color:var(--dim)}
 .base::after{content:"";position:absolute;left:8%;right:8%;top:100%;height:34px;background:radial-gradient(closest-side,rgba(245,240,235,.07),transparent);pointer-events:none}
 
 .livro{--d:16px;position:relative;flex:none;height:var(--h,212px);aspect-ratio:2/3;transform-style:preserve-3d;transform:rotateY(calc(20deg + var(--giro,0deg)));transition:transform .5s var(--ease);will-change:transform;border-radius:2px 4px 4px 2px}
-.livro[data-formato="guia"]{--d:9px}
 .livro[data-formato="livro"]{--d:18px}
-.livro[data-formato="caixa"]{--d:26px;aspect-ratio:3/4}
 .livro:focus-visible{outline-offset:6px}
 .lombada{position:absolute;top:0;bottom:0;right:100%;width:var(--d);transform-origin:right center;transform:rotateY(-90deg);background:var(--a);filter:brightness(.62);border-radius:2px 0 0 2px;box-shadow:inset -3px 0 6px rgba(0,0,0,.35),inset 2px 0 0 rgba(255,255,255,.08)}
-.livro[data-formato="caixa"] .lombada{filter:brightness(.55)}
 .livro:active{transform:translateY(-4px) rotateY(14deg)}
 .livro.saiu{visibility:hidden}
 .trilho.rola .livro{transition:none}
@@ -346,10 +347,52 @@ nav a.cta:hover{background:rgba(245,240,235,.1);border-color:var(--dim)}
 .capa .k{position:relative;font-size:8px;font-size:5.3cqw;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.8;line-height:1.35;padding:2% 0 7%;border-bottom:1px solid rgba(127,127,127,.4)}
 .capa .t{position:relative;font-family:'Fraunces',serif;font-weight:300;font-size:18px;font-size:13cqw;line-height:1.05;letter-spacing:-.02em;margin:auto 0;padding:8% 0}
 .capa .a{position:relative;font-family:'Fraunces',serif;font-style:italic;font-size:9px;font-size:6.2cqw;font-weight:400;opacity:.85;padding-bottom:2%}
-.livro[data-formato="caixa"] .capa .t,.m-capa[data-formato="caixa"] .capa .t{font-size:14.5cqw}
+
+/* ---------- FORMATOS: cada material com a cara do que é ---------- */
+.x-play,.x-barra,.x-dobra,.x-pdf,.x-fone{position:absolute;z-index:4;pointer-events:none}
+.livro:not([data-formato="livro"]){transform:rotateY(calc(11deg + var(--giro,0deg)))}
+:not([data-formato="livro"])>.lombada{display:none}
+
+/* curso: tela com play e barra de vídeo */
+[data-formato="curso"]{aspect-ratio:3/4}
+.livro[data-formato="curso"],[data-formato="curso"] .capa{border-radius:9%/6.75%}
+[data-formato="curso"] .capa{border:5px solid #171614;padding:12% 11% 15%;box-shadow:0 0 0 1px rgba(245,240,235,.24),0 18px 30px -12px rgba(0,0,0,.8)}
+[data-formato="curso"] .capa::before{background:linear-gradient(125deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 36%)}
+[data-formato="curso"] .capa::after{display:none}
+[data-formato="curso"] .capa .t{margin:0;padding:9% 0 0;font-size:19px;font-size:14cqw}
+[data-formato="curso"] .capa .a{margin-top:auto}
+.x-play{left:50%;top:60%;width:44px;height:44px;width:31cqw;height:31cqw;transform:translate(-50%,-50%);border-radius:50%;background:rgba(12,11,10,.62);border:1px solid rgba(255,255,255,.6);display:grid;place-items:center;box-shadow:0 8px 18px -6px rgba(0,0,0,.7)}
+.x-play svg{width:38%;height:38%;margin-left:8%;fill:#fff}
+.x-barra{left:10%;right:10%;bottom:6.5%;height:3px;border-radius:99px;background:rgba(127,127,127,.4)}
+.x-barra::before{content:"";position:absolute;left:0;top:0;bottom:0;width:34%;border-radius:99px;background:var(--red)}
+
+/* guia e pdf: folha com canto dobrado e outra folha atrás */
+[data-formato="guia"],[data-formato="pdf"]{aspect-ratio:5/7}
+.livro[data-formato="guia"],.livro[data-formato="pdf"]{border-radius:2px}
+[data-formato="guia"]::before,[data-formato="pdf"]::before{content:"";position:absolute;inset:0;border-radius:2px;background:var(--a);filter:brightness(.6);transform:translate(5.5%,2.2%) rotate(2.4deg);box-shadow:0 16px 24px -10px rgba(0,0,0,.85)}
+[data-formato="guia"] .capa,[data-formato="pdf"] .capa{border-radius:2px;padding:12% 12% 10%;box-shadow:none;clip-path:polygon(0 0,80% 0,100% 14.3%,100% 100%,0 100%)}
+[data-formato="guia"] .capa::before,[data-formato="pdf"] .capa::before{background:linear-gradient(170deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 45%,rgba(0,0,0,.12) 100%)}
+[data-formato="guia"] .capa::after,[data-formato="pdf"] .capa::after{display:none}
+[data-formato="guia"] .capa .k,[data-formato="pdf"] .capa .k{padding-right:16%}
+.x-dobra{top:0;right:0;width:20%;height:14.3%;background:linear-gradient(to top right,rgba(255,255,255,.42) 50%,transparent 50.5%);background:linear-gradient(to top right,color-mix(in srgb,var(--a) 58%,#fff) 50%,transparent 50.5%);filter:drop-shadow(-2px 3px 3px rgba(0,0,0,.35))}
+.x-pdf{right:9%;bottom:7%;padding:.25em .5em;border-radius:3px;background:var(--red);color:#fff;font-size:9px;font-size:6.6cqw;font-weight:600;letter-spacing:.06em;line-height:1.2}
+[data-formato="pdf"] .capa .a{padding-right:34%}
+
+/* app: celular */
+[data-formato="app"]{aspect-ratio:9/17}
+.livro[data-formato="app"],[data-formato="app"] .capa{border-radius:17%/9%}
+[data-formato="app"] .capa{border:4px solid #171614;padding:24% 11% 14%;box-shadow:0 0 0 1px rgba(245,240,235,.26),0 18px 30px -12px rgba(0,0,0,.8)}
+[data-formato="app"] .capa::before{background:linear-gradient(125deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 34%)}
+[data-formato="app"] .capa::after{display:none}
+[data-formato="app"] .capa .t{font-size:15px;font-size:15cqw}
+[data-formato="app"] .capa .k{font-size:7px;font-size:6.4cqw}
+.x-fone{top:4%;left:50%;width:30%;height:3.4%;transform:translateX(-50%);border-radius:99px;background:#0c0b0a}
+.l-capa [data-formato="curso"] .capa,.l-capa [data-formato="app"] .capa{border-width:3px}
+
+.ico{flex:none;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 .c-texto{position:relative;flex:1;display:flex;flex-direction:column;padding-top:20px}
-.c-tipo{font-size:.82rem;color:var(--muted)}
+.c-tipo{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;color:var(--muted)}
 .cartao h3,.linha h3{font-family:'Fraunces',serif;font-weight:400;font-size:1.5rem;line-height:1.1;letter-spacing:-.02em;margin-top:4px}
 .c-texto p{margin-top:9px;font-size:.98rem;line-height:1.45;color:rgba(245,240,235,.82)}
 .c-acao{position:relative;margin-top:18px;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 14px}
@@ -365,10 +408,11 @@ nav a.cta:hover{background:rgba(245,240,235,.1);border-color:var(--dim)}
 
 /* ---------- GRATUITOS: lista de vidro ---------- */
 .lista{position:relative;margin-top:18px;border-radius:26px;border:1px solid rgba(245,240,235,.13);background:linear-gradient(180deg,rgba(245,240,235,.07),rgba(245,240,235,.03));box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 34px 60px -40px #000;overflow:hidden}
-.linha{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"capa texto" "capa botao";align-items:center;gap:12px 18px;padding:20px 18px 20px 26px}
+.linha{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"capa texto" "capa botao";align-items:center;gap:12px 16px;padding:20px 18px 20px 16px}
 .linha+.linha{border-top:1px solid var(--line)}
-.l-capa{grid-area:capa;perspective:700px;display:flex;padding-left:6px}
-.l-capa .livro{--h:112px;--d:7px}
+.l-capa{grid-area:capa;perspective:700px;display:flex}
+.l-capa{min-width:84px;justify-content:center}
+.l-capa .livro{--h:112px}
 .l-capa .livro[data-formato="livro"]{--d:11px}
 .l-texto{grid-area:texto;min-width:0}
 .linha h3{font-size:1.3rem;margin-top:2px}
@@ -404,12 +448,13 @@ nav a.cta:hover{background:rgba(245,240,235,.1);border-color:var(--dim)}
 .m-midia.tem-video{max-height:60vh}
 .m-midia::after{content:"";position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(to bottom,transparent,rgba(12,11,10,.7));pointer-events:none;z-index:3}
 .m-capa{position:relative;height:72%;aspect-ratio:2/3;border-radius:3px 6px 6px 3px;z-index:1}
-.m-capa[data-formato="caixa"]{aspect-ratio:3/4;height:66%}
+.m-capa[data-formato="curso"]{height:66%}
+.m-capa[data-formato="guia"],.m-capa[data-formato="pdf"]{height:68%}
 .m-capa .capa{box-shadow:0 30px 60px -18px rgba(0,0,0,.9),0 4px 10px rgba(0,0,0,.5)}
 .m-midia video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity .6s}
 .m-midia video.tocando{opacity:1}
 .m-info{padding:24px var(--gutter) 32px;display:flex;flex-direction:column;gap:22px}
-.m-tag{font-size:.84rem;color:var(--muted)}
+.m-tag{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;color:var(--muted)}
 .m-info h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,6vw,42px);line-height:1.04;letter-spacing:-.025em;margin-top:6px}
 .m-sub{font-size:1.04rem;color:rgba(245,240,235,.84);line-height:1.5;margin-top:10px;max-width:46ch}
 .m-bloco h3{font-size:.86rem;font-weight:600;color:var(--ouro);margin-bottom:8px}
@@ -454,13 +499,13 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
   .trilho[data-n="1"]{grid-template-columns:minmax(0,330px)}
   .cartao{flex:none}
   .pontos{display:none}
-  .linha{grid-template-columns:auto 1fr auto;grid-template-areas:"capa texto botao";padding:22px 28px 22px 34px;gap:12px 26px}
+  .linha{grid-template-columns:auto 1fr auto;grid-template-areas:"capa texto botao";padding:22px 28px 22px 26px;gap:12px 24px}
   .linha .btn{justify-self:end}
 }
 @media (min-width:900px){
   .intro{display:grid;grid-template-columns:1fr auto;column-gap:40px;align-items:end}
-  .intro>.eyebrow,.intro>h1,.intro>p{grid-column:1}
-  .filtro{grid-column:2;grid-row:1/span 3;align-self:end;margin-top:0}
+  .intro>h1,.intro>p{grid-column:1}
+  .filtro{grid-column:2;grid-row:1/span 2;align-self:end;margin-top:0}
   .trilho{grid-template-columns:repeat(4,minmax(0,1fr));justify-content:normal;padding-top:26px}
   .trilho[data-n="3"]{grid-template-columns:repeat(3,minmax(0,300px));justify-content:center}
   .trilho[data-n="2"]{grid-template-columns:repeat(2,minmax(0,300px));justify-content:center}
@@ -510,11 +555,10 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
 <main>
   <div class="wrap">
     <section class="intro">
-      <span class="eyebrow surge">Loja · Borderline Sem Estigma</span>
-      <h1 class="surge" style="--i:1">Lojinha TPB</h1>
-      <p class="surge" style="--i:2">Materiais para quem vive com TPB e para quem convive.</p>
+      <h1 class="surge">Loja Borderline<br>Sem Estigma</h1>
+      <p class="surge" style="--i:1">Materiais para quem vive com TPB e para quem convive.</p>
 
-      <div class="filtro surge" style="--i:3">
+      <div class="filtro surge" style="--i:2">
         <span class="filtro-rot" id="f-rot">Para quem é o material?</span>
         <div class="abas" id="abas" role="group" aria-labelledby="f-rot">
           <span class="aba-vidro" aria-hidden="true"></span>
@@ -527,7 +571,7 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
 
     <section class="sec" aria-labelledby="t-pagos">
       <div class="luz" aria-hidden="true"></div>
-      <div class="sec-head surge" style="--i:4">
+      <div class="sec-head surge" style="--i:3">
         <h2 id="t-pagos">Na prateleira</h2>
         <span id="n-pagos" aria-live="polite"></span>
       </div>
@@ -623,6 +667,24 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
     }catch(e){return url;}
   }
 
+  /* ---------- formato: curso, livro, guia, pdf ou app ---------- */
+  function fmt(p){var f=p.formato||'livro';return f==='caixa'?'curso':f;}
+  var ICONES={
+    curso:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9.5v5l4.5-2.5z"/>',
+    livro:'<path d="M5 4.5h11a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+    guia:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>',
+    app:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>'
+  };
+  ICONES.pdf=ICONES.guia;
+  function icone(p){return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'+(ICONES[fmt(p)]||ICONES.livro)+'</svg>';}
+  function extras(f){
+    if(f==='curso')return '<span class="x-play"><svg viewBox="0 0 24 24"><path d="M6 3.5v17L21 12z"/></svg></span><span class="x-barra"></span>';
+    if(f==='guia')return '<span class="x-dobra"></span>';
+    if(f==='pdf')return '<span class="x-dobra"></span><span class="x-pdf">PDF</span>';
+    if(f==='app')return '<span class="x-fone"></span>';
+    return '';
+  }
+
   /* ---------- capa ---------- */
   function capaHTML(p,lazy){
     var pt=partes(p.nome);
@@ -630,13 +692,13 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
     return '<div class="capa">'+
       '<span class="k">'+esc(p.rotulo||pt.k||'Borderline')+'</span>'+
       '<span class="t">'+esc(pt.t)+'</span>'+
-      '<span class="a">Dr. Fabio Schmidt</span>'+img+
+      '<span class="a">Dr. Fabio Schmidt</span>'+img+extras(fmt(p))+
     '</div>';
   }
   function livroHTML(p,lazy){
     var a=p.corAcento||'#333';
     var rotulo=p.nome+(p.gratuito?', grátis':', '+p.preco)+'. Abrir detalhes';
-    return '<button type="button" class="livro" data-id="'+esc(p.id)+'" data-formato="'+esc(p.formato||'livro')+'" style="--a:'+a+';--t:'+corTexto(a)+'" aria-label="'+esc(rotulo)+'" aria-haspopup="dialog">'+
+    return '<button type="button" class="livro" data-id="'+esc(p.id)+'" data-formato="'+esc(fmt(p))+'" style="--a:'+a+';--t:'+corTexto(a)+'" aria-label="'+esc(rotulo)+'" aria-haspopup="dialog">'+
       '<span class="lombada" aria-hidden="true"></span>'+capaHTML(p,lazy)+'</button>';
   }
 
@@ -684,7 +746,7 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
         (p.para?'<span class="c-quem">'+esc(p.para)+'</span>':'')+
         '<div class="c-palco">'+livroHTML(p,i>1)+'<span class="base" aria-hidden="true"></span></div>'+
         '<div class="c-texto">'+
-          (p.rotulo?'<span class="c-tipo">'+esc(p.rotulo)+'</span>':'')+
+          (p.rotulo?'<span class="c-tipo">'+icone(p)+esc(p.rotulo)+'</span>':'')+
           '<h3>'+esc(pt.t)+'</h3>'+
           (p.subtitulo?'<p>'+esc(p.subtitulo)+'</p>':'')+
         '</div>'+
@@ -708,7 +770,7 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
       var pt=partes(p.nome),tipo=[p.rotulo,p.para].filter(Boolean).join(' · ');
       g+='<article class="linha">'+
         '<div class="l-capa">'+livroHTML(p,true)+'</div>'+
-        '<div class="l-texto">'+(tipo?'<span class="c-tipo">'+esc(tipo)+'</span>':'')+
+        '<div class="l-texto">'+(tipo?'<span class="c-tipo">'+icone(p)+esc(tipo)+'</span>':'')+
           '<h3>'+esc(pt.t)+'</h3>'+(p.subtitulo?'<p>'+esc(p.subtitulo)+'</p>':'')+'</div>'+
         '<a class="btn free" href="'+esc(p.link)+'" target="_blank" rel="noopener">'+esc(p.botao||'Baixar grátis')+'<span class="sr"> '+esc(pt.t)+' (abre em nova aba)</span></a>'+
       '</article>';
@@ -814,10 +876,10 @@ footer{position:relative;margin-top:clamp(56px,9vw,110px);padding:44px var(--gut
   function conteudoHTML(p){
     var a=p.corAcento||'#333',pt=partes(p.nome);
     var h='<div class="m-midia'+(p.video?' tem-video':'')+'" style="--a2:'+a+'66">'+
-      '<div class="m-capa" data-formato="'+esc(p.formato||'livro')+'" style="--a:'+a+';--t:'+corTexto(a)+'">'+capaHTML(p,false)+'</div>'+
+      '<div class="m-capa" data-formato="'+esc(fmt(p))+'" style="--a:'+a+';--t:'+corTexto(a)+'">'+capaHTML(p,false)+'</div>'+
       (p.video?'<video muted loop playsinline preload="none" aria-hidden="true"'+(p.poster?' poster="'+esc(p.poster)+'"':'')+'></video>':'')+
     '</div><div class="m-info">';
-    h+='<div><span class="m-tag">'+(p.gratuito?'Material gratuito':esc(pt.k||p.rotulo||'Dr. Fabio Schmidt'))+'</span>'+
+    h+='<div><span class="m-tag">'+icone(p)+(p.gratuito?'Material gratuito':esc(pt.k||p.rotulo||'Dr. Fabio Schmidt'))+'</span>'+
        '<h2 id="m-titulo">'+esc(pt.t)+'</h2>'+
        (p.subtitulo?'<p class="m-sub">'+esc(p.subtitulo)+'</p>':'')+'</div>';
     if(p.publico)h+='<div class="m-bloco"><h3>Para quem é</h3><p>'+esc(p.publico)+'</p></div>';
