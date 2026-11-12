@@ -17,7 +17,9 @@
   <g class="ax" text-anchor="middle"><text class="txt" x="235" y="556">NA HORA</text><text class="txt" x="460" y="556">MINUTOS</text><text class="txt" x="730" y="556">DEPOIS</text></g>
   <path id="al" d="M165 495 C190 495 200 150 235 150 C275 150 300 440 430 492" stroke="#161413" stroke-width="11" fill="none" stroke-linecap="round"/>
   <path id="cu" d="M330 495 C420 495 470 215 590 198 C680 186 760 184 825 182" stroke="#CC0000" stroke-width="12" fill="none" stroke-linecap="round"/>
-  <path id="lo" d="M822 150 C700 30 430 26 262 112" stroke="#CC0000" stroke-width="7" fill="none" stroke-dasharray="14 12" marker-end="url(#ah)"/>
+  <mask id="mk" maskUnits="userSpaceOnUse" x="0" y="0" width="880" height="648"><path id="lm" d="M822 150 C700 30 430 26 262 112" stroke="#fff" stroke-width="34" fill="none"/></mask>
+  <path id="lo" d="M822 150 C700 30 430 26 262 112" stroke="#CC0000" stroke-width="7" fill="none" stroke-dasharray="14 12" mask="url(#mk)"/>
+  <polygon id="la" points="232,128 272,131 252,93" fill="#CC0000"/>
   <text id="foot" class="foot txt" x="150" y="626">Critério do DSM-5-TR. Sozinho, não fecha diagnóstico.</text>
  </svg>
  <div id="ta" class="ptag s txt" style="left:300px;top:150px">ALÍVIO<em>dura minutos</em></div>
@@ -58,11 +60,11 @@ window.seek=function(t){
  cardIn(t,T.card);const co=eo(pr(t,T.cout,.35));if(co>0){const c=$('card');c.style.opacity=1-co;c.style.transform+=` translateY(${-40*co}px) scale(${lerp(1,.88,co)})`}
  draw(al,eo(pr(t,T.rise,T.fall-T.rise-.3))*pk+eio(pr(t,T.fall,T.fallEnd-T.fall))*(1-pk));al.style.opacity=t>=T.rise?1:0;
  draw(cu,eio(pr(t,T.culpa,T.culpaEnd-T.culpa)));cu.style.opacity=t>=T.culpa?1:0;
- const lp=eio(pr(t,T.loop,T.loopEnd-T.loop));lo.style.opacity=lp>0?1:0;lo.style.clipPath=`inset(0 0 0 ${100-100*lp}%)`;
+ const lp=eio(pr(t,T.loop,T.loopEnd-T.loop));lo.style.opacity=lp>0?1:0;draw($('lm'),lp);$('la').style.opacity=lp>=.97?1:0;
  pop($('ta'),t,T.fall+.4,-3);pop($('tc'),t,T.culpaEnd-.2,2);pop($('tn'),t,T.novo,-2);
  pop($('tf'),t,T.falta,-2);$('rk').style.width=`calc(${100*eo(pr(t,T.imp-.1,.3))}% - 16px)`;pop($('ti'),t,T.imp,2);
  pop($('tb'),t,T.bronca,3);cu.style.strokeWidth=12+7*Math.sin(Math.PI*pr(t,T.bronca,1.2));
- const q=pr(t,T.quebra,.5);if(q>0){lo.style.opacity=lerp(1,.15,q);$('tn').style.opacity=lerp(1,.25,q)}else{const pu=Math.sin(Math.PI*pr(t,T.prox,.7));lo.style.strokeWidth=7+5*pu}
+ const q=pr(t,T.quebra,.5);if(q>0){lo.style.opacity=lerp(1,.15,q);$('la').style.opacity=lerp(1,.15,q);$('tn').style.opacity=lerp(1,.25,q)}else{const pu=Math.sin(Math.PI*pr(t,T.prox,.7));lo.style.strokeWidth=7+5*pu}
  pop($('tq'),t,T.outro,-3);
  $('foot').style.opacity=pr(t,T.card+.6,.3);
  cta(t,T.cta);speaker(t,W,G,HI);
