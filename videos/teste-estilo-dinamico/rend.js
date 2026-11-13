@@ -1,0 +1,4 @@
+const {chromium}=require('/opt/node-tools/node_modules/playwright');const path=require('path');const fs=require('fs');
+(async()=>{const b=await chromium.launch();fs.mkdirSync('o',{recursive:true});const list=process.argv[2]?process.argv[2].split(',').map(Number):[...Array(197).keys()].map(i=>i+335);
+await Promise.all([0,1,2,3].map(async k=>{const p=await b.newPage({viewport:{width:1080,height:1920}});await p.goto('file://'+path.resolve('index.html'));await p.evaluate(async()=>{await document.fonts.load('italic 900 300px Frau');await document.fonts.load('600 64px Mont');await document.fonts.load('900 54px Mont');await document.fonts.load('800 60px Mont')});
+for(let j=k;j<list.length;j+=4){const f=list[j];await p.evaluate(t=>window.setT(t),(f-1)/30);await p.screenshot({path:'o/'+String(f).padStart(4,'0')+'.jpg',type:'jpeg',quality:94})}await p.close()}));await b.close()})();
