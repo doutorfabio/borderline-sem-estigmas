@@ -11,18 +11,18 @@ html,body{margin:0}
 #title{position:absolute;left:108px;right:130px;top:214px;display:flex;flex-direction:column;align-items:center;text-align:center;z-index:5}
 #title .a{font:800 54px/1.12 Mont;color:#161514;white-space:nowrap}
 #title .b{font:italic 900 112px/1.04 Frau;color:#D3231B;white-space:nowrap;margin:2px 0 4px}
-.sc{position:absolute;left:150px;top:620px;width:780px;opacity:0;transform-origin:50% 60%}
-.dk{background:#1A1918;color:#F4EEE3;padding:46px 50px;box-shadow:0 24px 50px rgba(40,25,10,.35)}
-.lt{background:#FBF7EF;color:#161514;padding:46px 50px;box-shadow:0 24px 50px rgba(40,25,10,.3)}
-.lab{font:800 30px/1 Mont;letter-spacing:.16em;opacity:.6}
-.big{font:italic 900 104px/1 Frau;margin-top:18px}
+.sc{position:absolute;left:150px;top:640px;width:780px;min-height:560px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;opacity:0;transform-origin:50% 60%}
+.dk{background:#1A1918;color:#F4EEE3;padding:60px 60px;box-shadow:0 24px 50px rgba(40,25,10,.35)}
+.lt{background:#FBF7EF;color:#161514;padding:60px 60px;box-shadow:0 24px 50px rgba(40,25,10,.3)}
+.lab{font:800 38px/1.15 Mont;letter-spacing:.16em;opacity:.6}
+.big{font:italic 900 122px/1 Frau;margin-top:26px}
 .red{color:#E8281F}
-.ph{display:flex;align-items:center;gap:30px;margin-top:22px}
-.ic{width:120px;height:120px;border-radius:50%;background:#2BB24C;display:flex;align-items:center;justify-content:center;flex:none}
-.ic svg{width:64px;height:64px}
-.nm{font:800 58px/1.1 Mont}
-.stamp{position:absolute;right:30px;top:40px;padding:12px 20px 10px;border:6px solid #E8281F;color:#E8281F;font:900 48px/1 Mont;border-radius:10px;opacity:0;white-space:nowrap;background:rgba(251,247,239,.0)}
-.bub{position:absolute;max-width:640px;padding:30px 36px;border-radius:38px;font:800 50px/1.18 Mont;box-shadow:0 14px 30px rgba(40,25,10,.25);opacity:0}
+.ph{display:flex;align-items:center;gap:40px;margin-top:50px}
+.ic{width:190px;height:190px;border-radius:50%;background:#2BB24C;display:flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100px;height:100px}
+.nm{font:800 96px/1.1 Mont}
+.stamp{position:absolute;right:40px;bottom:50px;padding:12px 20px 10px;border:6px solid #E8281F;color:#E8281F;font:900 62px/1 Mont;border-radius:12px;opacity:0;white-space:nowrap;background:rgba(251,247,239,.0)}
+.bub{position:absolute;max-width:760px;padding:40px 46px;border-radius:44px;font:800 64px/1.18 Mont;box-shadow:0 14px 30px rgba(40,25,10,.25);opacity:0}
 .bub.me{right:150px;background:#1A1918;color:#F4EEE3;border-bottom-right-radius:10px}
 .bub.you{left:150px;background:#FBF7EF;color:#161514;border-bottom-left-radius:10px}
 #sticker{position:absolute;left:66px;top:1050px;width:270px;height:270px;opacity:0;z-index:50}
@@ -32,18 +32,18 @@ html,body{margin:0}
 #blk{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;align-items:baseline;gap:.26em;white-space:nowrap;font-size:var(--fs,64px)}
 .w{display:inline-block;font:800 1em/1.1 Mont;color:#161514;-webkit-text-stroke:2px rgba(251,247,239,.9);paint-order:stroke fill}
 .w.hl{font:italic 900 1.45em/1 Frau;color:#D3231B;-webkit-text-stroke:0}
-.clock{width:240px;height:240px;border-radius:50%;border:10px solid #F4EEE3;position:relative;margin:26px auto 0}
-.hand{position:absolute;left:50%;top:50%;width:8px;height:96px;margin-left:-4px;background:#E8281F;transform-origin:50% 0;border-radius:4px}
-.cnt{font:italic 900 230px/1 Frau;text-align:center}
+.clock{width:210px;height:210px;border-radius:50%;border:10px solid #F4EEE3;position:relative;margin:26px auto 0}
+.hand{position:absolute;left:50%;top:50%;width:10px;height:84px;margin-left:-4px;background:#E8281F;transform-origin:50% 0;border-radius:4px}
+.cnt{font:italic 900 300px/1 Frau;text-align:center}
 </style></head><body><div id="st"><div id="bg"></div><div id="lines"></div><canvas id="grain" width="540" height="960"></canvas>
 <div id="title"><div class="a">VOCÊ LIGOU E O</div><div class="b">BORDERLINE</div><div class="a">NÃO ATENDEU</div></div>
 <div id="s1" class="sc dk"><div class="lab">CHAMANDO...</div><div class="ph"><div class="ic"><svg viewBox="0 0 24 24"><path fill="#fff" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></div><div class="nm">Você</div></div><div class="stamp" id="miss">NÃO ATENDEU</div></div>
 <div id="s2" class="sc lt"><div class="lab">QUEM VÊ DE FORA CHAMA DE</div><div class="big red">joguinho?</div></div>
-<div id="s3" class="sc dk"><div class="lab">A FRASE QUE MAIS ASSUSTA</div><div class="big" id="acabou">Acabou.</div></div>
-<div id="s4" class="sc dk"><div class="lab">SEM ATENDER, ELA DEMORA</div><div class="clock"><div class="hand" id="hand"></div></div><div class="big" style="font-size:70px;text-align:center">mais alguns minutos</div></div>
+<div id="s3" class="sc dk"><div class="lab">A FRASE QUE MAIS ASSUSTA</div><div class="big" id="acabou" style="font-size:170px">Acabou.</div></div>
+<div id="s4" class="sc dk"><div class="lab">SEM ATENDER, A FRASE DEMORA</div><div class="clock"><div class="hand" id="hand"></div></div><div class="big" style="font-size:76px;text-align:center;margin-top:18px">mais alguns minutos</div></div>
 <div id="s5" class="sc lt"><div class="lab">NÃO LIGUE</div><div class="cnt red" id="cnt">1</div><div class="lab" style="text-align:center">VEZES</div></div>
 <div id="b1" class="bub me">Liguei porque quero falar com você. Tô aqui quando você quiser.</div>
-<div id="b2" class="bub you" style="font:italic 900 120px/1 Frau;padding:24px 48px">Tô.</div>
+<div id="b2" class="bub you" style="font:italic 900 170px/1 Frau;padding:30px 60px">Tô.</div>
 <div id="s6" class="sc lt"><div class="big red" style="margin:0">MANDA</div><div style="font:800 50px/1.15 Mont;margin-top:18px">pra quem já ligou e você não teve coragem de atender.</div></div>
 <div id="sticker"><div class="ring"></div><img id="sti" src="st_c.png"></div>
 <div id="cap"><div id="blk"></div></div></div>
@@ -56,7 +56,7 @@ function torn(w,h,j){const p=[];const n=Math.round(w/26),m=Math.round(h/26);for(
 const $=id=>document.getElementById(id);
 for(const id of ['s1','s2','s3','s4','s5','s6']){const e=$(id);e.dataset.r=(rnd()*6-3).toFixed(2);}
 let clipped=false,curC=-1;const blk=$('blk'),stk=$('sticker'),sti=$('sti');
-function scene(id,t0,t1,yoff=0){const e=$(id);if(!clipped){}const r=+e.dataset.r;if(t<0){}
+function scene(id,t0,t1,yoff=0){const e=$(id);const r=+e.dataset.r;
  return (t)=>{if(t<t0-0.05||t>=t1+0.4){e.style.opacity=0;return}const pi=back(cl((t-t0+0.05)/0.4)),po=io(cl((t-t1)/0.35));e.style.opacity=1;
  e.style.transform=`translate(${-1150*po}px,${(1-cl(pi,0,1.3))*900+yoff}px) rotate(${(r*(1-po)-12*po).toFixed(2)}deg) scale(${(0.85+0.15*cl(pi,0,1.1)).toFixed(3)})`}}
 let S=null;
@@ -77,11 +77,11 @@ window.setT=t=>{
  // s5 counter rolls to 10
  const pc=cl((t-B.s5-0.2)/0.9);$('cnt').textContent=Math.max(1,Math.round(1+9*io(pc)));
  // bubbles
- for(const [id,t0,t1,y] of [['b1',B.b1,B.s6,700],['b2',B.b2,B.s6,1010]]){const e=$(id);if(t<t0-0.05||t>=t1){e.style.opacity=0;continue}const p=back(cl((t-t0+0.05)/0.35)),po=cl((t1-t)/0.15);e.style.opacity=Math.min(1,po);e.style.top=y+'px';e.style.transform=`translateY(${(1-cl(p,0,1.2))*60}px) scale(${(0.7+0.3*cl(p,0,1.15)).toFixed(3)})`;e.style.transformOrigin=id=='b1'?'100% 100%':'0% 100%'}
+ for(const [id,t0,t1,y] of [['b1',B.b1,B.s6,660],['b2',B.b2,B.s6,1080]]){const e=$(id);if(t<t0-0.05||t>=t1){e.style.opacity=0;continue}const p=back(cl((t-t0+0.05)/0.35)),po=cl((t1-t)/0.15);e.style.opacity=Math.min(1,po);e.style.top=y+'px';e.style.transform=`translateY(${(1-cl(p,0,1.2))*60}px) scale(${(0.7+0.3*cl(p,0,1.15)).toFixed(3)})`;e.style.transformOrigin=id=='b1'?'100% 100%':'0% 100%'}
  // sticker windows
- const W=[[-0.4,B.s2-0.1,'st_c.png',1080],[B.b2-0.1,B.s6-0.1,'st_a.png',1180],[B.s6,99,'st_a.png',1050]];let sv=null;for(const w of W)if(t>=w[0]&&t<w[1])sv=w;
+ const W=[[-0.4,B.s2-0.1,'st_c.png',1110],[B.b2-0.1,B.s6-0.1,'st_a.png',1080],[B.s6,99,'st_a.png',1110]];let sv=null;for(const w of W)if(t>=w[0]&&t<w[1])sv=w;
  if(!sv)stk.style.opacity=0;else{if(!sti.src.endsWith(sv[2]))sti.src=sv[2];const pi=back(cl((t-sv[0])/0.4)),po=cl((sv[1]-t)/0.18);const e=D.env[Math.min(D.env.length-1,fr)]||0;
-  stk.style.top=sv[3]+'px';stk.style.left=(sv===W[1]?744-60:66)+'px';stk.style.opacity=Math.min(cl(pi*3),po);stk.style.transform=`scale(${(pi*(1+0.05*e)).toFixed(4)}) rotate(${(-6+4*Math.sin(t*2.2)).toFixed(2)}deg)`}
+  stk.style.top=sv[3]+'px';stk.style.left=(sv===W[1]?640:84)+'px';stk.style.opacity=Math.min(cl(pi*3),po);stk.style.transform=`scale(${(pi*(1+0.05*e)).toFixed(4)}) rotate(${(-6+4*Math.sin(t*2.2)).toFixed(2)}deg)`}
  // captions
  let ci=-1;for(let k=0;k<D.caps.length;k++){const c=D.caps[k];if(t>=c.t0&&t<c.t1)ci=k}
  if(ci!==curC){curC=ci;blk.innerHTML='';if(ci>=0){blk.style.setProperty('--fs','64px');for(const w of D.caps[ci].ws){const s=document.createElement('span');s.className='w'+(w.hl?' hl':'');s.textContent=w.w;s.dataset.s=w.s;blk.appendChild(s)}const mw=blk.getBoundingClientRect().width;if(mw>780)blk.style.setProperty('--fs',(64*780/mw).toFixed(1)+'px')}}
