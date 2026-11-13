@@ -14,6 +14,7 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 
 ## Registros
 
+- 2026-11-13 · r10 · Reel pergunta do passado entregue em três versões (12/11) sem veredito feed ou teste e sem linha no placar; Claude escreveu que não fez veredito porque o pedido era só legenda e Sfx. Postado, flopou. Ele: "Flopou / Arruma / Se vira". Correção: v4 recortada e veredito de teste dado e registrado antes de postar.
 - 2026-11-10 · a1 · Capa 12 do desafio (A EMOÇÃO DO BORDERLINE CHEGA EM ONDA, NÃO EM GOTA.) saiu com fórmula de contraste X, não Y. Achado pelo próprio Claude no funil pedido por ele. Barrada.
 - 2026-11-07 · a1 · Na fala que segue o gancho do Reel da vergonha, Claude escreveu "Parece orgulho. Quase sempre é vergonha.", fórmula de contraste, e entregou sem varrer. Achado pelo próprio Claude na revisão da nota pedida por ele ("Nota"). Trocado por "O que trava a desculpa é a vergonha."
 - 2026-11-07 · r10 · Carrossel TER BORDERLINE NÃO TIRA SEU DIREITO DE SOFRER entregue só com a nota da base técnica (95), sem veredito feed ou teste pelo termômetro, sem cruzar com o placar e sem registro em placar-vereditos.md antes de ele postar. Flopou. Ele: "Flopou de novo / Vai se fuser vc nak sabe usar essa merda de memórias". Correção: nota de capa não substitui veredito; toda peça pronta para postar sai com veredito feed ou teste escrito e registrado no placar antes da entrega.
