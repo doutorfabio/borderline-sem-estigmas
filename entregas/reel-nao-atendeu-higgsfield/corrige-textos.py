@@ -1,4 +1,4 @@
-import sys, subprocess, numpy as np, cv2
+import os, sys, subprocess, numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont
 
 S = "/tmp/claude-0/-home-user-borderline-sem-estigmas/225ca122-7ddc-5f7b-8d3b-85fb58ddf29a/scratchpad"
@@ -202,6 +202,18 @@ def hook():
 
 HOOK = hook()
 HOOK_Y = 1425
+if os.environ.get("HOOKIMG"):
+    _im = Image.open(os.environ["HOOKIMG"]).convert("RGBA")
+    _w = 880
+    _im = _im.resize((_w, int(_im.height * _w / _im.width)), Image.LANCZOS)
+    _pad = 40
+    _a = np.zeros((_im.height + 2 * _pad, _im.width + 2 * _pad), np.float32)
+    _a[_pad + 10:_pad + 10 + _im.height, _pad:_pad + _im.width] = 150
+    _a = cv2.GaussianBlur(_a, (0, 0), 14)
+    HOOK = Image.fromarray(np.dstack([np.zeros(_a.shape + (3,), np.uint8), _a.astype(np.uint8)]), "RGBA")
+    HOOK.alpha_composite(_im, (_pad, _pad))
+    HOOK = HOOK.rotate(2, resample=Image.BICUBIC, expand=True)
+    HOOK_Y = 1285
 BUB = text_img(["Tô aqui", "quando você", "quiser."], font("Inter.ttf", 45, 700), INK, spacing=1.24, align="center")
 WALL = text_img(["mais alguns minutos"], font("Fraunces.ttf", 74, 700), (20, 20, 20, 235))
 
@@ -235,12 +247,22 @@ def filled(comp, grow, close_right=None, close_left=None):
     return out
 
 
+PHONE = []
+if os.environ.get("PHONE"):
+    _c = cv2.VideoCapture(os.environ["PHONE"])
+    for _ in range(22):
+        PHONE.append(_c.read()[1])
+
+
 def process(i, small):
+    if i < len(PHONE):
+        small = PHONE[i]
     f = cv2.resize(small, (W, H), interpolation=cv2.INTER_LANCZOS4)
 
     # ---- 0: hook over the opening scene ----
     if i <= 64:
-        paste(f, HOOK, 502, HOOK_Y)
+        e = ease((i + 1) / 5)
+        paste(f, HOOK, 502, HOOK_Y, scale=0.9 + 0.1 * e)
 
     # ---- A: pink card scene ----
     if 65 <= i <= 165:
