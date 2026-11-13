@@ -47,6 +47,7 @@ window.setT=async function(t,frame){
  let z=1;for(const [a,b,z0,z1] of D.zooms)if(t>=a&&t<b){const p=(t-a)/(b-a);z=z0+(z1-z0)*(p*p*(3-2*p))}
  for(const c of STRONG)if(t>=c&&t<c+0.3)z+=0.03*Math.pow(1-(t-c)/0.3,2);
  if(t>=1.4&&t<2.7333)z*=1.13;
+ for(const [a,b] of [[4.7,5.6667],[12.1,13.0333],[19.4,21.5667],[23.0,24.4667],[26.0,27.5],[29.0,30.6],[32.9,34.7333],[36.6,38.4333],[39.9,41.3]])if(t>=a&&t<b)z*=1.10;
  {const hk=document.getElementById('hook');hk.style.opacity=(t<3.6||(t>=19.9&&t<21.6))?1:Math.max(0,(3.7333-t)/0.1333);}
  bg.style.transform='scale('+z.toFixed(5)+')';
  let i=-1;for(let k=0;k<D.chunks.length;k++){const c=D.chunks[k];if(t>=c.t0-0.03&&t<c.t1&&!(t>=11.13&&c.e<11.13))i=k}
