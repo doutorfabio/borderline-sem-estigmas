@@ -40,7 +40,7 @@ window.setT=async t=>{
  let s=Qq.seq[0];for(const x of Qq.seq)if(t>=x[0]-0.05)s=x;
  const sm=$('small'),wd=$('word');sm.textContent=s[1];wd.textContent=s[2];sm.style.color=Qq.fg;wd.style.color=Qq.wc||Qq.fg;
  const pw=cl((t-s[0]+(t<0.05?1:0.05))/0.28),k=0.9+0.1*oc(pw)+0.025*(t-s[0]);
- wd.style.fontSize='300px';const w=wd.getBoundingClientRect().width;if(w>900)wd.style.fontSize=(300*900/w).toFixed(0)+'px';
+ wd.style.fontSize='300px';const w=wd.getBoundingClientRect().width;if(w>860)wd.style.fontSize=(300*860/w).toFixed(0)+'px';
  wd.style.transform=`translateY(${((1-back(pw))*120).toFixed(1)}px) scale(${k.toFixed(3)})`;wd.style.opacity=cl(pw*3);sm.style.opacity=cl(pw*3);
  const e=window.ENV[Math.min(window.ENV.length-1,Math.round(t*30))]||0;
  const pq=cl((t-Qq.t0)/0.35),span=Math.min(4,Qq.t1-Qq.t0);
