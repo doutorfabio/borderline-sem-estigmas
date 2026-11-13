@@ -1,0 +1,53 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+@font-face{font-family:Mont;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:Mont;font-weight:900;src:url(fonts/montserrat-latin-900-normal.woff2)}
+@font-face{font-family:Frau;font-weight:900;font-style:italic;src:url(fonts/fraunces-latin-900-italic.woff2)}
+html,body{margin:0}
+#st{position:relative;width:1080px;height:1920px;overflow:hidden;font-variant-ligatures:none}
+#bg{position:absolute;inset:0}
+#big{position:absolute;left:40px;right:40px;top:250px;text-align:center;white-space:nowrap}
+#small{font:600 58px/1.1 Mont;letter-spacing:.02em;margin-bottom:6px}
+#word{font:italic 900 300px/.9 Frau;letter-spacing:-.01em;display:inline-block}
+#cut{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:50% 45%;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 70px)}
+#px{position:absolute;inset:0;z-index:20}
+.p{position:absolute;width:54px;height:54px}
+#cap{position:absolute;left:540px;top:1440px;transform:translateX(-50%);font:800 60px/1 Mont;white-space:nowrap;z-index:10}
+#bub{position:absolute;left:150px;right:150px;top:1020px;padding:40px 46px;border-radius:44px;border-bottom-right-radius:10px;background:#161514;color:#F6EFE3;font:800 58px/1.18 Mont;box-shadow:0 18px 40px rgba(0,0,0,.35);opacity:0;z-index:8;transform-origin:100% 100%}
+#tag{position:absolute;left:84px;top:150px;font:900 46px/1 Mont;padding:12px 20px 8px;background:#E8FF3C;color:#111;transform:rotate(-6deg);opacity:0}
+</style></head><body><div id="st"><div id="bg"></div><div id="tag">FS</div><div id="big"><div id="small"></div><div id="word"></div></div><img id="cut"><div id="bub">Liguei porque quero falar com você. Tô aqui quando você quiser.</div><div id="cap"></div><div id="px"></div></div>
+<script src="data.js"></script><script>
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),oc=p=>1-Math.pow(1-p,3),back=p=>{const c=1.7;return 1+(c+1)*Math.pow(p-1,3)+c*Math.pow(p-1,2)};
+const RED='radial-gradient(90% 70% at 50% 40%,#D3231B,#5A0806)',LIME='radial-gradient(90% 70% at 50% 40%,#D8FF55,#6E9E00)',BLUE='radial-gradient(90% 70% at 50% 40%,#2F56FF,#0A1665)',CREAM='radial-gradient(90% 70% at 50% 40%,#F6EFE3,#D9CDB8)';
+const L={fg:'#F6EFE3',cap:'#fff',sh:'0 4px 16px rgba(0,0,0,.55)'},Dk={fg:'#111',cap:'#111',sh:'0 0 0 transparent'};
+const Q=[
+{t0:0,t1:4.24,bg:RED,...L,img:'1225',seq:[[0,'você ligou e o','BORDERLINE'],[3.38,'o borderline','NÃO ATENDEU']]},
+{t0:4.24,t1:6.44,bg:LIME,...Dk,img:'0050',seq:[[4.24,'quem vê de fora chama de','JOGUINHO?']]},
+{t0:6.44,t1:10.54,bg:BLUE,...L,img:'1232',seq:[[6.44,'muitas vezes é','MEDO'],[9.6,'medo de ouvir','ACABOU.']]},
+{t0:10.54,t1:14.06,bg:CREAM,...Dk,wc:'#D3231B',img:'1200',seq:[[10.54,'sem atender, essa frase','DEMORA']]},
+{t0:14.06,t1:17.6,bg:RED,...L,img:'0645',seq:[[14.06,'então não ligue','DEZ VEZES']]},
+{t0:17.6,t1:21.22,bg:CREAM,...Dk,wc:'#D3231B',img:'1225',seq:[[17.6,'manda uma mensagem','SÓ UMA']],bub:1},
+{t0:21.22,t1:25.88,bg:LIME,...Dk,img:'0400',seq:[[21.22,'se você é quem não atende','RESPONDE'],[23.98,'com uma palavra','TÔ.']]},
+{t0:25.88,t1:99,bg:RED,...L,img:'1232',seq:[[25.88,'manda pra quem','JÁ LIGOU']]}];
+let seed=9;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const PX=[];for(let i=0;i<70;i++)PX.push([Math.floor(rnd()*20)*54,Math.floor(rnd()*36)*54,rnd()]);
+const px=document.getElementById('px');for(const p of PX){const d=document.createElement('div');d.className='p';d.style.left=p[0]+'px';d.style.top=p[1]+'px';px.appendChild(d)}
+const IM={'1225':[1,640],'1232':[1,640],'0050':[1,480],'0645':[1,500],'1200':[1,560],'0400':[1,540]};
+const $=id=>document.getElementById(id);
+window.setT=async t=>{
+ const qi=Q.findIndex(x=>t>=x.t0&&t<x.t1),Qq=Q[qi];const cut=$('cut');const src='cut/'+Qq.img+'.png';if(!cut.src.endsWith(src)){cut.src=src;await cut.decode()}
+ $('bg').style.background=Qq.bg;
+ let s=Qq.seq[0];for(const x of Qq.seq)if(t>=x[0]-0.05)s=x;
+ const sm=$('small'),wd=$('word');sm.textContent=s[1];wd.textContent=s[2];sm.style.color=Qq.fg;wd.style.color=Qq.wc||Qq.fg;
+ const pw=cl((t-s[0]+(t<0.05?1:0.05))/0.28),k=0.9+0.1*oc(pw)+0.025*(t-s[0]);
+ wd.style.fontSize='300px';const w=wd.getBoundingClientRect().width;if(w>900)wd.style.fontSize=(300*900/w).toFixed(0)+'px';
+ wd.style.transform=`translateY(${((1-back(pw))*120).toFixed(1)}px) scale(${k.toFixed(3)})`;wd.style.opacity=cl(pw*3);sm.style.opacity=cl(pw*3);
+ const e=window.ENV[Math.min(window.ENV.length-1,Math.round(t*30))]||0;
+ const pq=cl((t-Qq.t0)/0.35),span=Math.min(4,Qq.t1-Qq.t0);
+ const im=IM[Qq.img];cut.style.transform=`translateY(${(im[1]+(1-oc(pq))*60).toFixed(1)}px) scale(${(im[0]*(1.02)+im[0]*0.05*cl((t-Qq.t0)/span)+0.012*e).toFixed(4)}) rotate(${(Math.sin(t*1.3)*0.6).toFixed(2)}deg)`;
+ let dmin=9;for(const x of Q.slice(1))dmin=Math.min(dmin,Math.abs(t-x.t0));
+ const on=dmin<0.12;[...px.children].forEach((d,i)=>{d.style.opacity=on&&PX[i][2]<(1-dmin/0.12)?1:0;d.style.background=i%3==0?'#E8FF3C':'#fff'});
+ const b=$('bub');if(Qq.bub){const p=back(cl((t-17.6-0.3)/0.35));b.style.opacity=t>=17.9?1:0;b.style.transform=`translateY(${(1-cl(p,0,1.2))*60}px) scale(${(0.7+0.3*cl(p,0,1.15)).toFixed(3)})`}else b.style.opacity=0;
+ let c='';for(const x of window.CAPS)if(t>=x.t0&&t<x.t1)c=x.txt;const ce=$('cap');ce.textContent=Qq.bub&&t>=17.9?'':c;ce.style.color='#fff';ce.style.textShadow='0 4px 16px rgba(0,0,0,.6),0 1px 3px rgba(0,0,0,.6)';
+ const r=wd.getBoundingClientRect(),rc=ce.getBoundingClientRect();return [Math.min(r.left,rc.left||9e9),r.top,Math.max(r.right,rc.right||0),Math.max(rc.bottom||0,r.bottom)]};
+</script></body></html>
