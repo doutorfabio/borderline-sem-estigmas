@@ -190,6 +190,18 @@ T1 = text_img(["VOCÊ LIGOU E O"], font("Inter.ttf", 47, 600), (255, 255, 255, 2
 T3 = text_img(["NÃO ATENDEU"], font("Inter.ttf", 47, 600), (255, 255, 255, 255), track=0.13)
 TCX = 343 * K
 
+def hook():
+    fa = font("Inter.ttf", 92, 900)
+    t = text_img(["RECLAMOU QUE", "VOCÊ NÃO LIGOU."], fa, (255, 255, 255, 255), spacing=1.12, align="center", pad=40)
+    al = np.asarray(t)[..., 3].astype(np.float32)
+    sh = cv2.GaussianBlur(np.roll(al, 5, axis=0), (0, 0), 9) * 1.1
+    out = Image.fromarray(np.dstack([np.zeros(al.shape + (3,), np.uint8), np.clip(sh, 0, 255).astype(np.uint8)]), "RGBA")
+    out.alpha_composite(t)
+    return out
+
+
+HOOK = hook()
+HOOK_Y = 1425
 BUB = text_img(["Tô aqui", "quando você", "quiser."], font("Inter.ttf", 45, 700), INK, spacing=1.24, align="center")
 WALL = text_img(["mais alguns minutos"], font("Fraunces.ttf", 74, 700), (20, 20, 20, 235))
 
@@ -225,6 +237,10 @@ def filled(comp, grow, close_right=None, close_left=None):
 
 def process(i, small):
     f = cv2.resize(small, (W, H), interpolation=cv2.INTER_LANCZOS4)
+
+    # ---- 0: hook over the opening scene ----
+    if i <= 64:
+        paste(f, HOOK, 502, HOOK_Y)
 
     # ---- A: pink card scene ----
     if 65 <= i <= 165:
