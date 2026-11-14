@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:absolute;inset:0;overflow:hidden}
+#bg{position:absolute;inset:0;width:1080px;height:1920px;transform-origin:50% 38%}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.32) 100%)}
+#fade{position:absolute;inset:0;background:#000;opacity:0}
+.cap{position:absolute;left:160px;width:760px;top:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;column-gap:16px;row-gap:2px;text-align:center}
+.w{font:800 60px/1.12 Montserrat;color:#fff;letter-spacing:.5px;display:inline-block;
+ -webkit-text-stroke:1.5px rgba(0,0,0,.45);paint-order:stroke fill;text-shadow:0 3px 12px rgba(0,0,0,.6),0 1px 2px rgba(0,0,0,.7)}
+.k{font:italic 900 80px/1.0 Fraunces;color:#F4B95A;-webkit-text-stroke:0;letter-spacing:0;text-shadow:0 3px 14px rgba(0,0,0,.7),0 1px 2px rgba(0,0,0,.8)}
+#bar{position:absolute;height:6px;border-radius:3px;background:#F4B95A;box-shadow:0 2px 8px rgba(0,0,0,.5);opacity:0}
+.big{position:absolute;left:110px;width:860px;text-align:center}
+.bl{display:block;font:800 72px/1.1 Montserrat;color:#fff;letter-spacing:1px;text-shadow:0 4px 18px rgba(0,0,0,.65),0 1px 3px rgba(0,0,0,.8)}
+.bl .k{font:italic 900 104px/1.0 Fraunces}
+</style></head><body><div id="stage"><img id="bg"><div id="vig"></div><div id="layer"></div><div id="bar"></div><div id="fade"></div></div>
+<script>
+let D;const CAPY=1405;
+const ease=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3);
+window.init=async()=>{D={"blocks": [{"s": 2.7, "end": 4.58, "w": [{"t": "AI,", "s": 2.7, "e": 3.1, "k": false}, {"t": "SEU", "s": 3.18, "e": 3.18, "k": false}, {"t": "MALUCO!", "s": 3.18, "e": 3.98, "k": false}]}, {"s": 5.12, "end": 6.08, "w": [{"t": "QUE", "s": 5.12, "e": 5.52, "k": false}, {"t": "INFERNO!", "s": 5.52, "e": 5.92, "k": false}]}, {"s": 6.08, "end": 6.78, "w": [{"t": "DOUTOR,", "s": 6.08, "e": 6.44, "k": false}, {"t": "MINHA", "s": 6.44, "e": 6.58, "k": false}, {"t": "AVÓ", "s": 6.58, "e": 6.78, "k": false}]}, {"s": 6.78, "end": 7.28, "w": [{"t": "DIZIA", "s": 6.78, "e": 7.18, "k": false}, {"t": "QUE", "s": 7.18, "e": 7.28, "k": false}]}, {"s": 7.28, "end": 7.88, "w": [{"t": "QUEM", "s": 7.28, "e": 7.46, "k": false}, {"t": "VÊ", "s": 7.46, "e": 7.62, "k": false}, {"t": "CARA", "s": 7.62, "e": 7.88, "k": false}]}, {"s": 7.88, "end": 9.06, "w": [{"t": "NÃO", "s": 7.88, "e": 8.0, "k": false}, {"t": "VÊ", "s": 8.0, "e": 8.14, "k": false}, {"t": "CORAÇÃO.", "s": 8.14, "e": 8.46, "k": true}]}, {"s": 9.16, "end": 9.94, "w": [{"t": "O", "s": 9.16, "e": 9.56, "k": false}, {"t": "SENHOR", "s": 9.56, "e": 9.72, "k": false}, {"t": "VIU", "s": 9.72, "e": 9.94, "k": false}]}, {"s": 9.94, "end": 11.06, "w": [{"t": "O", "s": 9.94, "e": 10.04, "k": false}, {"t": "DIAGNÓSTICO.", "s": 10.04, "e": 10.68, "k": true}]}, {"s": 11.06, "end": 11.6, "w": [{"t": "EU", "s": 11.06, "e": 11.46, "k": false}, {"t": "VI", "s": 11.46, "e": 11.6, "k": false}]}, {"s": 11.6, "end": 12.86, "w": [{"t": "O", "s": 11.6, "e": 11.68, "k": false}, {"t": "CORAÇÃO", "s": 11.68, "e": 11.92, "k": true}, {"t": "DELA.", "s": 11.92, "e": 12.26, "k": false}]}, {"s": 13.32, "end": 14.6, "w": [{"t": "BONITO,", "s": 13.32, "e": 13.72, "k": false}, {"t": "SEU", "s": 13.72, "e": 13.84, "k": false}, {"t": "ANTÔNIO.", "s": 13.84, "e": 14.28, "k": false}]}, {"s": 14.6, "end": 15.36, "w": [{"t": "MAS", "s": 14.6, "e": 15.0, "k": false}, {"t": "A", "s": 15.0, "e": 15.12, "k": false}, {"t": "MINHA", "s": 15.12, "e": 15.2, "k": false}, {"t": "AVÓ", "s": 15.2, "e": 15.36, "k": false}]}, {"s": 15.36, "end": 16.64, "w": [{"t": "DIZIA", "s": 15.36, "e": 15.56, "k": false}, {"t": "OUTRA", "s": 15.56, "e": 15.68, "k": false}, {"t": "COISA.", "s": 15.68, "e": 16.04, "k": false}]}, {"s": 18.52, "end": 19.32, "w": [{"t": "SUA", "s": 18.52, "e": 18.92, "k": false}, {"t": "FILHA", "s": 18.92, "e": 19.12, "k": false}, {"t": "JOGOU", "s": 19.12, "e": 19.32, "k": false}]}, {"s": 19.32, "end": 19.78, "w": [{"t": "UMA", "s": 19.32, "e": 19.42, "k": false}, {"t": "BANDEJA", "s": 19.42, "e": 19.78, "k": false}]}, {"s": 19.78, "end": 20.54, "w": [{"t": "NA", "s": 19.78, "e": 19.86, "k": false}, {"t": "MINHA", "s": 19.86, "e": 19.96, "k": false}, {"t": "ENFERMEIRA.", "s": 19.96, "e": 20.46, "k": false}]}, {"s": 20.54, "end": 21.36, "w": [{"t": "CORAÇÃO", "s": 20.54, "e": 20.94, "k": true}, {"t": "EU", "s": 20.94, "e": 21.02, "k": false}, {"t": "NÃO", "s": 21.02, "e": 21.12, "k": false}, {"t": "VI,", "s": 21.12, "e": 21.3, "k": false}]}, {"s": 21.36, "end": 22.28, "w": [{"t": "VI", "s": 21.36, "e": 21.72, "k": false}, {"t": "A", "s": 21.72, "e": 21.82, "k": false}, {"t": "BANDEJA.", "s": 21.82, "e": 22.24, "k": true}]}, {"s": 22.28, "end": 22.78, "w": [{"t": "ELA", "s": 22.28, "e": 22.44, "k": false}, {"t": "JOGOU", "s": 22.44, "e": 22.78, "k": false}]}, {"s": 22.78, "end": 24.18, "w": [{"t": "A", "s": 22.78, "e": 22.82, "k": false}, {"t": "BANDEJA,", "s": 22.82, "e": 23.22, "k": false}, {"t": "DOUTOR.", "s": 23.22, "e": 23.62, "k": false}]}, {"s": 24.18, "end": 24.94, "w": [{"t": "AMANHÃ", "s": 24.18, "e": 24.58, "k": false}, {"t": "ELA", "s": 24.58, "e": 24.7, "k": false}, {"t": "PEDE", "s": 24.7, "e": 24.94, "k": false}]}, {"s": 24.94, "end": 26.5, "w": [{"t": "DESCULPA", "s": 24.94, "e": 25.42, "k": true}, {"t": "PRA", "s": 25.42, "e": 25.54, "k": false}, {"t": "MOÇA.", "s": 25.54, "e": 25.9, "k": false}]}, {"s": 26.74, "end": 27.66, "w": [{"t": "MAS", "s": 26.74, "e": 27.14, "k": false}, {"t": "PAU", "s": 27.14, "e": 27.36, "k": false}, {"t": "TORTO", "s": 27.36, "e": 27.66, "k": false}]}, {"s": 27.66, "end": 28.24, "w": [{"t": "LÁ", "s": 27.66, "e": 27.86, "k": false}, {"t": "NO", "s": 27.86, "e": 27.98, "k": false}, {"t": "SÍTIO", "s": 27.98, "e": 28.24, "k": false}]}, {"s": 28.24, "end": 29.18, "w": [{"t": "A", "s": 28.24, "e": 28.38, "k": false}, {"t": "GENTE", "s": 28.38, "e": 28.48, "k": false}, {"t": "NÃO", "s": 28.48, "e": 28.68, "k": false}, {"t": "CORTA.", "s": 28.68, "e": 29.18, "k": true}]}, {"s": 29.18, "end": 30.38, "w": [{"t": "PÕE", "s": 29.18, "e": 29.98, "k": false}, {"t": "UMA", "s": 29.98, "e": 30.1, "k": false}, {"t": "ESTACA", "s": 30.1, "e": 30.38, "k": true}]}, {"s": 30.38, "end": 31.08, "w": [{"t": "FIRME", "s": 30.38, "e": 30.8, "k": false}, {"t": "DO", "s": 30.8, "e": 30.88, "k": false}, {"t": "LADO", "s": 30.88, "e": 31.08, "k": false}]}, {"s": 31.08, "end": 32.24, "w": [{"t": "E", "s": 31.08, "e": 31.22, "k": false}, {"t": "AMARRA.", "s": 31.22, "e": 31.64, "k": true}]}], "big": [{"s": 0, "end": 2.55, "lines": [[["QUEM TEM", 0]], [["BORDERLINE", 1]], [["É MAU CARÁTER?", 0]]], "y": 760}, {"s": 16.4, "end": 18.35, "lines": [[["PAU QUE", 0]], [["NASCE TORTO,", 0]], [["MORRE ", 0], ["TORTO.", 1]]], "y": 150}, {"s": 32.18, "end": 33.42, "lines": [[["PAU QUE NASCE", 0]], [["TORTO,", 1]]], "y": 150}, {"s": 33.42, "end": 34.34, "lines": [[["SÓ MORRE", 0]], [["TORTO", 1]]], "y": 150}, {"s": 34.34, "end": 37.1, "lines": [[["QUANDO NINGUÉM", 0]], [["PÕE ", 0], ["ESTACA.", 1]]], "y": 150}]};await document.fonts.load('800 60px Montserrat');await document.fonts.load("italic 900 80px Fraunces");await document.fonts.ready;}
+function zoomAt(t){ if(t>=32.77){return 1+0.07*ease((t-32.77)/4.2)} if(t>=21.97&&t<29.0){return 1+0.035*((t-21.97)/7.03)} return 1}
+window.setT=async(t,src)=>{
+ const bg=document.getElementById('bg');
+ await new Promise(r=>{bg.onload=r;bg.src=src});
+ bg.style.transform=`scale(${zoomAt(t)})`;
+ document.getElementById('fade').style.opacity=t>36.9?Math.min(1,(t-36.9)/0.1):0;
+ const L=document.getElementById('layer');L.innerHTML='';const bar=document.getElementById('bar');bar.style.opacity=0;
+ // big texts
+ for(const b of D.big){ if(t<b.s||t>=b.end)continue;
+   const el=document.createElement('div');el.className='big';el.style.top=b.y+'px';
+   const p=b.s===0?1:ease((t-b.s)/0.28), out=Math.min(1,(b.end-t)/0.15);
+   el.style.opacity=Math.min(p,b.end>=37?1:out);el.style.transform=`translateY(${(1-p)*18}px)`;el.style.filter=`blur(${(1-p)*5}px)`;
+   for(const line of b.lines){const s=document.createElement('span');s.className='bl';
+     for(const [txt,k] of line){const x=document.createElement('span');if(k){x.className='k';const pk=b.s===0?1:ease((t-b.s-0.05)/0.35);x.style.display='inline-block';x.style.transform=`scale(${1+0.18*(1-pk)})`}x.textContent=txt;s.appendChild(x)}
+     el.appendChild(s)}
+   L.appendChild(el)}
+ // small captions
+ for(const b of D.blocks){ if(t<b.s||t>=b.end)continue;
+   const c=document.createElement('div');c.className='cap';L.appendChild(c);
+   const out=Math.min(1,(b.end-t)/0.12);c.style.opacity=out;
+   const spans=[];
+   for(const w of b.w){const s=document.createElement('span');s.className='w'+(w.k?' k':'');s.textContent=w.t;
+     const p=ease((t-w.s+0.04)/0.18);
+     if(t<w.s-0.04){s.style.opacity=0}else{s.style.opacity=p;
+       s.style.transform=w.k?`scale(${1+0.25*(1-ease((t-w.s+0.04)/0.26))})`:`translateY(${(1-p)*14}px)`;s.style.filter=`blur(${(1-p)*6}px)`}
+     c.appendChild(s);spans.push([s,w])}
+   c.style.top=(CAPY-c.offsetHeight/2)+'px';
+   // active word bar
+   let cur=-1;for(let i=0;i<spans.length;i++){if(t>=spans[i][1].s-0.04)cur=i}
+   if(cur>=0 && t<=spans[spans.length-1][1].e+0.25){
+     const rect=r=>{const st=r.style.transform;r.style.transform='none';const q=r.getBoundingClientRect();r.style.transform=st;return q};
+     const a=rect(spans[cur][0]);let x=a.left,w=a.width,y=a.bottom;
+     if(cur>0){const k=ease((t-spans[cur][1].s+0.04)/0.14);const pr=rect(spans[cur-1][0]);x=pr.left+(a.left-pr.left)*k;w=pr.width+(a.width-pr.width)*k;y=pr.bottom+(a.bottom-pr.bottom)*k}
+     bar.style.left=x+'px';bar.style.width=w+'px';bar.style.top=(y+4)+'px';bar.style.opacity=out*ease((t-spans[0][1].s+0.04)/0.15)}
+ }
+ // safe-area check
+ const bad=[];for(const e of [...L.querySelectorAll('.w,.bl span'),bar]){if(getComputedStyle(e).opacity==0&&e!==bar)continue;if(e===bar&&bar.style.opacity==0)continue;const r=e.getBoundingClientRect();if(r.width==0)continue;if(r.left<54||r.right>950||r.bottom>1536)bad.push([e.textContent||'bar',Math.round(r.left),Math.round(r.right),Math.round(r.bottom)])}
+ return bad;
+}
+</script></body></html>
