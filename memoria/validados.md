@@ -275,3 +275,43 @@ O que se repete (observação): sinais pouco reconhecidos (dois criadores); julg
 
 Temas propostos ao Dr. Fabio: filmes e séries com borderline do que mais acerta ao que mais estigmatiza (novo); nota de 0 a 10 para conselhos que a família recebe (novo); sinais de borderline que ninguém associa ao borderline (parente de Coisas que o border sente e você nem imagina, 24/04/2026); o que só quem ama alguém com borderline sabe (parente de Amar um borderline cansa e do Reel de 08/11; risco de repetição); o que eu não faria na crise de quem eu amo (parente de Três coisas para fazer quando a crise sobe, 29/06, e do Protocolo; teste).
 Descartados: TOP 5 coisas que você precisa saber sobre borderline (flop de fora); livros como aposta de alcance (sem prova).
+
+## 2026-11-14: aspectos do borderline pouco explicados, para carrossel (Vamos, chat 460b7cd5, 50 créditos) e lista de 20 ganchos
+
+Pedido dele: "Que já tenha uma ideia original que poucos explicam de forma simples mas faz parte do border", "Sugestão de lista de 20 temas já gancho", "Considerar contexto, ver meu perfil, o q vem funcionando, os gigantes do painel", "Intenção é ter outros que batem os gigantes e ou melhores", "Depois passamos pelo funil escrutínio rigoroso das regras checklist". 90 dias, PT e EN. O Vamos avisou: de carrossel de fora só há curtidas, sem views; a prova mais forte vem de Reels; leu de 15 a 48 comentários por post.
+
+Posts de fora mais fortes:
+- [@meuolharborderline, depois da crise a lembrança do pior some](https://www.instagram.com/p/DcyX-PGhcr-/): 321 mil views, 7.630 envios, cerca de 16x (02/09; mediana aproximada).
+- [@0liviapacifico, o amor some quando a pessoa não está](https://www.instagram.com/p/DcvIlD_uIC8/): 486 mil views, 2.805 envios, 10x (01/09).
+- [@softcomplexities, constância do vínculo](https://www.instagram.com/p/De2NHDBCcnM/): 281 mil views, 4.655 envios, 6,4x (23/10).
+- [@psi.luanafontana, desrealização, despersonalização e dissociação](https://www.instagram.com/p/Dd_yoGQgqm2/): 235 mil views, cerca de 15x (02/10).
+- [@thehonestborderline, ideação paranoide e psicose sob estresse](https://www.instagram.com/p/DeKRvU7NXwI/): 112 mil views, 906 envios (06/10); baseline fraca. Comentário com 388 curtidas: achou que era esquizofrenia.
+- Só comentário: [@meuolharborderline, sintomas físicos](https://www.instagram.com/p/DfDSmpXlBi0/), 1,4 mil curtidas (28/10), perguntas sobre fibromialgia e ninguém acredita mais quando estou com dor; [@meuolharborderline, faces da dissociação](https://www.instagram.com/p/DfIcL2tlFj9/), 1,7 mil curtidas (30/10), pergunta Sintomas também do TDI, como diferencia.
+- Sem prova de fora: remissão, vergonha crônica, sono, identidade. Envelhecer, tédio, mentalização e raiva voltada para si não foram testados.
+
+Fontes conferidas no PubMed em 14/11: Slotema 2018 (10.3389/fpsyt.2018.00347; 36 estudos, 1.263 pacientes, vozes em 25%); Niemantsverdriet 2017 (10.1038/s41598-017-13108-6; 324 pacientes, 43% com alguma alucinação); Morgan 2013 (10.1016/j.jpsychires.2013.06.009; 46 pacientes de 45 a 68 anos x 97 de 18 a 25: mais vazio e prejuízo social, menos impulsividade, autolesão e instabilidade afetiva); Hooley 2012 (10.1521/pedi.2012.26.2.179; 80 adultos, objeto transicional); Cardasis 1997 (10.1176/ajp.154.2.250; 146 internados, sensibilidade 63%, valor preditivo 45%); De Panfilis 2015 (10.1037/per0000132; 61 x 61, emoção negativa mesmo incluídos); Skoglund 2021 (10.1038/s41380-019-0442-0; 1,85 milhão, herdabilidade 46%, irmãos 4,7x); Sansone 2015 (10.4088/PCC.14r01743; dor crônica e queixas somáticas); Zimmerman 2012 (10.4088/JCP.10m06784; 1.976 pacientes, 1 critério x 0); Winsper 2017 (10.1016/j.neubiorev.2016.12.008; 32 estudos, sono e pesadelos); Gunderson 2004 (10.4088/jcp.v65n0804; 161 pacientes, 3 anos); Zanarini 2012 (10.1176/appi.ajp.2011.11101550; remissão 78 a 99%, recuperação 40 a 60%); McMain 2009 (10.1176/appi.ajp.2009.09010039; 180 pacientes, DBT igual a manejo psiquiátrico geral); Zanarini 1998 (10.3109/10673229809000330; 25 estados disfóricos específicos). Contra uma tese: Ebner-Priemer 2006 (10.1097/01.nmd.0000239900.46595.72) mostra lembrança puxando para o negativo, então não afirmar que a pessoa esquece o pior da crise; Korn 2016 (10.1017/S003329171500207X) sustenta que a crítica pesa mais, tese que já saiu em 22/10.
+
+Lista entregue (20, em ordem de aposta; hipótese editorial onde não há post de fora):
+1. 1 EM CADA 4 BORDERLINES OUVE VOZES. ESQUIZOFRENIA riscada. (parente de psicoses 04/04, Reel 07/06 com 31.593 views, Reel 28/10)
+2. DEPOIS DOS 45, O BORDERLINE OSCILA MENOS E SE ISOLA MAIS. RANZINZA riscado. (molde avó nervosa)
+3. O BORDERLINE DE 30 ANOS DORME COM UMA PELÚCIA. INFANTIL riscado.
+4. 6 SINAIS QUE O BORDERLINE ESCONDE ATÉ DO MÉDICO. (lista com os itens 1, 3, 5, 6, 8 e 13)
+5. NO DIA BOM, O BORDERLINE DUVIDA DA PRÓPRIA CRISE. FINGIMENTO riscado. (parente do carrossel de 18/08, 17.369 views)
+6. CHAMARAM O BORDERLINE PRA FESTA. VOLTOU SE SENTINDO DE FORA. ANTIPATIA riscada.
+7. DUAS FILHAS, A MESMA CASA. O BORDERLINE APARECEU EM UMA SÓ. (parente da semente)
+8. O BORDERLINE SENTE DOR E O EXAME VEM NORMAL. FRESCURA riscada.
+9. DISSERAM QUE VOCÊ TEM SÓ TRAÇOS DE BORDERLINE. POUCO riscado.
+10. VOCÊ SAIU. O BORDERLINE DEIXOU DE SENTIR O SEU AMOR. (miolo no Painel: Prova de amor; encosta na saudade de 14/11)
+11. BORDERLINE OU DUPLA PERSONALIDADE? NA BRIGA VIROU OUTRA PESSOA.
+12. EXISTEM 256 JEITOS DE TER BORDERLINE. (parente do Reel Nove moedas)
+13. O BORDERLINE DORMIU OITO HORAS E ACORDOU EXAUSTO. PREGUIÇA riscada.
+14. O BORDERLINE NÃO CHOROU NO ENTERRO DA AVÓ. INSENSÍVEL riscado. (só descrição clínica de Linehan)
+15. A DEPRESSÃO DO BORDERLINE SÓ MELHOROU QUANDO TRATARAM O BORDERLINE.
+16. NA SEMANA RUIM, O BORDERLINE DESCONFIA DE QUEM MAIS CUIDA. INGRATIDÃO riscada.
+17. NO AUGE DO ESTRESSE, O BORDERLINE ESTRANHA O PRÓPRIO ROSTO NO ESPELHO.
+18. AS CRISES DO BORDERLINE PARARAM. O EMPREGO E OS AMIGOS AINDA NÃO VOLTARAM.
+19. SUA CIDADE NÃO TEM DBT. O BORDERLINE TEM OUTRO TRATAMENTO QUE FUNCIONA.
+20. UM ESTUDO CONTOU 25 DORES TÍPICAS DO BORDERLINE.
+
+Descartados por repetição: elogio que não entra (Reel de 22/10, guarda a crítica); piora no ciclo menstrual (Reel de TPM, 11/09); pessoa favorita (4 posts entre maio e agosto); medo de melhorar (Reel de 03/06); borderline ou depressão pelo mecanismo horas x semanas (descartado em 01/11); identidade que muda com quem está perto (22/05, 13/07, 03/08); empatia (05/06). Sem vizinho com dado: CID-11. Fora por já terem sido propostos em 30/10: contar a vida para um estranho, falar em morrer na briga.
+Limite: histórico de 180 dias só vai até 12/10; de 13/10 a 14/11 a checagem foi pelos registros da memória. O funil (radar, termômetro, base de capa, checklist) ainda não rodou sobre os 20.
