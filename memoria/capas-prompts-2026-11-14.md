@@ -6,11 +6,12 @@ fonte: "[[validados]], [[capas-base-tecnica]], [[correcoes]]"
 status: rascunho
 ---
 
-# Capas de 14/11/2026: prompts das 7 que faltam
+# Capas de 14/11/2026: prompts das capas
 
-Configuração em todas: GPT Image 2.6, qualidade alta (high), 2k, proporção 4:5.
-Disparadas daqui: 1A e 1B (6 sinais) e 2A (criou as duas igual). O saldo acabou nas outras 7.
-Depois de gerar, conferir letra por letra e recolher por código se a margem ficar abaixo de 5%.
+Configuração em todas: GPT Image 2.6, qualidade alta (high), 2k, proporção 4:5, 2,75 créditos cada.
+As 10 capas foram disparadas em 14/11: 3 antes da recarga (1A, 1B, 2A) e 7 depois (2B a 5B, com os prompts abaixo).
+Ao disparar as 7, entrou no bloco HEADLINE a frase: No glow, halo or lighter aura around the letters: the paper colour stays perfectly uniform right up to the edge of each letter.
+Depois de gerar, conferir letra por letra, medir margem e halo por código e corrigir antes de entregar.
 
 Texto de cada capa (linhas na ordem):
 - Tema 2: CRIOU AS DUAS IGUAL. / O BORDERLINE / APARECEU / EM UMA SÓ. (EM UMA SÓ. em vermelho)
@@ -169,7 +170,7 @@ RULES: no other text anywhere: no logo, no handle, no watermark, no caption, no 
 
 ---
 
-## As três já disparadas (referência de estilo)
+## Jobs do Higgsfield (versões cruas; as corrigidas estão no Painel de Carrosséis)
 
 - 1A, 6 sinais, abraço na porta: job 247d13cf-55ca-4469-b0d5-f84f2617f827. Fundo creme, bloco de foto em meio-tom, mãe abraça a filha na porta, a filha segura um urso atrás das costas, fita vermelha.
 - 1B, 6 sinais, em pé: job 23d9b15a-16bd-423d-b049-ea66bc2d6972. Fundo amarelo, recorte de mulher de frente com as mãos para trás e o urso aparecendo no quadril.
@@ -178,3 +179,14 @@ RULES: no other text anywhere: no logo, no handle, no watermark, no caption, no 
 Texto das capas do tema 1: 6 SINAIS QUE / O BORDERLINE / ESCONDE / ATÉ DE VOCÊ. (ESCONDE em vermelho).
 
 O que o modelo errou e foi corrigido por código (scripts só na sessão; refazer se preciso): margem de cima e de baixo abaixo de 5% em todas (recolher ou deslocar sobre papel sintetizado da própria imagem); halo claro em volta das letras no fundo creme e no azul (trocar por papel onde o brilho local passa do fundo; no amarelo não apareceu). Custo: 2,75 créditos por capa em alta, 2k, 4:5.
+
+As sete disparadas depois da recarga:
+- 2B, criou as duas igual, sofá (creme): job 8de8e05d-f932-464e-99f1-b97d52689adf.
+- 3A, ouve vozes, mulher que se vira (creme): job 7087988c-9e68-4205-ba0e-3a360638c742.
+- 3B, ouve vozes, família no sofá (azul claro): job 39ce5954-c7be-49e7-bac7-a7a53e09e552.
+- 4A, se acalmou, testa no ombro (creme): job 301b3c83-5495-4829-b837-fa66b9db1d84.
+- 4B, se acalmou, copo de água (azul claro): job 367ae1c6-e281-447b-ba6e-09b007a3ac0b. A cauda do Q de QUANDO ficava a 2 px da linha de baixo; abertos 14 px de entrelinha por código.
+- 5A, férias, praia (amarelo): job da846003-9ad5-4faf-aa97-ce41a48f701f.
+- 5B, férias, rede (creme): job 80d1d379-8c5d-43df-a296-7c570f1fcec5.
+
+A frase contra o halo não resolveu: o brilho claro em volta das letras voltou em 4 das 7 (até 9% da área do texto) e foi limpo por código.

@@ -143,5 +143,8 @@ Tese: depois do diagnóstico, a família para de discordar com medo da crise; tr
 ## Capas geradas em 14/11/2026 (GPT Image 2.6, alta, 2k; ainda sem publicação e sem miolo)
 
 - 6 SINAIS QUE O BORDERLINE ESCONDE ATÉ DE VOCÊ. Duas capas: abraço na porta com urso escondido atrás das costas (creme) e mulher em pé com o urso no quadril (amarelo). Lista prevista: pelúcia, vozes, dor no estômago depois da briga, pesadelo, sentir-se de fora mesmo convidada, tédio quando a rotina some.
-- CRIOU AS DUAS IGUAL. O BORDERLINE APARECEU EM UMA SÓ. Uma capa: mãe serve dois pratos iguais às duas filhas (azul claro). Tese: metade do risco é herdada e o resto vem do que cada filha viveu sozinha (Skoglund 2021). Parente da semente.
-- Em prompt, sem imagem: 1 em cada 4 ouve vozes; se acalmou quando você chegou; piorou nas férias que você planejou. Ver `capas-prompts-2026-11-14.md` e `validados.md` (14/11).
+- CRIOU AS DUAS IGUAL. O BORDERLINE APARECEU EM UMA SÓ. Duas capas: mãe serve dois pratos iguais às duas filhas (azul claro) e mãe no sofá abraçando as duas, uma encostada e a outra rígida (creme). Tese: metade do risco é herdada e o resto vem do que cada filha viveu sozinha (Skoglund 2021). Parente da semente.
+- 1 EM CADA 4 BORDERLINES OUVE VOZES. ESQUIZOFRENIA riscada. Duas capas: mulher em pé que se vira para o vazio (creme) e família no sofá em que só ela olha para a porta vazia (azul claro).
+- O BORDERLINE SE ACALMOU QUANDO VOCÊ CHEGOU. TEATRO riscado. Duas capas: testa no ombro de quem chegou (creme) e copo de água com a mão de quem chega no braço (azul claro). Só a partir de 28/11.
+- O BORDERLINE PIOROU NAS FÉRIAS QUE VOCÊ PLANEJOU. INGRATIDÃO riscada. Duas capas: praia, só ela tensa (amarelo) e rede, acordada e de braços cruzados (creme). Para dezembro.
+- Prompts e jobs em `capas-prompts-2026-11-14.md`; funil e fontes em `validados.md` (14/11). Todas no Painel de Carrosséis, com status texto.
