@@ -1,0 +1,141 @@
+<title>Meus Links</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap">
+<style>
+  /* Lista vertical de botões grandes para o polegar, agrupada por uso */
+  :root{
+    --bg:#f3f1ee; --panel:#ffffff; --fg:#22201d; --muted:#6f6a63; --line:#e3ded7;
+    --accent:#1f5f6b; --accent-soft:#e2eef0; --ok:#2e7d4f;
+    --font:Manrope, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#161716; --panel:#212322; --fg:#ecebe8; --muted:#a19d97; --line:#33363a;
+    --accent:#7cc3cf; --accent-soft:#1f3236; --ok:#6fcf97; color-scheme:dark } }
+  :root[data-theme="dark"]{
+    --bg:#161716; --panel:#212322; --fg:#ecebe8; --muted:#a19d97; --line:#33363a;
+    --accent:#7cc3cf; --accent-soft:#1f3236; --ok:#6fcf97; color-scheme:dark }
+
+  body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+  .wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+  h1{font-size:26px;font-weight:800;margin:0;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:4px 0 0}
+  #busca{width:100%;box-sizing:border-box;padding:13px 14px;border:1px solid var(--line);border-radius:12px;
+    background:var(--panel);color:var(--fg);font:500 16px var(--font)}
+  #busca:focus{outline:2px solid var(--accent);outline-offset:1px}
+  section{display:flex;flex-direction:column;gap:8px}
+  h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 2px 2px}
+  .item{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px 6px 6px 14px}
+  .info{flex:1;min-width:0}
+  .nome{font-weight:700;font-size:15.5px;line-height:1.25}
+  .url{color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  button.copiar{flex:none;border:0;border-radius:10px;padding:13px 16px;min-width:92px;background:var(--accent);color:var(--bg);
+    font:800 14px var(--font);cursor:pointer}
+  button.copiar.ok{background:var(--ok)}
+  button.copiar:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+  a.abrir{flex:none;color:var(--accent);font-weight:700;font-size:13px;padding:13px 6px;text-decoration:none}
+  .vazio{color:var(--muted);text-align:center}
+  @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Meus Links</h1>
+    <p class="sub">Toque em Copiar e cole onde quiser.</p>
+  </header>
+  <input id="busca" type="search" placeholder="Procurar link" autocomplete="off">
+  <div id="lista"></div>
+  <p class="vazio" id="vazio" hidden>Nenhum link com esse nome.</p>
+</div>
+
+<script>
+const GRUPOS = [
+  { titulo: "Vendas e agenda", links: [
+    ["Protocolo 7 Dias (site)", "https://curso.drfabioschmidt.net/"],
+    ["Protocolo 7 Dias (pagamento)", "https://pay.hotmart.com/S104212285E"],
+    ["Livro R$ 69 (pagamento)", "https://pay.hotmart.com/U103950622S?off=3xv992tf"],
+    ["Guia Protocolo da Crise R$ 27 (pagamento)", "https://pay.hotmart.com/H105440271K"],
+    ["Kit de Regulação R$ 27 (pagamento)", "https://pay.hotmart.com/M105447307K"],
+    ["Marcar consulta", "https://consultadrfabio.base44.app/"],
+    ["Respira (app)", "https://respira.base44.app/"],
+    ["Instagram", "https://www.instagram.com/drfabioschmidt"],
+  ]},
+  { titulo: "Painéis de trabalho", links: [
+    ["Painel Resolve", "https://claude.ai/artifact/UpCyZQZ4LqwKwwoGgiR8v9"],
+    ["Painel de Insights", "https://claude.ai/artifact/WZKujhSm5EnmhF2pt5YeLw"],
+    ["Painel de Carrosséis", "https://claude.ai/artifact/FLkAaLreMAYtkkFBpnpSWC"],
+    ["Painel Borderline Sem Estigma", "https://claude.ai/artifact/Jc3hE4KzSkR11oAro7C2HM"],
+    ["Funil de Ideias", "https://claude.ai/artifact/ThvWsoEKzgf43aQfmZYYbA"],
+    ["Cofre Borderline", "https://claude.ai/artifact/Ww7nU4VnjuA5akFjGq37vU"],
+    ["Backup da Memória", "https://claude.ai/artifact/5W8kGyMBChhYbEKWDWkp1e"],
+    ["Central de Vídeo Borderline", "https://claude.ai/artifact/DNGwEpQVhct7Cnz8QEU6bA"],
+    ["Mapa de Pendências", "https://claude.ai/artifact/UhV42vLfQ44TMA6JREpobU"],
+    ["Pauta Borderline Sem Estigma", "https://claude.ai/artifact/KwJJTuic6NbQBu2boARztc"],
+    ["Certezas do Borderline Sem Estigma", "https://claude.ai/artifact/FCP1yHCM5b9BpbgEw99mtm"],
+    ["Auditoria Instagram out/2026", "https://claude.ai/artifact/XoKbi3GyQxpXZb3eMq7814"],
+    ["Meta Ads: por que não vendo", "https://claude.ai/artifact/THE1wszC4qULdN7Q8KFdLn"],
+    ["Ref", "https://claude.ai/artifact/31W93VxQHfBkpKP6PqLAaX"],
+    ["Referência Visual", "https://claude.ai/artifact/F2TpTL3MbYgyKCDz1HPzGW"],
+  ]},
+  { titulo: "Para pacientes e familiares", links: [
+    ["Protocolo da Crise (página)", "https://claude.ai/artifact/Hg4B4kNkyJxxLgpjzxQRud"],
+    ["Kit de Regulação (página)", "https://claude.ai/artifact/SHgXZCjYBQqkM8cvoDR4X3"],
+    ["Respire Agora", "https://claude.ai/artifact/UWhYe9JFa1XhWw8q6EaEcp"],
+    ["Sinais Antes da Crise", "https://claude.ai/artifact/7zpJ11dH8FbVmB73RVpFkh"],
+    ["Amar com Borderline", "https://claude.ai/artifact/9wrsSEjdvoe9CWy2qMcr8r"],
+    ["Atalho Plantão", "https://claude.ai/artifact/YQtTbFQbXATWV6YMmFBixe"],
+    ["Atalho Hora", "https://claude.ai/artifact/BRc5UPiZoiF6GRPyhRGVS1"],
+  ]},
+  { titulo: "Peças e lotes", links: [
+    ["Carrosséis 6 a 19 de novembro", "https://claude.ai/artifact/QTqfP2LEe17eUZavngsC7x"],
+    ["Stories TDAH ou Borderline", "https://claude.ai/artifact/VBfhgzsXmEewCYJHWWdXe8"],
+    ["Carrossel Parou de Usar", "https://claude.ai/artifact/Y2m8QTnsrVrBGWooSjp4mG"],
+    ["Leva 30/set a 6/out", "https://claude.ai/artifact/3vjtLckWZdMpK5Gdc9PnNE"],
+    ["Andressa: Cannabis na Odonto", "https://claude.ai/artifact/FHCKqPyTf8vrUnDWdwKCcT"],
+  ]},
+];
+
+const lista = document.getElementById("lista");
+const vazio = document.getElementById("vazio");
+
+function copiar(url, btn){
+  const feito = () => { btn.textContent = "Copiado"; btn.classList.add("ok");
+    setTimeout(() => { btn.textContent = "Copiar"; btn.classList.remove("ok"); }, 1600); };
+  const reserva = () => {
+    const t = document.createElement("textarea"); t.value = url; t.style.position = "fixed"; t.style.opacity = "0";
+    document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch(e) {} t.remove(); feito();
+  };
+  try { navigator.clipboard.writeText(url).then(feito, reserva); } catch(e) { reserva(); }
+}
+
+function desenhar(filtro){
+  const f = (filtro || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  lista.replaceChildren();
+  let total = 0;
+  for (const g of GRUPOS){
+    const itens = g.links.filter(([n]) => n.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").includes(f));
+    if (!itens.length) continue;
+    const sec = document.createElement("section");
+    const h = document.createElement("h2"); h.textContent = g.titulo; sec.appendChild(h);
+    for (const [nome, url] of itens){
+      total++;
+      const row = document.createElement("div"); row.className = "item";
+      const info = document.createElement("div"); info.className = "info";
+      const n = document.createElement("div"); n.className = "nome"; n.textContent = nome;
+      const u = document.createElement("div"); u.className = "url"; u.textContent = url.replace(/^https?:\/\/(www\.)?/, "");
+      info.append(n, u);
+      const a = document.createElement("a"); a.className = "abrir"; a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Abrir";
+      const b = document.createElement("button"); b.type = "button"; b.className = "copiar"; b.textContent = "Copiar";
+      b.addEventListener("click", () => copiar(url, b));
+      row.append(info, a, b);
+      sec.appendChild(row);
+    }
+    lista.appendChild(sec);
+  }
+  lista.style.display = "flex"; lista.style.flexDirection = "column"; lista.style.gap = "22px";
+  vazio.hidden = total > 0;
+}
+
+document.getElementById("busca").addEventListener("input", e => desenhar(e.target.value));
+desenhar("");
+</script>
