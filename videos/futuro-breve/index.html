@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:PF;src:url(fontes/pf-500.ttf);font-weight:500}
+@font-face{font-family:PF;src:url(fontes/pf-700.ttf);font-weight:700}
+@font-face{font-family:PF;src:url(fontes/pf-italic.ttf);font-weight:500;font-style:italic}
+html,body{margin:0;background:#000;width:1080px;height:1920px;overflow:hidden}
+.cena{position:absolute;inset:0;opacity:0}
+.foto{position:absolute;inset:0;background-size:cover;background-position:center}
+.grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 40%,rgba(0,0,0,.55) 58%,rgba(0,0,0,.88) 82%,rgba(0,0,0,.92) 100%)}
+.txt{position:absolute;left:96px;right:140px;color:#f5ecdf;font-family:PF;font-weight:500;
+  text-shadow:0 3px 18px rgba(0,0,0,.55)}
+.l{display:block;opacity:0}
+.base{top:1130px;font-size:78px;line-height:1.14}
+.base .pq{font-style:italic;font-size:54px;color:#e6c79a;margin-top:14px}
+.intro{top:640px;font-size:76px;line-height:1.18}
+.intro .dest{font-style:italic;color:#e6c79a}
+.ue{top:0;bottom:0;display:flex;align-items:center;justify-content:center;left:96px;right:96px;font-size:150px;font-weight:700}
+</style></head><body>
+
+<div class="cena" id="c0"><div class="txt intro">
+  <span class="l">Passando apenas</span>
+  <span class="l">para lembrar</span>
+  <span class="l">das coisas que</span>
+  <span class="l">estão por vir</span>
+  <span class="l dest">no nosso futuro breve:</span>
+</div></div>
+
+<div class="cena" id="c1"><div class="foto" style="background-image:url(1-bruno.png);background-position:30% center"></div><div class="grad"></div>
+  <div class="txt base"><span class="l">Bruno com ateliê</span><span class="l pq">reconhecido internacionalmente</span></div></div>
+
+<div class="cena" id="c2"><div class="foto" style="background-image:url(2-fabio.png);background-position:62% center"></div><div class="grad"></div>
+  <div class="txt base"><span class="l">Fabio na noite</span><span class="l">de autógrafos</span><span class="l pq">do seu livro</span></div></div>
+
+<div class="cena" id="c3"><div class="foto" style="background-image:url(3-partidinha.png);background-position:50% center"></div><div class="grad"></div>
+  <div class="txt base"><span class="l">E a partidinha</span></div></div>
+
+<div class="cena" id="c4"><div class="txt ue"><span class="l">Mas ué?</span></div></div>
+
+<div class="cena" id="c5"><div class="foto" style="background-image:url(4-netos.png);background-position:45% center"></div><div class="grad"></div>
+  <div class="txt base"><span class="l">Estou falando</span><span class="l">dos netos<span id="d1">.</span><span id="d2">.</span><span id="d3">.</span></span></div></div>
+
+<script>
+const DUR=20.4;
+// [id, inicio, fim, atrasos das linhas]
+const C=[
+ ['c0',0.0,5.0,[1.0,1.45,2.0,2.45,3.1]],
+ ['c1',4.8,7.9,[0.5,1.1]],
+ ['c2',7.9,11.1,[0.5,0.9,1.5]],
+ ['c3',11.1,13.5,[0.5]],
+ ['c4',14.7,16.5,[0.15]],
+ ['c5',16.5,DUR+1,[0.6,1.2]],
+];
+const cl=(x)=>Math.max(0,Math.min(1,x));
+const ease=(x)=>1-Math.pow(1-cl(x),3);
+window.seek=function(t){
+  for(const [id,a,b,ls] of C){
+    const el=document.getElementById(id);
+    const fi=id==='c4'?0.08:0.45, fo=0.45;
+    let o=Math.min(cl((t-a)/fi), cl((b-t)/fo));
+    if(id==='c0') o=cl((b-t)/fo);
+    el.style.opacity=o;
+    const f=el.querySelector('.foto');
+    if(f){const p=cl((t-a)/(b-a+0.5)); f.style.transform=`scale(${1.03+0.07*p})`;}
+    el.querySelectorAll('.l').forEach((l,i)=>{
+      const e=ease((t-a-ls[i])/0.6);
+      l.style.opacity=e;
+      if(id==='c4') l.style.transform=`scale(${0.85+0.15*ease((t-a-ls[i])/0.25)})`;
+      else l.style.transform=`translateY(${(1-e)*34}px)`;
+    });
+  }
+  const a5=16.5;
+  ['d1','d2','d3'].forEach((d,i)=>{document.getElementById(d).style.opacity=cl((t-a5-1.9-i*0.45)/0.2)});
+};
+window.DUR=DUR; seek(0);
+</script></body></html>
