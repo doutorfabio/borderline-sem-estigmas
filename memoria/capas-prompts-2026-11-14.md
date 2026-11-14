@@ -190,3 +190,10 @@ As sete disparadas depois da recarga:
 - 5B, férias, rede (creme): job 80d1d379-8c5d-43df-a296-7c570f1fcec5.
 
 A frase contra o halo não resolveu: o brilho claro em volta das letras voltou em 4 das 7 (até 9% da área do texto) e foi limpo por código.
+
+## Versões corrigidas depois do painel (14/11)
+
+- 2A mesa, refeita com a própria capa como referência (medias: image_references com o job 8fda3049): job 2db7f51b-1838-439a-8add-6a538ab6cdf0. Pedido: mesmo estilo e mesma foto; título em 3 linhas (CRIOU AS DUAS IGUAL. / O BORDERLINE / APARECEU EM UMA SÓ., com EM UMA SÓ. em vermelho); exatamente um garfo à esquerda e uma faca à direita de cada prato; a mãe segura os pratos pela borda.
+- 4A ombro, refeita com a referência (job 301b3c83): job d98aaf62-ceea-45b6-bb5d-26ef05aec791. Pedido: tudo igual; tirar a mão solta com chaves; duas pessoas e quatro mãos; chaves penduradas na fechadura.
+- 5A praia: sem nova geração. Por código: 12 px a mais entre as linhas, a linha de INGRATIDÃO a 85% do tamanho, margens laterais de 8,5%.
+- Editar com a capa anterior como referência manteve rostos, cena e tipografia e mudou só o que foi pedido.

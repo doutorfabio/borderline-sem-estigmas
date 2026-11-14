@@ -148,3 +148,4 @@ Tese: depois do diagnóstico, a família para de discordar com medo da crise; tr
 - O BORDERLINE SE ACALMOU QUANDO VOCÊ CHEGOU. TEATRO riscado. Duas capas: testa no ombro de quem chegou (creme) e copo de água com a mão de quem chega no braço (azul claro). Só a partir de 28/11.
 - O BORDERLINE PIOROU NAS FÉRIAS QUE VOCÊ PLANEJOU. INGRATIDÃO riscada. Duas capas: praia, só ela tensa (amarelo) e rede, acordada e de braços cruzados (creme). Para dezembro.
 - Prompts e jobs em `capas-prompts-2026-11-14.md`; funil e fontes em `validados.md` (14/11). Todas no Painel de Carrosséis, com status texto.
+- Leituras de 14/11 (Claude, Vamos e painel): ficam a mesa (criou as duas, corrigida, feed), o ombro (se acalmou, corrigida, só a partir de 28/11), a praia (férias, corrigida, dezembro), a família no sofá (vozes, palavra riscada a trocar, teste) e o abraço (6 sinais, teste). Não usar: em pé, sofá das filhas, mulher que se vira, copo de água, rede.

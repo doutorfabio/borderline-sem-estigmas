@@ -31,3 +31,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Esse novo foi q eu criei e vc pediu e está vazio".
 - Correção: pedir só a troca do nome do repositório novo; o envio sai desta sessão em seguida.
 - Regra prática: ao pedir repositório novo para receber o conteúdo de uma sessão em andamento, o nome tem de ser diferente do repositório já ligado à sessão.
+
+## 2026-11-14, a16 (halo) e regra 4 (conferência letra por letra)
+- O que aconteceu: entreguei 10 capas dizendo que estavam conferidas. O painel independente achou halo claro em volta de INGRATIDÃO na capa da rede (a limpeza por código pulou a última linha, que ficava na mesma faixa dos postes da imagem); canto do U de APARECEU cortado na capa do sofá; dois garfos num prato e nenhum no outro na capa da mesa, desmentindo o igual da frase; mão solta com chaves na capa do ombro; margem lateral de 5,8% em três capas, abaixo de 3% no recorte 3:4 da grade.
+- Frase dele: "Sei não hein pede opinião do vamos e passa pelos funks".
+- Correção: mesa e ombro refeitas com a referência (um garfo de cada lado e título em 3 linhas; chaves na fechadura); praia corrigida por código; as cinco versões reprovadas marcadas no Painel como não usar.
+- Regra prática: antes de dizer que uma capa está conferida, (1) medir o halo em todas as linhas de texto, inclusive a última; (2) contar os objetos que a frase afirma serem iguais; (3) contar as mãos de cada pessoa; (4) deixar 8% ou mais de margem lateral, por causa do recorte da grade; (5) passar a imagem por um leitor independente.

@@ -18,6 +18,10 @@ Conector `instagram`, conta 17841401503370732. Janela de até 14 dias por chamad
 - Retenção, em chamada separada: `media_permalink, media_reel_avg_watch_time, media_reel_skip_rate`.
 - Curtidas e comentários vieram vazios em 26/10. Se precisar deles, pedir print a ele.
 
+## Leitura de 14/11/2026 (Windsor, puxada pelo painel de capas; não conferida pelo Claude)
+
+Três carrosséis, para comparar nota de capa com envio: filha passou em primeiro (11/11) 44.055 views, 22.559 de alcance, 78 envios, 214 salvos; rir não desmente o seu choro (13/11, 1 dia) 18.541 views, 9.664 de alcance, 100 envios, 104 salvos; se trancou (04/11) 17.182 views, 34 envios. Observação do painel: a capa da filha tinha nota 100 na base técnica e fez 3,5 envios por mil de alcance; a de 02/11 (autolesão) faz 26 por mil. Nota de capa não previu envio.
+
 ## Leitura de 12/11/2026 (Windsor, posts de 30/10 a 12/11)
 
 37 publicações (27 Reels, 10 carrosséis). Posts de 08/11 em diante têm menos de 7 dias e ainda acumulam. Ret = tempo médio assistido em segundos. Pulo = saída nos 3 primeiros segundos. Puxada para comparar 10 temas de Reel falado propostos por um painel de 10 leituras.
