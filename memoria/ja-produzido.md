@@ -139,3 +139,9 @@ Tese: depois do diagnóstico, a família para de discordar com medo da crise; tr
 - Reel colagem Lendo uma mensagem sem emoji (13,5 s, só texto, não publicado na data do registro): sinal neutro lido como rejeição; tabela o que foi escrito x o que foi lido; sensibilidade à rejeição.
 
 - Story Surfar a vontade (13/11/2026, 3 blocos estáticos 9:16, creme com uma linha vermelha que sobe, faz pico e desce; ainda não publicado na data do registro). Para quem tem borderline, função confiança. Tese: a vontade na crise sobe rápido, tem um pico e desce sem precisar obedecer; três passos enquanto não desce (dizer baixinho que é uma vontade, reparar onde aperta no corpo, respirar devagar), com 188 e 192. Técnica de surfar a vontade, da terapia comportamental dialética; sem número de minutos, por falta de fonte. Vizinho: A compulsão funciona (por que repete). Jobs 88e203d9, 267f8464, ba0ee9a4 (GPT Image 2.6); lista do bloco 3 e apoio do bloco 1 ajustados por código para a margem de 12%. Arquivos em `entregas/story-surfar-a-vontade/` no branch claude/gifted-planck-w1n9wy.
+
+## Capas geradas em 14/11/2026 (GPT Image 2.6, alta, 2k; ainda sem publicação e sem miolo)
+
+- 6 SINAIS QUE O BORDERLINE ESCONDE ATÉ DE VOCÊ. Duas capas: abraço na porta com urso escondido atrás das costas (creme) e mulher em pé com o urso no quadril (amarelo). Lista prevista: pelúcia, vozes, dor no estômago depois da briga, pesadelo, sentir-se de fora mesmo convidada, tédio quando a rotina some.
+- CRIOU AS DUAS IGUAL. O BORDERLINE APARECEU EM UMA SÓ. Uma capa: mãe serve dois pratos iguais às duas filhas (azul claro). Tese: metade do risco é herdada e o resto vem do que cada filha viveu sozinha (Skoglund 2021). Parente da semente.
+- Em prompt, sem imagem: 1 em cada 4 ouve vozes; se acalmou quando você chegou; piorou nas férias que você planejou. Ver `capas-prompts-2026-11-14.md` e `validados.md` (14/11).
