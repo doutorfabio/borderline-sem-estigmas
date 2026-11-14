@@ -159,3 +159,12 @@ IMAGE (lower part of the safe area, centered, no frame): a black-and-white photo
 
 RULES: no other text anywhere: no logo, no handle, no watermark, no caption, no small print, no quotation marks. No phone, no pills, no blood. Spell every word exactly as written above, including the accents in FÉRIAS, VOCÊ and INGRATIDÃO.
 ```
+
+---
+
+## Versões corrigidas depois do painel (14/11)
+
+- 2A mesa, refeita com a própria capa como referência: mesmo estilo e mesma foto; título em 3 linhas (CRIOU AS DUAS IGUAL. / O BORDERLINE / APARECEU EM UMA SÓ., com EM UMA SÓ. em vermelho); um garfo à esquerda e uma faca à direita de cada prato; a mãe segura os pratos pela borda.
+- 4A ombro, refeita com a referência: tudo igual; sem a mão solta com chaves; duas pessoas e quatro mãos; chaves penduradas na fechadura.
+- 5A praia, por código: 12 px a mais entre as linhas, a linha de INGRATIDÃO a 85% do tamanho, margens laterais de 8,5%.
+- Os arquivos 02a, 04a e 05a desta pasta já são as versões corrigidas.
