@@ -1,8 +1,9 @@
-# Capas de 14/11/2026: prompts das 7 que faltam
+# Capas de 14/11/2026: prompts das capas
 
-Configuração em todas: GPT Image 2.6, qualidade alta (high), 2k, proporção 4:5.
-Disparadas daqui: 1A e 1B (6 sinais) e 2A (criou as duas igual). O saldo acabou nas outras 7.
-Depois de gerar, conferir letra por letra e recolher por código se a margem ficar abaixo de 5%.
+Configuração em todas: GPT Image 2.6, qualidade alta (high), 2k, proporção 4:5, 2,75 créditos cada.
+As 10 capas foram disparadas em 14/11: 3 antes da recarga (1A, 1B, 2A) e 7 depois (2B a 5B, com os prompts abaixo).
+Ao disparar as 7, entrou no bloco HEADLINE a frase: No glow, halo or lighter aura around the letters: the paper colour stays perfectly uniform right up to the edge of each letter.
+Depois de gerar, conferir letra por letra, medir margem e halo por código e corrigir antes de entregar.
 
 Texto de cada capa (linhas na ordem):
 - Tema 2: CRIOU AS DUAS IGUAL. / O BORDERLINE / APARECEU / EM UMA SÓ. (EM UMA SÓ. em vermelho)
