@@ -255,3 +255,23 @@ Pedido dele: "Traz tema validado no Vamos pro próximo Reel", "Texto roteiros v�
 - [@doc_martin_gp, rótulo do diagnóstico machuca](https://www.instagram.com/p/DehVqSGhzRp/): 399.085 views, 1.245 envios, cerca de 10x (15/10). Descartado: tese britânica de abolir o diagnóstico e família já feita de estigma.
 - Vistos e fora do formato: [@clairejja](https://www.instagram.com/p/DfR6VAssybu/) 151.094, 3,1x (medo de abandono, já feito); [@0liviapacifico](https://www.tiktok.com/@0liviapacifico/video/7691669715793513750) 595.751, 18x (esquete); [@dragraziellachavesribeiro](https://www.instagram.com/p/De_qi3-oPOU/) 833.958 (animação). Em português, nada falado à câmera passou.
 Decisão do Claude: sem outlier de fora com tema novo, os roteiros saíram do molde dos três maiores Reels dele em 180 dias (mediana de Reel 5.335): Cinco sinais diferentes de que um border te ama (18/06, 144.703 views, 4.287 envios); Te chamou de tudo ontem e hoje pediu pra você ficar (16/05, 95.241, 2.799); Some, bloqueia e volta como se nada tivesse acontecido (21/06, 94.516, 970). Roteiros: cinco frases que querem dizer fica; reclamou que você não ligou e não atendeu; meme depois da briga.
+
+## 2026-11-14: formato TOP 5 falado (Vamos, chats 2b6b9979 e e232ea19, 22 + 33 créditos)
+
+Pedido dele, com print do Reel TOP 5 LIVROS PARA QUEM TEM BORDERLINE (caneca, título fixo no topo, números 1 a 5 na lateral): "Ajude a pesquisar profundamente quais top5 assim se eu fizer vaia bombar". Duas pesquisas, 90 dias, PT e EN: (A) nicho borderline; (B) nichos vizinhos de saúde mental.
+
+Mais fortes:
+- [@dracarlapsiquiatra, 2 filmes que retratam o lado mais intenso do borderline (Gia, Betty Blue)](https://www.instagram.com/p/DemOHmMNbRa/): 239.308 views, cerca de 16x, 5.162 compartilhamentos (17/10). Médica à câmera com cenas dos filmes; segura o número 1 para o fim.
+- [@softcomplexities, 5 things only BPD partners know (each one more niche)](https://www.instagram.com/p/DexBPmQCAxw/): 641.503, 14,6x, 8.698 (21/10). Animação, sem fala.
+- [@kellybaums, nota de 1 a 10 para dicas de TDAH](https://www.tiktok.com/@kellybaums/video/7686960538412174623): 248.957, cerca de 43x, 1.214 (18/09). Fala à câmera, item e nota entram conforme fala. Formato mais próximo dos números na lateral.
+- [@drstevenstorage, 7 sinais escondidos de TDAH](https://www.instagram.com/p/DexPD5Gyvg5/): 793.313, cerca de 30x (21/10). Selfie, take único.
+- [@therapy_to_the_point, 6 sinais de que está entrando em depressão](https://www.instagram.com/p/DeX4Nc0BRlJ/): 2.438.023, cerca de 17x, 33.842 (11/10).
+- [@docamen, 5 coisas que um psiquiatra não faria se tivesse TDAH](https://www.tiktok.com/@docamen/video/7695814057424588063): 650.184, cerca de 70x, 10.470 (21/10).
+- [@drrenatopacheco, 3 coisas dos pais na crise do autismo](https://www.instagram.com/p/DfDfJN2sR1Q/): 678.146, cerca de 11x (28/10).
+
+Abaixo do usual: [@therapy_to_the_point, 5 things you should know about BPD](https://www.instagram.com/p/DevCQ9fhn3e/), 0,43x (aula genérica com credencial antes do reconhecimento); [@drrenatopacheco, 3 filmes para entender autismo](https://www.instagram.com/p/DfISkNvsJLu/), 0,23x (filmes que não retratam o tema). Livros, séries, personagens, músicas, mitos e frases: sem prova nem de viral nem de flop.
+
+O que se repete (observação): sinais pouco reconhecidos (dois criadores); julgar itens com nota ou ordem; promessa específica na primeira frase (o primeiro é perturbador; cada um mais específico); o número 1 guardado para o fim. Nenhum post comprova o layout exato com caneca e números na lateral.
+
+Temas propostos ao Dr. Fabio: filmes e séries com borderline do que mais acerta ao que mais estigmatiza (novo); nota de 0 a 10 para conselhos que a família recebe (novo); sinais de borderline que ninguém associa ao borderline (parente de Coisas que o border sente e você nem imagina, 24/04/2026); o que só quem ama alguém com borderline sabe (parente de Amar um borderline cansa e do Reel de 08/11; risco de repetição); o que eu não faria na crise de quem eu amo (parente de Três coisas para fazer quando a crise sobe, 29/06, e do Protocolo; teste).
+Descartados: TOP 5 coisas que você precisa saber sobre borderline (flop de fora); livros como aposta de alcance (sem prova).
