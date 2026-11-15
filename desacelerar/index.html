@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121212">
+<meta name="color-scheme" content="dark">
+<title>Desacelerar</title>
+<style>
+:root{
+  --bg:#121212;
+  --surface:#1c1a17;
+  --surface-2:#26231f;
+  --line:#3a352e;
+  --text:#d8d0c4;
+  --muted:#a89f92;
+  --accent:#c9a24a;
+  --accent-ink:#121212;
+  --circle:#c9a24a;
+  --circle-fill:rgba(201,162,74,.16);
+  --focus:#e0bf6e;
+}
+body.luz-baixa{
+  --bg:#070302;
+  --surface:#140805;
+  --surface-2:#1d0c07;
+  --line:#3a160c;
+  --text:#c98a4b;
+  --muted:#ad7341;
+  --accent:#c4663a;
+  --accent-ink:#070302;
+  --circle:#9a3a1e;
+  --circle-fill:rgba(154,58,30,.18);
+  --focus:#c9733f;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:19px;line-height:1.45;
+  min-height:100vh;min-height:100dvh;
+  transition:background-color .4s,color .4s;
+}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.app{max-width:520px;margin:0 auto;padding:16px 16px 150px}
+header.top{display:flex;align-items:center;gap:12px;min-height:56px;margin-bottom:8px}
+.voltar{
+  background:none;border:1px solid var(--line);border-radius:14px;
+  min-height:52px;padding:0 18px;font-size:18px;color:var(--text);
+}
+h1{font-size:32px;font-weight:600;margin:8px 0 6px;letter-spacing:.2px}
+h2{font-size:26px;font-weight:600;margin:4px 0 12px}
+h3{font-size:20px;font-weight:600;margin:24px 0 10px}
+p{margin:0 0 14px}
+.muted{color:var(--muted)}
+.tela{display:none}
+.tela.ativa{display:block}
+
+/* Botões */
+.btn{
+  display:flex;align-items:center;justify-content:center;width:100%;
+  min-height:60px;padding:14px 18px;border-radius:16px;
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  font-size:20px;font-weight:500;text-align:center;
+}
+.btn.principal{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.sec{background:transparent}
+.btn+.btn{margin-top:12px}
+.btn:disabled{opacity:.45;cursor:default}
+.menu{display:grid;gap:14px;margin-top:22px}
+.menu .btn{min-height:92px;font-size:23px;justify-content:flex-start;padding:18px 22px;border-left:4px solid var(--accent)}
+.links-menores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.links-menores .btn{min-height:56px;font-size:18px;margin:0}
+
+/* Escala 0 a 10 */
+.escala{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0 6px}
+.escala button{
+  min-height:56px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);font-size:20px;font-weight:600;
+}
+.escala button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.escala-legenda{display:flex;justify-content:space-between;font-size:18px;color:var(--muted);margin-bottom:18px}
+
+.opcoes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0 22px}
+.opcoes button{min-height:56px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:19px}
+.opcoes button[aria-pressed="true"]{border-color:var(--accent);background:var(--surface-2);box-shadow:inset 0 0 0 2px var(--accent)}
+
+/* Respiração */
+.palco{display:flex;flex-direction:column;align-items:center;padding-top:6px}
+.circulo-area{position:relative;width:min(78vw,320px);aspect-ratio:1;display:grid;place-items:center;margin:8px 0 18px}
+.circulo{
+  position:absolute;inset:0;margin:auto;width:100%;height:100%;border-radius:50%;
+  border:3px solid var(--circle);background:var(--circle-fill);
+  transform:scale(.45);will-change:transform;
+}
+.fase{position:relative;font-size:30px;font-weight:600;letter-spacing:.5px}
+.contador{font-size:24px;font-variant-numeric:tabular-nums;margin-bottom:6px}
+.ciclo-info{color:var(--muted);font-size:18px;margin-bottom:18px}
+.palco .btn{max-width:360px}
+
+/* Formulários */
+label.campo{display:block;font-size:19px;margin:16px 0 8px}
+input[type="text"],input[type="time"],input[type="date"],textarea{
+  width:100%;min-height:58px;padding:12px 14px;border-radius:14px;
+  border:1px solid var(--line);background:var(--surface);font-size:20px;
+}
+input[type="time"],input[type="date"]{color-scheme:dark}
+.conta-palavras{font-size:18px;color:var(--muted);margin:8px 0 4px}
+.aviso{
+  border:1px solid var(--accent);border-radius:14px;padding:12px 14px;margin:10px 0;
+  font-size:19px;background:var(--surface);
+}
+.confirmacao{border-radius:14px;padding:16px;margin:16px 0;background:var(--surface-2);font-size:20px}
+
+/* Listas */
+ul.lista{list-style:none;margin:0;padding:0}
+ul.lista li{
+  border:1px solid var(--line);border-radius:14px;background:var(--surface);
+  padding:14px;margin-bottom:12px;
+}
+.item-texto{font-size:20px;margin-bottom:4px;word-break:break-word}
+.item-data{font-size:18px;color:var(--muted);margin-bottom:10px}
+.item-acoes{display:flex;gap:10px;flex-wrap:wrap}
+.item-acoes button{
+  flex:1 1 auto;min-height:50px;padding:0 14px;border-radius:12px;
+  border:1px solid var(--line);background:transparent;font-size:18px;
+}
+li.resolvido .item-texto{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.etiqueta{display:inline-block;font-size:18px;border:1px solid var(--line);border-radius:999px;padding:2px 12px;margin-bottom:6px;color:var(--muted)}
+
+/* Checklist */
+.check{display:flex;align-items:center;gap:14px;min-height:60px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:10px;font-size:19px}
+.check input{width:28px;height:28px;flex:0 0 auto;accent-color:var(--accent)}
+.destaque{font-size:22px;font-weight:600;color:var(--accent)}
+
+/* Horário */
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duas .btn{margin:0;min-height:72px}
+.dia{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 14px;margin-bottom:10px}
+.dia-titulo{font-weight:600;margin-bottom:6px}
+.linha-reg{display:flex;justify-content:space-between;gap:10px;font-size:18px;padding:4px 0;flex-wrap:wrap}
+.linha-reg .dif{color:var(--muted)}
+.resumo{font-size:20px;padding:12px 14px;border-radius:14px;background:var(--surface-2);margin:12px 0}
+.edicao{border:1px solid var(--accent);border-radius:14px;padding:14px;margin:14px 0;background:var(--surface)}
+.edicao .duas{margin-top:8px}
+.edicao input{margin-bottom:6px}
+
+/* Configurações */
+.alternar{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:64px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:12px}
+.alternar input{width:30px;height:30px;accent-color:var(--accent)}
+textarea{min-height:200px;font-size:18px;line-height:1.4}
+
+/* Rodapé de segurança */
+footer.seguranca{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--bg);border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  font-size:18px;line-height:1.35;color:var(--muted);text-align:center;
+}
+footer.seguranca a{color:var(--text);font-weight:600;text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:4px 2px}
+
+/* Aviso de luz baixa ativa */
+.faixa-luz{display:none;margin-bottom:10px}
+body.luz-baixa .faixa-luz{display:block}
+.faixa-luz .btn{min-height:52px;font-size:18px}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){body{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="faixa-luz"><button class="btn sec" data-acao="luz-off" type="button">Desligar luz baixa</button></div>
+
+  <!-- INÍCIO -->
+  <section class="tela ativa" id="inicio" aria-labelledby="t-inicio">
+    <h1 id="t-inicio">Desacelerar</h1>
+    <p class="muted">Escolha uma coisa só.</p>
+    <nav class="menu" aria-label="Ferramentas">
+      <button class="btn" type="button" data-ir="respirar">Respirar</button>
+      <button class="btn" type="button" data-ir="tirar">Tirar da cabeça</button>
+      <button class="btn" type="button" data-ir="dormir">Preparar para dormir</button>
+      <button class="btn" type="button" data-ir="horario">Meu horário fixo</button>
+    </nav>
+    <div class="links-menores">
+      <button class="btn sec" type="button" data-ir="historico">Histórico</button>
+      <button class="btn sec" type="button" data-ir="config">Configurações</button>
+    </div>
+    <p class="muted" style="margin-top:22px;font-size:18px">Uso educativo. Não faz diagnóstico e não substitui o tratamento.</p>
+  </section>
+
+  <!-- RESPIRAR -->
+  <section class="tela" id="respirar" aria-labelledby="t-resp">
+    <header class="top"><button class="voltar" type="button" data-voltar>Voltar</button></header>
+    <div id="resp-antes">
+      <h2 id="t-resp">Respirar</h2>
+      <p>Quanto está acelerado agora?</p>
+      <div class="escala" id="escala-antes" role="group" aria-label="Nota de 0 a 10 antes"></div>
+      <div class="escala-legenda"><span>0 calmo</span><span>10 muito acelerado</span></div>
+      <p>Por quanto tempo?</p>
+      <div class="opcoes" id="duracoes" role="group" aria-label="Duração">
+        <button type="button" data-min="3" aria-pressed="false">3 min</button>
+        <button type="button" data-min="5" aria-pressed="true">5 min</button>
+        <button type="button" data-min="10" aria-pressed="false">10 min</button>
+      </div>
+      <button class="btn principal" type="button" id="btn-comecar" disabled>Começar</button>
+      <p class="muted" id="dica-nota" style="margin-top:10px;font-size:18px">Toque em uma nota para começar.</p>
+    </div>
+
+    <div id="resp-durante" hidden>
+      <div class="palco">
+        <div class="circulo-area">
+          <div class="circulo" id="circulo"></div>
+          <div class="fase" id="fase" aria-live="polite">Puxa</div>
+        </div>
+        <div class="contador" id="contador" aria-live="off">5:00</div>
+        <div class="ciclo-info">Puxa em 4. Solta em 6.</div>
+        <button class="btn principal" type="button" id="btn-pausar">Pausar</button>
+        <button class="btn sec" type="button" id="btn-encerrar">Encerrar agora</button>
+      </div>
+    </div>
+
+    <div id="resp-depois" hidden>
+      <h2>Pronto. E agora?</h2>
+      <div class="escala" id="escala-depois" role="group" aria-label="Nota de 0 a 10 depois"></div>
+      <div class="escala-legenda"><span>0 calmo</span><span>10 muito acelerado</span></div>
+      <button class="btn principal" type="button" id="btn-salvar-resp" disabled>Salvar</button>
+      <p class="confirmacao" id="resp-salvo" hidden>Salvo no histórico.</p>
+      <button class="btn sec" type="button" id="btn-resp-inicio" hidden data-ir="inicio">Voltar ao início</button>
+    </div>
+  </section>
+
+  <!-- TIRAR DA CABEÇA -->
+  <section class="tela" id="tirar" aria-labelledby="t-tirar">
+    <header class="top"><button class="voltar" type="button" data-voltar>Voltar</button></header>
+    <h2 id="t-tirar">Tirar da cabeça</h2>
+    <p>O que está rodando agora? Escreva curto.</p>
+    <label class="campo sr" for="txt-tirar">Pensamento</label>
+    <input type="text" id="txt-tirar" maxlength="120" autocomplete="off" autocapitalize="sentences" enterkeyhint="done">
+    <div class="conta-palavras" id="conta-palavras" aria-live="polite">0 palavras</div>
+    <div class="aviso" id="aviso-palavras" hidden>Só o essencial. Três palavras bastam.</div>
+    <button class="btn principal" type="button" id="btn-guardar" disabled>Guardar</button>
+    <div id="guardado-ok" hidden>
+      <p class="confirmacao" role="status">Guardado. Volta para a respiração.</p>
+      <button class="btn" type="button" data-ir="respirar">Ir para Respirar</button>
+    </div>
+    <h3>Guardados</h3>
+    <ul class="lista" id="lista-guardados"></ul>
+    <p class="muted" id="guardados-vazio">Nada guardado ainda.</p>
+  </section>
+
+  <!-- PREPARAR PARA DORMIR -->
+  <section class="tela" id="dormir" aria-labelledby="t-dormir">
+    <header class="top"><button class="voltar" type="button" data-voltar>Voltar</button></header>
+    <h2 id="t-dormir">Preparar para dormir</h2>
+    <label class="campo" for="hora-dormir">Hoje vou dormir às</label>
+    <input type="time" id="hora-dormir">
+    <p style="margin-top:14px" id="calc-dormir" aria-live="polite" hidden>Começar a desacelerar às <span class="destaque" id="hora-desacelerar"></span></p>
+    <h3>Antes de deitar</h3>
+    <div id="checklist"></div>
+    <button class="btn sec" type="button" id="btn-limpar-check">Desmarcar tudo</button>
+    <h3>Tela</h3>
+    <button class="btn principal" type="button" id="btn-luz">Modo luz baixa</button>
+    <p class="muted" style="margin-top:10px;font-size:18px">Escurece a tela e troca as cores por âmbar e vermelho escuro. Fica ligado até você desligar.</p>
+  </section>
+
+  <!-- MEU HORÁRIO FIXO -->
+  <section class="tela" id="horario" aria-labelledby="t-horario">
+    <header class="top"><button class="voltar" type="button" data-voltar>Voltar</button></header>
+    <h2 id="t-horario">Meu horário fixo</h2>
+    <p class="muted">O mesmo horário de acordar, inclusive nas folgas.</p>
+    <label class="campo" for="alvo-acordar">Acordar às</label>
+    <input type="time" id="alvo-acordar">
+    <label class="campo" for="alvo-refeicao">Primeira refeição às</label>
+    <input type="time" id="alvo-refeicao">
+
+    <h3>Registro de hoje</h3>
+    <div class="duas">
+      <button class="btn principal" type="button" id="btn-acordei">Acordei agora</button>
+      <button class="btn principal" type="button" id="btn-comi">Comi agora</button>
+    </div>
+    <div class="edicao" id="edicao" hidden>
+      <p id="edicao-titulo" style="margin-bottom:6px"></p>
+      <label class="campo" for="ed-data" style="margin-top:4px">Dia</label>
+      <input type="date" id="ed-data">
+      <label class="campo" for="ed-hora">Hora</label>
+      <input type="time" id="ed-hora">
+      <div class="duas">
+        <button class="btn principal" type="button" id="ed-ok">Pronto</button>
+        <button class="btn sec" type="button" id="ed-apagar">Apagar registro</button>
+      </div>
+    </div>
+
+    <h3>Últimos 14 dias</h3>
+    <div class="resumo" id="resumo-variacao">Variação média: sem registros ainda.</div>
+    <div id="lista-dias"></div>
+    <p class="muted" style="font-size:18px">Toque em um horário para corrigir.</p>
+  </section>
+
+  <!-- HISTÓRICO -->
+  <section class="tela" id="historico" aria-labelledby="t-hist">
+    <header class="top"><button class="voltar" type="button" data-voltar>Voltar</button></header>
+    <h2 id="t-hist">Histórico</h2>
+    <button class="btn principal" type="button" id="btn-copiar">Copiar resumo</button>
+    <p class="confirmacao" id="copiado" role="status" hidden></p>
+    <div id="resumo-caixa" hidden>
+      <label class="campo" for="resumo-texto">Resumo dos últimos 14 dias</label>
+      <textarea id="resumo-texto" readonly></textarea>
+    </div>
+    <h3>Respirações</h3>
+    <ul class="lista" id="hist-resp"></ul>
+    <p class="muted" id="hist-resp-vazio">Nenhuma respiração salva ainda.</p>
+    <h3>Horários</h3>
+    <ul class="lista" id="hist-hor"></ul>
+    <p class="muted" id="hist-hor-vazio">Nenhum horário registrado ainda.</p>
+  </section>
+
+  <!-- CONFIGURAÇÕES -->
+  <section class="tela" id="config" aria-labelledby="t-config">
+    <header class="top"><button class="voltar" type="button" data-voltar>Voltar</button></header>
+    <h2 id="t-config">Configurações</h2>
+    <label class="alternar" for="cfg-vibrar">
+      <span>Vibrar na troca de Puxa e Solta</span>
+      <input type="checkbox" id="cfg-vibrar">
+    </label>
+    <p class="muted" style="font-size:18px">Nem todo celular vibra pelo navegador. No iPhone, em geral, não funciona.</p>
+    <h3>Seus dados</h3>
+    <p>Tudo fica só neste aparelho, neste navegador. Nada é enviado.</p>
+    <button class="btn sec" type="button" id="btn-apagar">Apagar meus dados</button>
+    <div id="apagar-confirma" hidden>
+      <p class="aviso">Isso apaga notas, guardados, horários e configurações. Não dá para desfazer.</p>
+      <button class="btn principal" type="button" id="btn-apagar-sim">Sim, apagar tudo</button>
+      <button class="btn sec" type="button" id="btn-apagar-nao">Cancelar</button>
+    </div>
+    <p class="confirmacao" id="apagado" role="status" hidden>Dados apagados.</p>
+  </section>
+
+</div>
+
+<footer class="seguranca" role="contentinfo">
+  Se vier vontade de se machucar ou de morrer, ligue <a href="tel:188">CVV 188</a> (24h) ou <a href="tel:192">SAMU 192</a>.
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Armazenamento local ---------- */
+var CHAVE = 'desacelerar.v1';
+var PADRAO = function(){
+  return {
+    respiracoes: [],      // {id, ts, min, antes, depois, concluiu}
+    guardados: [],        // {id, ts, texto, resolvido}
+    horarios: [],         // {id, tipo:'acordar'|'refeicao', data:'AAAA-MM-DD', hora:'HH:MM'}
+    alvo: {acordar:'', refeicao:''},
+    dormir: {hora:'', checks:{}},
+    cfg: {vibrar:false, duracao:5},
+    luzBaixa: false
+  };
+};
+var estado = PADRAO();
+
+function carregar(){
+  try{
+    var bruto = window.localStorage.getItem(CHAVE);
+    if(!bruto) return;
+    var d = JSON.parse(bruto);
+    var p = PADRAO();
+    estado = {
+      respiracoes: Array.isArray(d.respiracoes) ? d.respiracoes : p.respiracoes,
+      guardados: Array.isArray(d.guardados) ? d.guardados : p.guardados,
+      horarios: Array.isArray(d.horarios) ? d.horarios : p.horarios,
+      alvo: Object.assign(p.alvo, d.alvo || {}),
+      dormir: Object.assign(p.dormir, d.dormir || {}),
+      cfg: Object.assign(p.cfg, d.cfg || {}),
+      luzBaixa: !!d.luzBaixa
+    };
+    if(!estado.dormir.checks || typeof estado.dormir.checks !== 'object') estado.dormir.checks = {};
+  }catch(e){ estado = PADRAO(); }
+}
+function salvar(){
+  try{ window.localStorage.setItem(CHAVE, JSON.stringify(estado)); return true; }
+  catch(e){ return false; }
+}
+function apagarTudo(){
+  try{ window.localStorage.removeItem(CHAVE); }catch(e){}
+  estado = PADRAO();
+}
+
+/* ---------- Utilidades ---------- */
+function $(id){ return document.getElementById(id); }
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function dois(n){ return (n<10?'0':'') + n; }
+function hojeISO(d){ d = d || new Date(); return d.getFullYear()+'-'+dois(d.getMonth()+1)+'-'+dois(d.getDate()); }
+function horaAgora(){ var d = new Date(); return dois(d.getHours())+':'+dois(d.getMinutes()); }
+function paraMin(hhmm){
+  if(!hhmm || !/^\d{1,2}:\d{2}$/.test(hhmm)) return null;
+  var p = hhmm.split(':'); return (+p[0])*60 + (+p[1]);
+}
+function deMin(m){ m = ((m % 1440) + 1440) % 1440; return dois(Math.floor(m/60))+':'+dois(m%60); }
+var DIAS = ['dom','seg','ter','qua','qui','sex','sáb'];
+function dataCurta(iso){
+  var p = iso.split('-'); var d = new Date(+p[0], +p[1]-1, +p[2]);
+  return DIAS[d.getDay()]+' '+p[2]+'/'+p[1];
+}
+function dataHora(ts){
+  var d = new Date(ts);
+  return dois(d.getDate())+'/'+dois(d.getMonth()+1)+' às '+dois(d.getHours())+':'+dois(d.getMinutes());
+}
+/* Diferença com sinal, pelo caminho mais curto no relógio (serve para quem acorda de tarde ou de noite). */
+function diferenca(hora, alvo){
+  var a = paraMin(hora), b = paraMin(alvo);
+  if(a===null || b===null) return null;
+  var d = a - b;
+  if(d > 720) d -= 1440;
+  if(d < -720) d += 1440;
+  return d;
+}
+function textoDif(d){
+  if(d===null) return 'sem alvo';
+  if(d===0) return 'no horário';
+  var abs = Math.abs(d);
+  return abs + ' min ' + (d>0 ? 'depois' : 'antes');
+}
+function plural(n,um,varios){ return n+' '+(n===1?um:varios); }
+function contarPalavras(t){ t = (t||'').trim(); return t ? t.split(/\s+/).length : 0; }
+function el(tag, attrs, texto){
+  var e = document.createElement(tag);
+  if(attrs) for(var k in attrs){ if(k==='class') e.className = attrs[k]; else e.setAttribute(k, attrs[k]); }
+  if(texto!=null) e.textContent = texto;
+  return e;
+}
+
+/* ---------- Navegação ---------- */
+var pilha = ['inicio'];
+function ir(id, semPilha){
+  if(id !== 'respirar' && respSessao.ativa){ pararSessao(); }
+  document.querySelectorAll('.tela').forEach(function(s){ s.classList.toggle('ativa', s.id===id); });
+  if(!semPilha && pilha[pilha.length-1] !== id) pilha.push(id);
+  if(id==='inicio') pilha = ['inicio'];
+  if(id==='respirar') prepararRespirar();
+  if(id==='tirar') renderGuardados();
+  if(id==='dormir') renderDormir();
+  if(id==='horario') renderHorario();
+  if(id==='historico') renderHistorico();
+  if(id==='config') renderConfig();
+  window.scrollTo(0,0);
+  try{ history.replaceState(null,'', id==='inicio' ? location.pathname + location.search : '#'+id); }catch(e){}
+}
+function voltar(){
+  if(pilha.length>1) pilha.pop();
+  ir(pilha[pilha.length-1] || 'inicio', true);
+}
+document.addEventListener('click', function(ev){
+  var b = ev.target.closest('[data-ir]');
+  if(b){ ir(b.getAttribute('data-ir')); return; }
+  if(ev.target.closest('[data-voltar]')){ voltar(); return; }
+  if(ev.target.closest('[data-acao="luz-off"]')){ setLuz(false); }
+});
+
+/* ---------- Escalas 0 a 10 ---------- */
+function montarEscala(cont, aoEscolher){
+  cont.innerHTML = '';
+  for(var i=0;i<=10;i++){
+    (function(n){
+      var b = el('button', {type:'button','aria-pressed':'false','aria-label':'Nota '+n}, String(n));
+      b.addEventListener('click', function(){
+        cont.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+        b.setAttribute('aria-pressed','true');
+        aoEscolher(n);
+      });
+      cont.appendChild(b);
+    })(i);
+  }
+}
+
+/* ---------- Respirar ---------- */
+var INSP = 4000, EXP = 6000, CICLO = INSP + EXP;
+var respSessao = {ativa:false, pausada:false, antes:null, depois:null, min:5, decorrido:0, ultimo:0, raf:0, fase:'', wake:null};
+
+function prepararRespirar(){
+  if(respSessao.ativa) return;
+  respSessao.antes = null; respSessao.depois = null;
+  respSessao.min = [3,5,10].indexOf(+estado.cfg.duracao) >= 0 ? +estado.cfg.duracao : 5;
+  $('resp-antes').hidden = false; $('resp-durante').hidden = true; $('resp-depois').hidden = true;
+  $('btn-comecar').disabled = true; $('dica-nota').hidden = false;
+  montarEscala($('escala-antes'), function(n){ respSessao.antes = n; $('btn-comecar').disabled = false; $('dica-nota').hidden = true; });
+  document.querySelectorAll('#duracoes button').forEach(function(b){
+    b.setAttribute('aria-pressed', String(+b.getAttribute('data-min')===respSessao.min));
+  });
+}
+document.querySelectorAll('#duracoes button').forEach(function(b){
+  b.addEventListener('click', function(){
+    respSessao.min = +b.getAttribute('data-min');
+    estado.cfg.duracao = respSessao.min; salvar();
+    document.querySelectorAll('#duracoes button').forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); });
+  });
+});
+
+function vibrar(){
+  if(!estado.cfg.vibrar) return;
+  try{ if(navigator.vibrate) navigator.vibrate(40); }catch(e){}
+}
+function pedirTelaAcesa(){
+  try{
+    if('wakeLock' in navigator){
+      navigator.wakeLock.request('screen').then(function(w){ respSessao.wake = w; }).catch(function(){});
+    }
+  }catch(e){}
+}
+function soltarTela(){
+  try{ if(respSessao.wake){ respSessao.wake.release(); respSessao.wake = null; } }catch(e){}
+}
+function suave(t){ return 0.5 - 0.5*Math.cos(Math.PI*t); }
+
+function quadro(agora){
+  if(!respSessao.ativa) return;
+  if(!respSessao.pausada){
+    respSessao.decorrido += agora - respSessao.ultimo;
+  }
+  respSessao.ultimo = agora;
+  var total = respSessao.min*60000;
+  var dec = Math.min(respSessao.decorrido, total);
+  var noCiclo = dec % CICLO;
+  var fase, escala;
+  if(noCiclo < INSP){ fase='Puxa'; escala = 0.45 + 0.55*suave(noCiclo/INSP); }
+  else { fase='Solta'; escala = 1 - 0.55*suave((noCiclo-INSP)/EXP); }
+  $('circulo').style.transform = 'scale('+escala.toFixed(4)+')';
+  if(!respSessao.pausada && fase !== respSessao.fase){
+    if(respSessao.fase) vibrar();
+    respSessao.fase = fase;
+    $('fase').textContent = fase;
+  }
+  var resta = Math.ceil((total - dec)/1000);
+  $('contador').textContent = Math.floor(resta/60)+':'+dois(resta%60);
+  if(dec >= total){ terminarSessao(true); return; }
+  respSessao.raf = requestAnimationFrame(quadro);
+}
+$('btn-comecar').addEventListener('click', function(){
+  if(respSessao.antes===null) return;
+  respSessao.ativa = true; respSessao.pausada = false; respSessao.decorrido = 0; respSessao.fase = '';
+  respSessao.ultimo = performance.now();
+  $('resp-antes').hidden = true; $('resp-durante').hidden = false; $('resp-depois').hidden = true;
+  $('btn-pausar').textContent = 'Pausar';
+  $('fase').textContent = 'Puxa';
+  pedirTelaAcesa();
+  respSessao.raf = requestAnimationFrame(quadro);
+});
+$('btn-pausar').addEventListener('click', function(){
+  respSessao.pausada = !respSessao.pausada;
+  $('btn-pausar').textContent = respSessao.pausada ? 'Continuar' : 'Pausar';
+  if(respSessao.pausada){ $('fase').textContent = 'Pausado'; soltarTela(); }
+  else { $('fase').textContent = respSessao.fase || 'Puxa'; pedirTelaAcesa(); }
+});
+$('btn-encerrar').addEventListener('click', function(){ terminarSessao(false); });
+
+function pararSessao(){
+  respSessao.ativa = false;
+  cancelAnimationFrame(respSessao.raf);
+  soltarTela();
+}
+function terminarSessao(concluiu){
+  pararSessao();
+  respSessao.concluiu = concluiu;
+  respSessao.minFeitos = Math.round(respSessao.decorrido/6000)/10;
+  $('resp-durante').hidden = true; $('resp-depois').hidden = false;
+  $('btn-salvar-resp').disabled = true; $('btn-salvar-resp').hidden = false;
+  $('resp-salvo').hidden = true; $('btn-resp-inicio').hidden = true;
+  montarEscala($('escala-depois'), function(n){ respSessao.depois = n; $('btn-salvar-resp').disabled = false; });
+}
+$('btn-salvar-resp').addEventListener('click', function(){
+  if(respSessao.depois===null) return;
+  estado.respiracoes.push({
+    id: uid(), ts: Date.now(), min: respSessao.min,
+    feito: Math.min(respSessao.minFeitos || 0, respSessao.min),
+    antes: respSessao.antes, depois: respSessao.depois, concluiu: !!respSessao.concluiu
+  });
+  var ok = salvar();
+  $('resp-salvo').textContent = ok ? 'Salvo no histórico.' : 'Não consegui salvar neste navegador. Anote se quiser levar à consulta.';
+  $('resp-salvo').hidden = false;
+  $('btn-salvar-resp').hidden = true;
+  $('btn-resp-inicio').hidden = false;
+});
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState==='visible' && respSessao.ativa && !respSessao.pausada){ pedirTelaAcesa(); }
+});
+
+/* ---------- Tirar da cabeça ---------- */
+$('txt-tirar').addEventListener('input', function(){
+  var n = contarPalavras(this.value);
+  $('conta-palavras').textContent = n + (n===1 ? ' palavra' : ' palavras');
+  $('aviso-palavras').hidden = n <= 5;
+  $('btn-guardar').disabled = n === 0;
+  $('guardado-ok').hidden = true;
+});
+$('txt-tirar').addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); $('btn-guardar').click(); } });
+$('btn-guardar').addEventListener('click', function(){
+  var t = $('txt-tirar').value.trim().replace(/\s+/g,' ');
+  if(!t) return;
+  estado.guardados.unshift({id:uid(), ts:Date.now(), texto:t, resolvido:false});
+  salvar();
+  $('txt-tirar').value = '';
+  $('conta-palavras').textContent = '0 palavras';
+  $('aviso-palavras').hidden = true;
+  $('btn-guardar').disabled = true;
+  $('guardado-ok').hidden = false;
+  $('txt-tirar').blur();
+  renderGuardados();
+});
+function renderGuardados(){
+  var ul = $('lista-guardados'); ul.innerHTML = '';
+  estado.guardados.forEach(function(g){
+    var li = el('li', g.resolvido ? {class:'resolvido'} : null);
+    li.appendChild(el('div',{class:'item-texto'}, g.texto));
+    li.appendChild(el('div',{class:'item-data'}, dataHora(g.ts) + (g.resolvido ? '. Resolvido.' : '')));
+    var ac = el('div',{class:'item-acoes'});
+    var b1 = el('button',{type:'button'}, g.resolvido ? 'Desmarcar resolvido' : 'Resolvido');
+    b1.addEventListener('click', function(){ g.resolvido = !g.resolvido; salvar(); renderGuardados(); });
+    var b2 = el('button',{type:'button'}, 'Apagar');
+    b2.addEventListener('click', function(){
+      if(b2.dataset.conf){ estado.guardados = estado.guardados.filter(function(x){ return x.id!==g.id; }); salvar(); renderGuardados(); }
+      else { b2.dataset.conf = '1'; b2.textContent = 'Toque de novo para apagar'; }
+    });
+    ac.appendChild(b1); ac.appendChild(b2); li.appendChild(ac);
+    ul.appendChild(li);
+  });
+  $('guardados-vazio').hidden = estado.guardados.length > 0;
+}
+
+/* ---------- Preparar para dormir ---------- */
+var CHECKS = [
+  ['luz','Luz baixa ou óculos laranja'],
+  ['tela','Tela no mínimo'],
+  ['cafeina','Sem cafeína nas últimas 6 horas'],
+  ['alcool','Sem álcool'],
+  ['discussao','Deixar discussões para depois']
+];
+function renderDormir(){
+  $('hora-dormir').value = estado.dormir.hora || '';
+  atualizarCalcDormir();
+  var c = $('checklist'); c.innerHTML = '';
+  CHECKS.forEach(function(item){
+    var lab = el('label',{class:'check', for:'ck-'+item[0]});
+    var inp = el('input',{type:'checkbox', id:'ck-'+item[0]});
+    inp.checked = !!estado.dormir.checks[item[0]];
+    inp.addEventListener('change', function(){ estado.dormir.checks[item[0]] = inp.checked; salvar(); });
+    lab.appendChild(inp); lab.appendChild(el('span',null,item[1]));
+    c.appendChild(lab);
+  });
+  atualizarBotaoLuz();
+}
+function atualizarCalcDormir(){
+  var m = paraMin(estado.dormir.hora);
+  if(m===null){ $('calc-dormir').hidden = true; return; }
+  $('hora-desacelerar').textContent = deMin(m - 180);
+  $('calc-dormir').hidden = false;
+}
+$('hora-dormir').addEventListener('input', function(){ estado.dormir.hora = this.value; salvar(); atualizarCalcDormir(); });
+$('hora-dormir').addEventListener('change', function(){ estado.dormir.hora = this.value; salvar(); atualizarCalcDormir(); });
+$('btn-limpar-check').addEventListener('click', function(){ estado.dormir.checks = {}; salvar(); renderDormir(); });
+
+function setLuz(on){
+  estado.luzBaixa = !!on; salvar();
+  document.body.classList.toggle('luz-baixa', estado.luzBaixa);
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', estado.luzBaixa ? '#070302' : '#121212');
+  atualizarBotaoLuz();
+}
+function atualizarBotaoLuz(){ $('btn-luz').textContent = estado.luzBaixa ? 'Desligar luz baixa' : 'Modo luz baixa'; }
+$('btn-luz').addEventListener('click', function(){ setLuz(!estado.luzBaixa); });
+
+/* ---------- Meu horário fixo ---------- */
+var editando = null;
+$('alvo-acordar').addEventListener('change', function(){ estado.alvo.acordar = this.value; salvar(); renderHorario(); });
+$('alvo-refeicao').addEventListener('change', function(){ estado.alvo.refeicao = this.value; salvar(); renderHorario(); });
+
+function registrar(tipo){
+  var hoje = hojeISO();
+  var r = estado.horarios.filter(function(h){ return h.tipo===tipo && h.data===hoje; })[0];
+  if(r){ r.hora = horaAgora(); }
+  else { r = {id:uid(), tipo:tipo, data:hoje, hora:horaAgora()}; estado.horarios.push(r); }
+  salvar();
+  abrirEdicao(r.id);
+  renderHorario();
+}
+$('btn-acordei').addEventListener('click', function(){ registrar('acordar'); });
+$('btn-comi').addEventListener('click', function(){ registrar('refeicao'); });
+
+function abrirEdicao(id){
+  var r = estado.horarios.filter(function(h){ return h.id===id; })[0];
+  if(!r){ $('edicao').hidden = true; editando = null; return; }
+  editando = id;
+  $('edicao-titulo').textContent = (r.tipo==='acordar' ? 'Acordei' : 'Primeira refeição') + ' registrado. Se não foi agora, corrija aqui.';
+  $('ed-data').value = r.data; $('ed-hora').value = r.hora;
+  $('edicao').hidden = false;
+}
+function salvarEdicao(){
+  var r = estado.horarios.filter(function(h){ return h.id===editando; })[0];
+  if(!r) return;
+  var nd = $('ed-data').value, nh = $('ed-hora').value;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(nd)){
+    // um registro por tipo por dia: se já existe outro no dia escolhido, substitui
+    estado.horarios = estado.horarios.filter(function(h){ return !(h.id!==r.id && h.tipo===r.tipo && h.data===nd); });
+    r.data = nd;
+  }
+  if(paraMin(nh)!==null) r.hora = nh;
+  salvar(); renderHorario();
+}
+$('ed-data').addEventListener('change', salvarEdicao);
+$('ed-hora').addEventListener('change', salvarEdicao);
+$('ed-ok').addEventListener('click', function(){ salvarEdicao(); $('edicao').hidden = true; editando = null; });
+$('ed-apagar').addEventListener('click', function(){
+  estado.horarios = estado.horarios.filter(function(h){ return h.id!==editando; });
+  salvar(); $('edicao').hidden = true; editando = null; renderHorario();
+});
+
+function ultimos14(){
+  var dias = [], d = new Date();
+  for(var i=0;i<14;i++){ var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()-i); dias.push(hojeISO(x)); }
+  return dias;
+}
+function mediaVariacao(tipo){
+  var alvo = estado.alvo[tipo]; if(!alvo) return null;
+  var dias = ultimos14(), soma = 0, n = 0;
+  estado.horarios.forEach(function(h){
+    if(h.tipo===tipo && dias.indexOf(h.data)>=0){ var d = diferenca(h.hora, alvo); if(d!==null){ soma += Math.abs(d); n++; } }
+  });
+  return n ? {media: Math.round(soma/n), n:n} : null;
+}
+function textoMedia(){
+  var a = mediaVariacao('acordar'), r = mediaVariacao('refeicao');
+  var partes = [];
+  if(a) partes.push('Variação média ao acordar: '+a.media+' min');
+  if(r) partes.push('Variação média na primeira refeição: '+r.media+' min');
+  if(!partes.length){
+    if(!estado.alvo.acordar && !estado.alvo.refeicao) return 'Variação média: defina os horários alvo acima.';
+    return 'Variação média: sem registros ainda.';
+  }
+  return partes.join('. ') + '.';
+}
+function renderHorario(){
+  $('alvo-acordar').value = estado.alvo.acordar || '';
+  $('alvo-refeicao').value = estado.alvo.refeicao || '';
+  $('resumo-variacao').textContent = textoMedia();
+  var cont = $('lista-dias'); cont.innerHTML = '';
+  ultimos14().forEach(function(dia){
+    var regs = estado.horarios.filter(function(h){ return h.data===dia; });
+    var box = el('div',{class:'dia'});
+    box.appendChild(el('div',{class:'dia-titulo'}, dia===hojeISO() ? 'Hoje, '+dataCurta(dia) : dataCurta(dia)));
+    [['acordar','Acordou'],['refeicao','Comeu']].forEach(function(t){
+      var r = regs.filter(function(h){ return h.tipo===t[0]; })[0];
+      var linha = el('div',{class:'linha-reg'});
+      if(r){
+        var b = el('button',{type:'button', class:'link-reg', style:'background:none;border:0;padding:6px 0;text-align:left;min-height:44px;font-size:18px;text-decoration:underline;text-underline-offset:3px'}, t[1]+' às '+r.hora);
+        b.addEventListener('click', function(){ abrirEdicao(r.id); $('edicao').scrollIntoView({block:'center'}); });
+        linha.appendChild(b);
+        linha.appendChild(el('span',{class:'dif'}, textoDif(diferenca(r.hora, estado.alvo[t[0]]))));
+      } else {
+        linha.appendChild(el('span',{class:'muted'}, t[1]+': sem registro'));
+      }
+      box.appendChild(linha);
+    });
+    cont.appendChild(box);
+  });
+  if(editando) abrirEdicao(editando);
+}
+
+/* ---------- Histórico ---------- */
+function renderHistorico(){
+  var ul = $('hist-resp'); ul.innerHTML = '';
+  estado.respiracoes.slice().sort(function(a,b){ return b.ts-a.ts; }).forEach(function(r){
+    var li = el('li');
+    li.appendChild(el('div',{class:'item-texto'}, 'Antes '+r.antes+'. Depois '+r.depois+'.'));
+    var dur = r.concluiu ? r.min+' min' : (r.feito!=null ? String(r.feito).replace('.',',')+' de '+r.min+' min' : r.min+' min');
+    li.appendChild(el('div',{class:'item-data', style:'margin-bottom:0'}, dataHora(r.ts)+'. '+dur+'.'));
+    ul.appendChild(li);
+  });
+  $('hist-resp-vazio').hidden = estado.respiracoes.length > 0;
+
+  var uh = $('hist-hor'); uh.innerHTML = '';
+  var hs = estado.horarios.slice().sort(function(a,b){ return (b.data+b.hora).localeCompare(a.data+a.hora); });
+  hs.forEach(function(h){
+    var li = el('li');
+    var nome = h.tipo==='acordar' ? 'Acordou' : 'Primeira refeição';
+    li.appendChild(el('div',{class:'item-texto'}, nome+' às '+h.hora));
+    li.appendChild(el('div',{class:'item-data', style:'margin-bottom:0'}, dataCurta(h.data)+'. '+textoDif(diferenca(h.hora, estado.alvo[h.tipo]))+'.'));
+    uh.appendChild(li);
+  });
+  $('hist-hor-vazio').hidden = hs.length > 0;
+}
+
+function gerarResumo(){
+  var dias = ultimos14();
+  var inicio = dias[dias.length-1], fim = dias[0];
+  var fmt = function(iso){ var p = iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; };
+  var L = [];
+  L.push('Resumo de '+fmt(inicio)+' a '+fmt(fim));
+  L.push('Gerado pelo app Desacelerar. Uso educativo.');
+  L.push('');
+  L.push('HORÁRIO FIXO');
+  L.push('Alvo para acordar: '+(estado.alvo.acordar || 'não definido'));
+  L.push('Alvo para a primeira refeição: '+(estado.alvo.refeicao || 'não definido'));
+  var a = mediaVariacao('acordar'), r = mediaVariacao('refeicao');
+  L.push('Variação média ao acordar: '+(a ? a.media+' min ('+plural(a.n,'registro','registros')+')' : 'sem dados'));
+  L.push('Variação média na primeira refeição: '+(r ? r.media+' min ('+plural(r.n,'registro','registros')+')' : 'sem dados'));
+  L.push('');
+  dias.slice().reverse().forEach(function(dia){
+    var w = estado.horarios.filter(function(h){ return h.data===dia && h.tipo==='acordar'; })[0];
+    var m = estado.horarios.filter(function(h){ return h.data===dia && h.tipo==='refeicao'; })[0];
+    var s = dataCurta(dia)+': acordou '+(w ? w.hora+' ('+textoDif(diferenca(w.hora, estado.alvo.acordar))+')' : 'sem registro');
+    s += '; comeu '+(m ? m.hora+' ('+textoDif(diferenca(m.hora, estado.alvo.refeicao))+')' : 'sem registro');
+    L.push(s);
+  });
+  L.push('');
+  L.push('RESPIRAÇÕES (nota de 0 a 10, antes e depois)');
+  var limite = new Date(); limite = new Date(limite.getFullYear(), limite.getMonth(), limite.getDate()-13).getTime();
+  var rs = estado.respiracoes.filter(function(x){ return x.ts >= limite; }).sort(function(a,b){ return a.ts-b.ts; });
+  if(!rs.length) L.push('Nenhuma no período.');
+  rs.forEach(function(x){
+    L.push(dataHora(x.ts)+': antes '+x.antes+', depois '+x.depois+', '+(x.concluiu ? x.min+' min' : 'encerrada antes, '+String(x.feito||0).replace('.',',')+' de '+x.min+' min'));
+  });
+  if(rs.length){
+    var ma = rs.reduce(function(s,x){ return s+x.antes; },0)/rs.length;
+    var md = rs.reduce(function(s,x){ return s+x.depois; },0)/rs.length;
+    L.push('Média: antes '+ma.toFixed(1).replace('.',',')+', depois '+md.toFixed(1).replace('.',',')+' ('+plural(rs.length,'sessão','sessões')+')');
+  }
+  var g = estado.guardados.filter(function(x){ return x.ts >= limite; });
+  L.push('');
+  L.push('PENSAMENTOS GUARDADOS NO PERÍODO: '+g.length+' ('+g.filter(function(x){return x.resolvido;}).length+' marcados como resolvidos)');
+  return L.join('\n');
+}
+$('btn-copiar').addEventListener('click', function(){
+  var txt = gerarResumo();
+  $('resumo-texto').value = txt;
+  $('resumo-caixa').hidden = false;
+  var aviso = $('copiado');
+  aviso.textContent = 'Resumo pronto abaixo.'; aviso.hidden = false;
+  function ok(){ aviso.textContent = 'Resumo copiado. Cole onde quiser levar à consulta.'; aviso.hidden = false; }
+  function manual(){
+    var ta = $('resumo-texto');
+    try{ ta.removeAttribute('readonly'); ta.focus(); ta.select(); ta.setSelectionRange(0, txt.length);
+      var feito = document.execCommand && document.execCommand('copy'); ta.setAttribute('readonly','');
+      if(feito){ ok(); return; } }catch(e){ ta.setAttribute('readonly',''); }
+    aviso.textContent = 'Não consegui copiar sozinho. O texto está abaixo: segure sobre ele e escolha Copiar.';
+    aviso.hidden = false;
+  }
+  try{
+    if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(txt).then(ok, manual); }
+    else manual();
+  }catch(e){ manual(); }
+});
+
+/* ---------- Configurações ---------- */
+function renderConfig(){
+  $('cfg-vibrar').checked = !!estado.cfg.vibrar;
+  $('apagar-confirma').hidden = true; $('btn-apagar').hidden = false; $('apagado').hidden = true;
+}
+$('cfg-vibrar').addEventListener('change', function(){
+  estado.cfg.vibrar = this.checked; salvar();
+  if(this.checked){ try{ if(navigator.vibrate) navigator.vibrate(40); }catch(e){} }
+});
+$('btn-apagar').addEventListener('click', function(){ $('apagar-confirma').hidden = false; $('btn-apagar').hidden = true; });
+$('btn-apagar-nao').addEventListener('click', function(){ $('apagar-confirma').hidden = true; $('btn-apagar').hidden = false; });
+$('btn-apagar-sim').addEventListener('click', function(){
+  apagarTudo();
+  setLuz(false);
+  apagarTudo();
+  $('apagar-confirma').hidden = true; $('btn-apagar').hidden = false;
+  $('apagado').hidden = false;
+  $('cfg-vibrar').checked = false;
+  editando = null;
+});
+
+/* ---------- Início ---------- */
+carregar();
+document.body.classList.toggle('luz-baixa', !!estado.luzBaixa);
+if(estado.luzBaixa){ var mt = document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute('content','#070302'); }
+var inicial = (location.hash || '').replace('#','');
+if(['respirar','tirar','dormir','horario','historico','config'].indexOf(inicial)>=0){ pilha = ['inicio']; ir(inicial); }
+})();
+</script>
+</body>
+</html>
