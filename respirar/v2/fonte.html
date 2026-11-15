@@ -1,0 +1,1399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#EEF1EA" />
+<title>RESPIRA JÁ!</title>
+<meta name="description" content="Respirações guiadas e gratuitas para cada situação: ansiedade, insônia, briga em família, crise. Dr. Fabio Schmidt, médico, CRM-SP 183549." />
+<meta property="og:title" content="Uma respiração para cada momento" />
+<meta property="og:description" content="Respirações guiadas e gratuitas para ansiedade, insônia, briga em família e crise. Dr. Fabio Schmidt, médico, CRM-SP 183549." />
+<meta property="og:type" content="website" />
+<script>
+(function () {
+  var d = document.documentElement;
+  d.className += ' js';
+  try { var t = localStorage.getItem('respira-tema'); if (t === 'dark' || t === 'light') d.setAttribute('data-theme', t); } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #EEF1EA;
+  --bg-alto: #D9EAE1;
+  --surface: #FAFBF7;
+  --ink: #13201A;
+  --muted: #58665E;
+  --line: rgba(19, 32, 26, .10);
+  --line-forte: rgba(19, 32, 26, .20);
+  --accent: #2F6F5E;
+  --accent-ink: #FAFBF7;
+  --accent-soft: #D5E7DE;
+  --brand: #B3121B;
+  --dock-bg: rgba(250, 251, 247, .68);
+  --dock-borda: rgba(255, 255, 255, .8);
+  --luz: rgba(47, 111, 94, .13);
+  --sombra: 0 1px 2px rgba(19, 32, 26, .05), 0 10px 28px -14px rgba(19, 32, 26, .18);
+  --sombra-alta: 0 2px 4px rgba(19, 32, 26, .06), 0 24px 48px -18px rgba(19, 32, 26, .30);
+
+  /* noite: palco da bolinha e tela do exercício */
+  --n-bg: #0A1613;
+  --n-bg-2: #143A31;
+  --n-ink: #E8F1EC;
+  --n-muted: #93A89F;
+  --n-line: rgba(232, 241, 236, .14);
+  --n-glow: #8CE6C8;
+
+  --mola: cubic-bezier(.34, 1.56, .64, 1);
+  --suave: cubic-bezier(.2, 0, 0, 1);
+  --fonte-titulo: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --fonte-texto: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fonte-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0C1714;
+  --bg-alto: #12332B;
+  --surface: #12211D;
+  --ink: #E6EEE9;
+  --muted: #98AAA1;
+  --line: rgba(230, 238, 233, .09);
+  --line-forte: rgba(230, 238, 233, .22);
+  --accent: #8CE6C8;
+  --accent-ink: #0A1613;
+  --accent-soft: #173A31;
+  --brand: #EF6A6F;
+  --dock-bg: rgba(18, 33, 29, .62);
+  --dock-borda: rgba(255, 255, 255, .08);
+  --luz: rgba(140, 230, 200, .14);
+  --sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -14px rgba(0, 0, 0, .6);
+  --sombra-alta: 0 2px 4px rgba(0, 0, 0, .3), 0 24px 48px -18px rgba(0, 0, 0, .7);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html:has(dialog[open]) { overflow: hidden; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(900px 520px at 88% -6%, var(--bg-alto), transparent 70%), var(--bg);
+  color: var(--ink);
+  font-family: var(--fonte-texto);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .4s var(--suave), color .4s var(--suave);
+}
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+/* entrada ao rolar */
+.js .revela { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+.js .revela.visto {
+  opacity: 1; transform: none; filter: none;
+  transition: opacity .6s var(--suave), transform .8s var(--mola), filter .6s var(--suave);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.troca { animation: sobe .35s var(--suave) both; }
+@keyframes sobe { from { opacity: 0; transform: translateY(10px); filter: blur(4px); } }
+@keyframes desenha { from { stroke-dashoffset: 1; } }
+@keyframes cai { from { transform: translateY(-95%); opacity: 0; filter: blur(2px); } }
+@keyframes pulsa { 0% { box-shadow: 0 0 0 0 rgba(140, 230, 200, .55); } 70%, 100% { box-shadow: 0 0 0 7px rgba(140, 230, 200, 0); } }
+
+.pagina { max-width: 1060px; margin: 0 auto; padding: 0 16px calc(120px + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 640px) { .pagina { padding-left: 24px; padding-right: 24px; } }
+section, .consulta, .seguranca { scroll-margin-top: 76px; }
+
+/* topo fixo que encolhe */
+.topo {
+  position: sticky; top: 0; z-index: 40;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) 0 10px;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, background-color .4s;
+}
+.topo-dentro { max-width: 1060px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 12px; }
+@media (min-width: 640px) { .topo-dentro { padding: 0 24px; } }
+.topo.compacto { border-bottom-color: var(--line); }
+.marca-bloco { display: grid; flex: 1; min-width: 0; }
+.marca { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--brand); }
+.mini-titulo {
+  font-family: var(--fonte-titulo); font-size: 1rem; font-weight: 600; line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-height: 0; opacity: 0; transform: translateY(8px);
+  transition: max-height .4s var(--suave), opacity .3s var(--suave), transform .5s var(--mola);
+}
+.topo.compacto .mini-titulo { max-height: 1.5em; opacity: 1; transform: none; }
+.credencial { font-family: var(--fonte-mono); font-size: .7rem; letter-spacing: .02em; color: var(--muted); }
+.topo .credencial { display: none; }
+@media (min-width: 760px) { .topo .credencial { display: block; } .abertura .credencial { display: none; } }
+.tema-btn {
+  flex: none; width: 40px; height: 40px; display: grid; place-items: center;
+  border-radius: 50%; border: 1px solid var(--line-forte); background: var(--surface);
+  cursor: pointer; transition: transform .5s var(--mola), background-color .3s, border-color .3s;
+}
+.tema-btn:hover { border-color: var(--ink); }
+.tema-btn:active { transform: scale(.88) rotate(-25deg); transition-duration: .12s; }
+.tema-btn svg { transition: transform .6s var(--mola); }
+.tema-btn .lua { display: none; }
+:root[data-theme="dark"] .tema-btn .sol { display: none; }
+:root[data-theme="dark"] .tema-btn .lua { display: block; }
+
+/* selos */
+.selo {
+  display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 6px 12px;
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
+  background: var(--accent); color: var(--accent-ink);
+}
+.selo i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .85; }
+.selo.pago { background: transparent; border: 1.5px solid var(--brand); color: var(--brand); }
+
+/* abertura */
+.abertura { display: grid; gap: 22px; padding: 12px 0 40px; }
+@media (min-width: 860px) {
+  .abertura { grid-template-columns: 1.05fr .95fr; grid-template-areas: "texto palco" "extra palco"; align-items: end; column-gap: 52px; row-gap: 0; padding: 52px 0 64px; }
+  .abertura-texto { grid-area: texto; }
+  .abertura-extra { grid-area: extra; align-self: start; }
+  .abertura .palco { grid-area: palco; align-self: center; }
+}
+.abertura-extra { order: 2; }
+.abertura-extra .dica { margin-top: 0; }
+@media (min-width: 860px) { .abertura-extra .dica { margin-top: 18px; } }
+h1 {
+  margin: 16px 0 14px; font-family: var(--fonte-titulo);
+  font-size: clamp(2.35rem, 9vw, 4rem); font-weight: 600; line-height: 1;
+  letter-spacing: -.025em; text-wrap: balance;
+}
+h1 em { font-weight: 400; font-style: italic; color: var(--accent); }
+.lead { max-width: 34em; margin: 0; font-size: 1.08rem; color: var(--muted); }
+.dica {
+  max-width: 34em; margin: 18px 0 0; border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0; background: var(--surface); padding: 12px 14px;
+  font-size: .95rem; box-shadow: var(--sombra);
+}
+.abertura .credencial { margin: 18px 0 0; }
+
+/* palco escuro da bolinha */
+.palco {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; justify-items: center; gap: 4px;
+  border-radius: 28px; padding: 16px 16px 20px;
+  background: radial-gradient(120% 85% at 50% 0%, var(--n-bg-2) 0%, var(--n-bg) 64%);
+  color: var(--n-ink);
+  box-shadow: var(--sombra-alta), inset 0 1px 0 rgba(255, 255, 255, .07);
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+  transition: transform .55s var(--mola);
+}
+.palco::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(60% 38% at 50% 100%, rgba(140, 230, 200, .12), transparent);
+}
+.palco:active { transform: scale(.985); transition-duration: .12s; }
+.palco-topo {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  font-family: var(--fonte-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--n-muted);
+}
+.ao-vivo { display: inline-flex; align-items: center; gap: 7px; }
+.ao-vivo i { width: 7px; height: 7px; border-radius: 50%; background: var(--n-glow); animation: pulsa 2s infinite; }
+.palco.pausado .ao-vivo i { animation: none; opacity: .35; }
+.ao-vivo b { font-weight: 600; }
+
+/* a esfera */
+.guia { position: relative; width: min(76vw, 300px); max-width: 100%; aspect-ratio: 1; }
+.guia-grande { width: min(80vw, 340px); }
+.guia canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.guia .anel { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; pointer-events: none; }
+.anel .trilho { fill: none; stroke: var(--n-line); stroke-width: 1; }
+.anel .prog { fill: none; stroke: var(--n-glow); stroke-width: 2; stroke-linecap: round; transition: opacity .15s ease-out; filter: drop-shadow(0 0 4px rgba(140, 230, 200, .7)); }
+.leitura { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 2.6rem; }
+.fase { font-family: var(--fonte-titulo); font-style: italic; font-size: clamp(1.5rem, 6vw, 2rem); line-height: 1.15; }
+.conta {
+  display: grid; place-items: center; width: 2.1rem; height: 2.1rem; overflow: hidden; border-radius: 50%;
+  border: 1px solid rgba(140, 230, 200, .35); background: rgba(140, 230, 200, .08);
+  font-family: var(--fonte-mono); font-weight: 600; font-size: 1rem; line-height: 1; font-variant-numeric: tabular-nums; color: var(--n-glow);
+  transition: opacity .3s, transform .45s var(--mola);
+}
+.conta:empty { opacity: 0; transform: scale(.6); }
+.digito { display: block; animation: cai .5s var(--mola) both; }
+.legenda-bola { text-align: center; font-size: .82rem; color: var(--n-muted); }
+
+/* seções */
+.secao { padding: 14px 0; }
+.cabecalho { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 18px; }
+.cabecalho h2 { margin: 0; font-family: var(--fonte-titulo); font-size: clamp(1.6rem, 5vw, 2.3rem); font-weight: 600; line-height: 1.08; letter-spacing: -.015em; text-wrap: balance; }
+.cabecalho p { flex-basis: 100%; margin: 0; font-size: .98rem; color: var(--muted); }
+.grade { display: grid; gap: 12px; }
+@media (min-width: 640px) { .grade { grid-template-columns: 1fr 1fr; gap: 14px; } }
+
+/* cartões de situação */
+.cartao {
+  position: relative; overflow: hidden; display: grid; gap: 10px; min-width: 0;
+  border: 1px solid var(--line); border-radius: 20px; background: var(--surface);
+  padding: 16px 16px 14px; text-align: left; box-shadow: var(--sombra); cursor: pointer;
+  transition: transform .55s var(--mola), box-shadow .25s var(--suave), border-color .25s, background-color .4s;
+}
+.cartao::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--luz), transparent 65%);
+  transition: opacity .3s;
+}
+@media (hover: hover) {
+  .cartao:hover { transform: translateY(-3px); box-shadow: var(--sombra-alta); border-color: var(--line-forte); }
+  .cartao:hover::after { opacity: 1; }
+  .cartao:hover .comecar svg { transform: translateX(3px); }
+}
+.cartao:active { transform: scale(.97); transition-duration: .12s; }
+.cartao-topo { display: flex; align-items: center; gap: 8px; font-family: var(--fonte-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.indice { color: var(--accent); font-weight: 600; }
+.cartao .titulo { font-family: var(--fonte-titulo); font-size: 1.25rem; font-weight: 600; line-height: 1.2; text-wrap: balance; }
+.forma { display: block; height: 46px; width: 100%; overflow: visible; }
+.forma .area { fill: var(--accent-soft); }
+.forma .linha { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.cartao-base { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.meta { font-family: var(--fonte-mono); font-size: .76rem; font-variant-numeric: tabular-nums; color: var(--muted); }
+.comecar { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 6px 12px; background: var(--accent-soft); color: var(--accent); font-size: .85rem; font-weight: 700; }
+.comecar svg { transition: transform .4s var(--mola); }
+
+/* enviar */
+.enviar { margin: 28px 0 8px; display: grid; gap: 14px; border-radius: 22px; background: var(--accent-soft); padding: 22px; }
+@media (min-width: 640px) { .enviar { grid-template-columns: 1fr auto; align-items: center; } }
+.enviar p { margin: 0; font-family: var(--fonte-titulo); font-size: 1.18rem; line-height: 1.3; text-wrap: balance; }
+
+.btn {
+  display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 8px;
+  border: 0; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+  padding: 0 22px; font-size: .95rem; font-weight: 700; text-decoration: none; white-space: nowrap; overflow: hidden;
+  cursor: pointer; transition: transform .5s var(--mola), width .45s var(--mola), background-color .25s, border-color .2s, box-shadow .25s;
+}
+.btn:active { transform: scale(.95); transition-duration: .12s; }
+.btn.contorno { background: transparent; color: var(--ink); border: 1.5px solid var(--line-forte); }
+.btn.contorno:hover { border-color: var(--ink); }
+.btn svg { flex: none; }
+.btn .risco { stroke-dasharray: 1; animation: desenha .45s var(--suave) both .1s; }
+
+.divisor { margin: 52px 0 30px; border: 0; border-top: 1px solid var(--line); }
+
+/* materiais */
+.material {
+  display: grid; align-content: start; gap: 8px; min-width: 0;
+  border: 1px solid var(--line); border-radius: 20px; background: var(--surface); padding: 18px;
+  box-shadow: var(--sombra); transition: transform .55s var(--mola), box-shadow .25s, background-color .4s;
+}
+@media (hover: hover) { .material:hover { transform: translateY(-3px); box-shadow: var(--sombra-alta); } }
+.material.destaque {
+  background: radial-gradient(130% 100% at 100% 0%, #1B4A3E 0%, var(--n-bg) 62%);
+  color: var(--n-ink); border-color: rgba(140, 230, 200, .2);
+}
+.material.destaque .tipo { color: var(--n-muted); border-color: var(--n-line); }
+.material.destaque .para, .material.destaque .preco small { color: var(--n-muted); }
+.material.destaque .btn.contorno { color: var(--n-ink); border-color: rgba(140, 230, 200, .45); }
+.material.destaque .btn.contorno:hover { background: var(--n-glow); color: var(--n-bg); border-color: var(--n-glow); }
+.linha-topo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.tipo { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-forte); border-radius: 6px; padding: 2px 6px; font-family: var(--fonte-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.tipo svg { flex: none; }
+.para { font-size: .82rem; color: var(--muted); }
+.material h3 { margin: 2px 0 0; font-family: var(--fonte-titulo); font-size: 1.22rem; font-weight: 600; line-height: 1.2; text-wrap: balance; }
+.material p { margin: 0; font-size: .95rem; }
+.compra { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.preco { font-family: var(--fonte-mono); font-size: 1.04rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.preco small { display: block; font-size: .72rem; font-weight: 400; color: var(--muted); }
+
+.consulta {
+  margin-top: 22px; display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 14px 16px;
+  border: 1px solid var(--line); border-radius: 22px; background: var(--surface); padding: 20px; box-shadow: var(--sombra);
+  transition: background-color .4s;
+}
+@media (min-width: 640px) { .consulta { grid-template-columns: auto 1fr auto; align-items: center; padding: 22px 24px; } }
+.consulta .foto { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; outline: 1px solid rgba(0, 0, 0, .1); outline-offset: -1px; box-shadow: 0 0 0 4px var(--accent-soft); }
+.consulta .texto { display: grid; gap: 4px; min-width: 0; }
+.rotulo { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.consulta h2 { margin: 0; font-family: var(--fonte-titulo); font-size: 1.28rem; font-weight: 600; line-height: 1.2; }
+.consulta p { margin: 0; font-size: .95rem; }
+.consulta .crm { font-family: var(--fonte-mono); font-size: .74rem; color: var(--muted); }
+.consulta .btn { grid-column: 1 / -1; justify-self: start; }
+@media (min-width: 640px) { .consulta .btn { grid-column: auto; justify-self: end; } }
+
+/* segurança */
+.seguranca { margin-top: 46px; display: grid; gap: 10px; max-width: 720px; border: 1.5px solid var(--ink); border-radius: 20px; padding: 18px 20px; }
+.seguranca strong { font-family: var(--fonte-titulo); font-size: 1.15rem; font-weight: 600; }
+.seguranca p { margin: 0; font-size: .95rem; }
+.sem-quebra { font-family: var(--fonte-mono); font-weight: 600; white-space: nowrap; }
+.ligar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.ligar .btn { min-height: 44px; }
+.ligar .btn.cvv { background: var(--brand); color: #fff; }
+
+/* rodapé */
+.rodape { margin-top: 34px; display: grid; gap: 14px; max-width: 720px; font-size: .82rem; color: var(--muted); }
+.rodape p { margin: 0; }
+.rodape ol { margin: 0; display: grid; gap: 4px; padding-left: 20px; overflow-wrap: anywhere; }
+.rodape a { color: inherit; }
+.rodape .nome { font-weight: 700; color: var(--ink); }
+
+/* menu de vidro */
+.dock {
+  position: fixed; z-index: 60; left: 50%; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  width: min(440px, calc(100vw - 24px)); transform: translateX(-50%);
+  display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px;
+  border-radius: 24px; background: var(--dock-bg);
+  -webkit-backdrop-filter: blur(18px) saturate(1.7); backdrop-filter: blur(18px) saturate(1.7);
+  border: 1px solid var(--dock-borda);
+  box-shadow: 0 12px 34px -12px rgba(10, 22, 19, .35), inset 0 1px 0 rgba(255, 255, 255, .5);
+  transition: transform .5s var(--mola), opacity .3s;
+}
+.dock.escondido { transform: translate(-50%, 130%); opacity: 0; }
+.dock-luz {
+  position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: 18px;
+  background: var(--luz); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 0 1px var(--luz);
+  transition: transform .55s var(--mola), width .45s var(--mola);
+}
+.dock a {
+  position: relative; display: grid; justify-items: center; align-content: center; gap: 3px; min-height: 52px;
+  border-radius: 18px; color: var(--muted); text-decoration: none; font-size: .64rem; font-weight: 700; letter-spacing: .02em;
+  transition: color .25s, transform .45s var(--mola);
+}
+.dock a:active { transform: scale(.9); transition-duration: .1s; }
+.dock a.ativo { color: var(--accent); }
+.dock a.ativo svg { transform: translateY(-1px) scale(1.08); }
+.dock a svg { transition: transform .45s var(--mola); }
+.dock a.sos { color: var(--brand); }
+
+/* aviso */
+.aviso {
+  position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); z-index: 70; max-width: calc(100vw - 32px);
+  transform: translate(-50%, 12px) scale(.96); border-radius: 999px; background: var(--ink); color: var(--bg);
+  padding: 10px 16px; font-size: .9rem; font-weight: 500; text-align: center; box-shadow: var(--sombra-alta);
+  opacity: 0; pointer-events: none; transition: opacity .3s var(--suave), transform .45s var(--mola);
+}
+.aviso.visivel { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+/* tela do exercício, sempre escura */
+dialog.folha {
+  margin: auto auto 0; width: 100%; max-width: 600px; height: 100dvh; max-height: 100dvh; padding: 0; border: 0;
+  background: radial-gradient(130% 70% at 50% 16%, var(--n-bg-2) 0%, var(--n-bg) 62%);
+  color: var(--n-ink); color-scheme: dark; overflow: hidden;
+  opacity: 0; translate: 0 100%;
+  transition-property: opacity, translate, display, overlay; transition-duration: 220ms; transition-timing-function: var(--suave); transition-behavior: allow-discrete;
+}
+dialog.folha[open] { opacity: 1; translate: 0 0; transition-duration: 380ms; }
+@starting-style { dialog.folha[open] { opacity: 0; translate: 0 100%; } }
+dialog.folha::backdrop {
+  background: rgb(0 0 0 / 0); backdrop-filter: blur(0);
+  transition-property: background-color, backdrop-filter, display, overlay; transition-duration: 220ms; transition-timing-function: var(--suave); transition-behavior: allow-discrete;
+}
+dialog.folha[open]::backdrop { background: rgb(4 10 8 / .6); backdrop-filter: blur(4px); transition-duration: 380ms; }
+@starting-style { dialog.folha[open]::backdrop { background: rgb(0 0 0 / 0); backdrop-filter: blur(0); } }
+@media (min-width: 640px) {
+  dialog.folha { margin: auto; height: auto; max-height: 94dvh; border-radius: 28px; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .6); translate: 0 16px; }
+  dialog.folha[open] { translate: 0 0; }
+  @starting-style { dialog.folha[open] { opacity: 0; translate: 0 16px; } }
+}
+.folha-dentro {
+  display: grid; height: 100%; max-height: inherit; align-content: start; gap: 18px; overflow-y: auto; overscroll-behavior: contain;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) 20px calc(30px + env(safe-area-inset-bottom, 0px));
+}
+.puxador { margin: 0 auto -6px; height: 4px; width: 40px; border-radius: 4px; background: var(--n-line); }
+@media (min-width: 640px) { .puxador { display: none; } }
+.folha .rotulo { color: var(--n-muted); }
+.folha-cabeca { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.folha-titulo { margin: 6px 0 0; font-family: var(--fonte-titulo); font-size: clamp(1.4rem, 5.6vw, 1.85rem); font-weight: 600; line-height: 1.15; text-wrap: balance; }
+.folha-sub { margin-top: 4px; font-family: var(--fonte-mono); font-size: .78rem; color: var(--n-muted); }
+.folha-botoes { display: flex; flex: none; gap: 8px; }
+.btn-icone, .btn-fechar {
+  display: inline-flex; min-height: 40px; min-width: 40px; align-items: center; justify-content: center;
+  border-radius: 999px; border: 1px solid var(--n-line); background: rgba(255, 255, 255, .05); padding: 0 10px;
+  font-size: .85rem; font-weight: 700; cursor: pointer; transition: border-color .2s, background-color .2s, transform .45s var(--mola);
+}
+.btn-icone:active, .btn-fechar:active { transform: scale(.9); transition-duration: .1s; }
+.btn-fechar { padding: 0 14px; }
+.btn-fechar:hover, .btn-icone:hover { border-color: rgba(232, 241, 236, .4); }
+.btn-icone.ligado { border-color: rgba(140, 230, 200, .5); background: rgba(140, 230, 200, .12); color: var(--n-glow); }
+.guia-bloco { display: grid; justify-items: center; gap: 10px; }
+.barras { display: flex; height: 4px; width: min(80vw, 340px); max-width: 100%; gap: 4px; }
+.barras span { position: relative; height: 100%; overflow: hidden; border-radius: 2px; background: rgba(232, 241, 236, .12); }
+.barras i { position: absolute; inset: 0; transform-origin: left; transform: scaleX(0); background: var(--n-glow); box-shadow: 0 0 8px rgba(140, 230, 200, .8); }
+.rotulos-barras { display: flex; width: min(80vw, 340px); max-width: 100%; gap: 4px; font-family: var(--fonte-mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .04em; color: var(--n-muted); }
+.rotulos-barras span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.folha .guia { cursor: pointer; }
+.ciclo { min-height: 1.2em; text-align: center; font-family: var(--fonte-mono); font-size: .78rem; font-variant-numeric: tabular-nums; color: var(--n-muted); }
+.folha-acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 4px; }
+.folha .btn { background: var(--n-glow); color: var(--n-bg); box-shadow: 0 12px 30px -10px rgba(140, 230, 200, .6); }
+.folha .btn.contorno { background: transparent; color: var(--n-ink); border: 1.5px solid var(--n-line); box-shadow: none; }
+.folha .btn.contorno:hover { border-color: rgba(232, 241, 236, .45); }
+.como { display: grid; gap: 8px; }
+.passos { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.passo {
+  width: 100%; display: flex; align-items: flex-start; gap: 12px; text-align: left;
+  border: 1px solid var(--n-line); border-radius: 14px; background: rgba(255, 255, 255, .03);
+  padding: 12px 14px; font-size: .95rem; line-height: 1.45; cursor: pointer;
+  transition: transform .5s var(--mola), background-color .3s, border-color .3s, opacity .4s;
+}
+.passo:active { transform: scale(.98); transition-duration: .1s; }
+.caixa {
+  flex: none; width: 20px; height: 20px; margin-top: 1px; display: grid; place-items: center;
+  border-radius: 6px; border: 1.5px solid rgba(232, 241, 236, .35); transition: background-color .25s, border-color .25s, transform .45s var(--mola);
+}
+.caixa path { fill: none; stroke: var(--n-bg); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .3s var(--suave) .05s; }
+.passo-texto {
+  background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat;
+  background-position: 0 58%; background-size: 0 1.5px; transition: background-size .4s var(--suave) .15s;
+}
+.passo.feito { opacity: .62; border-color: rgba(140, 230, 200, .25); background: rgba(140, 230, 200, .05); }
+.passo.feito .caixa { background: var(--n-glow); border-color: var(--n-glow); transform: scale(1.08); }
+.passo.feito .caixa path { stroke-dashoffset: 0; }
+.passo.feito .passo-texto { background-size: 100% 1.5px; }
+.nota { margin: 0; font-size: .92rem; color: var(--n-muted); }
+.cuidado { margin: 0; border-radius: 12px; border: 1px solid var(--n-line); background: rgba(255, 255, 255, .05); padding: 11px 13px; font-size: .92rem; }
+.video-bloco { display: grid; gap: 8px; }
+.video-bloco video { width: 100%; max-height: 70dvh; border-radius: 16px; background: #000; object-fit: contain; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .revela { opacity: 1; transform: none; filter: none; }
+  .troca, .digito, .forma .linha, .ao-vivo i, .btn .risco { animation: none !important; }
+  dialog.folha, dialog.folha[open] { translate: 0 0; transition-property: opacity, display, overlay; }
+}
+</style>
+</head>
+<body>
+
+<header class="topo" id="topo">
+  <div class="topo-dentro">
+    <div class="marca-bloco">
+      <span class="marca">Respira Já!</span>
+      <span class="mini-titulo" aria-hidden="true">Uma respiração para cada momento</span>
+    </div>
+    <span class="credencial">Dr. Fabio Schmidt · Médico · CRM-SP 183549</span>
+    <button type="button" class="tema-btn" id="btn-tema" aria-label="Mudar entre tema dia e noite">
+      <svg class="sol" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="lua" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="pagina">
+
+  <section class="abertura" id="inicio">
+    <div class="abertura-texto">
+      <div class="revela" style="--i:0"><span class="selo"><i></i>Gratuito</span></div>
+      <h1 class="revela" style="--i:1" id="titulo-principal">Uma respiração para <em>cada momento</em></h1>
+      <p class="lead revela" style="--i:2">Comece acompanhando a bolinha por um minuto. Depois escolha abaixo o que está acontecendo com você agora.</p>
+    </div>
+    <div class="abertura-extra">
+      <p class="dica revela" style="--i:3" id="dica-abertura">Você já leu a mesma mensagem cinco vezes procurando o tom. Antes de responder, fique um minuto com a bolinha.</p>
+      <p class="credencial revela" style="--i:4">Dr. Fabio Schmidt · Médico · CRM-SP 183549</p>
+    </div>
+
+    <div class="palco revela" style="--i:2" id="palco" role="button" tabindex="0" aria-label="Bolinha de respiração. Toque para pausar ou continuar.">
+      <div class="palco-topo">
+        <span>Respiração lenta · 5 · 5</span>
+        <span class="ao-vivo"><i></i><b id="palco-estado">Pronto</b></span>
+      </div>
+      <div class="guia" id="guia-topo">
+        <canvas class="orbe" aria-hidden="true"></canvas>
+        <svg class="anel" viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="trilho" cx="50" cy="50" r="48"></circle>
+          <circle class="prog" cx="50" cy="50" r="48" pathLength="100" stroke-dasharray="0 100" style="opacity:0"></circle>
+        </svg>
+      </div>
+      <div class="leitura"><span class="fase" aria-live="polite">Quando quiser</span><span class="conta" aria-hidden="true"></span></div>
+      <span class="legenda-bola">Cinco segundos para entrar, cinco para sair. Toque para pausar.</span>
+    </div>
+  </section>
+
+  <section class="secao" id="situacoes">
+    <div class="cabecalho revela">
+      <span class="selo"><i></i>Gratuito</span>
+      <h2>O que está acontecendo agora?</h2>
+      <p>Toque na situação. A bolinha guia o ritmo e você faz junto.</p>
+    </div>
+    <div class="grade" id="grade-situacoes"></div>
+
+    <div class="enviar revela">
+      <p>Mande para alguém que prende a respiração quando a ansiedade aperta.</p>
+      <button type="button" class="btn" id="btn-enviar"></button>
+    </div>
+  </section>
+
+  <hr class="divisor" />
+
+  <section class="secao" id="materiais">
+    <div class="cabecalho revela">
+      <span class="selo pago">Pago</span>
+      <h2>Para continuar depois da respiração</h2>
+      <p>Materiais que eu escrevi para quem tem borderline e para quem convive.</p>
+    </div>
+
+    <div class="grade">
+      <article class="material revela" style="--i:0">
+        <div class="linha-topo">
+          <span class="tipo"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>PDF</span>
+          <span class="para">Para quem tem borderline</span>
+        </div>
+        <h3>Kit de Regulação</h3>
+        <p>Dez ferramentas da terapia comportamental dialética para usar por conta própria, antes que a crise chegue.</p>
+        <div class="compra">
+          <span class="preco">R$ 27</span>
+          <a class="btn contorno" href="https://pay.hotmart.com/M105447307K?src=respirar" target="_blank" rel="noopener">Ver na Hotmart</a>
+        </div>
+      </article>
+
+      <article class="material revela" style="--i:1">
+        <div class="linha-topo">
+          <span class="tipo"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>PDF</span>
+          <span class="para">Para parceiros e familiares</span>
+        </div>
+        <h3>Protocolo da Crise</h3>
+        <p>O que fazer nos 60 minutos mais difíceis, quando a crise já começou.</p>
+        <div class="compra">
+          <span class="preco">R$ 27</span>
+          <a class="btn contorno" href="https://pay.hotmart.com/H105440271K?src=respirar" target="_blank" rel="noopener">Ver na Hotmart</a>
+        </div>
+      </article>
+
+      <article class="material destaque revela" style="--i:2">
+        <div class="linha-topo">
+          <span class="tipo"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg>Curso</span>
+          <span class="para">Para quem mora com alguém com borderline</span>
+        </div>
+        <h3>Protocolo 7 Dias</h3>
+        <p>Um procedimento por dia, durante sete dias. A pessoa com borderline não precisa assistir nem concordar.</p>
+        <div class="compra">
+          <span class="preco">R$ 219<small>ou 12x de R$ 21,90</small></span>
+          <a class="btn contorno" href="https://pay.hotmart.com/S104212285E?src=respirar" target="_blank" rel="noopener">Ver na Hotmart</a>
+        </div>
+      </article>
+
+      <article class="material revela" style="--i:3">
+        <div class="linha-topo">
+          <span class="tipo"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Livro</span>
+          <span class="para">Para quem convive</span>
+        </div>
+        <h3>Quando Escolher Não É Possível</h3>
+        <p>Guia de convivência para quem vive ao lado de alguém com desregulação emocional intensa.</p>
+        <div class="compra">
+          <span class="preco">R$ 69</span>
+          <a class="btn contorno" href="https://pay.hotmart.com/U103950622S?off=3xv992tf&src=respirar" target="_blank" rel="noopener">Ver na Hotmart</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="consulta revela" id="consulta">
+      <img class="foto" src="data:image/jpeg;base64,__FOTO__" alt="Foto do Dr. Fabio Schmidt" width="72" height="72" />
+      <div class="texto">
+        <span class="rotulo">Atendimento</span>
+        <h2>Consulta com o Dr. Fabio Schmidt</h2>
+        <p>Individual ou de casal, presencial em Mogi das Cruzes, SP, ou online. Sem convênio. <span class="sem-quebra">Primeira consulta R$ 700.</span></p>
+        <p class="crm">Médico, pós-graduado em psiquiatria · CRM-SP 183549</p>
+      </div>
+      <a class="btn contorno" href="https://consultadrfabio.base44.app/" target="_blank" rel="noopener">Ver horários</a>
+    </div>
+  </section>
+
+  <aside class="seguranca revela" id="ajuda" aria-label="Segurança">
+    <strong>Se você não está em segurança agora</strong>
+    <p>Se pensa em se machucar, ligue para o CVV: <span class="sem-quebra">188</span>. É gratuito e atende 24 horas. Em emergência, SAMU: <span class="sem-quebra">192</span>.</p>
+    <p>Se sentir tontura em qualquer respiração, pare e respire do seu jeito.</p>
+    <div class="ligar">
+      <a class="btn cvv" href="tel:188">Ligar para o CVV 188</a>
+      <a class="btn contorno" href="tel:192">SAMU 192</a>
+    </div>
+  </aside>
+
+  <footer class="rodape">
+    <p>Conteúdo educativo. Não substitui avaliação nem tratamento.</p>
+    <div>
+      <span class="rotulo">Fontes</span>
+      <ol>
+        <li>Balban MY e colegas. Brief structured respiration practices enhance mood and reduce physiological arousal. Cell Reports Medicine, 2023. <a href="https://doi.org/10.1016/j.xcrm.2022.100895" target="_blank" rel="noopener">doi.org/10.1016/j.xcrm.2022.100895</a></li>
+        <li>Fincham GW e colegas. Effect of breathwork on stress and mental health: a meta-analysis of randomised-controlled trials. Scientific Reports, 2023. <a href="https://doi.org/10.1038/s41598-022-27247-y" target="_blank" rel="noopener">doi.org/10.1038/s41598-022-27247-y</a></li>
+        <li>Linehan MM. DBT Skills Training Manual. 2ª edição. Guilford Press, 2015.</li>
+      </ol>
+    </div>
+    <p><span class="nome">Dr. Fabio Schmidt</span> · Médico, pós-graduado em psiquiatria · CRM-SP 183549 · Mogi das Cruzes, SP</p>
+  </footer>
+
+</main>
+
+<nav class="dock" id="dock" aria-label="Seções da página">
+  <span class="dock-luz" aria-hidden="true"></span>
+  <a href="#inicio" data-alvo="inicio"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.8 19.6A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M9.8 4.4A2 2 0 1 1 11 8H2"/></svg>Respirar</a>
+  <a href="#situacoes" data-alvo="situacoes"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></svg>Situações</a>
+  <a href="#materiais" data-alvo="materiais"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Materiais</a>
+  <a href="#consulta" data-alvo="consulta"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>Consulta</a>
+  <a href="#ajuda" data-alvo="ajuda" class="sos"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Ajuda</a>
+</nav>
+
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<dialog class="folha" id="folha" aria-labelledby="folha-titulo">
+  <div class="folha-dentro" id="folha-dentro"></div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+
+  var reduzido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- sons ---------- */
+  var ctx = null;
+  var somLigado = true;
+  try { var g = localStorage.getItem('respirar-som'); if (g !== null) somLigado = g === '1'; } catch (e) {}
+
+  function contexto() {
+    if (ctx) { if (ctx.state === 'suspended') ctx.resume().catch(function () {}); return ctx; }
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    ctx = new AC();
+    return ctx;
+  }
+  function tom(c, freq, dur, vol) {
+    var t = c.currentTime;
+    var o = c.createOscillator();
+    var gain = c.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.linearRampToValueAtTime(vol, t + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(gain); gain.connect(c.destination);
+    o.start(t); o.stop(t + dur + 0.03);
+  }
+  var Som = {
+    alternar: function () {
+      somLigado = !somLigado;
+      try { localStorage.setItem('respirar-som', somLigado ? '1' : '0'); } catch (e) {}
+      return somLigado;
+    },
+    preparar: function () { contexto(); },
+    tocar: function (nome, vol) {
+      if (!somLigado) return;
+      var c = contexto();
+      if (!c) return;
+      var v = vol == null ? 1 : vol;
+      if (nome === 'clique') {
+        var t = c.currentTime, o = c.createOscillator(), gain = c.createGain();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(1180, t);
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(0.035 * v, t + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+        o.connect(gain); gain.connect(c.destination);
+        o.start(t); o.stop(t + 0.12);
+      } else if (nome === 'pop') {
+        tom(c, 430, 0.16, 0.05 * v);
+        tom(c, 650, 0.12, 0.03 * v);
+      } else if (nome === 'chime') {
+        tom(c, 660, 1.1, 0.05 * v);
+        tom(c, 990, 0.9, 0.025 * v);
+      } else if (nome === 'whoosh') {
+        var t2 = c.currentTime;
+        var buf = c.createBuffer(1, Math.floor(c.sampleRate * 0.5), c.sampleRate);
+        var dados = buf.getChannelData(0);
+        for (var i = 0; i < dados.length; i++) dados[i] = Math.random() * 2 - 1;
+        var s = c.createBufferSource(); s.buffer = buf;
+        var f = c.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.2;
+        f.frequency.setValueAtTime(320, t2);
+        f.frequency.linearRampToValueAtTime(1500, t2 + 0.35);
+        var g2 = c.createGain();
+        g2.gain.setValueAtTime(0.0001, t2);
+        g2.gain.linearRampToValueAtTime(0.05 * v, t2 + 0.08);
+        g2.gain.exponentialRampToValueAtTime(0.0001, t2 + 0.45);
+        s.connect(f); f.connect(g2); g2.connect(c.destination);
+        s.start(t2); s.stop(t2 + 0.5);
+      }
+    }
+  };
+  function vibrar(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
+  ['pointerdown', 'keydown'].forEach(function (ev) {
+    document.addEventListener(ev, function () { Som.preparar(); }, { once: true, passive: true });
+  });
+
+  /* ---------- técnicas ---------- */
+  var TECNICAS = [
+    { id: 'resposta', situacao: 'Você mandou mensagem e a resposta não chega', tecnica: 'Respiração lenta', forma: 'esfera',
+      ritmo: [{ f: 'Inspire', s: 5, to: 1 }, { f: 'Solte', s: 5, to: 0 }], ciclos: 18, meta: '6 por minuto · 3 min',
+      passos: ['Puxe o ar pelo nariz enquanto a bolinha cresce.', 'Solte o ar enquanto ela diminui.', 'Deixe o celular virado para baixo nesses três minutos. A mensagem continua lá.'],
+      nota: '', cuidado: '', video: '' },
+    { id: 'suspiro', situacao: 'Um minuto, em qualquer lugar', tecnica: 'Suspiro duplo', forma: 'esfera',
+      ritmo: [{ f: 'Inspire pelo nariz', s: 2, to: 0.82 }, { f: 'Mais um pouco', s: 1, to: 1 }, { f: 'Solte pela boca', s: 6, to: 0 }], ciclos: 6, meta: '2 + 1 entra · 6 sai · 1 min',
+      passos: ['Puxe o ar pelo nariz.', 'Sem soltar, puxe mais um pouco no final.', 'Solte tudo pela boca, devagar, até o fim.'],
+      nota: 'Num estudo de 2023, cinco minutos por dia de suspiro duplo, durante um mês, melhoraram o humor mais do que a meditação.', cuidado: '', video: '' },
+    { id: 'dormir', situacao: 'A cabeça não desliga para dormir', tecnica: 'Respiração 4-7-8', forma: 'anel',
+      ritmo: [{ f: 'Inspire', s: 4, to: 1 }, { f: 'Segure', s: 7, to: null }, { f: 'Solte pela boca', s: 8, to: 0 }], ciclos: 4, meta: '4 entra · 7 segura · 8 sai',
+      passos: ['Na cama, puxe o ar pelo nariz contando até 4.', 'Segure contando até 7.', 'Solte pela boca, bem devagar, contando até 8.', 'Quatro voltas. Depois respire do seu jeito.'],
+      nota: '', cuidado: 'Se segurar o ar incomodar, encurte a pausa. Não force.', video: '' },
+    { id: 'conversa', situacao: 'A discussão esquentou e a resposta já está na ponta da língua', tecnica: 'Sopro lento', forma: 'anel',
+      ritmo: [{ f: 'Inspire pelo nariz', s: 3, to: 1 }, { f: 'Sopre devagar', s: 6, to: 0 }], ciclos: 8, meta: '3 entra · 6 sai',
+      passos: ['Antes de responder, diga: vou pegar uma água e já volto.', 'Fora dali, puxe o ar pelo nariz.', 'Sopre devagar com os lábios quase fechados, como se soprasse por um canudo.', 'Volte quando sua voz estiver no tom de sempre.'],
+      nota: '', cuidado: '', video: '' },
+    { id: 'crise', situacao: 'Crise de ansiedade: coração disparado, falta de ar', tecnica: 'Respiração pequena e lenta', forma: 'anel',
+      ritmo: [{ f: 'Inspire pouco', s: 3, to: 0.7 }, { f: 'Solte devagar', s: 5, to: 0 }], ciclos: 12, meta: '3 entra · 5 sai · sem segurar',
+      passos: ['Pés no chão. Uma mão na barriga.', 'Puxe pouco ar pelo nariz. Não encha o peito.', 'Solte mais devagar do que puxou.', 'Se conseguir, diga baixinho cinco coisas que você está vendo.'],
+      nota: 'Na crise, puxar muito ar e rápido pode aumentar a falta de ar. Aqui é pouco ar e devagar.',
+      cuidado: 'Dor no peito, desmaio ou primeira vez com esses sintomas: procure atendimento. SAMU 192.', video: '' },
+    { id: 'quadrada', situacao: 'Antes de sair de casa ou na fila', tecnica: 'Respiração quadrada', forma: 'quadrado',
+      ritmo: [{ f: 'Inspire', s: 4, to: 1 }, { f: 'Segure', s: 4, to: null }, { f: 'Solte', s: 4, to: 0 }, { f: 'Segure', s: 4, to: null }], ciclos: 5, meta: '4 · 4 · 4 · 4',
+      passos: ['Quatro tempos para cada lado do quadrado.', 'Dá para fazer em pé, de olhos abertos, sem ninguém perceber.', 'Se a cabeça fugir, conte nos dedos.'],
+      nota: '', cuidado: '', video: '' },
+    { id: 'maos', situacao: 'Quando a emoção sobe em segundos', tecnica: 'Respiração com as mãos', forma: 'esfera',
+      ritmo: [{ f: 'Inspire e feche as mãos', s: 4, to: 1 }, { f: 'Solte e abra as mãos', s: 6, to: 0 }], ciclos: 8, meta: '4 entra · 6 sai',
+      passos: ['Puxe o ar e feche as mãos com força.', 'Solte o ar devagar e abra as mãos.', 'Repare na diferença entre a mão apertada e a mão solta.'],
+      nota: 'Habilidade da terapia comportamental dialética, usada no tratamento do borderline.', cuidado: '', video: '' },
+    { id: 'junto', situacao: 'Alguém da casa está em crise', tecnica: 'Respirar junto', forma: 'duas',
+      ritmo: [{ f: 'Inspire', s: 4, to: 1 }, { f: 'Solte', s: 6, to: 0 }], ciclos: 10, meta: '4 entra · 6 sai',
+      passos: ['Sente perto, sem encostar se a pessoa não quiser.', 'Respire devagar, com um som que dê para ouvir.', 'Não mande a pessoa respirar. Só respire perto dela.'],
+      nota: '', cuidado: 'Se houver agressão ou risco, a sua segurança vem primeiro. Saia do ambiente e peça ajuda.', video: '' }
+  ];
+  function acharTecnica(id) { for (var i = 0; i < TECNICAS.length; i++) if (TECNICAS[i].id === id) return TECNICAS[i]; return null; }
+  function doisDigitos(n) { return (n < 10 ? '0' : '') + n; }
+
+  /* ---------- esfera de pontos ---------- */
+  function criarOrbe(canvas, op) {
+    op = op || {};
+    var c2 = canvas.getContext('2d');
+    var N = op.n || 340;
+    var cor = op.cor || '140,230,200';
+    var ponto = op.ponto || 1;
+    var forma = op.forma || 'esfera';
+    var pts = [], dpr = 1, w = 1, h = 1, raf = null, ligado = false, tAnt = 0, tempo = 0;
+    var ga = Math.PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < N; i++) {
+      var y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = ga * i;
+      pts.push({
+        bx: Math.cos(th) * r, by: y, bz: Math.sin(th) * r,
+        s1: Math.random(), s2: Math.random(), s3: Math.random() * Math.PI * 2,
+        x: (Math.random() - 0.5) * 4, y: (Math.random() - 0.5) * 4, z: Math.random() * 2 - 1
+      });
+    }
+    var o = { v: 0, vMostrado: 0.3, segurando: false, ocioso: true, progresso: -1, mouse: null };
+    var alvo = { x: 0, y: 0, z: 0 };
+
+    function calcAlvo(p, i, t) {
+      if (forma === 'anel') {
+        var a = (i / N) * Math.PI * 2 + t * 0.12;
+        var rr = 1 + (p.s1 - 0.5) * 0.14;
+        alvo.x = Math.cos(a) * rr; alvo.y = Math.sin(a) * rr; alvo.z = (p.s2 - 0.5) * 1.6;
+        return;
+      }
+      if (forma === 'quadrado') {
+        var s = (i / N) * 4, lado = Math.floor(s), f = s - lado, L = 0.8, j = (p.s1 - 0.5) * 0.07;
+        if (lado === 0) { alvo.x = -L + 2 * L * f; alvo.y = -L + j; }
+        else if (lado === 1) { alvo.x = L + j; alvo.y = -L + 2 * L * f; }
+        else if (lado === 2) { alvo.x = L - 2 * L * f; alvo.y = L + j; }
+        else { alvo.x = -L + j; alvo.y = L - 2 * L * f; }
+        alvo.z = (p.s2 - 0.5) * 1.6;
+        return;
+      }
+      var cx = 0, esc = 1, sentido = 1;
+      if (forma === 'duas') { var par = i % 2 === 0; cx = par ? -0.5 : 0.5; esc = 0.44; sentido = par ? 1 : -1; }
+      var ang = t * 0.22 * sentido, ca = Math.cos(ang), sa = Math.sin(ang);
+      var x1 = p.bx * ca + p.bz * sa, z1 = -p.bx * sa + p.bz * ca;
+      var cb = 0.9287, sb = 0.3709; /* inclinação de 0,38 rad */
+      alvo.x = cx + x1 * esc; alvo.y = (p.by * cb - z1 * sb) * esc; alvo.z = p.by * sb + z1 * cb;
+    }
+
+    function quadro(agora) {
+      var dt = Math.min(0.05, Math.max(0, (agora - tAnt) / 1000)); tAnt = agora;
+      if (!reduzido) tempo += dt;
+      var alvoV = o.ocioso ? 0.3 + 0.05 * Math.sin(agora / 900) : o.v;
+      o.vMostrado += (alvoV - o.vMostrado) * Math.min(1, dt * 10);
+      var v = o.vMostrado;
+      c2.clearRect(0, 0, w, h);
+      var cxp = w / 2, cyp = h / 2, R = Math.min(w, h) * 0.4;
+      var esc = reduzido ? R * 0.8 : R * (0.42 + 0.58 * v);
+      var gr = c2.createRadialGradient(cxp, cyp, 0, cxp, cyp, esc * 1.4);
+      gr.addColorStop(0, 'rgba(' + cor + ',' + (0.05 + 0.13 * v).toFixed(3) + ')');
+      gr.addColorStop(1, 'rgba(' + cor + ',0)');
+      c2.globalAlpha = 1; c2.fillStyle = gr; c2.fillRect(0, 0, w, h);
+      c2.fillStyle = 'rgb(' + cor + ')';
+      var k = Math.min(1, dt * 4.5);
+      var tremor = (o.segurando && !reduzido) ? 0.016 : 0;
+      var alfaGlobal = reduzido ? 0.45 + 0.55 * v : 1;
+      var m = o.mouse, raio = 70 * dpr;
+      for (var i = 0; i < N; i++) {
+        var p = pts[i];
+        calcAlvo(p, i, tempo);
+        p.x += (alvo.x - p.x) * k; p.y += (alvo.y - p.y) * k; p.z += (alvo.z - p.z) * k;
+        var x = p.x, y = p.y;
+        if (tremor) { x += Math.sin(tempo * 7 + p.s3) * tremor; y += Math.cos(tempo * 6 + p.s3) * tremor; }
+        var px = cxp + x * esc, py = cyp + y * esc;
+        if (m) {
+          var dx = px - m.x, dy = py - m.y, d2 = dx * dx + dy * dy;
+          if (d2 < raio * raio && d2 > 1) { var d = Math.sqrt(d2), fz = (1 - d / raio) * 22 * dpr; px += dx / d * fz; py += dy / d * fz; }
+        }
+        var prof = Math.max(0, Math.min(1, (p.z + 1) / 2));
+        var tam = (0.7 + 1.5 * prof) * dpr * ponto;
+        var alfa = (0.16 + 0.84 * prof) * alfaGlobal;
+        if (forma === 'quadrado' && o.progresso >= 0) {
+          var u = i / N, dd = Math.abs(u - o.progresso); dd = Math.min(dd, 1 - dd);
+          if (dd < 0.04) { var hl = 1 - dd / 0.04; alfa = Math.max(alfa, hl); tam *= 1 + hl * 1.3; }
+        }
+        c2.globalAlpha = alfa;
+        c2.beginPath(); c2.arc(px, py, tam, 0, 6.2832); c2.fill();
+      }
+      c2.globalAlpha = 1;
+      if (ligado) raf = requestAnimationFrame(quadro);
+    }
+
+    function medir() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      var r = canvas.getBoundingClientRect();
+      w = Math.max(1, Math.round(r.width * dpr)); h = Math.max(1, Math.round(r.height * dpr));
+      canvas.width = w; canvas.height = h;
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(medir).observe(canvas);
+    else window.addEventListener('resize', medir);
+    medir();
+
+    var alvoPonteiro = canvas.parentNode;
+    alvoPonteiro.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var r = canvas.getBoundingClientRect();
+      o.mouse = { x: (e.clientX - r.left) * dpr, y: (e.clientY - r.top) * dpr };
+    });
+    alvoPonteiro.addEventListener('pointerleave', function () { o.mouse = null; });
+
+    o.ligar = function () { if (ligado) return; ligado = true; tAnt = performance.now(); raf = requestAnimationFrame(quadro); };
+    o.desligar = function () { ligado = false; if (raf) cancelAnimationFrame(raf); raf = null; };
+    o.empurrar = function (forca) {
+      if (reduzido) return;
+      pts.forEach(function (p) { var f = 1 + (Math.random() * 0.8 + 0.2) * forca; p.x *= f; p.y *= f; });
+    };
+    return o;
+  }
+
+  /* ---------- motor do ritmo ---------- */
+  var suave = function (x) { return -(Math.cos(Math.PI * x) - 1) / 2; };
+
+  function criarMotor(opcoes) {
+    var raiz = opcoes.raiz;
+    var orbe = opcoes.orbe;
+    var prog = raiz.querySelector('.prog');
+    var contaEl = opcoes.conta;
+    var faseEl = opcoes.fase;
+    var m = {
+      rodando: false, terminou: false, decorrido: 0, fases: [], duracao: 1, ciclos: Infinity,
+      cicloAtual: 0, idxAnt: -1, cicloAnt: -1, raf: null, t0: 0, trava: null
+    };
+
+    function conta(n) {
+      if (!contaEl) return;
+      var txt = (n === 0 || n === '' || n == null) ? '' : String(n);
+      if (contaEl.getAttribute('data-v') === txt) return;
+      contaEl.setAttribute('data-v', txt);
+      contaEl.innerHTML = txt ? '<span class="digito">' + txt + '</span>' : '';
+    }
+
+    function pintar(v, p, n, idx, ciclo) {
+      if (orbe) orbe.v = v;
+      if (prog) {
+        prog.setAttribute('stroke-dasharray', (p * 100).toFixed(2) + ' 100');
+        prog.style.opacity = p > 0 ? '1' : '0';
+      }
+      conta(n);
+      m.cicloAtual = ciclo || 0;
+      if (opcoes.segs) {
+        for (var i = 0; i < opcoes.segs.length; i++) {
+          var el = opcoes.segs[i];
+          if (el) el.style.transform = 'scaleX(' + (i < idx ? 1 : i === idx ? p : 0).toFixed(4) + ')';
+        }
+      }
+      if (opcoes.aoCiclo) opcoes.aoCiclo(m);
+    }
+
+    function fase(t) {
+      if (faseEl) {
+        faseEl.textContent = t;
+        faseEl.classList.remove('troca');
+        void faseEl.offsetWidth;
+        faseEl.classList.add('troca');
+      }
+    }
+
+    function estado(e) {
+      if (orbe) {
+        orbe.ocioso = (e === 'parado' || e === 'fim');
+        if (e !== 'rodando') orbe.segurando = false;
+        if (e === 'parado' || e === 'fim') orbe.progresso = -1;
+      }
+      if (opcoes.aoEstado) opcoes.aoEstado(e);
+    }
+
+    function acordado(sim) {
+      try {
+        if (sim && 'wakeLock' in navigator && !m.trava) {
+          navigator.wakeLock.request('screen').then(function (t) { m.trava = t; }).catch(function () {});
+        }
+        if (!sim && m.trava) { m.trava.release(); m.trava = null; }
+      } catch (e) { m.trava = null; }
+    }
+
+    function tick(agora) {
+      m.decorrido = (agora - m.t0) / 1000;
+      var total = m.duracao * m.ciclos;
+      if (isFinite(total) && m.decorrido >= total) { finalizar(); return; }
+      var noCiclo = m.decorrido % m.duracao;
+      var ciclo = Math.floor(m.decorrido / m.duracao);
+      var acc = 0;
+      for (var i = 0; i < m.fases.length; i++) {
+        var f = m.fases[i];
+        if (noCiclo < acc + f.s) {
+          var p = (noCiclo - acc) / f.s;
+          var v = f.ini + (f.fim - f.ini) * suave(p);
+          if (i !== m.idxAnt || ciclo !== m.cicloAnt) {
+            var primeira = m.idxAnt === -1;
+            m.idxAnt = i; m.cicloAnt = ciclo;
+            fase(f.f);
+            if (opcoes.som) { Som.tocar('pop', primeira ? 0.5 : 0.6); vibrar(8); }
+          }
+          if (orbe) { orbe.segurando = f.ini === f.fim; orbe.progresso = noCiclo / m.duracao; }
+          pintar(v, p, Math.ceil(f.s - (noCiclo - acc)), i, ciclo);
+          break;
+        }
+        acc += f.s;
+      }
+      m.raf = requestAnimationFrame(tick);
+    }
+
+    function finalizar() {
+      m.rodando = false;
+      if (m.raf) cancelAnimationFrame(m.raf);
+      acordado(false);
+      m.terminou = true;
+      pintar(0, 1, '', m.fases.length, Math.max(0, m.ciclos - 1));
+      fase('Terminou');
+      if (orbe) orbe.empurrar(0.9);
+      if (opcoes.som) { Som.tocar('chime', 0.7); vibrar([10, 60, 10]); }
+      if (opcoes.aoFim) opcoes.aoFim();
+      estado('fim');
+    }
+
+    m.definir = function (ritmo, ciclos) {
+      m.parar();
+      var v = 0;
+      m.fases = ritmo.map(function (p) {
+        var ini = v;
+        var fim = p.to == null ? v : p.to;
+        v = fim;
+        return { f: p.f, s: p.s, ini: ini, fim: fim };
+      });
+      m.duracao = ritmo.reduce(function (a, p) { return a + p.s; }, 0) || 1;
+      m.ciclos = ciclos;
+      m.decorrido = 0; m.terminou = false;
+      m.idxAnt = -1; m.cicloAnt = -1; m.cicloAtual = 0;
+      pintar(0, 0, 0, -1, 0);
+      fase('Quando quiser');
+      estado('parado');
+    };
+    m.iniciar = function () {
+      if (m.rodando) return;
+      if (m.terminou) { m.decorrido = 0; m.terminou = false; m.idxAnt = -1; m.cicloAnt = -1; }
+      m.rodando = true;
+      m.t0 = performance.now() - m.decorrido * 1000;
+      m.raf = requestAnimationFrame(tick);
+      acordado(true);
+      estado('rodando');
+    };
+    m.pausar = function () {
+      if (!m.rodando) return;
+      m.rodando = false;
+      if (m.raf) cancelAnimationFrame(m.raf);
+      acordado(false);
+      estado(m.decorrido > 0 ? 'pausado' : 'parado');
+    };
+    m.parar = function () {
+      m.rodando = false;
+      if (m.raf) cancelAnimationFrame(m.raf);
+      acordado(false);
+    };
+    m.recomecar = function () {
+      m.parar();
+      m.decorrido = 0; m.terminou = false;
+      m.idxAnt = -1; m.cicloAnt = -1; m.cicloAtual = 0;
+      pintar(0, 0, 0, -1, 0);
+      fase('Quando quiser');
+      if (orbe) orbe.empurrar(0.5);
+      estado('parado');
+    };
+    return m;
+  }
+
+  /* ---------- botão que muda de forma ---------- */
+  function morfar(btn, html) {
+    if (reduzido) { btn.innerHTML = html; return; }
+    var w0 = btn.offsetWidth;
+    btn.style.width = w0 + 'px';
+    btn.innerHTML = html;
+    btn.style.width = 'auto';
+    var w1 = btn.offsetWidth;
+    btn.style.width = w0 + 'px';
+    void btn.offsetWidth;
+    btn.style.width = w1 + 'px';
+    clearTimeout(btn._morf);
+    btn._morf = setTimeout(function () { btn.style.width = ''; }, 500);
+  }
+
+  /* ---------- aviso ---------- */
+  var avisoEl = document.getElementById('aviso');
+  var avisoTimer = null;
+  function avisar(texto) {
+    avisoEl.textContent = texto;
+    avisoEl.classList.add('visivel');
+    clearTimeout(avisoTimer);
+    avisoTimer = setTimeout(function () { avisoEl.classList.remove('visivel'); }, 2400);
+  }
+
+  /* ---------- tema dia e noite ---------- */
+  var raizHtml = document.documentElement;
+  var metaCor = document.querySelector('meta[name="theme-color"]');
+  function corDoTema() { if (metaCor) metaCor.setAttribute('content', raizHtml.getAttribute('data-theme') === 'dark' ? '#0C1714' : '#EEF1EA'); }
+  corDoTema();
+  document.getElementById('btn-tema').addEventListener('click', function () {
+    var escuro = raizHtml.getAttribute('data-theme') !== 'dark';
+    raizHtml.setAttribute('data-theme', escuro ? 'dark' : 'light');
+    try { localStorage.setItem('respira-tema', escuro ? 'dark' : 'light'); } catch (e) {}
+    corDoTema();
+    Som.tocar('clique', 0.9);
+  });
+
+  /* ---------- entradas ao rolar ---------- */
+  function observarEntradas(raiz) {
+    var els = (raiz || document).querySelectorAll('.revela:not(.visto)');
+    if (!('IntersectionObserver' in window) || reduzido) {
+      Array.prototype.forEach.call(els, function (el) { el.classList.add('visto'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        el.classList.add('visto');
+        io.unobserve(el);
+        setTimeout(function () { el.classList.remove('revela', 'visto'); }, 1400);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    Array.prototype.forEach.call(els, function (el) { io.observe(el); });
+  }
+
+  /* ---------- topo que encolhe ---------- */
+  var topo = document.getElementById('topo');
+  var h1 = document.getElementById('titulo-principal');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      topo.classList.toggle('compacto', !en[0].isIntersecting && en[0].boundingClientRect.top < 0);
+    }, { threshold: 0 }).observe(h1);
+  }
+
+  /* ---------- abertura ---------- */
+  var palco = document.getElementById('palco');
+  var raizTopo = document.getElementById('guia-topo');
+  var palcoEstado = document.getElementById('palco-estado');
+  var orbeTopo = criarOrbe(raizTopo.querySelector('canvas'), { forma: 'esfera', n: 320 });
+  var guiaTopo = criarMotor({
+    raiz: raizTopo, orbe: orbeTopo,
+    fase: palco.querySelector('.fase'), conta: palco.querySelector('.conta'),
+    aoEstado: function (e) {
+      palco.classList.toggle('pausado', e !== 'rodando');
+      palcoEstado.textContent = e === 'rodando' ? 'Ao vivo' : e === 'pausado' ? 'Pausado' : 'Pronto';
+    }
+  });
+  guiaTopo.definir([{ f: 'Inspire', s: 5, to: 1 }, { f: 'Solte', s: 5, to: 0 }], Infinity);
+  function alternarTopo() {
+    Som.tocar('clique', 0.9);
+    vibrar(6);
+    if (guiaTopo.rodando) guiaTopo.pausar();
+    else guiaTopo.iniciar();
+  }
+  palco.addEventListener('click', alternarTopo);
+  palco.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); alternarTopo(); }
+  });
+  var palcoVisivel = true;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      palcoVisivel = en[0].isIntersecting;
+      if (palcoVisivel && !document.hidden) orbeTopo.ligar(); else orbeTopo.desligar();
+    }).observe(palco);
+  }
+  orbeTopo.ligar();
+  if (!reduzido) setTimeout(function () { guiaTopo.iniciar(); }, 900);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { guiaTopo.pausar(); orbeTopo.desligar(); }
+    else if (palcoVisivel) orbeTopo.ligar();
+  });
+
+  /* ---------- cartões ---------- */
+  function formaSvg(ritmo, indice) {
+    var UPS = 10, alto = 6, baixo = 40, x = 0, v = 0;
+    var d = 'M0 ' + baixo;
+    ritmo.forEach(function (p) {
+      var fim = p.to == null ? v : p.to;
+      x += p.s * UPS;
+      d += ' L' + x + ' ' + (baixo - (baixo - alto) * fim).toFixed(1);
+      v = fim;
+    });
+    var largura = Math.max(x, 190);
+    return '<svg class="forma" viewBox="0 0 ' + largura + ' 46" preserveAspectRatio="xMinYMid meet" aria-hidden="true">' +
+      '<path class="area" d="' + d + ' L' + x + ' ' + baixo + ' Z"/>' +
+      '<path class="linha" pathLength="1" d="' + d + '" style="stroke-dasharray:1;animation:desenha 1100ms cubic-bezier(.2,0,0,1) both;animation-delay:' + (400 + indice * 70) + 'ms"/></svg>';
+  }
+
+  var seta = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  var grade = document.getElementById('grade-situacoes');
+  TECNICAS.forEach(function (t, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'cartao revela';
+    b.style.setProperty('--i', i % 2);
+    b.innerHTML =
+      '<span class="cartao-topo"><span class="indice">' + doisDigitos(i + 1) + '</span><span>' + t.tecnica + '</span></span>' +
+      '<span class="titulo">' + t.situacao + '</span>' +
+      formaSvg(t.ritmo, i % 2) +
+      '<span class="cartao-base"><span class="meta">' + t.meta + '</span>' +
+      '<span class="comecar">Começar' + seta + '</span></span>';
+    b.addEventListener('click', function () { abrirFolha(t.id); });
+    grade.appendChild(b);
+  });
+  grade.addEventListener('pointermove', function (e) {
+    var c = e.target.closest && e.target.closest('.cartao');
+    if (!c) return;
+    var r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+
+  /* ---------- enviar ---------- */
+  var btnEnviar = document.getElementById('btn-enviar');
+  var htmlEnviar = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg><span>Enviar esta página</span>';
+  var htmlCopiado = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="risco" pathLength="1" d="M5 12.5l4.2 4.2L19 7"/></svg><span>Link copiado</span>';
+  btnEnviar.innerHTML = htmlEnviar;
+  btnEnviar.addEventListener('click', function () {
+    Som.tocar('clique', 0.9);
+    var url = window.location.href.split('#')[0];
+    var dados = { title: 'Uma respiração para cada momento', text: 'Respirações guiadas e gratuitas do Dr. Fabio Schmidt.', url: url };
+    if (navigator.share) {
+      navigator.share(dados).catch(function (e) { if (!e || e.name !== 'AbortError') copiar(url); });
+      return;
+    }
+    copiar(url);
+    function copiar(u) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(u).then(function () {
+          morfar(btnEnviar, htmlCopiado);
+          Som.tocar('pop', 0.7); vibrar(8);
+          setTimeout(function () { morfar(btnEnviar, htmlEnviar); }, 2200);
+        }).catch(function () { avisar(u); });
+      } else { avisar(u); }
+    }
+  });
+
+  /* ---------- menu de vidro ---------- */
+  var dock = document.getElementById('dock');
+  var luz = dock.querySelector('.dock-luz');
+  var itens = Array.prototype.slice.call(dock.querySelectorAll('a'));
+  var secoes = itens.map(function (a) { return document.getElementById(a.getAttribute('data-alvo')); });
+  var atual = null;
+  function marcar(id) {
+    atual = id;
+    itens.forEach(function (a) {
+      var on = a.getAttribute('data-alvo') === id;
+      a.classList.toggle('ativo', on);
+      if (on) {
+        a.setAttribute('aria-current', 'true');
+        luz.style.width = a.offsetWidth + 'px';
+        luz.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+      } else a.removeAttribute('aria-current');
+    });
+  }
+  var travaEspiar = 0;
+  function espiar() {
+    if (Date.now() < travaEspiar) return;
+    var lim = window.innerHeight * 0.42, id = secoes[0].id;
+    secoes.forEach(function (s) { if (s && s.getBoundingClientRect().top <= lim) id = s.id; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) id = secoes[secoes.length - 1].id;
+    if (id !== atual) marcar(id);
+  }
+  var agendado = false;
+  window.addEventListener('scroll', function () {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(function () { agendado = false; espiar(); });
+  }, { passive: true });
+  window.addEventListener('resize', function () { if (atual) marcar(atual); });
+  itens.forEach(function (a) {
+    a.addEventListener('click', function () {
+      Som.tocar('clique', 0.8); vibrar(5);
+      travaEspiar = Date.now() + 900;
+      marcar(a.getAttribute('data-alvo'));
+    });
+  });
+  marcar('inicio');
+
+  /* ---------- tela do exercício ---------- */
+  var folha = document.getElementById('folha');
+  var dentro = document.getElementById('folha-dentro');
+  var motorFolha = null;
+  var orbeFolha = null;
+  var estadoFolha = 'parado';
+
+  var iconePlay = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><polygon points="7 4 19 12 7 20 7 4"/></svg>';
+  var iconePause = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>';
+  var iconeDeNovo = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+  var iconeSom = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.8"/></svg>';
+  var iconeMudo = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>';
+  var marca = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path pathLength="1" d="M5 12.5l4.2 4.2L19 7"/></svg>';
+
+  function abrirFolha(id) {
+    var t = acharTecnica(id);
+    if (!t) return;
+    var indice = TECNICAS.indexOf(t) + 1;
+    Som.tocar('whoosh', 0.8);
+    guiaTopo.pausar();
+
+    var barras = t.ritmo.map(function (p) { return '<span style="flex:' + p.s + '"><i></i></span>'; }).join('');
+    var rotulos = t.ritmo.map(function (p) { return '<span style="flex:' + p.s + '">' + p.s + 's</span>'; }).join('');
+    var passos = t.passos.map(function (p) {
+      return '<li><button type="button" class="passo" aria-pressed="false"><span class="caixa" aria-hidden="true">' + marca + '</span><span class="passo-texto">' + p + '</span></button></li>';
+    }).join('');
+    var video = t.video
+      ? '<div class="video-bloco"><span class="rotulo">Vídeo com o Dr. Fabio</span><video id="video-folha" src="' + t.video + '" controls playsinline preload="metadata"></video></div>'
+      : '';
+
+    dentro.innerHTML =
+      '<div class="puxador" aria-hidden="true"></div>' +
+      '<div class="folha-cabeca"><div>' +
+        '<span class="rotulo">' + doisDigitos(indice) + ' · ' + t.tecnica + '</span>' +
+        '<h2 class="folha-titulo" id="folha-titulo">' + t.situacao + '</h2>' +
+        '<div class="folha-sub">' + t.meta + '</div>' +
+      '</div><div class="folha-botoes">' +
+        '<button type="button" class="btn-icone' + (somLigado ? ' ligado' : '') + '" id="btn-som" aria-label="Som dos avisos de fase"></button>' +
+        '<button type="button" class="btn-fechar" id="btn-fechar">Fechar</button>' +
+      '</div></div>' +
+      video +
+      '<div class="guia-bloco">' +
+        '<div class="barras" id="barras">' + barras + '</div>' +
+        '<div class="rotulos-barras" aria-hidden="true">' + rotulos + '</div>' +
+        '<div class="guia guia-grande" id="guia-folha" role="button" tabindex="0" aria-label="Toque para começar ou pausar">' +
+          '<canvas class="orbe" aria-hidden="true"></canvas>' +
+          '<svg class="anel" viewBox="0 0 100 100" aria-hidden="true"><circle class="trilho" cx="50" cy="50" r="48"></circle><circle class="prog" cx="50" cy="50" r="48" pathLength="100" stroke-dasharray="0 100" style="opacity:0"></circle></svg>' +
+        '</div>' +
+        '<div class="leitura"><span class="fase" aria-live="polite">Quando quiser</span><span class="conta" aria-hidden="true"></span></div>' +
+        '<div class="ciclo" id="ciclo"></div>' +
+        '<div class="folha-acoes">' +
+          '<button type="button" class="btn" id="btn-play">' + iconePlay + '<span>Começar</span></button>' +
+          '<button type="button" class="btn contorno" id="btn-recomecar">Recomeçar</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="como"><span class="rotulo">Como fazer · toque para marcar</span><ol class="passos">' + passos + '</ol></div>' +
+      (t.nota ? '<p class="nota">' + t.nota + '</p>' : '') +
+      (t.cuidado ? '<p class="cuidado">' + t.cuidado + '</p>' : '');
+
+    var segs = Array.prototype.slice.call(dentro.querySelectorAll('#barras i'));
+    var cicloEl = dentro.querySelector('#ciclo');
+    var btnPlay = dentro.querySelector('#btn-play');
+    var somFolha = dentro.querySelector('#btn-som');
+    var btnFechar = dentro.querySelector('#btn-fechar');
+    var btnRecomecar = dentro.querySelector('#btn-recomecar');
+    var guiaFolha = dentro.querySelector('#guia-folha');
+    var videoEl = dentro.querySelector('#video-folha');
+    somFolha.innerHTML = somLigado ? iconeSom : iconeMudo;
+
+    if (orbeFolha) orbeFolha.desligar();
+    if (typeof folha.showModal === 'function') folha.showModal();
+    else folha.setAttribute('open', '');
+    dentro.scrollTop = 0;
+
+    orbeFolha = criarOrbe(guiaFolha.querySelector('canvas'), { forma: t.forma, n: 380, ponto: 1.1 });
+    orbeFolha.ligar();
+
+    var rotulosBotao = { parado: 'Começar', rodando: 'Pausar', pausado: 'Continuar', fim: 'De novo' };
+    motorFolha = criarMotor({
+      raiz: guiaFolha,
+      orbe: orbeFolha,
+      fase: dentro.querySelector('.leitura .fase'),
+      conta: dentro.querySelector('.leitura .conta'),
+      segs: segs,
+      som: true,
+      aoEstado: function (e) {
+        var mudou = e !== estadoFolha;
+        estadoFolha = e;
+        var html = (e === 'rodando' ? iconePause : e === 'fim' ? iconeDeNovo : iconePlay) + '<span>' + rotulosBotao[e] + '</span>';
+        if (mudou && btnPlay.offsetWidth) morfar(btnPlay, html); else btnPlay.innerHTML = html;
+      },
+      aoCiclo: function (m) {
+        if (m.terminou) return;
+        cicloEl.textContent = (m.rodando || m.decorrido > 0)
+          ? 'Volta ' + (m.cicloAtual + 1) + ' de ' + m.ciclos
+          : m.ciclos + ' voltas';
+      },
+      aoFim: function () {
+        cicloEl.textContent = 'Como você está agora? Se precisar, faça de novo.';
+      }
+    });
+    estadoFolha = '';
+    motorFolha.definir(t.ritmo, t.ciclos);
+
+    function alternar() {
+      Som.tocar('clique', 0.9); vibrar(6);
+      if (estadoFolha === 'rodando') { motorFolha.pausar(); return; }
+      if (videoEl) { try { videoEl.pause(); } catch (e) {} }
+      motorFolha.iniciar();
+    }
+    if (videoEl) videoEl.addEventListener('play', function () { motorFolha.pausar(); });
+    btnPlay.addEventListener('click', alternar);
+    guiaFolha.addEventListener('click', alternar);
+    guiaFolha.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); alternar(); }
+    });
+    btnRecomecar.addEventListener('click', function () { Som.tocar('clique', 0.9); motorFolha.recomecar(); });
+    somFolha.addEventListener('click', function () {
+      var ligado = Som.alternar();
+      somFolha.innerHTML = ligado ? iconeSom : iconeMudo;
+      somFolha.classList.toggle('ligado', ligado);
+      if (ligado) Som.tocar('clique', 0.9);
+      avisar(ligado ? 'Som ligado' : 'Som desligado');
+    });
+    btnFechar.addEventListener('click', fecharFolha);
+    Array.prototype.forEach.call(dentro.querySelectorAll('.passo'), function (b) {
+      b.addEventListener('click', function () {
+        var feito = !b.classList.contains('feito');
+        b.classList.toggle('feito', feito);
+        b.setAttribute('aria-pressed', feito ? 'true' : 'false');
+        if (feito) { Som.tocar('pop', 0.5); vibrar(6); } else Som.tocar('clique', 0.6);
+      });
+    });
+  }
+
+  function fecharFolha() {
+    if (motorFolha) motorFolha.pausar();
+    if (orbeFolha) { orbeFolha.desligar(); orbeFolha = null; }
+    var v = dentro.querySelector('#video-folha');
+    if (v) { try { v.pause(); } catch (e) {} }
+    Som.tocar('clique', 0.8);
+    if (typeof folha.close === 'function') folha.close();
+    else folha.removeAttribute('open');
+    setTimeout(function () {
+      if (history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.search);
+    }, 100);
+  }
+
+  folha.addEventListener('cancel', function (e) { e.preventDefault(); fecharFolha(); });
+  folha.addEventListener('click', function (e) { if (e.target === folha) fecharFolha(); });
+
+  observarEntradas();
+
+  /* link direto: pagina.html#crise */
+  var hash = window.location.hash.slice(1);
+  if (hash === 'apuracao') hash = 'resposta'; /* links antigos */
+  if (/^[a-z0-9-]+$/.test(hash) && acharTecnica(hash)) abrirFolha(hash);
+})();
+</script>
+</body>
+</html>
