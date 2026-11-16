@@ -1,4 +1,4 @@
-// node render.mjs frames <outdir> <startFrame> <endFrame>   (60fps, 3 subframes each)
+// node render.mjs frames <outdir> <startFrame> <endFrame>   (FPS env, default 60; 3 subframes each)
 // node render.mjs times <outdir> t1,t2,...                  (stills)
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -22,7 +22,7 @@ if (mode === 'times') {
   for (const t of a.split(',').map(Number)) await shot(t, `${out}/t_${t.toFixed(3)}.png`, 'png');
 } else {
   for (let f = +a; f < +b; f++) for (let s = 0; s < 3; s++) {
-    const t = Math.max(0, f / 60 + (s - 1) / 180);
+    const FPS = +(process.env.FPS || 60); const t = Math.max(0, f / FPS + (s - 1) / (3 * FPS));
     await shot(t, `${out}/s_${String(f * 3 + s).padStart(5, '0')}.jpg`, 'jpeg');
   }
 }

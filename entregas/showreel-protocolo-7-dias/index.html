@@ -84,6 +84,8 @@ const piorou=maskLine(piorouWrap,'Piorou',{fontSize:HF+'px',lineHeight:'0.98',co
 const baseMark=document.createElement('span');Object.assign(baseMark.style,{display:'inline-block',width:'0',height:'0',verticalAlign:'baseline'});piorou.appendChild(baseMark);
 const pDot=document.createElement('span');pDot.textContent='.';pDot.style.color=BRICK;piorou.appendChild(pDot);
 hookLines.push(piorou);
+const hookSub=mk(hook,{left:'90px',top:'1077px',width:'860px',color:INK},'a ab');
+['Para quem convive','com borderline'].forEach(l=>{const d=document.createElement('div');d.textContent=l;d.style.lineHeight='1.06';d.style.whiteSpace='nowrap';hookSub.appendChild(d)});
 const hookMB=hookLines.map(()=>mb());
 
 /* =========================================================
@@ -218,11 +220,12 @@ const endFSs=document.createElement('span');endFSs.textContent='FS';Object.assig
 const eb=mk(end,{left:'90px',top:'880px',width:'860px',textAlign:'center'});
 const eName=maskLine(eb,'Dr. Fabio Schmidt',{fontSize:'70px',color:INK,lineHeight:'1.05'},'ab');
 const eProd=maskLine(eb,'Protocolo 7 Dias',{fontSize:'44px',fontWeight:'600',color:INK,marginTop:'26px'},'pp');
-const eCom=maskLine(eb,'Comente',{fontSize:'46px',fontWeight:'500',color:INK,marginTop:'100px'},'pp');
+const eCom=maskLine(eb,'Responda este story com',{fontSize:'40px',fontWeight:'600',color:INK,marginTop:'30px'},'pp');
 const eGo=maskLine(eb,'COMEÇAR',{fontSize:'132px',color:BRICK,lineHeight:'1.02'},'ab');
-const eUnder=mk(end,{background:BRICK,borderRadius:'6px',transformOrigin:'0 50%'});
-const ef=mk(end,{left:'90px',top:'1392px',width:'860px',textAlign:'center'});
-const eFoot=['Conteúdo educativo. Não substitui avaliação nem tratamento.','Dr. Fabio Schmidt · Médico · CRM-SP 183549'].map(l=>maskLine(ef,l,{fontSize:'25px',fontWeight:'400',color:INK,opacity:'.78',lineHeight:'1.5'},'pp'));
+const eLink=maskLine(eb,'e eu te envio o link',{fontSize:'40px',fontWeight:'500',color:INK},'pp');
+eGo.parentNode.style.overflow='visible';eGo.style.transformOrigin='50% 55%';
+const ef=mk(end,{left:'90px',top:'1385px',width:'860px',textAlign:'center'});
+const eFoot=['Conteúdo educativo. Não substitui avaliação nem tratamento.','Dr. Fabio Schmidt, Médico, CRM-SP 183549'].map(l=>maskLine(ef,l,{fontSize:'25px',fontWeight:'400',color:INK,opacity:'.78',lineHeight:'1.5'},'pp'));
 
 /* =========================================================
    FLOOD + CURSOR (top layers)
@@ -243,7 +246,9 @@ function measure(){
   let maxW=0;DAYS.forEach(d=>d.name.forEach(l=>{probe.textContent=l;maxW=Math.max(maxW,probe.getBoundingClientRect().width)}));
   M.dayFont=Math.min(100,Math.floor(100*860/maxW));
   probe.textContent='Um procedimento';M.titleFont=Math.min(92,Math.floor(100*720/probe.getBoundingClientRect().width));
+  probe.textContent='Para quem convive';M.subFont=Math.floor(100*860/probe.getBoundingClientRect().width);
   probe.remove();
+  hookSub.style.fontSize=M.subFont+'px';hookSub.style.top=(1152-hookSub.getBoundingClientRect().height/2).toFixed(1)+'px';
   dayScenes.forEach(s=>s.hd.ls.forEach(l=>l.parentNode.style.fontSize=M.dayFont+'px'));
   titleL.forEach(l=>l.parentNode.style.fontSize=M.titleFont+'px');
   // all scenes visible, identity transforms
@@ -256,6 +261,7 @@ function measure(){
   // row 1 tile in the step list
   M.r1=rectOf(cards[0].n);
   M.row1=rectOf(cards[0].c);
+  {const a=rectOf(titleBox),b=rectOf(cards[6].c);M.listMid=(a.y+b.y+b.h)/2;}
   // day 5 words
   d5w.forEach(o=>{o.r=rectOf(o.e)});
   // end: COMEÇAR width for underline
@@ -268,8 +274,8 @@ function measure(){
 function camera(t){
   let Z=1,fx=540,fy=960;
   if(t<4){Z=1+0.04*prog(t,0,4)}
-  else if(t<6){Z=1.04+0.04*prog(t,4,6);const p=expoIO(prog(t,4.85,5.38));Z*=lerp(1,1.16,p);fx=lerp(540,M.row1.cx,p);fy=lerp(960,M.row1.cy,p)}
-  else if(t<20){const T=6+2*Math.floor((t-6)/2);Z=1+0.04*prog(t,T,T+2)}
+  else if(t<6){const p=easeIO(prog(t,4.0,4.6));Z=1.04*lerp(1,1.3,p);fx=lerp(540,520,p);fy=lerp(960,M.listMid,p)}
+  else if(t<20){const T=6+2*Math.floor((t-6)/2);if(T===14){const p=easeIO(prog(t,14.0,14.9));Z=lerp(1,1.15,p);fx=lerp(540,510,p);fy=lerp(960,950,p)}else Z=1+0.04*prog(t,T,T+2)}
   else{Z=1.04+0.04*prog(t,20,24)}
   cam.style.transform=`translate(540px,960px) scale(${Z.toFixed(5)}) translate(${(-fx).toFixed(2)}px,${(-fy).toFixed(2)}px)`;
 }
@@ -349,6 +355,7 @@ function updHook(t){
     const v=vel(f,t);mbSet(s,hookMB[i],v[0],0);
   });
   pDot.style.visibility=t>=2.5?'hidden':'visible';
+  hookSub.style.opacity=(prog(t,0,0.3)*(1-prog(t,1.7,2.0))).toFixed(3);
 }
 function objRect(t){ // [cx,cy,w,h]
   const D=M.dot,G=130;
@@ -549,11 +556,11 @@ function updEnd(t){
   endFSs.style.transform=`translateY(${((1-spring(u,0.5,0.4))*120).toFixed(1)}%) scale(${(sz/250).toFixed(4)})`;
   rise(eName,spring(u,1.0,0.42));
   rise(eProd,spring(u,1.5,0.42));
-  rise(eCom,spring(u,2.0,0.42));
-  rise(eGo,spring(u,2.06,0.42));
-  eFoot.forEach((l,i)=>rise(l,spring(u,2.5+0.06*i,0.42)));
-  const uw=M.go.w*0.92;box(eUnder,520-uw/2,M.go.y+M.go.h+8,uw,12,6);
-  eUnder.style.transform=`scaleX(${expoOut(prog(u,3.0,3.4)).toFixed(4)})`;
+  const fade=(e,a)=>{e.style.transform='none';e.style.opacity=prog(u,a,a+0.3).toFixed(3)};
+  fade(eCom,2.0);
+  eGo.style.transform=`scale(${spring(u,2.1,0.42).toFixed(4)})`;
+  fade(eLink,2.5);
+  eFoot.forEach(l=>fade(l,3.0));
 }
 
 /* =========================================================
