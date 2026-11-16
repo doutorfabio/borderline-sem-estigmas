@@ -112,7 +112,7 @@ function ball(t){
   else if(t>=T.landSlider && t<T.launch){x=sliderBallX(t);y=SL.y;}
   else {
     const last=[...hops].filter(h=>h[1]<=t).pop(); x=last[3].x;y=last[3].y;
-    if(t>=T.home){ x=SW.on; y=0; if(t>=T.off) x=lerp(SW.on,SW.off,spring(t-T.off,24,.78)); }
+    if(t>=T.home){ x=SW.on; y=0; if(t>=T.off) x=lerp(SW.on,SW.off,spring(t-T.off,34,.9)); }
   }
   let sq=0; landings.forEach(l=>{ if(t>=l) sq+=squash(t-l, l===T.click?0:.2); });
   T.steps.forEach(s=>{ if(t>=s) sq+=squash(t-s,.08); });
