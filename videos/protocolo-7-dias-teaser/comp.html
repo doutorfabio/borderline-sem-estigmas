@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Protocolo 7 Dias teaser</title>
+<style>
+@font-face{font-family:P;src:url(fonts/poppins-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:P;src:url(fonts/poppins-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:P;src:url(fonts/poppins-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:P;src:url(fonts/poppins-latin-700-normal.woff2) format('woff2');font-weight:700}
+:root{--bg:#0d0d0d;--ch:#1a1a1a;--ch2:#262626;--ch3:#333;--red:#cc0000;--w:#fff}
+html,body{margin:0;background:var(--bg);overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;background:var(--bg);overflow:hidden;font-family:P,sans-serif;color:var(--w)}
+.layer{position:absolute;left:0;top:0;transform-origin:0 0}
+#grid{left:-1400px;top:-1600px;width:3440px;height:5200px;
+  background-image:radial-gradient(circle,rgba(255,255,255,.11) 1.6px,transparent 2px);background-size:34px 34px;background-position:0 0}
+#mask{position:absolute;inset:0;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,transparent 150px,#000 214px,#000 1468px,transparent 1530px);
+  mask-image:linear-gradient(to bottom,transparent 0,transparent 150px,#000 214px,#000 1468px,transparent 1530px)}
+.abs{position:absolute}
+.card{position:absolute;background:var(--ch);border-radius:28px;box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
+.lbl{position:absolute;white-space:nowrap;line-height:1}
+.key{position:absolute;background:var(--ch3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:24px}
+#ball{position:absolute;width:40px;height:40px;border-radius:50%;background:#fff;left:-20px;top:-20px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="grid" class="layer"></div>
+  <div id="mask"><div id="world" class="layer"></div></div>
+</div>
+<script>
+// ---------- helpers (all pure) ----------
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,u)=>a+(b-a)*u;
+const smooth=u=>{u=clamp(u);return u*u*(3-2*u)};
+const cubicIO=u=>{u=clamp(u);return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2};
+const sineIO=u=>{u=clamp(u);return -(Math.cos(Math.PI*u)-1)/2};
+const expoOut=u=>{u=clamp(u);return u>=1?1:1-Math.pow(2,-10*u)};
+// closed-form damped spring from 0 to 1, small overshoot
+function spring(dt,w=22,z=.68){ if(dt<=0)return 0; const wd=w*Math.sqrt(1-z*z);
+  return 1-Math.exp(-z*w*dt)*(Math.cos(wd*dt)+(z*w/wd)*Math.sin(wd*dt)); }
+// impact squash: positive = wider
+function squash(dt,A=.22){ if(dt<0)return 0; return A*Math.exp(-dt*13)*Math.cos(dt*34); }
+
+// ---------- world layout (world units; camera maps world x 320 to screen 540) ----------
+const W=640;
+const SW={x0:512,x1:604,y:0,off:538,on:578};           // switch track and knob centres
+const SL={x0:150,x1:590,y:712};                        // slider track
+const dayX=d=>SL.x0+(d-1)*(SL.x1-SL.x0)/6;
+const CARDS=[{y:1060,h:140,t:'Dia 1',b:'Frase fixa de presença'},
+             {y:1220,h:140,t:'Dia 3',b:'Pausa combinada de 20 minutos'},
+             {y:1380,h:212,t:'Dia 4',b:'Roteiro de pós-crise'}];
+const PILL={x:32,y:1512,w:172,h:46};
+const FIELD={x:32,y:1507,w:576,h:56};
+const KB={y:1662,pad:12,kh:58,gap:8};
+const ROWS=['QWERTYUIOP','ASDFGHJKLÇ','ZXCVBNM'];
+const REPLY='COMEÇAR';
+
+// keyboard geometry
+const keys={};
+(function(){
+  const inner=W-2*KB.pad, kw=(inner-9*6)/10;
+  ROWS.forEach((r,ri)=>{
+    let x0=KB.pad; const y=KB.y+KB.pad+ri*(KB.kh+KB.gap);
+    if(ri===2){ const sw=kw*1.5; keys['⇧']={x:x0,y,w:sw,h:KB.kh,l:''}; x0+=sw+6 + (inner-(2*sw+12+7*kw+36))/2; }
+    [...r].forEach((c,i)=>{ keys[c]={x:x0+i*(kw+6),y,w:kw,h:KB.kh,l:c}; });
+    if(ri===2){ const sw=kw*1.5; keys['⌫']={x:W-KB.pad-sw,y,w:sw,h:KB.kh,l:''}; }
+  });
+  const y=KB.y+KB.pad+3*(KB.kh+KB.gap), rw=170;
+  keys['_']={x:KB.pad,y,w:inner-rw-6,h:KB.kh,l:''};
+  keys['↵']={x:W-KB.pad-rw,y,w:rw,h:KB.kh,l:''};
+})();
+const KB_H=KB.pad*2+4*KB.kh+3*KB.gap;
+const kc=k=>({x:keys[k].x+keys[k].w/2,y:keys[k].y+keys[k].h/2});
+
+// ---------- timing (seconds; 120 BPM, beat = .5 s) ----------
+const T={click:.5, free:.75, landSlider:1.5, steps:[1.75,2,2.25,2.5,2.75,3], launch:3.08,
+  cards:[3.5,4,4.5], pill:5.0, kbIn:5.1, typeStart:5.75, keyDt:.25, ret:7.5,
+  back:8.4, home:9.35, off:9.5, end:10};
+const typeTimes=[...REPLY].map((c,i)=>T.typeStart+i*T.keyDt);   // 5.75 ... 7.25
+
+// ---------- ball route: rests, slides and hops; never jumps ----------
+const pts={sw0:{x:SW.off,y:0},sw1:{x:SW.on,y:0},d1:{x:dayX(1),y:SL.y},d7:{x:dayX(7),y:SL.y},
+  c1:{x:560,y:CARDS[0].y+70},c2:{x:560,y:CARDS[1].y+70},c3:{x:560,y:CARDS[2].y+62},pill:{x:PILL.x+PILL.w/2,y:PILL.y+PILL.h/2}};
+// hop list [t0,t1,from,to,lift,height]
+const hops=[[T.free,T.landSlider,pts.sw1,pts.d1,150,.55],
+  [T.launch,T.cards[0],pts.d7,pts.c1,90,.4],
+  [T.cards[0]+.08,T.cards[1],pts.c1,pts.c2,60,.3],
+  [T.cards[1]+.08,T.cards[2],pts.c2,pts.c3,60,.3],
+  [T.cards[2]+.08,T.pill,pts.c3,pts.pill,80,.35],
+  [T.pill+.4,T.typeStart,pts.pill,kc(REPLY[0]),70,.35]];
+for(let i=1;i<REPLY.length;i++) hops.push([typeTimes[i-1]+.03,typeTimes[i],kc(REPLY[i-1]),kc(REPLY[i]),34,.22]);
+hops.push([typeTimes[REPLY.length-1]+.03,T.ret,kc(REPLY[REPLY.length-1]),kc('↵'),44,.25]);
+hops.push([T.back,T.home,kc('↵'),pts.sw1,260,.6]);
+const landings=hops.map(h=>h[1]);
+
+function sliderBallX(t){ // ball rides the knob, day by day
+  let x=dayX(1);
+  T.steps.forEach((ts,i)=>{ x+= (dayX(i+2)-dayX(i+1))*spring(t-ts+.02,30,.72); });
+  return x;
+}
+function ball(t){
+  let x,y,lift=0,hgt=0,vx=0,vy=0;
+  const h=hops.find(h=>t>=h[0]&&t<h[1]);
+  if(h){ const u=(t-h[0])/(h[1]-h[0]); const ue=lerp(u,sineIO(u),.35); const arc=4*u*(1-u);
+    // long return hop curves out to the left so the path reads
+    const bend = h[4]>200 ? -170*Math.sin(Math.PI*u) : 0;
+    x=lerp(h[2].x,h[3].x,ue)+bend; y=lerp(h[2].y,h[3].y,ue)-h[4]*arc; hgt=h[5]*arc; }
+  else if(t<T.click) {x=SW.off;y=0;}
+  else if(t<T.free) {x=lerp(SW.off,SW.on,spring(t-T.click,26,.7));y=0;}
+  else if(t>=T.landSlider && t<T.launch){x=sliderBallX(t);y=SL.y;}
+  else {
+    const last=[...hops].filter(h=>h[1]<=t).pop(); x=last[3].x;y=last[3].y;
+    if(t>=T.home){ x=SW.on; y=0; if(t>=T.off) x=lerp(SW.on,SW.off,spring(t-T.off,24,.78)); }
+  }
+  let sq=0; landings.forEach(l=>{ if(t>=l) sq+=squash(t-l, l===T.click?0:.2); });
+  T.steps.forEach(s=>{ if(t>=s) sq+=squash(t-s,.08); });
+  return {x,y,s:1+hgt,sx:1+sq,sy:1-sq,hgt};
+}
+
+// ---------- camera: position + log-space zoom ----------
+const CAM=[[0,0,1.28],[.72,0,1.28],[1.58,690,1.28],[3.05,700,1.28],[3.72,1312,1.28],[4.85,1340,1.28],
+  [5.62,1712,1.28],[7.62,1716,1.28],[8.45,925,.59],[8.98,925,.59],[10,0,1.28]];
+function camera(t){
+  for(let i=0;i<CAM.length-1;i++){ const a=CAM[i],b=CAM[i+1];
+    if(t<=b[0]){ const u=cubicIO((t-a[0])/(b[0]-a[0]));
+      return {cy:lerp(a[1],b[1],u), z:Math.exp(lerp(Math.log(a[2]),Math.log(b[2]),u))}; } }
+  const l=CAM[CAM.length-1]; return {cy:l[1],z:l[2]};
+}
+
+// ---------- build DOM once ----------
+const world=document.getElementById('world');
+const el=(cls,css,html='')=>{const d=document.createElement('div');if(cls)d.className=cls;Object.assign(d.style,css);d.innerHTML=html;world.appendChild(d);return d;};
+const px=v=>v+'px';
+// toggle
+const tCard=el('card',{left:'0',top:px(-110),width:px(W),height:'220px'});
+el('lbl',{left:'40px',top:px(-22),fontSize:'42px',fontWeight:600,letterSpacing:'-.5px'},'Protocolo 7 Dias');
+const swTrack=el('abs',{left:px(SW.x0-24),top:px(-28),width:px(SW.x1-SW.x0+48),height:'56px',borderRadius:'28px',background:'#3a3a3a'});
+const swSlot=el('abs',{left:px(SW.on-22),top:'-22px',width:'44px',height:'44px',borderRadius:'50%',background:'rgba(0,0,0,.28)'});
+// slider
+el('card',{left:'0',top:'598px',width:px(W),height:'176px'});
+el('lbl',{left:'40px',top:px(SL.y-16),fontSize:'32px',fontWeight:600},'Dia');
+const slTrack=el('abs',{left:px(SL.x0),top:px(SL.y-6),width:px(SL.x1-SL.x0),height:'12px',borderRadius:'6px',background:'#3a3a3a'});
+const slFill=el('abs',{left:px(SL.x0),top:px(SL.y-6),height:'12px',borderRadius:'6px',background:'var(--red)'});
+const ticks=[1,2,3,4,5,6,7].map(d=>el('abs',{left:px(dayX(d)-3),top:px(SL.y+22),width:'6px',height:'6px',borderRadius:'3px',background:'rgba(255,255,255,.28)'}));
+const knob=el('abs',{width:'52px',height:'52px',borderRadius:'50%',background:'#2b2b2b',boxShadow:'0 0 0 3px #fff inset',top:px(SL.y-26)});
+const bub=el('abs',{height:'46px',minWidth:'46px',padding:'0 14px',boxSizing:'border-box',borderRadius:'12px',background:'#fff',color:'#0d0d0d',
+  fontWeight:700,fontSize:'26px',display:'flex',alignItems:'center',justifyContent:'center',top:px(SL.y-86)});
+const bubTip=el('abs',{width:'14px',height:'14px',background:'#fff',transform:'rotate(45deg)',top:px(SL.y-47)});
+// cards
+const cardEls=CARDS.map((c,i)=>{
+  const g=document.createElement('div'); g.className='abs'; Object.assign(g.style,{left:'0',top:px(c.y),width:px(W),height:px(c.h)}); world.appendChild(g);
+  g.innerHTML=`<div class="card" style="left:0;top:0;width:${W}px;height:${c.h}px"></div>
+   <div class="abs" style="left:32px;top:30px;width:44px;height:44px;border-radius:12px;background:#2b2b2b"><div class="abs" style="left:15px;top:15px;width:14px;height:14px;border-radius:7px;background:var(--red)"></div></div>
+   <div class="lbl" style="left:94px;top:30px;font-size:22px;font-weight:600;color:rgba(255,255,255,.62)">${c.t}</div>
+   <div class="lbl" style="left:94px;top:62px;font-size:28px;font-weight:500">${c.b}</div>`;
+  return g; });
+// reply field (pill -> field -> bubble), lives inside card 3 coordinates (world)
+const field=el('abs',{overflow:'hidden'});
+const fieldTxt=el('lbl',{fontSize:'24px',fontWeight:600});
+const caret=el('abs',{width:'3px',height:'30px',background:'var(--red)'});
+const sendBtn=el('abs',{width:'42px',height:'42px',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center'},
+  '<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+// keyboard
+const kbWrap=document.createElement('div'); kbWrap.className='abs'; Object.assign(kbWrap.style,{left:'0',top:'0'}); world.appendChild(kbWrap);
+const kbPanel=document.createElement('div'); kbPanel.className='card'; Object.assign(kbPanel.style,{left:'0',top:px(KB.y),width:px(W),height:px(KB_H),borderRadius:'26px'}); kbWrap.appendChild(kbPanel);
+const keyEls={};
+Object.entries(keys).forEach(([k,g])=>{ const d=document.createElement('div'); d.className='key';
+  Object.assign(d.style,{left:px(g.x),top:px(g.y),width:px(g.w),height:px(g.h)}); d.textContent=g.l;
+  if(k==='↵') d.innerHTML='<svg width="34" height="26" viewBox="0 0 34 26"><path d="M29 3v9a4 4 0 0 1-4 4H6M12 9l-7 7 7 7" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  if(k==='⇧') d.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 4 4 13h4.5v7h7v-7H20z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>';
+  if(k==='⌫') d.innerHTML='<svg width="30" height="22" viewBox="0 0 30 22"><path d="M9 2h18v18H9L2 11z M14 7l8 8M22 7l-8 8" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>';
+  if(k==='⇧'||k==='⌫'||k==='↵') d.style.background='#2b2b2b';
+  kbWrap.appendChild(d); keyEls[k]=d; });
+const pop=el('abs',{width:'64px',height:'78px',borderRadius:'14px',background:'#4a4a4a',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'38px',fontWeight:600});
+// cursor (world space)
+const cursor=el('abs',{left:'0',top:'0',transformOrigin:'0 0'},
+  '<svg width="34" height="48" viewBox="0 0 34 48" style="display:block;margin:-2px 0 0 -3px"><path d="M3 2v38l9.5-9.2 6.4 14.6 6.6-2.9-6.3-14.3H32z" fill="#fff" stroke="#0d0d0d" stroke-width="2.4" stroke-linejoin="round"/></svg>');
+const ballEl=el('',{});ballEl.id='ball';
+
+// ---------- seek(t): every visual is computed from t ----------
+const CUR0={x:612,y:74};
+function seek(t){
+  t=((t%10)+10)%10;
+  const cam=camera(t), z=cam.z, tx=540-320*z, ty=850-cam.cy*z;
+  world.style.transform=`translate(${tx}px,${ty}px) scale(${z})`;
+  document.getElementById('grid').style.transform=`translate(${tx}px,${ty}px) scale(${z})`;
+  const b=ball(t);
+
+  // switch
+  const on = t>=T.click+.04 && t<T.off+.08 ? 1 : 0;
+  const onU = t<T.off ? smooth((t-T.click)/.12) : 1-smooth((t-T.off)/.18);
+  swTrack.style.background = `rgb(${lerp(58,204,onU)},${lerp(58,0,onU)},${lerp(58,0,onU)})`;
+  swSlot.style.opacity = (t>T.free+.1 && t<T.home) ? .9*smooth((t-T.free-.1)/.2) : 0;
+
+  // slider: fill and value come from the knob's x, the knob from the ball while it rides
+  let kx = dayX(1);
+  if(t>=T.landSlider && t<T.launch) kx=b.x;
+  else if(t>=T.launch && t<9.15) kx=dayX(7);
+  else if(t>=9.15) kx=lerp(dayX(7),dayX(1),spring(t-9.15,14,.9));
+  const kn=squash(t-T.landSlider,.12);
+  knob.style.left=px(kx-26); knob.style.transform=`scale(${1+kn},${1-kn})`;
+  slFill.style.width=px(Math.max(0,kx-SL.x0));
+  const val=clamp(Math.round(1+6*(kx-SL.x0)/(SL.x1-SL.x0)),1,7);
+  bub.textContent=val; bub.style.left=px(kx); bub.style.transform='translateX(-50%)';
+  bubTip.style.left=px(kx-7);
+  const hit7 = t>=T.steps[5] ? Math.exp(-(t-T.steps[5])*5) : 0;
+  const bubOp = t<9.1?1:t<9.85?0:smooth((t-9.85)/.1);
+  bub.style.opacity=bubOp; bubTip.style.opacity=bubOp;
+  const red7 = (val===7 && t<9.1)?1:0;
+  bub.style.background = red7?'var(--red)':'#fff'; bub.style.color = red7?'#fff':'#0d0d0d'; bubTip.style.background=bub.style.background;
+  bub.style.transform=`translateX(-50%) scale(${1+.12*hit7})`;
+  ticks.forEach((k,i)=>k.style.background = (kx>=dayX(i+1)-1)?'rgba(204,0,0,.9)':'rgba(255,255,255,.28)');
+
+  // cards: each arrives on its own beat, just before the ball lands on it
+  cardEls.forEach((g,i)=>{ const ta=T.cards[i]-.2, land=T.cards[i];
+    let op=smooth((t-ta)/.14), dy=36*(1-spring(t-ta,20,.7)), sc=lerp(.95,1,spring(t-ta,20,.7));
+    if(t>=land) dy+= 6*Math.exp(-(t-land)*12)*Math.sin((t-land)*30);
+    const out=9.0+(2-i)*.1; if(t>=out){ const u=smooth((t-out)/.25); op*=1-u; dy+=24*u; }
+    if(t<ta) op=0;
+    g.style.opacity=op; g.style.transform=`translateY(${dy}px) scale(${sc})`; g.style.transformOrigin='50% 50%'; });
+  const c3=cardEls[2]; const c3dy=parseFloat(c3.style.transform.match(/translateY\(([-\d.e]+)px/)[1]); const c3op=+c3.style.opacity;
+
+  // reply: pill -> field (5.0) -> bubble (7.5)
+  const grow=spring(t-(T.pill+.05),18,.8), shrink=spring(t-(T.ret+.06),17,.82);
+  const typed=REPLY.slice(0,typeTimes.filter(k=>t>=k).length);
+  const bubbleW=168, B={x:FIELD.x+FIELD.w-bubbleW,y:FIELD.y+4,w:bubbleW,h:48};
+  let R={x:lerp(PILL.x,FIELD.x,grow),y:lerp(PILL.y,FIELD.y,grow),w:lerp(PILL.w,FIELD.w,grow),h:lerp(PILL.h,FIELD.h,grow)};
+  if(t>=T.ret+.06) R={x:lerp(R.x,B.x,shrink),y:lerp(R.y,B.y,shrink),w:lerp(R.w,B.w,shrink),h:lerp(R.h,B.h,shrink)};
+  const isBubble=t>=T.ret+.06;
+  Object.assign(field.style,{left:px(R.x),top:px(R.y+c3dy),width:px(R.w),height:px(R.h),borderRadius:px(R.h/2),
+    background: isBubble? `rgb(${lerp(46,204,smooth(shrink*1.4))},${lerp(46,0,smooth(shrink*1.4))},${lerp(46,0,smooth(shrink*1.4))})` : '#2e2e2e',opacity:c3op});
+  if(t<T.pill+.05){ fieldTxt.textContent='Responder'; Object.assign(fieldTxt.style,{left:px(PILL.x+28),top:px(PILL.y+11+c3dy),fontSize:'22px',fontWeight:500,opacity:c3op}); }
+  else if(!isBubble){ fieldTxt.textContent=typed||'Responder';
+    Object.assign(fieldTxt.style,{left:px(R.x+24),top:px(R.y+R.h/2-13+c3dy),fontSize:typed?'26px':'22px',fontWeight:typed?600:500,
+      opacity:c3op*(typed?1:clamp(1-grow*2.2))}); }
+  else { fieldTxt.textContent=REPLY; const tw=fieldTxt.offsetWidth||0;
+    Object.assign(fieldTxt.style,{left:px(lerp(FIELD.x+24,B.x+(B.w-tw)/2,shrink)),top:px(R.y+R.h/2-13+c3dy),fontSize:'26px',fontWeight:600,opacity:c3op}); }
+  const typing = t>=T.pill+.25 && t<T.ret+.06;
+  caret.style.opacity = typing && (Math.floor(t*4)%2===0 || (t>=T.typeStart-.05)) ? c3op : 0;
+  const tw2 = typed ? fieldTxt.offsetWidth : 0;
+  Object.assign(caret.style,{left:px(R.x+24+tw2+(typed?4:0)),top:px(R.y+R.h/2-15+c3dy)});
+  const sendOn=spring(t-T.ret,24,.6);
+  Object.assign(sendBtn.style,{left:px(R.x+R.w-49),top:px(R.y+R.h/2-21+c3dy),
+    opacity: (t>T.pill+.15 && t<T.ret+.18)? c3op*smooth((t-T.pill-.15)/.15)*(1-smooth((t-T.ret-.06)/.1)) : 0,
+    background: t>=T.ret? 'var(--red)':'#3d3d3d', transform:`scale(${t>=T.ret?1+.18*(1-sendOn)*Math.sign(1):1})`});
+
+  // keyboard rises below the field, part of the same scene
+  const kin=spring(t-T.kbIn,15,.82); let kop=smooth((t-T.kbIn)/.2), kdy=90*(1-kin);
+  if(t>=8.95){ const u=smooth((t-8.95)/.35); kop*=1-u; kdy+=70*u; }
+  if(t<T.kbIn) kop=0;
+  kbWrap.style.opacity=kop; kbWrap.style.transform=`translateY(${kdy}px)`;
+  const pressList=[...REPLY].map((c,i)=>[c,typeTimes[i]]).concat([['↵',T.ret]]);
+  Object.entries(keyEls).forEach(([k,d])=>{ let p=0; pressList.forEach(([c,tk])=>{ if(c===k&&t>=tk) p=Math.max(p,Math.exp(-(t-tk)*9)); });
+    d.style.transform=`translateY(${4*p}px) scale(${1-.04*p})`;
+    const base=(k==='⇧'||k==='⌫'||k==='↵')?43:51; const v=Math.round(base+40*p); d.style.background=`rgb(${v},${v},${v})`; });
+  // key preview pop above the struck key
+  let popK=null,popU=0; pressList.forEach(([c,tk])=>{ if(c!=='↵'&&t>=tk&&t<tk+.2){popK=c;popU=t-tk;} });
+  if(popK){ const g=keys[popK]; Object.assign(pop.style,{left:px(g.x+g.w/2-32),top:px(g.y-86+kdy),opacity:kop*(1-smooth((popU-.12)/.08))});
+    pop.textContent=popK; pop.style.transform=`scale(${.8+.2*expoOut(popU/.08)})`; pop.style.transformOrigin='50% 100%'; }
+  else pop.style.opacity=0;
+
+  // cursor: in, click, back to rest; matches at the loop point
+  const cIn=sineIO((t-.06)/.38), cOut=cubicIO((t-.62)/.5);
+  const cx=lerp(lerp(CUR0.x,SW.off+2,cIn),CUR0.x,cOut), cyy=lerp(lerp(CUR0.y,4,cIn),CUR0.y,cOut);
+  const press= t>=T.click-.06 ? Math.exp(-Math.pow((t-T.click+.01)/.06,2)) : 0;
+  cursor.style.transform=`translate(${cx}px,${cyy}px) scale(${1-.12*press})`;
+
+  // ball
+  Object.assign(ballEl.style,{transform:`translate(${b.x}px,${b.y}px) scale(${b.s*b.sx},${b.s*b.sy})`,
+    boxShadow:`0 ${4+14*b.hgt}px ${8+22*b.hgt}px rgba(0,0,0,${.55-.15*b.hgt})`});
+}
+window.__seek=seek;
+window.__events=()=>[{t:T.click,k:'click'},{t:T.landSlider,k:'land'},...T.steps.map(t=>({t,k:'tick'})),{t:T.launch,k:'launch'},
+  ...T.cards.map(t=>({t,k:'card'})),{t:T.pill,k:'pill'},{t:T.kbIn,k:'kb'},...typeTimes.map(t=>({t,k:'key'})),{t:T.ret,k:'send'},
+  {t:T.home,k:'land'},{t:T.off,k:'off'}];
+window.__ready=document.fonts.ready.then(()=>{seek(0);return true;});
+const q=new URLSearchParams(location.search); if(q.has('t')) window.__ready.then(()=>seek(+q.get('t')));
+</script>
+</body>
+</html>
