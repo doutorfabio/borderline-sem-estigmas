@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Zanarini 16 anos</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  html,body{margin:0;background:#0d0d0d;}
+  #stage{width:1080px;height:1920px;overflow:hidden;background:#0d0d0d;position:relative}
+  svg{display:block}
+  .arc{font-family:'Archivo Black',sans-serif}
+  .pop{font-family:'Poppins',sans-serif}
+</style>
+</head>
+<body>
+<div id="stage">
+<svg id="svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <g id="cam"></g>
+</svg>
+</div>
+<script>
+// Tempos reais da narração (gerado por montar_audio.py). Trocou a voz? Rode o script de novo e cole aqui.
+const TEMPOS = /*TEMPOS*/{
+ "duracao_total": 35.532,
+ "linhas": [
+  {
+   "id": "L01",
+   "texto": "Te disseram que borderline nunca melhora?",
+   "inicio": 0.6,
+   "fim": 3.036,
+   "fala_inicio": 0.66,
+   "fala_fim": 2.916,
+   "palavras": [
+    {
+     "w": "Te",
+     "s": 0.58,
+     "e": 0.73
+    },
+    {
+     "w": "disseram",
+     "s": 0.743,
+     "e": 1.218
+    },
+    {
+     "w": "que",
+     "s": 1.23,
+     "e": 1.33
+    },
+    {
+     "w": "borderline",
+     "s": 1.343,
+     "e": 1.993
+    },
+    {
+     "w": "nunca",
+     "s": 2.005,
+     "e": 2.368
+    },
+    {
+     "w": "melhora",
+     "s": 2.38,
+     "e": 2.855
+    }
+   ]
+  },
+  {
+   "id": "L02",
+   "texto": "Um estudo seguiu duzentas e noventa pessoas internadas com borderline.",
+   "inicio": 3.586,
+   "fim": 7.667,
+   "fala_inicio": 3.646,
+   "fala_fim": 7.547,
+   "palavras": [
+    {
+     "w": "Um",
+     "s": 3.579,
+     "e": 3.729
+    },
+    {
+     "w": "estudo",
+     "s": 3.741,
+     "e": 4.154
+    },
+    {
+     "w": "seguiu",
+     "s": 4.166,
+     "e": 4.491
+    },
+    {
+     "w": "duzentas",
+     "s": 4.504,
+     "e": 4.966
+    },
+    {
+     "w": "e",
+     "s": 4.979,
+     "e": 5.066
+    },
+    {
+     "w": "noventa",
+     "s": 5.079,
+     "e": 5.479
+    },
+    {
+     "w": "pessoas",
+     "s": 5.491,
+     "e": 5.891
+    },
+    {
+     "w": "internadas",
+     "s": 5.904,
+     "e": 6.616
+    },
+    {
+     "w": "com",
+     "s": 6.629,
+     "e": 6.791
+    },
+    {
+     "w": "borderline",
+     "s": 6.804,
+     "e": 7.516
+    }
+   ]
+  },
+  {
+   "id": "L03",
+   "texto": "Por dezesseis anos.",
+   "inicio": 7.917,
+   "fim": 9.217,
+   "fala_inicio": 7.977,
+   "fala_fim": 9.097,
+   "palavras": [
+    {
+     "w": "Por",
+     "s": 7.896,
+     "e": 8.071
+    },
+    {
+     "w": "dezesseis",
+     "s": 8.083,
+     "e": 8.546
+    },
+    {
+     "w": "anos",
+     "s": 8.558,
+     "e": 9.071
+    }
+   ]
+  },
+  {
+   "id": "L04",
+   "texto": "Nesse tempo, noventa e nove em cada cem ficaram dois anos ou mais sem o diagnóstico.",
+   "inicio": 10.217,
+   "fim": 15.167,
+   "fala_inicio": 10.277,
+   "fala_fim": 15.047,
+   "palavras": [
+    {
+     "w": "Nesse",
+     "s": 10.21,
+     "e": 10.622
+    },
+    {
+     "w": "tempo",
+     "s": 10.635,
+     "e": 10.985
+    },
+    {
+     "w": "noventa",
+     "s": 11.26,
+     "e": 11.685
+    },
+    {
+     "w": "e",
+     "s": 11.697,
+     "e": 11.722
+    },
+    {
+     "w": "nove",
+     "s": 11.735,
+     "e": 11.96
+    },
+    {
+     "w": "em",
+     "s": 11.972,
+     "e": 12.047
+    },
+    {
+     "w": "cada",
+     "s": 12.06,
+     "e": 12.322
+    },
+    {
+     "w": "cem",
+     "s": 12.335,
+     "e": 12.572
+    },
+    {
+     "w": "ficaram",
+     "s": 12.585,
+     "e": 12.96
+    },
+    {
+     "w": "dois",
+     "s": 12.972,
+     "e": 13.185
+    },
+    {
+     "w": "anos",
+     "s": 13.197,
+     "e": 13.522
+    },
+    {
+     "w": "ou",
+     "s": 13.535,
+     "e": 13.71
+    },
+    {
+     "w": "mais",
+     "s": 13.722,
+     "e": 13.997
+    },
+    {
+     "w": "sem",
+     "s": 14.01,
+     "e": 14.197
+    },
+    {
+     "w": "o",
+     "s": 14.21,
+     "e": 14.26
+    },
+    {
+     "w": "diagnóstico",
+     "s": 14.272,
+     "e": 14.997
+    }
+   ]
+  },
+  {
+   "id": "L05",
+   "texto": "O estudo também mediu trabalho ou estudo constante.",
+   "inicio": 15.767,
+   "fim": 18.701,
+   "fala_inicio": 15.827,
+   "fala_fim": 18.581,
+   "palavras": [
+    {
+     "w": "O",
+     "s": 15.76,
+     "e": 15.885
+    },
+    {
+     "w": "estudo",
+     "s": 15.898,
+     "e": 16.335
+    },
+    {
+     "w": "também",
+     "s": 16.348,
+     "e": 16.66
+    },
+    {
+     "w": "mediu",
+     "s": 16.673,
+     "e": 16.948
+    },
+    {
+     "w": "trabalho",
+     "s": 16.96,
+     "e": 17.46
+    },
+    {
+     "w": "ou",
+     "s": 17.473,
+     "e": 17.573
+    },
+    {
+     "w": "estudo",
+     "s": 17.585,
+     "e": 17.91
+    },
+    {
+     "w": "constante",
+     "s": 17.923,
+     "e": 18.523
+    }
+   ]
+  },
+  {
+   "id": "L06",
+   "texto": "E ter ao menos um amigo ou parceiro próximo.",
+   "inicio": 18.901,
+   "fim": 21.455,
+   "fala_inicio": 18.961,
+   "fala_fim": 21.335,
+   "palavras": [
+    {
+     "w": "E",
+     "s": 18.897,
+     "e": 19.022
+    },
+    {
+     "w": "ter",
+     "s": 19.035,
+     "e": 19.197
+    },
+    {
+     "w": "ao",
+     "s": 19.21,
+     "e": 19.31
+    },
+    {
+     "w": "menos",
+     "s": 19.322,
+     "e": 19.597
+    },
+    {
+     "w": "um",
+     "s": 19.61,
+     "e": 19.785
+    },
+    {
+     "w": "amigo",
+     "s": 19.797,
+     "e": 20.135
+    },
+    {
+     "w": "ou",
+     "s": 20.147,
+     "e": 20.222
+    },
+    {
+     "w": "parceiro",
+     "s": 20.235,
+     "e": 20.747
+    },
+    {
+     "w": "próximo",
+     "s": 20.76,
+     "e": 21.297
+    }
+   ]
+  },
+  {
+   "id": "L07",
+   "texto": "Isso, com os sintomas em baixa, chegou para sessenta em cada cem.",
+   "inicio": 21.905,
+   "fim": 26.061,
+   "fala_inicio": 21.965,
+   "fala_fim": 25.941,
+   "palavras": [
+    {
+     "w": "Isso",
+     "s": 21.898,
+     "e": 22.311
+    },
+    {
+     "w": "com",
+     "s": 22.561,
+     "e": 22.698
+    },
+    {
+     "w": "os",
+     "s": 22.711,
+     "e": 22.798
+    },
+    {
+     "w": "sintomas",
+     "s": 22.811,
+     "e": 23.261
+    },
+    {
+     "w": "em",
+     "s": 23.273,
+     "e": 23.423
+    },
+    {
+     "w": "baixa",
+     "s": 23.436,
+     "e": 23.861
+    },
+    {
+     "w": "chegou",
+     "s": 24.173,
+     "e": 24.511
+    },
+    {
+     "w": "para",
+     "s": 24.523,
+     "e": 24.711
+    },
+    {
+     "w": "sessenta",
+     "s": 24.723,
+     "e": 25.211
+    },
+    {
+     "w": "em",
+     "s": 25.223,
+     "e": 25.311
+    },
+    {
+     "w": "cada",
+     "s": 25.323,
+     "e": 25.586
+    },
+    {
+     "w": "cem",
+     "s": 25.598,
+     "e": 25.911
+    }
+   ]
+  },
+  {
+   "id": "L08",
+   "texto": "E demorou mais.",
+   "inicio": 26.311,
+   "fim": 27.517,
+   "fala_inicio": 26.371,
+   "fala_fim": 27.397,
+   "palavras": [
+    {
+     "w": "E",
+     "s": 26.298,
+     "e": 26.41
+    },
+    {
+     "w": "demorou",
+     "s": 26.423,
+     "e": 26.873
+    },
+    {
+     "w": "mais",
+     "s": 26.885,
+     "e": 27.373
+    }
+   ]
+  },
+  {
+   "id": "L09",
+   "texto": "Os sintomas cederam para quase todos.",
+   "inicio": 28.267,
+   "fim": 30.634,
+   "fala_inicio": 28.327,
+   "fala_fim": 30.514,
+   "palavras": [
+    {
+     "w": "Os",
+     "s": 28.26,
+     "e": 28.423
+    },
+    {
+     "w": "sintomas",
+     "s": 28.435,
+     "e": 28.998
+    },
+    {
+     "w": "cederam",
+     "s": 29.01,
+     "e": 29.373
+    },
+    {
+     "w": "para",
+     "s": 29.385,
+     "e": 29.585
+    },
+    {
+     "w": "quase",
+     "s": 29.598,
+     "e": 29.998
+    },
+    {
+     "w": "todos",
+     "s": 30.01,
+     "e": 30.485
+    }
+   ]
+  },
+  {
+   "id": "L10",
+   "texto": "Trabalho e vínculos levaram mais tempo.",
+   "inicio": 30.934,
+   "fim": 33.332,
+   "fala_inicio": 30.994,
+   "fala_fim": 33.212,
+   "palavras": [
+    {
+     "w": "Trabalho",
+     "s": 30.918,
+     "e": 31.493
+    },
+    {
+     "w": "e",
+     "s": 31.505,
+     "e": 31.568
+    },
+    {
+     "w": "vínculos",
+     "s": 31.58,
+     "e": 32.068
+    },
+    {
+     "w": "levaram",
+     "s": 32.08,
+     "e": 32.455
+    },
+    {
+     "w": "mais",
+     "s": 32.468,
+     "e": 32.743
+    },
+    {
+     "w": "tempo",
+     "s": 32.755,
+     "e": 33.143
+    }
+   ]
+  }
+ ]
+}/*FIM*/;
+
+const W = 1080, H = 1920, RED = '#cc0000', WHITE = '#ffffff', GRAY = '#3a3a3a', BG = '#0d0d0d';
+const NS = 'http://www.w3.org/2000/svg';
+const cam = document.getElementById('cam');
+function el(tag, attrs, parent){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); (parent||cam).appendChild(e); return e; }
+
+// ---------- tempo ----------
+const L = {}; TEMPOS.linhas.forEach(l => L[l.id] = l);
+function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,''); }
+// Sem marcação por palavra (voz gravada por você), estima a posição da palavra pela proporção de letras na linha.
+function est(id, palavra, fim){ const l=L[id], txt=l.texto, i=norm(txt.slice(0, txt.toLowerCase().indexOf(palavra.toLowerCase()) + (fim?palavra.length:0))).length; return l.fala_inicio + (l.fala_fim-l.fala_inicio)*i/norm(txt).length; }
+function w(id, palavra){ const p = (L[id].palavras||[]).find(x => norm(x.w) === norm(palavra)); return p ? p.s : est(id,palavra,false); }
+function we(id, palavra){ const p = (L[id].palavras||[]).find(x => norm(x.w) === norm(palavra)); return p ? p.e : est(id,palavra,true); }
+const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const prog = (t,a,d)=>clamp((t-a)/d);
+const eio = x => x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
+const eout = x => 1-Math.pow(1-x,3);
+const lerp = (a,b,x)=>a+(b-a)*x;
+
+// ---------- layout fixo do diagrama (coordenadas do mundo) ----------
+const TL = { y:560, x0:170, x1:900 };              // linha do tempo: 16 anos
+const G = { x0:270, y0:720, dx:60, dy:60, r:13, rr:21 }; // grade 10x10
+const dotXY = i => [G.x0 + (i%10)*G.dx, G.y0 + Math.floor(i/10)*G.dy];
+
+// timeline
+const tlLine = el('line',{x1:TL.x0,y1:TL.y,x2:TL.x0,y2:TL.y,stroke:WHITE,'stroke-width':4,'stroke-linecap':'round'});
+const ticks = [];
+for(let k=1;k<=8;k++){ const x = TL.x0 + k*(TL.x1-TL.x0)/8; ticks.push(el('line',{x1:x,y1:TL.y-12,x2:x,y2:TL.y+12,stroke:WHITE,'stroke-width':4,opacity:0})); }
+const arrowHead = el('path',{d:'M0,-11 L16,0 L0,11 Z',fill:WHITE,opacity:0});
+const startNode = el('circle',{cx:TL.x0,cy:TL.y,r:0,fill:RED});
+
+// grade
+const dots = [], rings = [];
+for(let i=0;i<100;i++){ const [x,y]=dotXY(i);
+  rings.push(el('circle',{cx:x,cy:y,r:G.rr,fill:'none',stroke:RED,'stroke-width':5,opacity:0}));
+  dots.push(el('circle',{cx:x,cy:y,r:0,fill:GRAY}));
+}
+// anel do exemplo (duas metades desenhadas)
+const [ex,ey] = dotXY(0);
+const arcTop = el('path',{d:`M${ex-G.rr},${ey} A${G.rr},${G.rr} 0 0 1 ${ex+G.rr},${ey}`,fill:'none',stroke:RED,'stroke-width':4,'stroke-linecap':'butt'});
+const arcBot = el('path',{d:`M${ex+G.rr},${ey} A${G.rr},${G.rr} 0 0 1 ${ex-G.rr},${ey}`,fill:'none',stroke:RED,'stroke-width':4,'stroke-linecap':'butt'});
+const ARC_LEN = Math.PI*G.rr;
+
+// colchete dos 99 (embaixo da grade, esquerda para direita)
+const b99y = G.y0 + 9*G.dy + 34;
+const b99 = el('path',{d:`M${G.x0-14},${b99y-12} L${G.x0-14},${b99y} L${G.x0+9*G.dx+14},${b99y} L${G.x0+9*G.dx+14},${b99y-12}`,fill:'none',stroke:WHITE,'stroke-width':3});
+// colchete dos 60 (à esquerda, de cima para baixo, linhas 1 a 6)
+const b60x = G.x0 - 40;
+const b60 = el('path',{d:`M${b60x+12},${G.y0-14} L${b60x},${G.y0-14} L${b60x},${G.y0+5*G.dy+14} L${b60x+12},${G.y0+5*G.dy+14}`,fill:'none',stroke:RED,'stroke-width':3});
+
+// ---------- textos (cada um com entrada e saída próprias, revelação por máscara) ----------
+const defs = el('defs',{}, document.getElementById('svg'));
+let clipN = 0;
+function label(lines, x, y, opt){
+  // lines: [{t, size, font, fill}] ; anchor: start|middle|end
+  const g = el('g',{});
+  const cid = 'c'+(clipN++);
+  const cp = el('clipPath',{id:cid,clipPathUnits:'userSpaceOnUse'},defs);
+  const rect = el('rect',{x:0,y:0,width:0,height:0},cp);
+  const inner = el('g',{'clip-path':`url(#${cid})`},g);
+  let yy = y;
+  const texts = [];
+  lines.forEach(ln=>{
+    yy += ln.size*(ln.lead||1);
+    const t = el('text',{x:x,y:yy,'text-anchor':opt.anchor||'start',fill:ln.fill||WHITE,'font-size':ln.size,class:ln.font||'pop'},inner);
+    if(ln.spans){ ln.spans.forEach(s=>{ const ts=el('tspan',{fill:s.fill||ln.fill||WHITE},t); ts.textContent=s.t; }); }
+    else t.textContent = ln.t;
+    if(ln.weight) t.setAttribute('font-weight',ln.weight);
+    texts.push(t);
+  });
+  return {g, rect, inner, texts, inT:opt.inT, outT:opt.outT, dir:opt.dir||'up', box:null, words:opt.words};
+}
+const LABELS = [];
+function L_(lines,x,y,opt){ const l=label(lines,x,y,opt); LABELS.push(l); return l; }
+
+// ---------- montagem do roteiro sobre os tempos reais ----------
+const T = {
+  gridIn: 0.15,
+  qIn:    Math.max(1.25, w('L01','nunca')-0.25),
+  qOut:   L.L02.inicio-0.32,
+  camTL:  L.L02.inicio,
+  node:   L.L02.inicio+0.62,
+  l290:   w('L02','duzentas'),
+  lInt:   w('L02','internadas'),
+  lSrc:   we('L02','borderline')+0.05,
+  draw:   L.L03.inicio,
+  drawD:  1.25,
+};
+T.l16    = T.draw + T.drawD + 0.02;
+T.out16  = L.L04.inicio - 0.05;
+T.camG   = L.L04.inicio + 0.22;              // recua para a grade
+T.fill   = Math.max(T.camG+0.75, w('L04','noventa')-0.1);
+T.fillD  = 1.25;
+T.b99    = T.fill + T.fillD + 0.05;
+T.l99    = T.b99 + 0.42;
+T.l99b   = Math.max(T.l99 + 1.0, w('L04','dois'));
+T.camDot = L.L05.inicio + 0.05;               // aproxima de uma pessoa
+T.dim    = T.camDot + 0.75;
+T.arc1   = Math.max(T.dim+0.3, w('L05','trabalho')-0.15);
+T.lab1   = T.arc1 + 0.5;
+T.arc2   = Math.max(T.lab1+0.45, w('L06','amigo')-0.35);
+T.lab2   = T.arc2 + 0.5;
+T.labOut = L.L07.inicio - 0.05;
+T.undim  = L.L07.inicio + 0.25;
+T.camBack= L.L07.inicio + 0.5;
+T.rings  = T.camBack + 0.8;
+T.ringsD = Math.max(2.2, L.L08.fala_fim - T.rings);
+T.b60    = T.rings + T.ringsD + 0.05;
+T.l60    = T.b60 + 0.42;
+T.camAll = Math.max(T.l60 + 0.35, L.L09.inicio - 0.45);
+T.outNums= L.L10.inicio - 0.1;
+T.take1  = L.L10.inicio + 0.3;
+T.take2  = T.take1 + 0.45;
+T.END    = TEMPOS.duracao_total;
+
+// rótulos (tamanhos no mundo, pensados para a escala da câmera em que aparecem)
+const Q = L_([{t:'NUNCA', size:124, font:'arc', lead:1},{t:'MELHORA?', size:124, font:'arc', lead:1.04}], 540, 170, {anchor:'middle', inT:T.qIn, outT:T.qOut, words:2});
+const l290 = L_([{t:'290 pessoas', size:34, font:'arc'}], TL.x0-12, TL.y-104, {inT:T.l290, outT:T.camG-0.4, words:2});
+const lInt = L_([{t:'internadas', size:26}], TL.x0-12, TL.y+22, {inT:T.lInt, outT:T.camG-0.4, words:1});
+const lSrc = L_([{t:'Zanarini e colegas, 2012', size:17, fill:'#9a9a9a'}], TL.x0-12, TL.y+58, {inT:T.lSrc, outT:T.camG-0.4, words:4});
+const l16  = L_([{t:'16 anos', size:34, font:'arc'}], TL.x1, TL.y+22, {anchor:'end', inT:T.l16, outT:T.out16, words:2});
+const cx99 = G.x0 + 4.5*G.dx;
+const l99  = L_([{spans:[{t:'99 '},{t:'em 100'}], size:62, font:'arc'}], cx99, b99y+6, {anchor:'middle', inT:T.l99, outT:T.outNums, words:3});
+const l99b = L_([{t:'2 anos sem diagnóstico', size:38}], cx99, b99y+86, {anchor:'middle', inT:T.l99b, outT:T.camDot+0.05, words:4});
+const lab1 = L_([{t:'trabalho ou estudo', size:11}], ex, ey-G.rr-26, {anchor:'middle', inT:T.lab1, outT:T.labOut, words:3});
+const lab2 = L_([{t:'amigo ou parceiro', size:11}], ex, ey+G.rr+2, {anchor:'middle', inT:T.lab2, outT:T.labOut, words:3});
+const l60  = L_([{t:'60', size:62, font:'arc', fill:RED},{t:'em 100', size:36, lead:1.2}], b60x-20, G.y0+2.5*G.dy-70, {anchor:'end', inT:T.l60, outT:T.outNums, words:3});
+const take = L_([{t:'TRABALHO E', size:76, font:'arc'},{t:'VÍNCULOS', size:76, font:'arc', lead:1.1},{t:'LEVARAM', size:76, font:'arc', fill:RED, lead:1.1},{t:'MAIS TEMPO', size:76, font:'arc', fill:RED, lead:1.1}], 540, 130, {anchor:'middle', inT:T.take1, outT:1e9, words:6});
+
+// medir caixas uma vez (layout fixo)
+let measured = false;
+function measure(){ LABELS.forEach(l=>{ const b=l.inner.getBBox(); l.box={x:b.x-4,y:b.y-6,w:b.width+8,h:b.height+12}; }); measured = true; }
+
+function revealLabel(l, t){
+  const D = 0.32;
+  const a = eout(prog(t,l.inT,D)), b = eio(prog(t,l.outT,0.26));
+  const B = l.box;
+  // entra de baixo para cima (máscara sobe); sai varrendo para a direita
+  const top = B.y + B.h*(1-a);
+  const left = B.x + B.w*b;
+  l.rect.setAttribute('x',left); l.rect.setAttribute('y',top);
+  l.rect.setAttribute('width',Math.max(0,B.x+B.w-left)); l.rect.setAttribute('height',Math.max(0,B.y+B.h-top));
+  l.inner.setAttribute('transform',`translate(0 ${(1-a)*B.h*0.35})`);
+  const vis = a>0 && b<1; l.visible = vis;
+  l.g.style.display = vis ? '' : 'none';
+  return vis;
+}
+
+// ---------- câmera ----------
+// chaves: [tempo de partida, duração, {fx,fy,s}]
+const VIEW_ALL = {fx:540, fy:960, s:1};
+const VIEW_HOOK = {fx:540, fy:930, s:1.0};
+const VIEW_TL0 = {fx:TL.x0+170, fy:TL.y-100, s:2.3};
+const VIEW_G = {fx:G.x0+4.5*G.dx, fy:1030, s:1.2};
+const VIEW_DOT = {fx:ex, fy:ey, s:3.4};
+const VIEW_G2 = {fx:520, fy:1000, s:1.1};
+const CAM = [
+  [0, 0.001, VIEW_HOOK],
+  [T.camTL, 0.6, VIEW_TL0],
+  // durante o desenho da linha a câmera acompanha a ponta (ver abaixo)
+  [T.camG-0.0, 0.75, VIEW_G],
+  [T.camDot, 0.7, VIEW_DOT],
+  [T.camBack, 0.75, VIEW_G2],
+  [T.camAll, 0.7, VIEW_ALL],
+];
+function camAt(t){
+  let v = CAM[0][2];
+  for(let i=1;i<CAM.length;i++){
+    const [a,d,to] = CAM[i];
+    if(t<a) break;
+    const x = eio(prog(t,a,d));
+    v = { fx:lerp(v.fx,to.fx,x), fy:lerp(v.fy,to.fy,x), s:Math.exp(lerp(Math.log(v.s),Math.log(to.s),x)) };
+  }
+  // acompanhamento da linha do tempo (pan da esquerda para a direita, mesma direção do tempo)
+  const pd = eio(prog(t,T.draw,T.drawD));
+  if(t>=T.draw && t<T.camG+0.75){
+    const head = lerp(TL.x0, TL.x1, pd);
+    const target = {fx: clamp(head, TL.x0+170, TL.x1-170), fy:TL.y-100, s:2.3};
+    if(t<T.camG){ v = target; }
+    else { const x=eio(prog(t,T.camG,0.75)); v = {fx:lerp(target.fx,VIEW_G.fx,x), fy:lerp(target.fy,VIEW_G.fy,x), s:Math.exp(lerp(Math.log(2.3),Math.log(VIEW_G.s),x))}; }
+  }
+  return v;
+}
+
+// ---------- seek ----------
+window.seek = function(t){
+  if(!measured) measure();
+  const v = camAt(t);
+  cam.setAttribute('transform',`translate(540 960) scale(${v.s}) translate(${-v.fx} ${-v.fy})`);
+
+  // grade nasce (esquerda para direita, linha a linha)
+  const dimA = eio(prog(t,T.dim,0.3)) * (1-eio(prog(t,T.undim,0.3)));
+  const tlDim = eio(prog(t,T.camTL,0.5)) * (1-eio(prog(t,T.camG,0.6)));
+  for(let i=0;i<100;i++){
+    const gi = eout(prog(t, T.gridIn + i*0.0085, 0.22));
+    const fi = prog(t, T.fill + (i/98)*T.fillD*0.82, 0.12);
+    const isWhite = i<99;
+    const d = dots[i];
+    d.setAttribute('r', G.r*gi);
+    d.setAttribute('fill', isWhite && fi>0.5 ? WHITE : GRAY);
+    d.setAttribute('opacity', (i===0 ? 1 : 1-0.92*dimA) * (1-0.8*tlDim));
+    // anéis de recuperação (60), mais lentos
+    const r = rings[i];
+    if(i===0){ r.setAttribute('opacity', t>=T.rings ? 1 : 0); r.setAttribute('stroke-width',4); }
+    else if(i<60){ const ri = eout(prog(t, T.rings + ((i-1)/58)*T.ringsD*0.9, 0.18)); r.setAttribute('opacity', ri>0?1:0); r.setAttribute('r', G.rr*(0.6+0.4*ri)); r.setAttribute('stroke-width', 4*ri); }
+  }
+  // exemplo: duas metades do anel
+  const a1 = eio(prog(t,T.arc1,0.45)), a2 = eio(prog(t,T.arc2,0.45));
+  const hideEx = t>=T.rings;
+  arcTop.setAttribute('stroke-dasharray',`${ARC_LEN*a1} ${ARC_LEN}`); arcTop.style.display = hideEx||a1<=0 ? 'none':'';
+  arcBot.setAttribute('stroke-dasharray',`${ARC_LEN*a2} ${ARC_LEN}`); arcBot.style.display = hideEx||a2<=0 ? 'none':'';
+
+  // linha do tempo: ponto de internação, depois a linha anda para a direita
+  startNode.setAttribute('r', 13*eout(prog(t,T.node,0.3)));
+  const pd = eio(prog(t,T.draw,T.drawD));
+  const hx = lerp(TL.x0, TL.x1, pd);
+  tlLine.setAttribute('x2', hx);
+  tlLine.style.display = pd>0 ? '' : 'none';
+  ticks.forEach((tk,k)=>{ const tx = TL.x0+(k+1)*(TL.x1-TL.x0)/8; tk.setAttribute('opacity', hx>=tx-1 ? 1 : 0); });
+  arrowHead.setAttribute('transform',`translate(${hx+4} ${TL.y})`);
+  arrowHead.setAttribute('opacity', pd>0 && pd<1 ? 1 : 0);
+
+  // colchetes
+  const p99 = eio(prog(t,T.b99,0.4)); const len99 = 9*G.dx+28+24;
+  const o99 = 1-eio(prog(t,T.outNums,0.3)); b99.setAttribute('stroke-dasharray',`0 ${len99*(1-o99)} ${len99*p99*o99} ${len99}`); b99.style.display = p99>0 && o99>0 ? '' : 'none';
+  const p60 = eio(prog(t,T.b60,0.4)); const len60 = 5*G.dy+28+24;
+  b60.setAttribute('stroke-dasharray',`0 ${len60*(1-o99)} ${len60*p60*o99} ${len60}`); b60.style.display = p60>0 && o99>0 ? '' : 'none';
+
+  LABELS.forEach(l=>revealLabel(l,t));
+};
+window.T = T; window.LABELS = LABELS; window.camAt = camAt;
+</script>
+</body>
+</html>

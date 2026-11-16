@@ -1,0 +1,500 @@
+{
+ "duracao_total": 35.532,
+ "linhas": [
+  {
+   "id": "L01",
+   "texto": "Te disseram que borderline nunca melhora?",
+   "inicio": 0.6,
+   "fim": 3.036,
+   "fala_inicio": 0.66,
+   "fala_fim": 2.916,
+   "palavras": [
+    {
+     "w": "Te",
+     "s": 0.58,
+     "e": 0.73
+    },
+    {
+     "w": "disseram",
+     "s": 0.743,
+     "e": 1.218
+    },
+    {
+     "w": "que",
+     "s": 1.23,
+     "e": 1.33
+    },
+    {
+     "w": "borderline",
+     "s": 1.343,
+     "e": 1.993
+    },
+    {
+     "w": "nunca",
+     "s": 2.005,
+     "e": 2.368
+    },
+    {
+     "w": "melhora",
+     "s": 2.38,
+     "e": 2.855
+    }
+   ]
+  },
+  {
+   "id": "L02",
+   "texto": "Um estudo seguiu duzentas e noventa pessoas internadas com borderline.",
+   "inicio": 3.586,
+   "fim": 7.667,
+   "fala_inicio": 3.646,
+   "fala_fim": 7.547,
+   "palavras": [
+    {
+     "w": "Um",
+     "s": 3.579,
+     "e": 3.729
+    },
+    {
+     "w": "estudo",
+     "s": 3.741,
+     "e": 4.154
+    },
+    {
+     "w": "seguiu",
+     "s": 4.166,
+     "e": 4.491
+    },
+    {
+     "w": "duzentas",
+     "s": 4.504,
+     "e": 4.966
+    },
+    {
+     "w": "e",
+     "s": 4.979,
+     "e": 5.066
+    },
+    {
+     "w": "noventa",
+     "s": 5.079,
+     "e": 5.479
+    },
+    {
+     "w": "pessoas",
+     "s": 5.491,
+     "e": 5.891
+    },
+    {
+     "w": "internadas",
+     "s": 5.904,
+     "e": 6.616
+    },
+    {
+     "w": "com",
+     "s": 6.629,
+     "e": 6.791
+    },
+    {
+     "w": "borderline",
+     "s": 6.804,
+     "e": 7.516
+    }
+   ]
+  },
+  {
+   "id": "L03",
+   "texto": "Por dezesseis anos.",
+   "inicio": 7.917,
+   "fim": 9.217,
+   "fala_inicio": 7.977,
+   "fala_fim": 9.097,
+   "palavras": [
+    {
+     "w": "Por",
+     "s": 7.896,
+     "e": 8.071
+    },
+    {
+     "w": "dezesseis",
+     "s": 8.083,
+     "e": 8.546
+    },
+    {
+     "w": "anos",
+     "s": 8.558,
+     "e": 9.071
+    }
+   ]
+  },
+  {
+   "id": "L04",
+   "texto": "Nesse tempo, noventa e nove em cada cem ficaram dois anos ou mais sem o diagnóstico.",
+   "inicio": 10.217,
+   "fim": 15.167,
+   "fala_inicio": 10.277,
+   "fala_fim": 15.047,
+   "palavras": [
+    {
+     "w": "Nesse",
+     "s": 10.21,
+     "e": 10.622
+    },
+    {
+     "w": "tempo",
+     "s": 10.635,
+     "e": 10.985
+    },
+    {
+     "w": "noventa",
+     "s": 11.26,
+     "e": 11.685
+    },
+    {
+     "w": "e",
+     "s": 11.697,
+     "e": 11.722
+    },
+    {
+     "w": "nove",
+     "s": 11.735,
+     "e": 11.96
+    },
+    {
+     "w": "em",
+     "s": 11.972,
+     "e": 12.047
+    },
+    {
+     "w": "cada",
+     "s": 12.06,
+     "e": 12.322
+    },
+    {
+     "w": "cem",
+     "s": 12.335,
+     "e": 12.572
+    },
+    {
+     "w": "ficaram",
+     "s": 12.585,
+     "e": 12.96
+    },
+    {
+     "w": "dois",
+     "s": 12.972,
+     "e": 13.185
+    },
+    {
+     "w": "anos",
+     "s": 13.197,
+     "e": 13.522
+    },
+    {
+     "w": "ou",
+     "s": 13.535,
+     "e": 13.71
+    },
+    {
+     "w": "mais",
+     "s": 13.722,
+     "e": 13.997
+    },
+    {
+     "w": "sem",
+     "s": 14.01,
+     "e": 14.197
+    },
+    {
+     "w": "o",
+     "s": 14.21,
+     "e": 14.26
+    },
+    {
+     "w": "diagnóstico",
+     "s": 14.272,
+     "e": 14.997
+    }
+   ]
+  },
+  {
+   "id": "L05",
+   "texto": "O estudo também mediu trabalho ou estudo constante.",
+   "inicio": 15.767,
+   "fim": 18.701,
+   "fala_inicio": 15.827,
+   "fala_fim": 18.581,
+   "palavras": [
+    {
+     "w": "O",
+     "s": 15.76,
+     "e": 15.885
+    },
+    {
+     "w": "estudo",
+     "s": 15.898,
+     "e": 16.335
+    },
+    {
+     "w": "também",
+     "s": 16.348,
+     "e": 16.66
+    },
+    {
+     "w": "mediu",
+     "s": 16.673,
+     "e": 16.948
+    },
+    {
+     "w": "trabalho",
+     "s": 16.96,
+     "e": 17.46
+    },
+    {
+     "w": "ou",
+     "s": 17.473,
+     "e": 17.573
+    },
+    {
+     "w": "estudo",
+     "s": 17.585,
+     "e": 17.91
+    },
+    {
+     "w": "constante",
+     "s": 17.923,
+     "e": 18.523
+    }
+   ]
+  },
+  {
+   "id": "L06",
+   "texto": "E ter ao menos um amigo ou parceiro próximo.",
+   "inicio": 18.901,
+   "fim": 21.455,
+   "fala_inicio": 18.961,
+   "fala_fim": 21.335,
+   "palavras": [
+    {
+     "w": "E",
+     "s": 18.897,
+     "e": 19.022
+    },
+    {
+     "w": "ter",
+     "s": 19.035,
+     "e": 19.197
+    },
+    {
+     "w": "ao",
+     "s": 19.21,
+     "e": 19.31
+    },
+    {
+     "w": "menos",
+     "s": 19.322,
+     "e": 19.597
+    },
+    {
+     "w": "um",
+     "s": 19.61,
+     "e": 19.785
+    },
+    {
+     "w": "amigo",
+     "s": 19.797,
+     "e": 20.135
+    },
+    {
+     "w": "ou",
+     "s": 20.147,
+     "e": 20.222
+    },
+    {
+     "w": "parceiro",
+     "s": 20.235,
+     "e": 20.747
+    },
+    {
+     "w": "próximo",
+     "s": 20.76,
+     "e": 21.297
+    }
+   ]
+  },
+  {
+   "id": "L07",
+   "texto": "Isso, com os sintomas em baixa, chegou para sessenta em cada cem.",
+   "inicio": 21.905,
+   "fim": 26.061,
+   "fala_inicio": 21.965,
+   "fala_fim": 25.941,
+   "palavras": [
+    {
+     "w": "Isso",
+     "s": 21.898,
+     "e": 22.311
+    },
+    {
+     "w": "com",
+     "s": 22.561,
+     "e": 22.698
+    },
+    {
+     "w": "os",
+     "s": 22.711,
+     "e": 22.798
+    },
+    {
+     "w": "sintomas",
+     "s": 22.811,
+     "e": 23.261
+    },
+    {
+     "w": "em",
+     "s": 23.273,
+     "e": 23.423
+    },
+    {
+     "w": "baixa",
+     "s": 23.436,
+     "e": 23.861
+    },
+    {
+     "w": "chegou",
+     "s": 24.173,
+     "e": 24.511
+    },
+    {
+     "w": "para",
+     "s": 24.523,
+     "e": 24.711
+    },
+    {
+     "w": "sessenta",
+     "s": 24.723,
+     "e": 25.211
+    },
+    {
+     "w": "em",
+     "s": 25.223,
+     "e": 25.311
+    },
+    {
+     "w": "cada",
+     "s": 25.323,
+     "e": 25.586
+    },
+    {
+     "w": "cem",
+     "s": 25.598,
+     "e": 25.911
+    }
+   ]
+  },
+  {
+   "id": "L08",
+   "texto": "E demorou mais.",
+   "inicio": 26.311,
+   "fim": 27.517,
+   "fala_inicio": 26.371,
+   "fala_fim": 27.397,
+   "palavras": [
+    {
+     "w": "E",
+     "s": 26.298,
+     "e": 26.41
+    },
+    {
+     "w": "demorou",
+     "s": 26.423,
+     "e": 26.873
+    },
+    {
+     "w": "mais",
+     "s": 26.885,
+     "e": 27.373
+    }
+   ]
+  },
+  {
+   "id": "L09",
+   "texto": "Os sintomas cederam para quase todos.",
+   "inicio": 28.267,
+   "fim": 30.634,
+   "fala_inicio": 28.327,
+   "fala_fim": 30.514,
+   "palavras": [
+    {
+     "w": "Os",
+     "s": 28.26,
+     "e": 28.423
+    },
+    {
+     "w": "sintomas",
+     "s": 28.435,
+     "e": 28.998
+    },
+    {
+     "w": "cederam",
+     "s": 29.01,
+     "e": 29.373
+    },
+    {
+     "w": "para",
+     "s": 29.385,
+     "e": 29.585
+    },
+    {
+     "w": "quase",
+     "s": 29.598,
+     "e": 29.998
+    },
+    {
+     "w": "todos",
+     "s": 30.01,
+     "e": 30.485
+    }
+   ]
+  },
+  {
+   "id": "L10",
+   "texto": "Trabalho e vínculos levaram mais tempo.",
+   "inicio": 30.934,
+   "fim": 33.332,
+   "fala_inicio": 30.994,
+   "fala_fim": 33.212,
+   "palavras": [
+    {
+     "w": "Trabalho",
+     "s": 30.918,
+     "e": 31.493
+    },
+    {
+     "w": "e",
+     "s": 31.505,
+     "e": 31.568
+    },
+    {
+     "w": "vínculos",
+     "s": 31.58,
+     "e": 32.068
+    },
+    {
+     "w": "levaram",
+     "s": 32.08,
+     "e": 32.455
+    },
+    {
+     "w": "mais",
+     "s": 32.468,
+     "e": 32.743
+    },
+    {
+     "w": "tempo",
+     "s": 32.755,
+     "e": 33.143
+    }
+   ]
+  }
+ ]
+}
