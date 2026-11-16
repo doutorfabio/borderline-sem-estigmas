@@ -1,0 +1,356 @@
+[
+{
+"text": "Doutor,",
+"start": 0.0,
+"end": 0.18,
+"p": 0.94
+},
+{
+"text": "pelo",
+"start": 0.18,
+"end": 0.34,
+"p": 1.0
+},
+{
+"text": "amor",
+"start": 0.34,
+"end": 0.5,
+"p": 1.0
+},
+{
+"text": "de",
+"start": 0.5,
+"end": 0.6,
+"p": 1.0
+},
+{
+"text": "Deus,",
+"start": 0.6,
+"end": 0.74,
+"p": 1.0
+},
+{
+"text": "fala",
+"start": 0.78,
+"end": 0.94,
+"p": 1.0
+},
+{
+"text": "aqui",
+"start": 0.94,
+"end": 1.14,
+"p": 1.0
+},
+{
+"text": "para",
+"start": 1.14,
+"end": 1.24,
+"p": 0.68
+},
+{
+"text": "o",
+"start": 1.24,
+"end": 1.3,
+"p": 1.0
+},
+{
+"text": "pessoal",
+"start": 1.3,
+"end": 1.52,
+"p": 1.0
+},
+{
+"text": "que",
+"start": 1.52,
+"end": 1.7,
+"p": 0.99
+},
+{
+"text": "Rivotril",
+"start": 1.7,
+"end": 2.08,
+"p": 0.71
+},
+{
+"text": "não",
+"start": 2.08,
+"end": 2.2,
+"p": 1.0
+},
+{
+"text": "é",
+"start": 2.2,
+"end": 2.3,
+"p": 1.0
+},
+{
+"text": "legal,",
+"start": 2.3,
+"end": 2.54,
+"p": 1.0
+},
+{
+"text": "benzodiazepínicos.",
+"start": 2.6,
+"end": 3.36,
+"p": 0.38
+},
+{
+"text": "É,",
+"start": 3.44,
+"end": 3.88,
+"p": 0.65
+},
+{
+"text": "a",
+"start": 3.88,
+"end": 3.98,
+"p": 1.0
+},
+{
+"text": "gente",
+"start": 3.98,
+"end": 4.12,
+"p": 1.0
+},
+{
+"text": "evita,",
+"start": 4.12,
+"end": 4.74,
+"p": 1.0
+},
+{
+"text": "evita",
+"start": 4.74,
+"end": 5.74,
+"p": 0.97
+},
+{
+"text": "muito,",
+"start": 5.74,
+"end": 6.02,
+"p": 1.0
+},
+{
+"text": "evita",
+"start": 6.2,
+"end": 6.8,
+"p": 1.0
+},
+{
+"text": "muito",
+"start": 6.8,
+"end": 7.16,
+"p": 1.0
+},
+{
+"text": "mesmo.",
+"start": 7.16,
+"end": 7.6,
+"p": 1.0
+},
+{
+"text": "Mas",
+"start": 8.04,
+"end": 8.48,
+"p": 1.0
+},
+{
+"text": "é",
+"start": 8.48,
+"end": 8.9,
+"p": 0.97
+},
+{
+"text": "evitável,",
+"start": 8.9,
+"end": 9.76,
+"p": 1.0
+},
+{
+"text": "né?",
+"start": 9.8,
+"end": 9.92,
+"p": 0.6
+},
+{
+"text": "Porque,",
+"start": 9.98,
+"end": 10.26,
+"p": 1.0
+},
+{
+"text": "inclusive,",
+"start": 10.34,
+"end": 10.76,
+"p": 1.0
+},
+{
+"text": "o",
+"start": 11.02,
+"end": 11.14,
+"p": 1.0
+},
+{
+"text": "benzodiazepínico",
+"start": 11.14,
+"end": 11.96,
+"p": 0.89
+},
+{
+"text": "tem",
+"start": 11.96,
+"end": 12.04,
+"p": 0.88
+},
+{
+"text": "a",
+"start": 12.04,
+"end": 12.18,
+"p": 0.95
+},
+{
+"text": "tendência",
+"start": 12.18,
+"end": 12.78,
+"p": 1.0
+},
+{
+"text": "a",
+"start": 12.78,
+"end": 12.88,
+"p": 0.96
+},
+{
+"text": "piorar",
+"start": 12.88,
+"end": 13.3,
+"p": 1.0
+},
+{
+"text": "algumas",
+"start": 13.3,
+"end": 13.56,
+"p": 0.79
+},
+{
+"text": "das",
+"start": 13.56,
+"end": 13.86,
+"p": 1.0
+},
+{
+"text": "situações",
+"start": 13.86,
+"end": 14.48,
+"p": 1.0
+},
+{
+"text": "que",
+"start": 14.48,
+"end": 14.74,
+"p": 1.0
+},
+{
+"text": "a",
+"start": 14.74,
+"end": 14.86,
+"p": 1.0
+},
+{
+"text": "gente",
+"start": 14.86,
+"end": 14.98,
+"p": 1.0
+},
+{
+"text": "vê",
+"start": 14.98,
+"end": 15.26,
+"p": 1.0
+},
+{
+"text": "corriqueiramente",
+"start": 16.24,
+"end": 16.68,
+"p": 0.98
+},
+{
+"text": "nos",
+"start": 16.68,
+"end": 16.94,
+"p": 1.0
+},
+{
+"text": "pacientes",
+"start": 16.94,
+"end": 17.46,
+"p": 1.0
+},
+{
+"text": "com",
+"start": 17.46,
+"end": 17.74,
+"p": 1.0
+},
+{
+"text": "o",
+"start": 17.74,
+"end": 17.92,
+"p": 0.94
+},
+{
+"text": "borderline.",
+"start": 17.92,
+"end": 18.5,
+"p": 0.96
+},
+{
+"text": "Então,",
+"start": 18.58,
+"end": 18.8,
+"p": 1.0
+},
+{
+"text": "é",
+"start": 18.92,
+"end": 19.2,
+"p": 0.64
+},
+{
+"text": "evitar",
+"start": 19.2,
+"end": 19.4,
+"p": 0.99
+},
+{
+"text": "ao",
+"start": 19.4,
+"end": 19.62,
+"p": 0.93
+},
+{
+"text": "máximo",
+"start": 19.62,
+"end": 19.92,
+"p": 1.0
+},
+{
+"text": "mesmo,",
+"start": 19.92,
+"end": 20.26,
+"p": 1.0
+},
+{
+"text": "é",
+"start": 20.32,
+"end": 20.42,
+"p": 0.59
+},
+{
+"text": "evitar.",
+"start": 20.42,
+"end": 20.58,
+"p": 1.0
+}
+]
