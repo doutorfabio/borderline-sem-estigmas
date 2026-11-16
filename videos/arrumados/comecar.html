@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Protocolo COMEÇAR</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>html,body{margin:0;background:#141414}svg{display:block}</style></head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"><rect width="1080" height="1920" fill="#141414"/><g id="cam"></g></svg>
+<script src="comum.js"></script>
+<script>
+const CAM=document.getElementById('cam'), RED='#e5252a', W='#fff', CARD='#2b2b2d', TRACK='#444447', DUR=10.08;
+const PX = k => k*1300;                     // painéis lado a lado no mesmo espaço
+
+// ---------- painel 1: interruptor ----------
+const p1 = el('g',{},CAM);
+el('rect',{x:540-280,y:960-150,width:560,height:300,rx:44,fill:CARD},p1);
+txt(p1,'Protocolo 7 Dias',540,900,{size:44,weight:700});
+const tTrack = el('rect',{x:540-130,y:940,width:260,height:110,rx:55,fill:TRACK},p1);
+const tKnob = el('circle',{cx:540-75,cy:995,r:44,fill:W},p1);
+const cursor = el('path',{d:'M0,0 L0,62 L16,47 L27,74 L38,69 L27,43 L48,43 Z',fill:W,stroke:'#000','stroke-width':3},p1);
+
+// ---------- painel 2: régua dos 7 dias ----------
+const p2 = el('g',{transform:`translate(${PX(1)} 0)`},CAM);
+el('rect',{x:90,y:780,width:900,height:330,rx:44,fill:CARD},p2);
+txt(p2,'Dia',470,900,{size:52,weight:700});
+const badge = el('circle',{cx:600,cy:884,r:40,fill:RED},p2);
+const badgeTxt = txt(p2,'1',600,902,{size:48,weight:900});
+const SX0=180, SX1=900, SY=1000;
+el('rect',{x:SX0-20,y:SY-14,width:SX1-SX0+40,height:28,rx:14,fill:TRACK},p2);
+const fill2 = el('rect',{x:SX0-20,y:SY-14,width:0,height:28,rx:14,fill:RED},p2);
+for(let d=0; d<7; d++) el('circle',{cx:SX0+d*(SX1-SX0)/6,cy:SY,r:6,fill:'#777'},p2);
+const sKnob = el('circle',{cx:SX0,cy:SY,r:34,fill:W},p2);
+
+// ---------- painel 3: conversa e teclado ----------
+const p3 = el('g',{transform:`translate(${PX(2)} 0)`},CAM);
+const MSGS=['Dia 1: frase fixa de presença','Dia 3: pausa combinada de 20 minutos','Dia 4: roteiro pós-crise de 10 minutos'];
+const bubbles = MSGS.map((m,i)=>{ const g=el('g',{},p3); const y=330+i*150;
+  el('rect',{x:100,y:y,width:760,height:116,rx:30,fill:CARD},g); txt(g,m,140,y+70,{size:36,weight:700,anchor:'start'}); return g; });
+const sent = el('g',{},p3);
+el('rect',{x:640,y:790,width:340,height:104,rx:30,fill:RED},sent); txt(sent,'COMEÇAR',810,856,{size:40,weight:900});
+const kb = el('g',{},p3);
+el('rect',{x:70,y:860,width:940,height:676,rx:40,fill:'#d4d4d8'},kb);
+el('rect',{x:110,y:900,width:860,height:96,rx:48,fill:W},kb);
+const typed = txt(kb,'',160,964,{size:44,weight:900,anchor:'start',fill:'#141414'});
+const caret = el('rect',{x:160,y:925,width:4,height:52,fill:RED},kb);
+const sendB = el('circle',{cx:920,cy:948,r:36,fill:RED},kb);
+el('path',{d:'M908,930 l22,18 l-22,18',fill:'none',stroke:W,'stroke-width':6,'stroke-linecap':'round','stroke-linejoin':'round'},kb);
+const ROWS=['qwertyuiop','asdfghjklç','zxcvbnm'], KW=82, KH=96, keys={};
+ROWS.forEach((r,ri)=>{ const n=r.length, x0=540-(n*KW+(n-1)*6)/2;
+  [...r].forEach((c,ci)=>{ const x=x0+ci*(KW+6), y=1036+ri*(KH+16);
+    const k=el('rect',{x,y,width:KW,height:KH,rx:14,fill:W},kb);
+    txt(kb,c,x+KW/2,y+64,{size:40,weight:400,fill:'#141414'}); keys[c]=k; }); });
+el('rect',{x:110,y:1036+3*(KH+16),width:860,height:KH,rx:14,fill:W},kb);   // espaço
+// COMEÇAR digitado nas batidas da trilha
+const WORD='COMEÇAR', TT=[5.1,5.6,6.1,6.65,6.85,7.1,7.5], SEND=8.1;
+
+// ---------- câmera ----------
+const OS=860/(PX(2)+1080); const OVER={fx:(PX(2)+1080)/2+30/OS, fy:960, s:OS};
+const VIEWS=[[0,{fx:540,fy:960,s:1}],[1.45,{fx:PX(1)+540,fy:960,s:1}],[3.85,{fx:PX(2)+540,fy:960,s:1}],[8.6,OVER]];
+const DURS=[0,0.5,0.4,0.6];
+function camAt(t){ let v=VIEWS[0][1];
+  for(let i=1;i<VIEWS.length;i++){ const [a,to]=VIEWS[i]; if(t<a) break; const x=eio(prog(t,a,DURS[i]));
+    v={fx:lerp(v.fx,to.fx,x), fy:lerp(v.fy,to.fy,x), s:Math.exp(lerp(Math.log(v.s),Math.log(to.s),x))}; }
+  return v; }
+
+window.seek=function(t){
+  const v=camAt(t);
+  CAM.setAttribute('transform',`translate(540 960) scale(${v.s}) translate(${-v.fx} ${-v.fy})`);
+  // 1: cursor chega e liga
+  const cp=eio(prog(t,0.15,0.7)), click=Math.sin(Math.PI*prog(t,0.88,0.16));
+  cursor.setAttribute('transform',`translate(${lerp(760,520,cp)} ${lerp(1260,1000,cp)}) scale(${1-0.15*click})`);
+  const on=eio(prog(t,0.95,0.3));
+  tKnob.setAttribute('cx',lerp(540-75,540+75,on));
+  tTrack.setAttribute('fill', on>0.5?RED:TRACK);
+  // 2: régua anda do dia 1 ao dia 7
+  const sp=eio(prog(t,2.0,1.7)); const kx=lerp(SX0,SX1,sp);
+  sKnob.setAttribute('cx',kx); fill2.setAttribute('width',kx-SX0+20);
+  const day=1+Math.min(6,Math.floor(sp*6+0.5)); badgeTxt.textContent=String(day);
+  // 3: mensagens, teclado e COMEÇAR
+  bubbles.forEach((b,i)=>inout(b,t,4.15+i*0.22,1e9,0.35,30));
+  const kup=eout(prog(t,4.85,0.4)), kdown=eio(prog(t,SEND+0.05,0.35));
+  kb.setAttribute('transform',`translate(0 ${(1-kup)*720 + kdown*720})`); kb.style.display=(kup<=0||kdown>=1)?'none':'';
+  let n=0; TT.forEach(x=>{ if(t>=x) n++; });
+  typed.textContent = WORD.slice(0,n);
+  const tw = n>0 ? typed.getComputedTextLength() : 0;
+  caret.setAttribute('x',160+tw+4); caret.setAttribute('opacity', (Math.floor(t*2.5)%2===0 || n<7)?1:0);
+  Object.values(keys).forEach(k=>k.setAttribute('fill',W));
+  TT.forEach((x,i)=>{ if(t>=x && t<x+0.14){ const c=WORD[i].toLowerCase(); if(keys[c]) keys[c].setAttribute('fill','#9a9aa0'); } });
+  sendB.setAttribute('r', 36*(1-0.2*Math.sin(Math.PI*prog(t,SEND,0.18))));
+  inout(sent,t,SEND+0.1,1e9,0.35,60);
+};
+window.DUR=DUR;
+</script></body></html>
