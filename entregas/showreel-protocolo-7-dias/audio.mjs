@@ -4,7 +4,8 @@ import fs from 'node:fs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const b = await chromium.launch(); const p = await b.newPage();
-const b64 = await p.evaluate(async () => {
+const SFX = process.argv[2] === 'sfx';
+const b64 = await p.evaluate(async (SFX) => {
   const sr = 48000, DUR = 24, ctx = new OfflineAudioContext(2, sr * DUR, sr);
   const master = ctx.createGain(); master.gain.value = 0.7;
   const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.attack.value = 0.003; comp.release.value = 0.12;
@@ -44,9 +45,10 @@ const b64 = await p.evaluate(async () => {
       o.connect(g); g.connect(pan(i % 2 ? 0.3 : -0.3)); o.start(t); o.stop(t + d + 0.02); });
   }
   const B = 0.5;
-  for (let k = 0; k < 48; k++) kick(k * B, k < 8 ? 0.85 : 0.95);
+  if (!SFX) for (let k = 0; k < 48; k++) kick(k * B, k < 8 ? 0.85 : 0.95);
   hit(0, false); [4, 6, 8, 10, 12, 14, 16, 18, 20].forEach(t => hit(t, false)); hit(22, true);
   whoosh(5.62, 6.0); for (let i = 0; i < 6; i++) whoosh(6 + 2 * i + 1.7, 8 + 2 * i); whoosh(19.62, 20.0);
+  if (!SFX) {
   for (let t = 4.25; t < 23.9; t += B) hat(t);
   // hook drone builds tension
   tone(2.0, 55, 55, 1.95, 'sine', 0.22, 0.05); tone(2.0, 110, 110, 1.95, 'triangle', 0.05, 0.05);
@@ -59,6 +61,7 @@ const b64 = await p.evaluate(async () => {
   for (let e = 0; e < 4; e++) bass(20 + e * B + 0.25, 43.65, 0.2);
   pad(20, chords[1], 2.0); pad(22, [261.63, 329.63, 392, 587.33], 1.98, 0.045);
   for (let e = 0; e < 4; e++) bass(22 + e * B + 0.25, 65.41, 0.2);
+  }
   [5.5, 6.5, 8.5, 11.0, 12.5, 13.0, 13.5, 15.0, 16.5].forEach(t => blip(t));
   blip(7.0, 900, 0.18); blip(9.0, 1200, 0.12); blip(11.5, 900, 0.12);
   for (let k = 1; k < 14; k++) tick(16 + 0.5 + k * 0.0625);
@@ -73,5 +76,5 @@ const b64 = await p.evaluate(async () => {
     out.setInt16(44 + i * 4, Math.max(-1, Math.min(1, L[i] * f)) * 32767, true); out.setInt16(46 + i * 4, Math.max(-1, Math.min(1, R[i] * f)) * 32767, true); }
   const bytes = new Uint8Array(out.buffer); let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
   return btoa(s);
-});
-fs.writeFileSync('soundtrack-raw.wav', Buffer.from(b64, 'base64')); await b.close(); console.log('ok');
+}, SFX);
+fs.writeFileSync(SFX ? 'sfx-raw.wav' : 'soundtrack-raw.wav', Buffer.from(b64, 'base64')); await b.close(); console.log('ok');
