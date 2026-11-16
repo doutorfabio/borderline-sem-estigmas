@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Protocolo 7 Dias</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>html,body{margin:0;background:#1b1b1b}svg{display:block}</style></head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"><rect width="1080" height="1920" fill="#1b1b1b"/></svg>
+<script src="comum.js"></script>
+<script>
+const S=document.getElementById('s'), RED='#e5252a', W='#ffffff', BG='#1b1b1b', DUR=30.08;
+
+// ---------- cena 1: círculo e balão ----------
+const gCirc = el('g',{},S); const circ = el('circle',{cx:540,cy:960,r:115,fill:RED},gCirc);
+const gBub = el('g',{},S);
+el('path',{d:'M640,640 h270 a34,34 0 0 1 34,34 v112 a34,34 0 0 1 -34,34 h-150 l-46,48 l6,-48 h-80 a34,34 0 0 1 -34,-34 v-112 a34,34 0 0 1 34,-34 z',fill:W},gBub);
+txt(gBub,'Você diz:',775,712,{size:48,weight:900,fill:'#1b1b1b'});
+txt(gBub,'Calma!',775,772,{size:48,weight:900,fill:'#1b1b1b'});
+
+// ---------- cena 2: grade de 7 dias ----------
+const CELL=64, COLS=7, ROWS=7, GX=540-COLS*CELL/2, GY=820;     // grade 448x448 + cabeçalho
+const gGrid = el('g',{},S);                                      // move junto na cena 3
+const gTitle = el('g',{},gGrid);
+const rule1 = el('line',{x1:330,y1:560,x2:750,y2:560,stroke:RED,'stroke-width':4},gTitle);
+txt(gTitle,'Um procedimento',540,628,{size:58,weight:900});
+txt(gTitle,'por dia',540,696,{size:58,weight:900});
+const rule2 = el('line',{x1:330,y1:724,x2:750,y2:724,stroke:RED,'stroke-width':4},gTitle);
+const gCells = el('g',{},gGrid);
+const crisis = el('circle',{cx:GX+3.5*CELL,cy:GY+CELL+5.6*CELL,r:0,fill:RED},gGrid);
+const lines = el('g',{stroke:W,'stroke-width':3,fill:'none'},gGrid);
+for(let c=0;c<=COLS;c++) el('line',{x1:GX+c*CELL,y1:GY,x2:GX+c*CELL,y2:GY+(ROWS+0.75)*CELL},lines);
+el('line',{x1:GX,y1:GY,x2:GX+COLS*CELL,y2:GY},lines);
+for(let r=0;r<=ROWS;r++) el('line',{x1:GX,y1:GY+0.75*CELL+r*CELL,x2:GX+COLS*CELL,y2:GY+0.75*CELL+r*CELL},lines);
+const heads = el('g',{},gGrid);
+for(let c=0;c<COLS;c++) txt(heads,String(c+1),GX+(c+.5)*CELL,GY+0.52*CELL,{size:26,weight:700});
+// quadrados que voam do círculo até a grade
+const flyers=[]; let seed=7; const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+  const tx=GX+c*CELL+CELL/2, ty=GY+0.75*CELL+r*CELL+CELL/2;
+  const a=rnd()*Math.PI*2, d=160+rnd()*260;
+  flyers.push({tx,ty,sx:540+Math.cos(a)*d,sy:960+Math.sin(a)*d,rot:(rnd()-.5)*220,del:rnd()*0.35,
+    el:el('rect',{x:-CELL/2+4,y:-CELL/2+4,width:CELL-8,height:CELL-8,fill:'none',stroke:W,'stroke-width':3},gCells)});
+}
+// escada: dia k preenche k quadrados de baixo para cima
+const fills=[]; let order=0;
+for(let c=0;c<COLS;c++) for(let k=0;k<=c;k++){
+  const r=ROWS-1-k; fills.push({o:order++, el:el('rect',{x:GX+c*CELL+8,y:GY+0.75*CELL+r*CELL+8,width:CELL-16,height:CELL-16,fill:W},gGrid)});
+}
+const frameP = 2*((COLS*CELL+40)+((ROWS+0.75)*CELL+40));
+const frame = el('rect',{x:GX-20,y:GY-20,width:COLS*CELL+40,height:(ROWS+0.75)*CELL+40,fill:'none',stroke:RED,'stroke-width':4},gGrid);
+
+// ---------- cena 3: os três passos ----------
+function icon(g,kind,cx,cy){
+  if(kind==='fala'){ el('path',{d:`M${cx-44},${cy-34} h88 a14,14 0 0 1 14,14 v40 a14,14 0 0 1 -14,14 h-46 l-26,24 l4,-24 h-20 a14,14 0 0 1 -14,-14 v-40 a14,14 0 0 1 14,-14 z`,fill:RED},g);
+    for(let i=-1;i<=1;i++) el('circle',{cx:cx+i*22,cy:cy,r:6,fill:W},g); }
+  if(kind==='pausa'){ el('circle',{cx,cy,r:40,fill:RED},g); el('rect',{x:cx-15,y:cy-17,width:9,height:34,fill:W},g); el('rect',{x:cx+6,y:cy-17,width:9,height:34,fill:W},g); }
+  if(kind==='roteiro'){ el('circle',{cx,cy,r:40,fill:RED},g); for(let i=-1;i<=1;i++){ el('circle',{cx:cx-15,cy:cy+i*13,r:3.5,fill:W},g); el('rect',{x:cx-6,y:cy+i*13-2.5,width:24,height:5,fill:W},g);} }
+}
+const COLX=736;
+function step(kind,y,l1,l2,l3){ const g=el('g',{},S); icon(g,kind,COLX,y);
+  txt(g,l1,COLX,y+92,{size:41,weight:900}); txt(g,l2,COLX,y+142,{size:37,weight:700});
+  if(l3) txt(g,l3,COLX,y+188,{size:32,weight:400,style:'italic',fill:'#b5b5b5'}); return g; }
+const st1 = step('fala',  600,'1º minuto','Uma frase fixa','Estou aqui com você');
+const st2 = step('pausa', 880,'Próximos 20 minutos','Pausa combinada');
+const st3 = step('roteiro',1120,'Após a crise','Roteiro de 10 minutos');
+
+// ---------- cena 4: assinatura ----------
+const gSig = el('g',{},S);
+const sigClip = el('clipPath',{id:'sc'},el('defs',{},S)); const sigRect = el('rect',{x:0,y:600,width:0,height:400},sigClip);
+const sigName = el('g',{'clip-path':'url(#sc)'},gSig);
+txt(sigName,'Dr. Fabio Schmidt',540,860,{size:104,font:'Mr Dafoe',weight:400,fill:RED});
+const gCred = el('g',{},S);
+txt(gCred,'CRM-SP 183549',540,940,{size:38,weight:700});
+const gCred2 = el('g',{},S);
+txt(gCred2,'Médico, pós-graduado em psiquiatria',540,1020,{size:36,weight:400});
+txt(gCred2,'10 anos de atuação em CAPS',540,1068,{size:36,weight:400});
+
+// ---------- cena 5: fechamento ----------
+const gEnd = el('g',{},S);
+txt(gEnd,'Protocolo 7 Dias',540,960,{size:92,weight:900});
+const endRule = el('line',{x1:540,y1:1000,x2:540,y2:1000,stroke:RED,'stroke-width':6},gEnd);
+const gDisc = el('g',{},S);
+txt(gDisc,'Conteúdo educativo. Não substitui avaliação nem tratamento.',540,1480,{size:29,weight:400,fill:'#9a9a9a'});
+const black = el('rect',{width:1080,height:1920,fill:'#000',opacity:0},S);
+
+window.seek = function(t){
+  // cena 1
+  const grow = eio(prog(t,5.55,0.45)), shrink = eio(prog(t,6.0,0.35));
+  const pulse = 1 + 0.12*Math.sin(Math.PI*prog(t,4.05,0.4));
+  circ.setAttribute('r', 115*pulse*(1+0.9*grow)*(1-shrink));
+  pop(gCirc,t,0.05,540,960,0.45);
+  pop(gBub,t,2.05,640,860,0.45,5.35);
+  // cena 2: quadrados voam e viram grade
+  const out2 = eio(prog(t,18.05,0.35));
+  flyers.forEach(f=>{ const p=eio(prog(t,6.0+f.del,1.45));
+    const x=lerp(f.sx,f.tx,p), y=lerp(f.sy,f.ty,p), r=f.rot*(1-p);
+    f.el.setAttribute('transform',`translate(${x} ${y}) rotate(${r})`);
+    f.el.setAttribute('opacity', t<6.0?0:(p<1?1:1-eout(prog(t,7.95,0.2)))); });
+  lines.setAttribute('opacity', eout(prog(t,7.85,0.3)));
+  heads.setAttribute('opacity', eout(prog(t,8.0,0.3)));
+  inout(gTitle,t,8.05,1e9,0.4);
+  crisis.setAttribute('r', 92*eback(prog(t,8.45,0.45)));
+  fills.forEach(f=>{ const a=eback(prog(t,8.6+f.o*0.085,0.22)); f.el.setAttribute('transform',`translate(${f.el.getAttribute('x')*1+ (CELL-16)/2} ${f.el.getAttribute('y')*1+(CELL-16)/2}) scale(${a}) translate(${-(f.el.getAttribute('x')*1+(CELL-16)/2)} ${-(f.el.getAttribute('y')*1+(CELL-16)/2)})`); f.el.style.display=a<=0?'none':''; });
+  const fp = eio(prog(t,11.05,0.7)); frame.setAttribute('stroke-dasharray',`${frameP*fp} ${frameP}`); frame.style.display=fp>0?'':'none';
+  // cena 3: grade vai para a esquerda
+  const mv = eio(prog(t,12.05,0.6));
+  const sc = lerp(1,0.66,mv), cx = lerp(540,282,mv), cy = lerp(960,930,mv);
+  gGrid.setAttribute('transform',`translate(${cx} ${cy}) scale(${sc}) translate(-540 -960)`);
+  gGrid.setAttribute('opacity',1-out2); gGrid.style.display = (t<5.9||out2>=1)?'none':'';
+  gCells.style.display = t<6.0 ? 'none':'';
+  inout(st1,t,12.55,18.05); inout(st2,t,14.05,18.05); inout(st3,t,16.05,18.05);
+  // cena 4: assinatura escrita da esquerda para a direita
+  sigRect.setAttribute('width', 1080*eio(prog(t,18.45,1.4)));
+  inout(gSig,t,18.4,24.05,0.01,0); inout(gCred,t,19.95,24.05); inout(gCred2,t,20.45,24.05);
+  // cena 5
+  inout(gEnd,t,24.35,1e9,0.45);
+  const er = eio(prog(t,24.8,0.5)); endRule.setAttribute('x1',540-230*er); endRule.setAttribute('x2',540+230*er);
+  inout(gDisc,t,25.05,1e9,0.45,0);
+  black.setAttribute('opacity', eio(prog(t,28.9,0.6)));
+};
+window.DUR = DUR;
+</script></body></html>

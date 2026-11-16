@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Nome Borderline</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>html,body{margin:0;background:#121214}svg{display:block}</style></head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"><rect width="1080" height="1920" fill="#121214"/><g id="cam"></g></svg>
+<script src="comum.js"></script>
+<script>
+const S=document.getElementById('s'), CAM=document.getElementById('cam'), W='#ffffff', BG='#121214', DUR=30.08;
+const SW={stroke:W,'stroke-width':4,fill:'none','stroke-linejoin':'round','stroke-linecap':'round'};
+
+// ---------- linha do tempo vertical, layout fixo ----------
+const TITLE_Y=760, Y0=1900, STEP=900;
+const NODES=[
+  {ano:'1938', nome:'Adolf Stern', icon:'maquina'},
+  {ano:'1967', nome:'Otto Kernberg', icon:'livro'},
+  {ano:'1975', nome:'Gunderson e Singer', icon:'aberto'},
+  {ano:'1980', nome:'DSM-III', icon:'manual'},
+  {ano:'1993', nome:'Marsha Linehan', icon:'caneta'},
+  {ano:'2022', nome:'CID-11', icon:'tela'},
+];
+const LAST = Y0+(NODES.length-1)*STEP;
+const spine = el('line',{x1:540,y1:TITLE_Y+70,x2:540,y2:TITLE_Y+70,stroke:W,'stroke-width':3},CAM);
+const gTitle = el('g',{},CAM);
+txt(gTitle,'De onde vem o nome',540,TITLE_Y-40,{size:64,weight:700});
+txt(gTitle,'borderline?',540,TITLE_Y+36,{size:64,weight:900});
+
+function drawIcon(g,k,cx,cy){
+  const G=el('g',SW,g);
+  if(k==='maquina'){ el('rect',{x:cx-30,y:cy-74,width:60,height:46,fill:W,stroke:'none'},G);
+    el('path',{d:`M${cx-74},${cy-24} h148 l10,52 h-168 z`},G); el('rect',{x:cx-90,y:cy+28,width:180,height:44,rx:8},G);
+    for(let i=0;i<3;i++) el('line',{x1:cx-62+i*6,y1:cy+42+i*10,x2:cx+62-i*6,y2:cy+42+i*10,'stroke-dasharray':'8 7'},G);
+    el('circle',{cx:cx,cy:cy-4,r:10},G); el('line',{x1:cx-104,y1:cy-24,x2:cx-74,y2:cy-24},G); }
+  if(k==='livro'){ el('path',{d:`M${cx-80},${cy-40} l110,-30 l60,40 l-110,32 z`},G);
+    el('path',{d:`M${cx-80},${cy-40} v40 l60,40 l110,-32 v-38`},G);
+    el('path',{d:`M${cx-74},${cy-24} l56,36 M${cx-74},${cy-12} l56,36`},G);
+    el('path',{d:`M${cx-6},${cy-46} l36,-10 l20,13 l-36,10 z`},G); }
+  if(k==='aberto'){ el('path',{d:`M${cx},${cy-46} c-28,-14 -60,-14 -86,-4 v96 c26,-10 58,-10 86,4 c28,-14 60,-14 86,-4 v-96 c-26,-10 -58,-10 -86,4 z M${cx},${cy-46} v96`},G);
+    for(let i=0;i<5;i++){ el('line',{x1:cx-72,y1:cy-26+i*16,x2:cx-14,y2:cy-26+i*16},G); el('line',{x1:cx+14,y1:cy-26+i*16,x2:cx+72,y2:cy-26+i*16},G);} }
+  if(k==='manual'){ el('rect',{x:cx-52,y:cy-74,width:104,height:148,rx:4},G);
+    txt(g,'DSM-III',cx,cy-34,{size:24,weight:900}); el('line',{x1:cx-30,y1:cy-14,x2:cx+30,y2:cy-14},G); el('line',{x1:cx-30,y1:cy+2,x2:cx+30,y2:cy+2},G); el('line',{x1:cx-18,y1:cy+50,x2:cx+18,y2:cy+50},G); }
+  if(k==='caneta'){ el('path',{d:`M${cx-100},${cy+44} h200 l-20,-24 h-160 z`},G);
+    el('path',{d:`M${cx-10},${cy+6} c-24,-12 -52,-12 -76,-4 v-50 c24,-8 52,-8 76,4 c24,-12 52,-12 76,-4 v50 c-24,-8 -52,-8 -76,4 z M${cx-10},${cy+6} v-54`},G);
+    el('path',{d:`M${cx+44},${cy-8} l46,-70 l10,7 l-46,70 l-14,8 z`},G); }
+  if(k==='tela'){ el('rect',{x:cx-80,y:cy-62,width:160,height:112,rx:10},G); el('path',{d:`M${cx-40},${cy+72} h80 M${cx},${cy+50} v22`},G);
+    el('circle',{cx:cx,cy:cy-22,r:18},G); el('path',{d:`M${cx-36},${cy+30} c4,-24 18,-32 36,-32 c18,0 32,8 36,32`},G); }
+}
+const nodeG = NODES.map((n,i)=>{ const y=Y0+i*STEP; const g=el('g',{},CAM);
+  const mask=el('rect',{x:380,y:y-210,width:320,height:420,fill:BG},g);       // corta a linha atrás do ícone
+  const gy=el('g',{},g); txt(gy,n.ano,540,y-138,{size:64,weight:900});
+  const gi=el('g',{},g); drawIcon(gi,n.icon,540,y);
+  const gn=el('g',{},g); txt(gn,n.nome,540,y+160,{size:44,weight:700});
+  return {g,gy,gi,gn,y}; });
+
+// fechamento (fora da câmera)
+const gFinal = el('g',{},S);
+txt(gFinal,'Borderline vem de fronteira.',540,1300,{size:60,weight:900});
+txt(gFinal,'Entre neurose e psicose.',540,1380,{size:52,weight:400});
+
+// ---------- câmera ----------
+const VIEWS=[[0,{fy:960,s:1,cy:960}]]; NODES.forEach((n,i)=>VIEWS.push([4.0+i*4.0,{fy:Y0+i*STEP,s:1,cy:960}]));
+const OVER={fy:(TITLE_Y-80+LAST+180)/2, s:900/(LAST+180-TITLE_Y+80), cy:640};
+VIEWS.push([26.9,OVER]);
+function camAt(t){ let v=VIEWS[0][1];
+  for(let i=1;i<VIEWS.length;i++){ const [a,to]=VIEWS[i]; if(t<a) break; const x=eio(prog(t,a,0.85));
+    v={fy:lerp(v.fy,to.fy,x), cy:lerp(v.cy,to.cy,x), s:Math.exp(lerp(Math.log(v.s),Math.log(to.s),x))}; }
+  return v; }
+
+window.seek=function(t){
+  const v=camAt(t);
+  CAM.setAttribute('transform',`translate(540 ${v.cy}) scale(${v.s}) translate(-540 ${-v.fy})`);
+  inout(gTitle,t,0.15,1e9,0.8,0);
+  // a linha desce acompanhando o tempo (de cima para baixo)
+  let y2 = TITLE_Y+70 + 1030*eio(prog(t,0.9,1.0));
+  if(t>=1.9) y2 = Math.max(TITLE_Y+1100, Math.min(LAST+240, v.fy + 1150/v.s));
+  spine.setAttribute('y2', y2);
+  nodeG.forEach((n,i)=>{ const t0=4.0+i*4.0;
+    inout(n.gy,t,t0+0.55,1e9,0.4); inout(n.gi,t,t0+0.85,1e9,0.45); inout(n.gn,t,t0+1.25,1e9,0.4); });
+  inout(gFinal,t,27.75,1e9,0.45,16);
+};
+window.DUR=DUR;
+</script></body></html>
