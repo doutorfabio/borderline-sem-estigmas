@@ -1,0 +1,377 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:M;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}
+@font-face{font-family:M;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}
+@font-face{font-family:M;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:M;font-weight:900;src:url(fonts/montserrat-latin-900-normal.woff2)}
+@font-face{font-family:F;font-weight:900;font-style:italic;src:url(fonts/fraunces-latin-900-italic.woff2)}
+@font-face{font-family:F;font-weight:700;font-style:italic;src:url(fonts/fraunces-latin-700-italic.woff2)}
+:root{--red:#CC0000;--cream:#F2EADB;--ink:#0D0D0D}
+html,body{margin:0;padding:0;background:transparent;width:1080px;height:1920px;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden}
+.abs{position:absolute;left:0;top:0}
+.m{font-family:M;font-weight:900;text-transform:uppercase;line-height:1;white-space:nowrap}
+.f{font-family:F;font-weight:900;font-style:italic;text-transform:uppercase;line-height:1;white-space:nowrap}
+.w{display:inline-block;will-change:transform}
+.ov{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;display:none}
+.label{font-family:M;font-weight:700;font-size:26px;letter-spacing:.22em;white-space:nowrap}
+/* captions */
+#cap{position:absolute;left:502px;top:1300px;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
+.cw{display:inline-block;font-family:M;font-weight:800;font-size:64px;color:#fff;text-transform:uppercase;margin:0 .13em;
+ text-shadow:0 0 2px #0D0D0D,1.5px 1.5px 0 #0D0D0D,-1.5px 1.5px 0 #0D0D0D,1.5px -1.5px 0 #0D0D0D,-1.5px -1.5px 0 #0D0D0D,0 6px 18px rgba(0,0,0,.55)}
+.cw.hl{font-family:F;font-weight:900;font-style:italic;color:var(--red);font-size:88px;margin:0 .2em;
+ text-shadow:0 2px 5px rgba(0,0,0,.55),0 6px 22px rgba(0,0,0,.6)}
+.cw.q{font-family:F;font-weight:900;font-style:italic;color:#fff;font-size:72px;
+ text-shadow:0 0 2px #0D0D0D,0 5px 16px rgba(0,0,0,.6)}
+</style></head>
+<body><div id="stage"></div>
+<script>
+// ===================== helpers =====================
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>clamp((t-a)/(b-a));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const E={
+ oc:p=>1-Math.pow(1-p,3), ic:p=>p*p*p, ioc:p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,
+ oe:p=>p>=1?1:1-Math.pow(2,-10*p), ie:p=>p<=0?0:Math.pow(2,10*p-10),
+ ob:p=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2)},
+ oq:p=>1-Math.pow(1-p,5)
+};
+const stage=document.getElementById('stage');
+function mk(tag,cls,parent,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;(parent||stage).appendChild(e);return e}
+function st(e,o){for(const k in o)e.style[k]=o[k]}
+function place(e,x,y){st(e,{left:x+'px',top:y+'px'})}
+// standard word reveal: rise + blur
+function wordIn(e,t,ws,dur=0.18,dy=34){
+ const p=P(t,ws-0.04,ws-0.04+dur), q=E.oc(p);
+ e.style.opacity=q; e.style.transform=`translateY(${(1-q)*dy}px)`; e.style.filter=p<1?`blur(${(1-p)*8}px)`:'none';
+}
+// build a line of words: [{t:'TEXT',s:time,cls:'m'|'f',size,color}] returns span list
+function line(parent,words,gap=0.26){
+ const L=mk('div','abs',parent); st(L,{whiteSpace:'nowrap'});
+ const spans=words.map((w,i)=>{const s=mk('span','w '+(w.cls||'m'),L,w.t);
+   st(s,{fontSize:w.size+'px',color:w.color||'inherit',marginRight:(i<words.length-1?gap+'em':'0')}); if(w.weight)s.style.fontWeight=w.weight; if(w.lower)s.style.textTransform='none'; s._s=w.s; return s});
+ L._spans=spans; return L;
+}
+const SAFE={l:54,r:950,b:1536,t:150};
+
+// ===================== DATA =====================
+// overlay windows (final timeline seconds)
+const OV=[
+ {id:1,a:13.38,b:16.56},
+ {id:2,a:19.80,b:23.958},
+ {id:3,a:25.15,b:28.30},
+ {id:4,a:35.80,b:39.29},
+ {id:5,a:41.60,b:44.86},
+];
+const inOverlay=t=>OV.some(o=>t>=o.a+0.12&&t<o.b-0.05);
+
+// caption groups: words [text, start, end, kind] kind: ''|'hl'|'q'
+const G=[
+ [['Ouve',3.68,4.06],['sua',4.06,4.18],['resposta',4.18,4.72]],
+ [['e',4.72,5.06],['pergunta',5.06,5.42],['de novo.',5.42,5.90,'hl']],
+ [['Quem',6.02,6.16],['convive',6.16,6.62]],
+ [['só',6.62,6.78],['vê',6.78,6.98],['metade',6.98,7.62,'hl']],
+ [['de',7.62,7.72],['cada',7.72,7.84],['cena.',7.84,8.18]],
+ [['São',8.32,8.60],['cinco.',8.60,8.84,'hl']],
+ [['Depois',9.42,9.74],['que',9.74,9.96],['sente',9.96,10.24]],
+ [['que',10.24,10.42],['te',10.42,10.52],['machucou,',10.52,11.02]],
+ [['o',11.04,11.16],['silêncio',11.16,11.66,'hl']],
+ [['que',11.66,11.76],['fica',11.76,11.98],['dói',11.98,12.36]],
+ [['mais',12.36,12.48],['que a',12.48,12.90],['cobrança.',12.90,13.26,'hl']],
+ [['A',17.26,17.36],['pergunta',17.36,17.72],['repetida.',17.72,18.62,'hl']],
+ [['Ouviu',18.66,19.06],['da',19.06,19.18]],
+ [['primeira',19.18,19.38,'hl'],['vez.',19.38,19.74]],
+ [['Percebe',24.608,25.088],['que',25.088,25.15]],
+ [['Perceber',28.368,28.788]],
+ [['não',28.788,28.908],['faz',28.908,29.088],['parar.',29.088,29.328,'hl']],
+ [['Guarda',30.128,30.608],['exatamente',30.608,30.868]],
+ [['o',30.868,31.208],['jeito',31.208,31.408]],
+ [['que',31.408,31.568],['você',31.568,31.728],['voltou',31.728,32.068,'hl']],
+ [['depois',32.068,32.408],['da',32.408,32.668],['briga.',32.668,32.968]],
+ [['Hum,',33.028,33.248,'q'],['só',33.248,33.528,'q'],['agora',33.528,33.988,'q']],
+ [['veio',33.988,34.308,'q'],['perguntar',34.308,34.828,'q']],
+ [['como',34.828,34.988,'q'],['que',34.988,35.148,'q']],
+ [['eu',35.148,35.268,'q'],['fiquei,',35.268,35.548,'q'],['né?',35.668,35.788,'q']],
+ [['que',39.288,39.488],['uma',39.488,39.608],['briga',39.608,40.008]],
+ [['não',40.008,40.288],['acaba',40.288,40.528]],
+ [['com',40.528,40.808],['tudo.',40.808,41.008,'hl']],
+ [['Não',44.828,45.068],['vale',45.068,45.268]],
+ [['pra',45.268,45.428],['todo',45.428,45.588],['mundo.',45.588,45.868]],
+ [['Vale',45.988,46.348],['pra',46.348,46.548]],
+ [['muita gente.',46.548,46.968,'hl']],
+ [['Nada',47.168,47.348],['disso',47.348,47.668]],
+ [['obriga',47.668,48.208],['ninguém',48.208,48.328,'hl']],
+ [['a',48.328,48.688],['aguentar',48.688,49.008],['tudo.',49.008,49.40]],
+];
+const NUMS=[[1,9.04],[2,16.60],[3,24.008],[4,29.568],[5,41.188]];
+const END=49.727;
+
+// ===================== CAPTIONS =====================
+const cap=mk('div','',stage); cap.id='cap';
+const capGroups=G.map((g,gi)=>{
+ const box=mk('div','abs',stage); st(box,{left:'502px',top:'1398px',transform:'translate(-50%,-50%)',whiteSpace:'nowrap',textAlign:'center',display:'none'});
+ const spans=g.map(w=>{const s=mk('span','cw'+(w[3]?' '+w[3]:''),box,w[0]);s._s=w[1];s._e=w[2];return s});
+ const nextStart=gi<G.length-1?G[gi+1][0][1]:END;
+ const lastEnd=g[g.length-1][2];
+ return {box,spans,a:g[0][1],b:Math.min(nextStart,lastEnd+0.55),gi};
+});
+function fitCaptions(){capGroups.forEach(c=>{c.box.style.display='block';const w=c.box.getBoundingClientRect().width;c.fit=Math.min(1,800/w);c.box.style.display='none'})}
+function renderCaptions(t){
+ for(const c of capGroups){
+  const vis=t>=c.a-0.02&&t<c.b&&!inOverlay(t);
+  if(!vis){c.box.style.display='none';continue}
+  c.box.style.display='block';
+  const pin=E.ob(P(t,c.a-0.02,c.a+0.14));
+  const pout=P(t,c.b-0.10,c.b);
+  let tr=`translate(-50%,-50%) scale(${c.fit*lerp(0.86,1,pin)})`; let op=1, bl=0;
+  if(pout>0){const v=c.gi%3; if(v===0){tr+=` translateY(${-26*pout}px)`;bl=6*pout}else if(v===1){tr+=` scale(${1-0.12*pout})`}else{tr+=` scale(${1-0.15*pout})`;bl=4*pout} op=1-pout}
+  st(c.box,{transform:tr,opacity:op,filter:bl?`blur(${bl}px)`:'none'});
+  for(const s of c.spans){
+   if(t<s._s-0.03){s.style.opacity=0;continue}
+   const hl=s.classList.contains('hl');
+   const p=P(t,s._s-0.03,s._s+(hl?0.16:0.10));
+   const sc=hl?lerp(1.22,1,E.ob(p)):lerp(0.8,1,E.oc(p));
+   s.style.opacity=clamp(p*1.6); s.style.transform=`scale(${sc}) translateY(${(1-E.oc(p))*(hl?0:10)}px)`;
+  }
+ }
+}
+
+// ===================== HOOK (0 - 3.64) =====================
+const hook=mk('div','abs',stage); st(hook,{left:'502px',top:'1352px',transform:'translate(-50%,-50%)',textAlign:'center'});
+const hk1=mk('div','',hook); const hk2=mk('div','',hook); const hk3=mk('div','',hook); const hk3b=mk('div','',hook); const hk4=mk('div','',hook);
+const HW=[];
+function hw(parent,txt,s,e,cls,size){const sp=mk('span','w '+cls,parent,txt);st(sp,{fontSize:size+'px',margin:'0 .12em',position:'relative'});
+ if(cls==='m'){sp.style.color='#fff';sp.style.textShadow='0 0 2px #0D0D0D,1.5px 1.5px 0 #0D0D0D,-1.5px 1.5px 0 #0D0D0D,1.5px -1.5px 0 #0D0D0D,-1.5px -1.5px 0 #0D0D0D,0 6px 18px rgba(0,0,0,.55)'}
+ else{sp.style.color='var(--red)';sp.style.textShadow='0 4px 14px rgba(0,0,0,.45)'}
+ const bar=mk('i','',sp); st(bar,{position:'absolute',left:'0',right:'0',bottom:'-8px',height:'7px',background:'var(--red)',transformOrigin:'left center',transform:'scaleX(0)'});
+ HW.push({sp,bar,s,e}); return sp}
+hw(hk1,'Quem',0.00,0.14,'m',42);hw(hk1,'tem',0.14,0.28,'m',42);
+hw(hk2,'borderline',0.28,0.74,'f',106);
+hw(hk3,'prefere',0.74,1.22,'m',60);hw(hk3,'ouvir',1.22,1.68,'m',60);hw(hk3b,'que',1.68,1.72,'m',60);hw(hk3b,'te',1.72,1.86,'m',60);hw(hk3b,'machucou',1.86,2.32,'m',60);
+hw(hk4,'do',2.32,2.48,'m',48);hw(hk4,'que',2.48,2.60,'m',48);hw(hk4,'ver',2.60,2.86,'m',48);hw(hk4,'você',2.86,3.12,'m',48);hw(hk4,'calado.',3.12,3.64,'f',70);
+[hk1,hk2,hk3,hk3b,hk4].forEach(e=>st(e,{whiteSpace:'nowrap',lineHeight:'1.06'}));
+function renderHook(t){
+ if(t>3.92){hook.style.display='none';return} hook.style.display='block';
+ const pout=P(t,3.66,3.90);
+ st(hook,{opacity:1-pout,transform:`translate(-50%,-50%) translateY(${-24*E.ic(pout)}px)`,filter:pout>0?`blur(${6*pout}px)`:'none'});
+ for(const w of HW){
+  const a=P(t,w.s-0.02,Math.min(w.e,w.s+0.22));
+  const done=t>=w.e+0.02;
+  // bar grows under current word; stays faint under past words
+  w.bar.style.transform=`scaleX(${E.oc(a)})`; w.bar.style.opacity=done?0.0:1;
+  const pop=P(t,w.s-0.02,w.s+0.12); w.sp.style.transform=`scale(${t>=w.s-0.02&&t<w.e+0.05?lerp(1.08,1.04,E.oc(pop)):1})`;
+ }
+}
+
+// ===================== NUMERAL POPS =====================
+const nums=NUMS.map(([n,s])=>{const b=mk('div','abs',stage);st(b,{left:'104px',top:'420px',display:'none'});
+ const big=mk('div','f',b,String(n));st(big,{fontSize:'300px',color:'var(--red)',textShadow:'0 8px 24px rgba(0,0,0,.45)',lineHeight:'.9'});
+ const sm=mk('div','label',b,'DE 5');st(sm,{color:'#fff',fontSize:'30px',marginTop:'8px',marginLeft:'14px',textShadow:'0 2px 10px rgba(0,0,0,.7)'});
+ return {b,big,sm,s}});
+function renderNums(t){for(const n of nums){const a=n.s-0.04,b=n.s+1.25;
+ if(t<a||t>b||inOverlay(t)){n.b.style.display='none';continue} n.b.style.display='block';
+ const pi=P(t,a,a+0.24),po=P(t,b-0.2,b);
+ st(n.big,{transform:`scale(${lerp(1.7,1,E.ob(pi))}) rotate(${lerp(-10,0,E.oc(pi))}deg)`,filter:pi<1?`blur(${(1-pi)*14}px)`:'none',transformOrigin:'0% 60%'});
+ st(n.b,{opacity:clamp(pi*2)*(1-po),transform:`translateX(${-30*E.ic(po)}px)`});
+ n.sm.style.opacity=P(t,a+0.12,a+0.3);
+}}
+
+// ===================== OVERLAY BASE =====================
+function overlayRoot(bg){const r=mk('div','ov',stage);st(r,{background:bg});return r}
+function idxLabel(root,n,color){const l=mk('div','label abs',root,`0${n} <span style="opacity:.45">/ 05</span>`);st(l,{left:'70px',top:'230px',color});return l}
+
+// ---------- O1: ARQUITETURA (silêncio / cobrança) ----------
+const O1={o:OV[0]}; (()=>{const R=overlayRoot('var(--ink)');O1.R=R;O1.lab=idxLabel(R,1,'var(--cream)');
+ O1.beam1=mk('div','abs',R);st(O1.beam1,{left:'70px',top:'600px',width:'860px',height:'5px',background:'var(--red)',transformOrigin:'left center'});
+ const cw=mk('div','abs',R);st(cw,{left:'66px',top:'450px',height:'150px',overflow:'hidden'});
+ O1.calado=mk('div','f',cw,'Calado,');st(O1.calado,{fontSize:'132px',color:'var(--red)',paddingTop:'8px'});
+ O1.l1=line(R,[{t:'parece',s:13.96},{t:'que',s:14.12},{t:'você',s:14.30},{t:'está',s:14.44}].map(w=>({...w,size:50,weight:700,color:'var(--cream)'})),0.28);place(O1.l1,72,628);
+ O1.svg=document.createElementNS('http://www.w3.org/2000/svg','svg');st(O1.svg,{position:'absolute',left:0,top:0,width:'1080px',height:'1920px'});R.appendChild(O1.svg);
+ O1.s1=document.createElementNS('http://www.w3.org/2000/svg','line');O1.s2=document.createElementNS('http://www.w3.org/2000/svg','line');
+ [O1.s1,O1.s2].forEach(s=>{s.setAttribute('stroke','#F2EADB');s.setAttribute('stroke-width','3');s.setAttribute('stroke-opacity','.7');O1.svg.appendChild(s)});
+ O1.blk=mk('div','abs',R);st(O1.blk,{left:'502px',top:'760px',transformOrigin:'50% 0%',textAlign:'center'});
+ O1.indo=mk('div','m',O1.blk,'indo');st(O1.indo,{fontSize:'168px',color:'var(--cream)'});
+ O1.emb=mk('div','m',O1.blk,'embora');st(O1.emb,{fontSize:'168px',color:'var(--cream)',marginTop:'-6px'});
+ O1.cob=line(R,[{t:'Cobrando,',s:15.22,size:54,weight:700,color:'var(--cream)'}]);place(O1.cob,72,1040);
+ O1.beam2=mk('div','abs',R);st(O1.beam2,{left:'70px',top:'1262px',width:'860px',height:'5px',background:'var(--red)',transformOrigin:'left center'});
+ O1.cont=mk('div','m abs',R,'continua');st(O1.cont,{fontSize:'132px',color:'var(--cream)',left:'502px',top:'1130px',transformOrigin:'50% 100%'});
+ O1.ali=mk('div','f abs',R,'ali.');st(O1.ali,{fontSize:'210px',color:'var(--red)',left:'502px',top:'1272px',transformOrigin:'50% 30%'});
+})();
+O1.render=t=>{const {a,b}=O1.o;const R=O1.R; if(t<a||t>=b){R.style.display='none';return} R.style.display='block';
+ const pin=E.oe(P(t,a,a+0.2)), pout=E.ic(P(t,b-0.14,b));
+ R.style.clipPath=`inset(${(1-pin)*100}% 0 ${pout*100}% 0)`;
+ O1.lab.style.opacity=P(t,a+0.1,a+0.3);
+ O1.beam1.style.transform=`scaleX(${E.oc(P(t,a+0.02,a+0.4))})`;
+ const pc=E.oc(P(t,13.44,13.64)); O1.calado.style.transform=`translateY(${(1-pc)*110}%)`;
+ O1.l1._spans.forEach(s=>wordIn(s,t,s._s));
+ // hanging block
+ const pI=P(t,14.55,14.75), pE=P(t,14.73,14.93);
+ const swing=t>14.55?6*Math.exp(-4*(t-14.55))*Math.cos(9*(t-14.55)):0;
+ O1.indo.style.opacity=E.oc(pI); O1.indo.style.transform=`translateY(${(1-E.ob(pI))*-70}px)`;
+ O1.emb.style.opacity=E.oc(pE); O1.emb.style.transform=`translateY(${(1-E.ob(pE))*-50}px)`;
+ const pg=E.ioc(P(t,14.98,15.42)); // going away
+ const W=O1.blk.offsetWidth, sc=lerp(1,0.3,pg), tx=lerp(0,292,pg), ty=lerp(0,-30,pg);
+ st(O1.blk,{transform:`translateX(-50%) translate(${tx}px,${ty}px) scale(${sc}) rotate(${swing*(1-pg)}deg)`,opacity:t<14.55?0:lerp(1,0.32,pg)});
+ // strings from beam to block top corners
+ const topY=760+ty, cx=502+tx, half=W*sc/2*0.62;
+ const sv=t>=14.55?1:0, sl=E.oc(pI);
+ O1.s1.setAttribute('x1',cx-half);O1.s1.setAttribute('y1',603);O1.s1.setAttribute('x2',cx-half);O1.s1.setAttribute('y2',603+(topY-603)*sl);
+ O1.s2.setAttribute('x1',cx+half);O1.s2.setAttribute('y1',603);O1.s2.setAttribute('x2',cx+half);O1.s2.setAttribute('y2',603+(topY-603)*sl);
+ O1.svg.style.opacity=sv*lerp(1,0.35,pg);
+ O1.cob._spans.forEach(s=>wordIn(s,t,s._s));
+ O1.beam2.style.transform=`scaleX(${E.oc(P(t,15.18,15.5))})`;
+ const pct=P(t,15.64,15.86); st(O1.cont,{opacity:E.oc(pct),transform:`translateX(-50%) scaleY(${t<15.64?0:lerp(1.35,1,E.ob(pct))}) scaleX(${lerp(0.9,1,E.oc(pct))})`});
+ const pa=P(t,16.00,16.18); st(O1.ali,{opacity:E.oc(pa),transform:`translateX(-50%) scale(${t<16.0?0:lerp(1.7,1,E.ob(pa))})`});
+};
+
+// ---------- O2: ÓRBITA (pergunta de novo) ----------
+const O2={o:OV[1],cx:502,cy:840}; (()=>{const R=overlayRoot('var(--ink)');O2.R=R;O2.lab=idxLabel(R,2,'var(--cream)');
+ O2.svg=document.createElementNS('http://www.w3.org/2000/svg','svg');st(O2.svg,{position:'absolute',left:0,top:0,width:'1080px',height:'1920px'});R.appendChild(O2.svg);
+ O2.rings=[140,225,305,380].map((r,i)=>{const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',O2.cx);c.setAttribute('cy',O2.cy);c.setAttribute('r',r);c.setAttribute('fill','none');
+  c.setAttribute('stroke',i===1?'#CC0000':'#F2EADB');c.setAttribute('stroke-opacity',i===1?'.85':'.28');c.setAttribute('stroke-width',i===1?'3':'2');if(i%2===0)c.setAttribute('stroke-dasharray','6 14');O2.svg.appendChild(c);return {c,r}});
+ O2.orb=[];const ringsR=[305,378];
+ for(let i=0;i<14;i++){const e=mk('div','abs',R,'de novo?');st(e,{fontFamily:'M',fontWeight:800,fontSize:'34px',color:i%3===2?'var(--red)':'var(--cream)',whiteSpace:'nowrap'});
+  O2.orb.push({e,s:20.44+i*0.19,r:ringsR[i%2],th0:i*2.399,w:(i%2?1:-1)*(0.55+0.12*(i%3))})}
+ O2.c1=mk('div','m abs',R,'pergunta');st(O2.c1,{fontSize:'84px',color:'var(--cream)',left:O2.cx+'px',top:'752px'});
+ O2.c2=mk('div','f abs',R,'de novo');st(O2.c2,{fontSize:'110px',color:'var(--red)',left:O2.cx+'px',top:'838px'});
+ O2.v1=mk('div','m abs',R,'verdade');st(O2.v1,{fontSize:'136px',color:'var(--cream)',left:O2.cx+'px',top:'726px'});
+ O2.v2=line(O2.R,[{t:'por',s:23.12,cls:'f',size:104,color:'var(--red)'},{t:'dentro.',s:23.54,cls:'f',size:104,color:'var(--red)'}],0.22);st(O2.v2,{left:O2.cx+'px',top:'872px'});
+ O2.sen1=line(R,[{t:'porque',s:20.70},{t:'a',s:21.00},{t:'resposta',s:21.16}].map(w=>({...w,size:50,weight:700,color:'var(--cream)'})));
+ O2.sen2=line(R,[{t:'ainda',s:21.52},{t:'não',s:22.04},{t:'pareceu',s:22.36}].map(w=>({...w,size:50,weight:700,color:'var(--cream)'})));
+ st(O2.sen1,{left:O2.cx+'px',top:'1318px'});st(O2.sen2,{left:O2.cx+'px',top:'1386px'});
+})();
+O2.render=t=>{const {a,b}=O2.o;const R=O2.R; if(t<a||t>=b){R.style.display='none';return} R.style.display='block';
+ const pin=E.oc(P(t,a,a+0.28)), pout=E.ic(P(t,b-0.12,b));
+ const rad=1500*pin*(1-pout); R.style.clipPath=`circle(${rad}px at ${O2.cx}px ${O2.cy}px)`;
+ O2.lab.style.opacity=P(t,a+0.15,a+0.35);
+ const col=E.ioc(P(t,22.92,23.62)); // collapse inward
+ const rs=lerp(1,0.22,col);
+ O2.rings.forEach((g,i)=>{g.c.setAttribute('r',g.r*lerp(0.55,1,E.oc(P(t,a,a+0.5)))*rs);g.c.setAttribute('transform',`rotate(${(t-a)*(i%2?24:-18)} ${O2.cx} ${O2.cy})`);});
+ O2.svg.style.opacity=lerp(1,0.0,P(t,23.4,23.8));
+ for(const o of O2.orb){ if(t<o.s-0.02){o.e.style.display='none';continue} o.e.style.display='block';
+  const th=o.th0+o.w*(t-o.s)*1.0 + (t-a)*0.25; const r=o.r*rs; const x=O2.cx+r*Math.cos(th), y=O2.cy+r*Math.sin(th);
+  const ap=E.ob(P(t,o.s-0.02,o.s+0.18));
+  st(o.e,{transform:`translate(-50%,-50%) translate(${x}px,${y}px) rotate(${th*180/Math.PI+90}deg) scale(${ap*lerp(1,0.4,col)})`,left:'0px',top:'0px',opacity:clamp(ap)*lerp(1,0,P(t,23.1,23.6))});}
+ // center words
+ const p1=P(t,19.86,20.04), p2=P(t,20.27,20.47), sw=E.ic(P(t,22.84,23.0));
+ st(O2.c1,{opacity:E.oc(p1)*(1-sw),transform:`translateX(-50%) scale(${lerp(1.3,1,E.oc(p1))*lerp(1,0.6,sw)})`,filter:p1<1?`blur(${(1-p1)*10}px)`:'none'});
+ st(O2.c2,{opacity:E.oc(p2)*(1-sw),transform:`translateX(-50%) scale(${lerp(1.5,1,E.ob(p2))*lerp(1,0.6,sw)})`});
+ const pv=P(t,22.88,23.06);
+ st(O2.v1,{opacity:E.oc(pv),transform:`translateX(-50%) scale(${lerp(1.35,1,E.oc(pv))})`,filter:pv<1?`blur(${(1-pv)*10}px)`:'none'});
+ O2.v2.style.transform='translateX(-50%)'; O2.v2._spans.forEach(s=>wordIn(s,t,s._s,0.16,26));
+ [O2.sen1,O2.sen2].forEach(L=>{L.style.transform='translateX(-50%)';L._spans.forEach(s=>wordIn(s,t,s._s))});
+};
+
+// ---------- O3: RÉGUA (reação maior que a situação) ----------
+const O3={o:OV[2],cx:502,cy:820}; (()=>{const R=overlayRoot('transparent');O3.R=R;
+ O3.slices=[];for(let i=0;i<8;i++){const s=mk('div','abs',R);st(s,{left:0,top:(i*240)+'px',width:'1080px',height:'241px',background:'var(--cream)'});O3.slices.push(s)}
+ const C=mk('div','abs',R);O3.C=C;st(C,{width:'1080px',height:'1920px'});
+ O3.lab=idxLabel(C,3,'var(--ink)');
+ O3.ruler=mk('div','abs',C);st(O3.ruler,{left:'70px',top:'1150px',width:'860px',height:'60px'});
+ const base=mk('div','abs',O3.ruler);st(base,{left:0,top:0,width:'860px',height:'3px',background:'var(--ink)'});
+ O3.ticks=[];for(let i=0;i<=40;i++){const tk=mk('div','abs',O3.ruler);const tall=i%5===0;st(tk,{left:(i*21.5)+'px',top:'0px',width:'2px',height:(tall?30:14)+'px',background:'var(--ink)'});O3.ticks.push(tk)}
+ O3.box=mk('div','abs',C);st(O3.box,{left:(O3.cx-165)+'px',top:(O3.cy-72)+'px',width:'330px',height:'144px',border:'4px solid var(--ink)',boxSizing:'border-box'});
+ O3.mk1=mk('div','abs',C);O3.mk2=mk('div','abs',C);[O3.mk1,O3.mk2].forEach(m=>st(m,{top:'1118px',width:'4px',height:'34px',background:'var(--red)'}));
+ O3.span=mk('div','abs',C);st(O3.span,{top:'1132px',height:'4px',background:'var(--red)'});
+ O3.re=mk('div','m abs',C,'reação');st(O3.re,{fontSize:'62px',color:'var(--ink)',left:O3.cx+'px',top:O3.cy+'px',
+   textShadow:'3px 0 0 #F2EADB,-3px 0 0 #F2EADB,0 3px 0 #F2EADB,0 -3px 0 #F2EADB,2px 2px 0 #F2EADB,-2px -2px 0 #F2EADB,2px -2px 0 #F2EADB,-2px 2px 0 #F2EADB'});
+ O3.lA=line(C,[{t:'passou',s:25.548},{t:'do',s:25.868},{t:'tamanho',s:26.108}].map(w=>({...w,size:56,weight:700,color:'var(--ink)'})));st(O3.lA,{left:O3.cx+'px',top:'1226px'});
+ O3.sit=line(C,[{t:'da',s:26.408,size:56,weight:700,color:'var(--ink)'},{t:'situação',s:26.608,cls:'f',size:88,color:'var(--red)'}],0.22);st(O3.sit,{left:O3.cx+'px',top:'930px'});
+ O3.rec=mk('div','abs',C);st(O3.rec,{width:'26px',height:'26px',borderRadius:'50%',background:'var(--red)'});
+ O3.lB=line(C,[{t:'enquanto',s:26.908},{t:'ela',s:27.548},{t:'acontece',s:27.828}].map(w=>({...w,size:56,weight:700,color:'var(--ink)'})));st(O3.lB,{left:(O3.cx+20)+'px',top:'1350px'});
+})();
+O3.render=t=>{const {a,b}=O3.o;const R=O3.R; if(t<a||t>=b){R.style.display='none';return} R.style.display='block';
+ O3.slices.forEach((s,i)=>{const di=i%2?1:-1;
+  const pin=E.oe(P(t,a+i*0.009,a+0.11+i*0.009)); const pout=E.ie(P(t,b-0.13+i*0.006,b-0.02+i*0.006));
+  s.style.transform=`translateX(${t<b-0.13?di*1080*(1-pin):-di*1080*pout}px)`;});
+ const cIn=P(t,a+0.08,a+0.14), cOut=P(t,b-0.15,b-0.11); O3.C.style.opacity=cIn*(1-cOut);
+ O3.lab.style.opacity=P(t,a+0.1,a+0.3);
+ O3.ticks.forEach((tk,i)=>{tk.style.opacity=P(t,a+0.06+i*0.007,a+0.12+i*0.007)});
+ const pb=E.ob(P(t,25.17,25.34)); st(O3.box,{transform:`scale(${lerp(0.6,1,pb)})`,opacity:clamp(pb*1.5)});
+ const pr=P(t,25.21,25.36); const g=E.ioc(P(t,25.52,26.44));
+ const jit=t>26.9?Math.sin(t*61)*2.2:0;
+ const sx=lerp(1,2.62,g), sy=lerp(1,2.15,g);
+ st(O3.re,{opacity:E.oc(pr),transform:`translate(-50%,-50%) translate(${jit}px,${-jit*0.6}px) scale(${sx*lerp(0.7,1,E.ob(pr))},${sy*lerp(0.7,1,E.ob(pr))})`});
+ const w=O3.re.offsetWidth*sx; const x1=O3.cx-w/2, x2=O3.cx+w/2; const mo=P(t,25.5,25.62);
+ st(O3.mk1,{left:(x1-2)+'px',opacity:mo});st(O3.mk2,{left:(x2-2)+'px',opacity:mo});st(O3.span,{left:x1+'px',width:(x2-x1)+'px',opacity:mo});
+ [O3.lA,O3.sit,O3.lB].forEach(L=>{L.style.transform='translateX(-50%)';L._spans.forEach(s=>wordIn(s,t,s._s))});
+ const lb=O3.lB.getBoundingClientRect(); st(O3.rec,{left:(lb.left-44)+'px',top:(1350+17)+'px',opacity:t<26.88?0:(Math.floor((t-26.88)*3)%2===0?1:0.25)});
+};
+
+// ---------- O4: FAIXAS (cada volta) ----------
+const O4={o:OV[3]}; (()=>{const R=overlayRoot('var(--cream)');O4.R=R;O4.lab=idxLabel(R,4,'var(--ink)');
+ O4.edge=mk('div','abs',stage);st(O4.edge,{top:0,width:'34px',height:'1920px',background:'var(--red)',display:'none'});
+ const tops=[268,404,540,1086,1222,1358]; const order=[2,1,0,3,4,5];
+ const spawn={2:35.868,3:35.868,1:36.338,4:36.338,0:36.678,5:36.678};
+ O4.rows=tops.map((tp,i)=>{const clip=mk('div','abs',R);st(clip,{left:'54px',top:tp+'px',width:'896px',height:'128px',overflow:'hidden'});
+  const inner=mk('div','m abs',clip,('cada volta dessas &nbsp;•&nbsp; ').repeat(4));
+  const style=i%3; st(inner,{fontSize:'104px',top:'12px',color:style===1?'transparent':(style===2?'var(--red)':'var(--ink)'),WebkitTextStroke:style===1?'2.5px var(--ink)':'0'});
+  return {clip,inner,dir:i%2?1:-1,spd:230+40*(i%3),s:spawn[i]}});
+ O4.blk=mk('div','abs',R);st(O4.blk,{left:'54px',top:'690px',width:'896px',height:'384px',background:'var(--red)',transformOrigin:'50% 50%'});
+ O4.t1=line(O4.blk,[{t:'deixa',s:37.108,size:112,color:'var(--cream)'}]);st(O4.t1,{left:'448px',top:'34px'});
+ O4.t2=line(O4.blk,[{t:'mais',s:37.668,size:112,color:'var(--cream)'},{t:'fácil',s:38.088,size:112,color:'var(--cream)'}],0.25);st(O4.t2,{left:'448px',top:'146px'});
+ O4.t3=line(O4.blk,[{t:'de',s:38.668,cls:'f',size:96,color:'var(--cream)'},{t:'acreditar',s:38.808,cls:'f',size:96,color:'var(--cream)'}],0.22);st(O4.t3,{left:'448px',top:'262px'});
+})();
+O4.render=t=>{const {a,b}=O4.o;const R=O4.R; if(t<a||t>=b){R.style.display='none';O4.edge.style.display='none';return} R.style.display='block';
+ const pin=E.oe(P(t,a,a+0.16)), pout=E.ie(P(t,b-0.12,b));
+ R.style.clipPath=`inset(0 ${(1-pin)*100}% 0 ${pout*100}%)`;
+ const ex=t<a+0.18?pin*1080-17:(t>b-0.13?pout*1080-17:-999); st(O4.edge,{display:ex>-500?'block':'none',left:ex+'px'});
+ O4.lab.style.opacity=P(t,a+0.1,a+0.3);
+ const blkP=E.oc(P(t,37.06,37.24)); const dim=lerp(1,0.2,blkP);
+ O4.rows.forEach(r=>{const p=E.oe(P(t,r.s-0.04,r.s+0.3));const slow=lerp(1,0.35,blkP);
+  const run=(t-r.s)*r.spd*r.dir*slow; const W=r.inner.offsetWidth/4; let x=((run%W)+W)%W - W; x+= r.dir*(1-p)*600;
+  st(r.inner,{transform:`translateX(${x}px)`}); r.clip.style.opacity=(t<r.s-0.04?0:clamp(p*2))*dim;});
+ st(O4.blk,{transform:`scaleY(${blkP})`,opacity:t<37.06?0:1});
+ [O4.t1,O4.t2,O4.t3].forEach(L=>{L.style.transform='translateX(-50%)';L._spans.forEach(s=>wordIn(s,t,s._s))});
+};
+
+// ---------- O5: FICHA (pior dia / resumo) ----------
+const O5={o:OV[4]}; (()=>{const R=overlayRoot('var(--ink)');O5.R=R;
+ O5.card=mk('div','abs',R);st(O5.card,{left:'92px',top:'330px',width:'820px',height:'1120px',background:'var(--cream)',borderRadius:'22px',boxShadow:'0 30px 80px rgba(0,0,0,.55)',overflow:'hidden',transformOrigin:'50% 100%'});
+ O5.lab=mk('div','label abs',O5.card,'05 <span style="opacity:.45">/ 05</span>');st(O5.lab,{left:'48px',top:'44px',color:'var(--ink)'});
+ O5.top=line(O5.card,[{t:'não',s:41.708},{t:'quer',s:42.048},{t:'que',s:42.308}].map(w=>({...w,size:58,weight:700,color:'var(--ink)'})));st(O5.top,{left:'48px',top:'104px'});
+ const ys=[270,340,410,480,  730,800,870,940,1010]; const widths=[.82,.64,.9,.58,.76,.69,.86,.6,.72];
+ O5.rows=ys.map((y,i)=>{const d=mk('div','abs',O5.card);st(d,{left:'86px',top:y+'px',height:'22px',width:(634*widths[i])+'px',borderRadius:'11px',background:'rgba(13,13,13,.13)',transformOrigin:'left center'});
+  const dot=mk('div','abs',O5.card);st(dot,{left:'48px',top:(y+3)+'px',width:'16px',height:'16px',borderRadius:'50%',background:'rgba(13,13,13,.3)'});return {d,dot,i}});
+ O5.red=mk('div','abs',O5.card);st(O5.red,{background:'var(--red)'});
+ O5.pior=line(O5.card,[{t:'o',s:42.448},{t:'pior',s:42.588},{t:'dia',s:42.828}].map(w=>({...w,size:96,color:'var(--cream)'})),0.24);st(O5.pior,{left:'70px',top:'572px'});
+ O5.vire=line(O5.card,[{t:'vire',s:43.108},{t:'um',s:43.688}].map(w=>({...w,size:66,color:'var(--cream)'})),0.25);st(O5.vire,{left:'410px',top:'520px'});
+ O5.res=line(O5.card,[{t:'resumo',s:43.748,cls:'f',size:176,color:'var(--cream)'}]);st(O5.res,{left:'410px',top:'612px'});
+ O5.quem=line(O5.card,[{t:'de',s:44.208},{t:'quem',s:44.388},{t:'é.',s:44.588}].map(w=>({...w,size:66,color:'var(--cream)'})),0.25);st(O5.quem,{left:'410px',top:'846px'});
+})();
+O5.render=t=>{const {a,b}=O5.o;const R=O5.R; if(t<a||t>=b){R.style.display='none';return} R.style.display='block';
+ const pbg=E.oe(P(t,a,a+0.16)), pout=E.ic(P(t,b-0.14,b));
+ R.style.clipPath=`inset(${(1-pbg)*100}% 0 ${pout*100}% 0)`;
+ const pc=E.ob(P(t,a+0.04,a+0.36)); st(O5.card,{transform:`translateY(${(1-pc)*260}px) rotate(${lerp(-5,0,E.oc(P(t,a+0.04,a+0.36)))}deg)`,opacity:clamp(pc*2)});
+ O5.lab.style.opacity=P(t,a+0.2,a+0.4);
+ O5.top._spans.forEach(s=>wordIn(s,t,s._s));
+ const ex=E.ioc(P(t,43.08,43.52));
+ O5.rows.forEach(r=>{const p=E.oc(P(t,a+0.2+r.i*0.035,a+0.45+r.i*0.035)); r.d.style.transform=`scaleX(${p})`; r.d.style.opacity=1-ex; r.dot.style.opacity=p*(1-ex)});
+ // red strip in the middle of the list (slot 556-694), opens at 'o pior dia', fills the card at 'vire'
+ const pr=E.oc(P(t,42.40,42.62));
+ const y0=lerp(556+69*(1-pr),236,ex), h0=lerp(138*pr,880,ex), x0=lerp(36,0,ex), w0=lerp(748,820,ex);
+ st(O5.red,{left:x0+'px',top:y0+'px',width:w0+'px',height:h0+'px',borderRadius:(14*(1-ex))+'px',opacity:t<42.40?0:1});
+ O5.pior._spans.forEach(s=>wordIn(s,t,s._s));
+ st(O5.pior,{transform:`translateY(${lerp(0,-290,ex)}px)`});
+ [O5.vire,O5.res,O5.quem].forEach(L=>{L.style.transform='translateX(-50%)';L._spans.forEach(s=>wordIn(s,t,s._s))});
+};
+
+// ===================== MASTER =====================
+window.render=function(t){renderHook(t);renderCaptions(t);renderNums(t);O1.render(t);O2.render(t);O3.render(t);O4.render(t);O5.render(t)};
+// safe-area audit: returns list of violations for visible text elements
+window.audit=function(t){const out=[];
+ document.querySelectorAll('.w,.cw,.f,.m,.label').forEach(e=>{ if(!e.textContent.trim())return;
+  let p=e,vis=true; while(p&&p!==document.body){const cs=getComputedStyle(p); if(cs.display==='none'||parseFloat(cs.opacity)<0.05){vis=false;break} p=p.parentElement}
+  if(!vis)return; if(e.closest('[data-skip]'))return;
+  // clipped marquee rows: use clip container
+  let r=e.getBoundingClientRect(); const clip=e.parentElement&&getComputedStyle(e.parentElement).overflow==='hidden'?e.parentElement.getBoundingClientRect():null;
+  if(clip){r={left:Math.max(r.left,clip.left),right:Math.min(r.right,clip.right),top:Math.max(r.top,clip.top),bottom:Math.min(r.bottom,clip.bottom)}}
+  if(r.right<=0||r.left>=1080||r.bottom<=0||r.top>=1920)return;
+  if(r.left<SAFE.l-1||r.right>SAFE.r+1||r.bottom>SAFE.b+1||r.top<SAFE.t-1) out.push([e.textContent.trim().slice(0,24),Math.round(r.left),Math.round(r.top),Math.round(r.right),Math.round(r.bottom)]);
+ });return out};
+window.ready=(async()=>{await document.fonts.load('900 50px M');await document.fonts.load('800 50px M');await document.fonts.load('700 50px M');await document.fonts.load('600 50px M');await document.fonts.load('italic 900 50px F');await document.fonts.load('italic 700 50px F');await document.fonts.ready;
+ // center-anchored elements via translateX(-50%) set in render; fit captions
+ [O1.cont,O1.ali,O2.c1,O2.c2,O2.v1].forEach(e=>{e.style.transform='translateX(-50%)'});
+ fitCaptions(); return true})();
+</script></body></html>
