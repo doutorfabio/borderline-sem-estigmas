@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Protocolo 7 Dias</title>
+<style>
+@font-face{font-family:AB;src:url(fonts/archivo-black-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:P;src:url(fonts/poppins-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:P;src:url(fonts/poppins-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:P;src:url(fonts/poppins-latin-600-normal.woff2) format('woff2');font-weight:600}
+html,body{margin:0;background:#EDE4D3;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#EDE4D3}
+.layer{position:absolute;inset:0}
+.cam{position:absolute;inset:0;transform-origin:540px 900px}
+.ln{position:absolute;overflow:hidden;white-space:nowrap;padding:.14em .06em;line-height:1}
+.ln>span{display:inline-block}
+.big{font-family:AB}
+.sm{font-family:P}
+.mk{display:inline-block;width:.24em;height:.24em;vertical-align:baseline}
+.ab{position:absolute}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+// ---------------- pure helpers ----------------
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,u)=>a+(b-a)*u;
+const smooth=u=>{u=clamp(u);return u*u*(3-2*u)};
+const sineIO=u=>{u=clamp(u);return -(Math.cos(Math.PI*u)-1)/2};
+const expoOut=u=>{u=clamp(u);return u>=1?1:1-Math.pow(2,-10*u)};
+const expoIn=u=>{u=clamp(u);return u<=0?0:Math.pow(2,10*u-10)};
+function spring(dt,w=20,z=.72){ if(dt<=0)return 0; const wd=w*Math.sqrt(1-z*z);
+  return 1-Math.exp(-z*w*dt)*(Math.cos(wd*dt)+(z*w/wd)*Math.sin(wd*dt)); }
+function pulse(dt,A=.2,k=10,f=26){ return dt<0?0:A*Math.exp(-dt*k)*Math.cos(dt*f); }
+function rng(seed){ let s=seed>>>0; return ()=>{ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
+const B=.5; // beat
+
+const INK='#1A1A1A', CREAM='#EDE4D3';
+const DAYS=[
+  {n:1,name:'Frase fixa de presença',bg:'#A62B24',fg:CREAM},
+  {n:2,name:'Limite sem briga',bg:'#E0662B',fg:INK},
+  {n:3,name:'Pausa combinada de 20 minutos',bg:'#E2A72E',fg:INK},
+  {n:4,name:'Roteiro de pós-crise',bg:'#7C8B3A',fg:CREAM},
+  {n:5,name:'Sair dos detalhes no auge',bg:'#1F7A74',fg:CREAM},
+  {n:6,name:'Regra de previsibilidade',bg:'#2F5D9B',fg:CREAM},
+  {n:7,name:'Autocuidado de quem cuida',bg:'#6B3F73',fg:CREAM}];
+const dayT=i=>6+2*i;               // bar start of day i (0-based)
+const M={x:540,y:1120};            // stage for every day's motion
+const BOXW=720;                    // widest text block in world units
+const zoomAt=t=>1+.12*clamp(t/24); // one continuous push-in
+
+// ---------------- DOM ----------------
+const stage=document.getElementById('stage');
+function mk(parent,cls,css={},html=''){const d=document.createElement('div');if(cls)d.className=cls;Object.assign(d.style,css);d.innerHTML=html;parent.appendChild(d);return d;}
+function layer(bg){const L=mk(stage,'layer',{background:bg});const C=mk(L,'cam');return {L,C};}
+// a masked text line; y = top in world units; fitted to width
+function line(parent,html,{y,size,max=BOXW,family='big',weight=400,color=INK,align='center',x=540}){
+  const w=mk(parent,'ln '+family,{top:y+'px',fontSize:size+'px',fontWeight:weight,color});
+  const s=document.createElement('span'); s.innerHTML=html; w.appendChild(s);
+  return {w,s,y,size,max,align,x};
+}
+function fit(l){ const r=l.s.getBoundingClientRect(); if(r.width>l.max){ l.size*=l.max/r.width; l.w.style.fontSize=l.size+'px'; }
+  const r2=l.w.getBoundingClientRect(); l.width=r2.width; l.height=r2.height;
+  l.w.style.left=(l.align==='center'? l.x-r2.width/2 : l.x)+'px'; }
+// reveal from below (in) and leave upward (out); both by mask
+function showLine(l,t,tin,tout=1e9){ let y=140*(1-spring(t-tin,18,.8)); if(t<tin)y=140;
+  if(t>=tout) y=-140*Math.pow(clamp((t-tout)/.3),2);  // exit accelerates out of the mask
+  l.s.style.transform=`translateY(${y}%)`; }
+
+const base=layer(CREAM);
+// opening
+const op=['Você','pediu','calma.','Piorou<i class="mk" id="mk1"></i>'].map(h=>line(base.C,h,{y:0,size:150}));
+// bar 3
+const b3=['Um','procedimento','por dia'].map(h=>line(base.C,h,{y:0,size:104}));
+// days
+const dayL=DAYS.map(d=>{const g=layer(d.bg); g.dia=line(g.C,'Dia '+d.n,{y:250,size:132,color:d.fg});
+  const words=d.name.split(' '); // wrap by hand into at most 2 lines, longest-first balance
+  let best=null; for(let k=1;k<=words.length;k++){const a=words.slice(0,k).join(' '),b=words.slice(k).join(' ');const m=Math.max(a.length,b.length);if(!best||m<best.m)best={m,a,b};}
+  g.names=[best.a,best.b].filter(Boolean).map(s=>line(g.C,s,{y:0,size:70,color:d.fg}));
+  return g;});
+// final
+const fin=layer(CREAM);
+const f1=line(fin.C,'Protocolo',{y:0,size:150});
+const f2=line(fin.C,'7 Dias<i class="mk" id="mk2"></i>',{y:0,size:150});
+const f3=line(fin.C,'<span style="font-family:P;font-weight:600;font-size:46px;vertical-align:middle;margin-right:18px">Comente</span><span id="cta" style="display:inline-block;background:#1A1A1A;color:#EDE4D3;padding:10px 22px 14px;border-radius:10px;font-size:56px;vertical-align:middle">COMEÇAR</span>',{y:0,size:56,family:'big'});
+const ul=mk(fin.C,'ab',{height:'8px',background:INK,borderRadius:'4px'});
+const foot=mk(fin.L,'ab',{left:'0',width:'1080px',top:'1392px'}); // screen space, above the bottom 20%
+const ft1=line(foot,'Conteúdo educativo. Não substitui avaliação nem tratamento.',{y:0,size:25,family:'sm',weight:400,max:800});
+const ft2=line(foot,'Dr. Fabio Schmidt · Médico · CRM-SP 183549',{y:46,size:25,family:'sm',weight:500,max:800});
+
+// day props (scene layers)
+const shapes1=[], shapes2=[];
+(function(){ const r=rng(11);
+  for(let i=0;i<9;i++){ const a=-Math.PI/2+i*2*Math.PI/9+.2, R=200+40*(i%2);
+    const kind=i%3, s=26+(i%2)*8;
+    const d=mk(dayL[0].C,'ab',{width:s+'px',height:s+'px',background:CREAM,borderRadius:kind===0?'50%':kind===1?'5px':'0',
+      clipPath:kind===2?'polygon(50% 0,100% 100%,0 100%)':'none'});
+    shapes1.push({d,x:M.x+R*Math.cos(a)*1.25,y:M.y+R*Math.sin(a)*.8,s,ph:r()*6.28}); }
+  const xs=[230,400,560,720,850]; xs.forEach((x,i)=>{ const up=i%2===0, s=40+(i%3)*8;
+    const d=mk(dayL[1].C,'ab',{width:s+'px',height:s+'px',background:INK,borderRadius:i%2?'8px':'50%'});
+    shapes2.push({d,x,s,up,from:up?M.y-300:M.y+300,delay:i*.05}); });
+})();
+// clock face (day 3)
+const clockSvg=mk(dayL[2].C,'ab',{left:(M.x-260)+'px',top:(M.y-260)+'px'},
+  `<svg width="520" height="520" viewBox="0 0 520 520"><circle id="ring" cx="260" cy="260" r="240" fill="none" stroke="${INK}" stroke-width="8"/>`+
+  Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return `<line class="tk" x1="${260+214*Math.sin(a)}" y1="${260-214*Math.cos(a)}" x2="${260+232*Math.sin(a)}" y2="${260-232*Math.cos(a)}" stroke="${INK}" stroke-width="${i%3?5:9}" stroke-linecap="round"/>`}).join('')+`</svg>`);
+const ring=clockSvg.querySelector('#ring'), tks=[...clockSvg.querySelectorAll('.tk')];
+const lab20=line(dayL[2].C,'20 min',{y:M.y+196,size:44,family:'sm',weight:600,color:INK,align:'left',x:M.x+196});
+// checks (day 4)
+const checks=[0,1,2].map(i=>mk(dayL[3].C,'ab',{left:'262px',top:(M.y-110+110*i-28)+'px'},
+  `<svg width="60" height="56" viewBox="0 0 60 56"><path d="M6 30 L22 46 L54 10" fill="none" stroke="${CREAM}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>`));
+// falling words (day 5)
+const WORDS=['ontem','sempre','nunca','de novo','aquela vez'];
+const words=[];
+(function(){ const r=rng(5); let i=0;
+  for(let ry=0;ry<7;ry++) for(let rx=0;rx<4;rx++){ const x=200+rx*200+(ry%2)*90+r()*40-20, y=M.y-300+ry*96+r()*30-15;
+    if(Math.hypot(x-M.x,y-M.y)<130||x>880) continue;
+    const d=mk(dayL[4].C,'ab sm',{fontWeight:600,fontSize:(28+Math.round(r()*8))+'px',color:CREAM,whiteSpace:'nowrap'},WORDS[i++%5]);
+    words.push({d,x,y,rot:(r()-.5)*80,vx:(r()-.5)*160,delay:r()*.22,gin:r()*.15}); }
+})();
+
+// dot layer: always on top, same camera
+const topL=layer('transparent'); topL.L.style.pointerEvents='none';
+const grid=mk(topL.C,'ab',{left:'190px',top:(M.y-50)+'px'},
+  `<svg width="700" height="100" viewBox="0 0 700 100" style="overflow:visible">`+
+  `<line id="gh1" x1="0" y1="0" x2="700" y2="0" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>`+
+  `<line id="gh2" x1="0" y1="100" x2="700" y2="100" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>`+
+  Array.from({length:8},(_,i)=>`<line class="gv" x1="${i*100}" y1="0" x2="${i*100}" y2="100" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>`).join('')+`</svg>`);
+const gh=[grid.querySelector('#gh1'),grid.querySelector('#gh2')], gv=[...grid.querySelectorAll('.gv')];
+const stamps=Array.from({length:7},(_,k)=>mk(topL.C,'ab',{width:'50px',height:'50px',borderRadius:'50%',background:INK,left:(240+100*k-25)+'px',top:(M.y-25)+'px'}));
+const bars=[0,1,2].map(()=>mk(topL.C,'ab',{background:INK,transformOrigin:'0 50%'}));
+const dot=bars[0]; // the one ink dot; bars[1], bars[2] only exist when it breaks into three
+
+// ---------------- measure at runtime ----------------
+let P1,P2,ctaR;
+function layout(){
+  [...op,...b3,...dayL.flatMap(g=>[g.dia,...g.names]),f1,f2,f3,ft1,ft2,lab20].forEach(fit);
+  const stack=(ls,cy,gap=-.06)=>{ const H=ls.reduce((a,l)=>a+l.height,0)+gap*ls[0].size*(ls.length-1); let y=cy-H/2;
+    ls.forEach(l=>{l.y=y;l.w.style.top=y+'px';y+=l.height+gap*l.size;}); };
+  stack(op,700); stack(b3,800);
+  dayL.forEach(g=>{ stack(g.names, 610+ (g.names.length-1)*0, -.02); g.names.forEach(l=>{l.y+=0;}); });
+  dayL.forEach(g=>{ const top0=g.dia.y+g.dia.height-10; let y=top0; g.names.forEach(l=>{l.y=y;l.w.style.top=y+'px';y+=l.height-.04*l.size;}); });
+  stack([f1,f2],700); f3.y=f2.y+f2.height+60; f3.w.style.top=f3.y+'px';
+  const r1=document.getElementById('mk1').getBoundingClientRect(); P1={x:r1.left+r1.width/2,y:r1.bottom-r1.height/2,s:r1.width};
+  const r2=document.getElementById('mk2').getBoundingClientRect(); P2={x:r2.left+r2.width/2,y:r2.bottom-r2.height/2,s:r2.width};
+  const rc=document.getElementById('cta').getBoundingClientRect(); ctaR={x:rc.left,y:rc.bottom,w:rc.width};
+}
+
+// ---------------- the dot's route ----------------
+// a bar is two ends A,B and a thickness h; a dot is A=B
+const D0=36;
+function seg(A,Bp,h){return {A,B:Bp,h};}
+const pt=(x,y)=>({x,y});
+const lerpP=(p,q,u)=>({x:lerp(p.x,q.x,u),y:lerp(p.y,q.y,u)});
+const handTip=a=>pt(M.x+190*Math.cos(a*Math.PI/180),M.y+190*Math.sin(a*Math.PI/180));
+const START=pt(196,M.y);
+function route(t){ // returns [bar0,bar1,bar2] (bar1/2 null when not split) and dot scale
+  let s=1, h=D0, A,Bp, b1=null,b2=null;
+  if(t<3.5){ A=Bp=pt(P1.x,P1.y); h=D0; s=t<2.5?0:spring(t-2.5,16,.7); s*=1+pulse(t-3,.18,9,28); }
+  else if(t<4.0){ const u=(t-3.5)/.5; // drop out of the sentence: falls with gravity, drifts left
+    const fy=clamp(u/.4); A=Bp=pt(lerp(P1.x,START.x,sineIO((u-.32)/.68)),lerp(P1.y,START.y+60,fy*fy)-60*smooth((u-.4)/.6)); }
+  else if(t<5.0){ A=Bp=START; }
+  else if(t<7.0){ const u=spring(t-5,10,.86); A=Bp=pt(lerp(START.x,M.x,u),M.y); }
+  else if(t<9.0){ const u=spring(t-7,22,.62); A=pt(M.x-120*u,M.y); Bp=pt(M.x+120*u,M.y); }
+  else if(t<11.0){ const u=spring(t-9,18,.75); A=pt(lerp(M.x-120,170,u),M.y); Bp=pt(lerp(M.x+120,910,u),M.y); h=lerp(D0,30,u); }
+  else if(t<13.0){ const u=spring(t-11,16,.8); const ang=-90+120*(t<11.25?0:spring(t-11.25,14,.72));
+    A=lerpP(pt(170,M.y),M,u); Bp=lerpP(pt(910,M.y),handTip(ang),u); h=lerp(30,26,u); }
+  else if(t<15.0){ const tip=handTip(30); const thirds=[0,1,2].map(i=>[lerpP(M,tip,i/3),lerpP(M,tip,(i+1)/3)]);
+    const slot=i=>[pt(360,M.y-110+110*i),pt(820,M.y-110+110*i)];
+    const us=[0,1,2].map(i=>spring(t-13-i*.15,17,.72));
+    const mkb=i=>seg(lerpP(thirds[i][0],slot(i)[0],us[i]),lerpP(thirds[i][1],slot(i)[1],us[i]),lerp(26,D0,us[i]));
+    return {bars:[mkb(0),mkb(1),mkb(2)],s:1}; }
+  else if(t<16.25){ // three bars fold back into the dot
+    const u=spring(t-15,18,.8); const slot=i=>[pt(360,M.y-110+110*i),pt(820,M.y-110+110*i)];
+    const mkb=i=>seg(lerpP(slot(i)[0],M,u),lerpP(slot(i)[1],M,u),D0);
+    if(u<.995) return {bars:[mkb(0),mkb(1),mkb(2)],s:1};
+    A=Bp=M; }
+  else if(t<19.0){ // stamps one cell per half beat
+    const cell=k=>pt(240+100*k,M.y); const times=[0,1,2,3,4,5,6].map(k=>16.25+.25*k);
+    let p=M; let k=times.filter(x=>t>=x).length-1;
+    if(k<0){ const u=(t-16.0)/.25; p=lerpP(M,cell(0),sineIO(u)); s=1+.35*Math.sin(Math.PI*clamp(u)); }
+    else { const t0=times[k]; if(k<6 && t>=t0+.07){ const u=(t-t0-.07)/.18; p=lerpP(cell(k),cell(k+1),sineIO(u)); s=1+.35*Math.sin(Math.PI*clamp(u)); }
+      else p=cell(k); s*= 1+pulse(t-t0,.22,12,30); }
+    A=Bp=p; }
+  else if(t<21.25){ const u=spring(t-19,12,.85); A=Bp=lerpP(pt(840,M.y),M,u);
+    if(t>=19.25) s=1+.5*(1-Math.cos(2*Math.PI*(t-19.25)/2))/2; }
+  else { const u=clamp((t-21.25)/.25); const e=sineIO(u);
+    const p=pt(lerp(M.x,P2.x,e),lerp(M.y,P2.y,e)-160*Math.sin(Math.PI*u));
+    A=Bp=p; h=lerp(D0,P2.s,e); if(t>=21.5){A=Bp=pt(P2.x,P2.y);h=P2.s;}
+    s=1+pulse(t-21.5,.2,10,30)+pulse(t-23.5,.16,8,26); }
+  return {bars:[seg(A,Bp,h),null,null],s};
+}
+function drawBar(el,b,s=1){ if(!b){el.style.display='none';return;} el.style.display='block';
+  const dx=b.B.x-b.A.x, dy=b.B.y-b.A.y, len=Math.hypot(dx,dy), ang=Math.atan2(dy,dx)*180/Math.PI;
+  const h=b.h*s, L=len+h; // rounded caps: a dot is a bar of length 0
+  Object.assign(el.style,{width:L+'px',height:h+'px',borderRadius:(h/2)+'px',left:(b.A.x-h/2)+'px',top:(b.A.y-h/2)+'px',
+    transformOrigin:`${h/2}px ${h/2}px`,transform:`rotate(${ang}deg)`}); }
+
+// ---------------- transitions into each colour ----------------
+let dotScreen=pt(540,900);
+function toScreen(p,t){const z=zoomAt(t);return pt(540+(p.x-540)*z,900+(p.y-900)*z);}
+const R_ALL=2400;
+function reveal(i,t){ // returns progress state applied to dayL[i]
+  const g=dayL[i], t0=dayT(i), L=g.L; L.style.transform=''; L.style.clipPath='none';
+  if(t<t0){L.style.display='none';return;} L.style.display='block';
+  const d=t-t0;
+  switch(i){
+    case 0:{const p=expoOut(d/.38); L.style.clipPath=`inset(0 ${(1-p)*100}% 0 0)`;break;}
+    case 1:{const c=toScreen(M,t0); const p=expoOut(d/.45); L.style.clipPath=`circle(${p*R_ALL}px at ${c.x}px ${c.y}px)`;break;}
+    case 2:{const p=expoOut(d/.4); L.style.clipPath=`inset(${(1-p)*50}% 0 ${(1-p)*50}% 0)`;break;}
+    case 3:{const a=(-90*(1-spring(d,17,.78)))*Math.PI/180, S=4200, px0=0, py0=1920;
+      const rot=(x,y)=>[px0+x*Math.cos(a)-y*Math.sin(a), py0+x*Math.sin(a)+y*Math.cos(a)];
+      const pts=[[0,0],[S,0],[S,-S],[0,-S]].map(([x,y])=>rot(x,y).map(v=>v.toFixed(1)+'px').join(' '));
+      L.style.clipPath=`polygon(${pts.join(',')})`;break;}
+    case 4:{const p=spring(d,19,.8); L.style.transform=`translateY(${(1-p)*1920}px)`;break;}
+    case 5:{const W=1080/7; let pts=['0px 0px','1080px 0px'];
+      const h=k=>1920*expoOut((d-k*.035)/.24);
+      for(let k=6;k>=0;k--){pts.push(`${(k+1)*W}px ${h(k)}px`,`${k*W}px ${h(k)}px`);}
+      L.style.clipPath=`polygon(${pts.join(',')})`;break;}
+    case 6:{const p=smooth(d/.7); L.style.clipPath=`inset(${(1-p)*100}% 0 0 0)`;break;}
+  }
+}
+
+// ---------------- seek ----------------
+function seek(t){
+  t=clamp(t,0,24); const z=zoomAt(t);
+  document.querySelectorAll('.cam').forEach(c=>c.style.transform=`scale(${z})`);
+  // opening
+  const opIn=[-.4,.5,1,2], opOut=[3.5,3.53,3.56,3.59];
+  op.forEach((l,i)=>showLine(l,t,opIn[i],opOut[i]));
+  const lift=-40*spring(t-1.5,14,.8); op.forEach(l=>l.w.style.top=(l.y+lift)+'px');
+  // bar 3
+  [4,4.5,4.5].forEach((ti,i)=>showLine(b3[i],t,i===0?4:4.5));
+  base.L.style.display = t<6.4?'block':'none';
+  // days
+  dayL.forEach((g,i)=>{ reveal(i,t); const t0=dayT(i);
+    if(t>=t0+2.6 && i<6) g.L.style.display='none';     // fully covered by the next colour
+    if(i===6 && t>=20.6) g.L.style.display='none';
+    showLine(g.dia,t,t0+.1); g.names.forEach((l,k)=>showLine(l,t,t0+B+k*.08)); });
+  // day 1 shapes: grow, jitter, settle
+  shapes1.forEach((s,i)=>{ const g=spring(t-7-i*.02,18,.75); const amp=t<7.5?1:Math.exp(-(t-7.5)*7);
+    const jx=amp*14*Math.sin(t*37+s.ph), jy=amp*14*Math.cos(t*31+s.ph*1.7);
+    s.d.style.left=(s.x-s.s/2+jx)+'px'; s.d.style.top=(s.y-s.s/2+jy)+'px'; s.d.style.transform=`scale(${g}) rotate(${amp*12*Math.sin(t*23+s.ph)}deg)`; });
+  // day 2 shapes: grow, travel to the line, stop on it
+  shapes2.forEach(s=>{ const g=spring(t-9-s.delay*.5,18,.75); const t1=9.18+s.delay, tl=9.5;
+    const stopY=s.up? M.y-15-s.s/2 : M.y+15+s.s/2; let y=s.from;
+    if(t>=t1){ const u=clamp((t-t1)/(tl-t1)); y=lerp(s.from,stopY,u*u); }
+    if(t>=tl){ y=stopY + (s.up?-1:1)*Math.abs(pulse(t-tl,10,9,24)); }
+    const sq=t>=tl?pulse(t-tl,.22,10,30):0;
+    s.d.style.left=(s.x-s.s/2)+'px'; s.d.style.top=(y-s.s/2)+'px';
+    s.d.style.transform=`scale(${g*(1+sq)},${g*(1-sq)})`; s.d.style.transformOrigin=s.up?'50% 100%':'50% 0'; });
+  // day 3 clock face draws, label
+  const rd=smooth((t-10.5)/.45); ring.style.strokeDasharray=`${2*Math.PI*240}`; ring.style.strokeDashoffset=`${2*Math.PI*240*(1-rd)}`;
+  tks.forEach((k,i)=>k.style.opacity=clamp((t-10.55-i*.025)/.06));
+  showLine(lab20,t,11.62);
+  // day 4 checks
+  checks.forEach((c,i)=>{ const p=c.querySelector('path'); p.style.strokeDashoffset=1-smooth((t-13.5-i*.16)/.14); });
+  // day 5 words grow, then fall away
+  words.forEach(w=>{ const g=spring(t-15-w.gin,18,.78); let x=w.x,y=w.y,r=0; const tf=15.5+w.delay;
+    if(t>=tf){ const d=t-tf; y+=1900*d*d*1.2; x+=w.vx*d; r=w.rot*d*2.2; }
+    w.d.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%) rotate(${r}deg) scale(${g})`; });
+  // day 6/7 grid in the dot layer
+  const gd=t<19?clamp((t-16)/.25):1-clamp((t-19)/.25);
+  gh.forEach(l=>{l.setAttribute('x2',700*expoOut(gd));});
+  gv.forEach((l,i)=>{ const u=expoOut(clamp(gd*1.6-i*.08)); l.setAttribute('y2',100*u); });
+  grid.style.display=(t>=16&&t<19.3)?'block':'none';
+  stamps.forEach((s,k)=>{ const tk=16.25+.25*k; let sc=t<tk?0:spring(t-tk,24,.7); if(t>=19) sc*=1-smooth((t-19-k*.025)/.2);
+    s.style.transform=`scale(${sc})`; s.style.display=sc>0.001?'block':'none'; });
+  // the dot
+  const r=route(t); r.bars.forEach((b,i)=>drawBar(bars[i],b,i===0||b?r.s:1));
+  // final
+  if(t>=20){ fin.L.style.display='block'; const c=toScreen(M,20); const p=expoOut((t-20)/.5);
+    fin.L.style.clipPath=`circle(${p*R_ALL}px at ${c.x}px ${c.y}px)`; } else fin.L.style.display='none';
+  showLine(f1,t,20.5); showLine(f2,t,21.0); showLine(f3,t,22.0); showLine(ft1,t,22.5); showLine(ft2,t,22.58);
+  const uu=expoOut((t-23)/.35); Object.assign(ul.style,{left:ctaR.x+'px',top:(ctaR.y+14)+'px',width:(ctaR.w*uu)+'px',display:t>=23?'block':'none'});
+  topL.L.style.display='block';
+}
+window.__seek=seek;
+window.__ready=document.fonts.ready.then(()=>{ layout(); seek(0); return true; });
+</script>
+</body>
+</html>

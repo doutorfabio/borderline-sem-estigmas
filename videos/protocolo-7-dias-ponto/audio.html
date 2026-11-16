@@ -1,0 +1,28 @@
+<!doctype html><script>
+window.makeAudio=async()=>{
+ const SR=48000,D=24,ctx=new OfflineAudioContext(2,SR*D,SR);
+ const master=ctx.createGain();master.gain.value=0.8;master.connect(ctx.destination);
+ // soft kick on every beat
+ for(let i=0;i<48;i++){const t=i*.5,o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(48,t+.12);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(i%4===0?.55:.38,t+.004);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.connect(g).connect(master);o.start(t);o.stop(t+.35);}
+ // pad: one chord per bar, low and soft
+ const chords=[[57,60,64],[57,60,64],[53,57,60],[57,60,64],[55,59,62],[53,57,60],[48,52,55],[50,53,57],[52,55,59],[53,57,60],[48,52,55],[48,52,55,60]];
+ const hz=m=>440*Math.pow(2,(m-69)/12);
+ const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1100;lp.connect(master);
+ chords.forEach((c,b)=>{const t=b*2;c.forEach(m=>{[-4,4].forEach(dt=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';o.frequency.value=hz(m);o.detune.value=dt;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.022,t+.35);g.gain.setValueAtTime(.022,t+1.7);g.gain.linearRampToValueAtTime(0,t+2.15);o.connect(g).connect(lp);o.start(t);o.stop(t+2.2);});});});
+ // distinct hit on each scene change: tuned bell + short filtered noise
+ const notes={0:69,4:72,6:74,8:76,10:77,12:79,14:81,16:83,18:84,20:81};
+ for(const [ts,m] of Object.entries(notes)){const t=+ts;
+  [1,2.76,5.4].forEach((r,k)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=hz(m)*r;
+   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime([.16,.06,.025][k],t+.003);g.gain.exponentialRampToValueAtTime(.0005,t+[1.1,.5,.25][k]);o.connect(g).connect(master);o.start(t);o.stop(t+1.2);});
+  const n=ctx.createBufferSource(),buf=ctx.createBuffer(1,SR*.12,SR),d=buf.getChannelData(0);let s=7;for(let i=0;i<d.length;i++){s=(s*1103515245+12345)%2147483648;d[i]=(s/1073741824-1)*Math.exp(-i/(SR*.02));}
+  n.buffer=buf;const bp=ctx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=3000;bp.Q.value=.8;const g=ctx.createGain();g.gain.value=.12;n.connect(bp).connect(g).connect(master);n.start(t);}
+ const out=await ctx.startRendering();
+ // WAV 16-bit
+ const L=out.getChannelData(0),R=out.getChannelData(1),n=L.length,buf=new ArrayBuffer(44+n*4),v=new DataView(buf);
+ const w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+ w(0,'RIFF');v.setUint32(4,36+n*4,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,2,true);v.setUint32(24,SR,true);v.setUint32(28,SR*4,true);v.setUint16(32,4,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*4,true);
+ for(let i=0;i<n;i++){v.setInt16(44+i*4,Math.max(-1,Math.min(1,L[i]))*32767,true);v.setInt16(46+i*4,Math.max(-1,Math.min(1,R[i]))*32767,true);}
+ let bin='';const u=new Uint8Array(buf);for(let i=0;i<u.length;i+=32768)bin+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(bin);};
+</script>
