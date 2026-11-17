@@ -2,6 +2,14 @@
 
 Métricas dos posts do @drfabioschmidt, registradas a cada leitura. Ativada em 26/10/2026, a pedido dele ("Ativa memória de insights").
 
+## Anúncios Meta, últimos 30 dias até 17/11/2026 (Windsor)
+
+- Gasto total cerca de R$2.300, 9 compras atribuídas pelo pixel (todas em mulheres; 7 entre 45 e 64 anos).
+- Conjuntos de venda (A, B, C, anúncios para a landing): R$1.648, 9 compras, cerca de R$183 por compra. Melhor: L2 navy Tudo que você fala, R$682, 5 compras (R$136). Vídeo Minha filha R$377, 2 compras.
+- Sem compra: Amplo 18+ (R$164, anúncios direto ao checkout com 0 visualização de página registrada), boosts e carrosséis C1 a C3, T1, T2 e perfil (cerca de R$360, cliques baratos de 25 a 34 anos).
+- Funil da landing: cerca de 815 visualizações, 27 checkouts iniciados (3,3%), 9 compras (1 em 3 checkouts). Frequência 1,0 a 1,5, sem saturação.
+- Leitura do Claude, não fato: o público dos conjuntos de venda está certo; o gargalo é a página (3 em 100 clicam em comprar) e o gasto em peças sem objetivo de venda.
+
 ## Regras deste arquivo
 
 - Sempre que chegar métrica nova (print, CSV, relatório, puxada do Windsor), registre aqui na hora, antes de continuar o trabalho. Grave direto no `main`, como o resto de `memoria/`.
