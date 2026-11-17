@@ -85,7 +85,7 @@
       "erro": "Palavra curta isolada na linha",
       "consequencia": "A palavra ir isolada ficou estranha",
       "acao": "Quebrar à mão, com hierarquia.",
-      "ultima_violacao": "2026-11-06",
+      "ultima_violacao": "2026-11-16",
       "fonte": "memoria/correcoes.md:226"
     },
     {

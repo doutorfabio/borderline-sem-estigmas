@@ -12,6 +12,12 @@ Cada vez que uma peça ou resposta violar um anti-pattern de [[BRAIN]] (ids em `
 
 Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · como foi corrigido`
 
+## 2026-11-16, a3 (palavra curta solta), regra 10 (veredito) e nota de cena
+- O que aconteceu: no Reel dos cinco itens, a primeira entrega e a versão com trilha saíram com blocos de legenda de palavra curta solta (QUEM TEM, COMO QUE, VALE PRA, OUVIU DA, VIRE UM); a primeira entrega foi sem legenda do post, capa e veredito; o gancho escrito repetia o falado; e a nota de cena não foi tirada antes de editar, o que deixou três retalhos de 4 a 7 quadros entre o fim de uma tela e um corte dele.
+- Frase dele: "Thunb e descrição tbm" e "Esse texto na tela de início não tá legal né é pequeno".
+- Correção: blocos refeitos com no máximo três palavras e sem palavra curta solta; título novo que não repete a fala; telas, zooms e números alinhados nos 17 cortes dele; thumb, legenda e veredito (teste) entregues com a versão final.
+- Regra prática: antes de editar gravação dele, (1) tirar a nota de cena e listar os cortes; (2) alinhar toda entrada e saída de tela num corte dele; (3) passar os blocos de legenda pela regra das três palavras e da palavra curta; (4) o vídeo só sai junto com legenda, capa e veredito.
+
 ## Registros
 
 - 2026-11-13 · a8/r10 · Veredito de feed dado pelo Claude para a v6/v7 do Reel pergunta do passado, recorte de peça que já tinha flopado na v3. Flopou de novo. Ele: "Flopou absurdamente como nunca aconteceu". Correção: tese que flopou sai da fila do feed; tema novo só com prova do Vamos antes da gravação.

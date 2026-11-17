@@ -27,3 +27,12 @@ Só com pedido dele (regra: sem grave, sem impacto, sem boom):
 - Biblioteca da skill media-use: `.claude/skills/media-use/audio/assets/sfx/` (whoosh-short, click-soft, pop, typing, key-press etc.).
 - Os whooshes EditorPro de 30/10 nunca foram salvos no repositório; se ele mandar de novo, colocar aqui em editorpro/.
 - Sons de papel e de porta de madeira sintetizados por código: `videos/profissionais-colagem/renders/narrado/sfx.py` (branch claude/stoic-babbage-8vvmqz).
+
+## gerados/ (efeitos que ele gerou por prompt em 16/11/2026 para o Reel dos cinco itens)
+
+Escolhidos por medição entre duas versões de cada. Secos, sem grave. Usar no nível de sempre (pico abaixo da média da voz, com ducking).
+- Fio_de_aco_esticando.m4a (2,6 s; som útil de 0,17 a 1,5 s): algo pendurado, tensão, afastamento.
+- Moeda_girando_ate_parar.m4a (4,0 s; gira até 1,3 s, batidas em 1,37, 1,63, 1,94 e 2,41 s, clique final em 2,96 s): repetição, volta, espera que assenta.
+- Letreiro_de_aeroporto.m4a (4,4 s; corrida de 0,05 a 3,75 s, batida final em 4,10 s): lista, troca de palavra, letreiro correndo.
+- Ficha_deslizando_e_carimbo.m4a (11,5 s; deslize em 1,55 s, carimbo limpo em 3,24 s; o resto são batidas repetidas): ficha, papel, registro.
+- Rising Ticks não foi guardado: as duas versões vieram graves.
