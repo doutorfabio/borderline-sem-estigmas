@@ -348,3 +348,36 @@ Pedido dele depois de ver as 10 capas e as escolhas do Claude: "Sei não hein pe
 - Corrigido em 14/11: 02a refeita com a referência (job 2db7f51b-1838-439a-8add-6a538ab6cdf0): um garfo e uma faca por prato, título em 3 linhas (CRIOU AS DUAS IGUAL. / O BORDERLINE / APARECEU EM UMA SÓ.), margens de 8,5% nas laterais; N 84 pela conta do painel. 04a refeita (job d98aaf62-ceea-45b6-bb5d-26ef05aec791): chaves na fechadura, sem a mão solta, entrelinha aberta em 14 px; N 95. 05a por código: 12 px a mais entre as linhas, INGRATIDÃO a 85%, laterais de 8,5%; N 89.
 - Pendente de decisão dele: palavra riscada da capa de vozes (proposta do Claude: LOUCURA no lugar de ESQUIZOFRENIA); o que fazer com a lista dos 6 sinais; trocar ou não igual por do mesmo jeito (o painel avisou que igual como advérbio atrai correção nos comentários).
 - Aviso do painel pelo placar: nota alta de capa não previu envio. Números do Windsor puxados pelo painel em 14/11 (não conferidos pelo Claude): filha (11/11) 44.055 views, 22.559 de alcance, 78 envios, 214 salvos; rir não desmente (13/11) 18.541 views, 9.664 de alcance, 100 envios, 104 salvos; se trancou (04/11) 17.182 views, 34 envios.
+
+## 2026-11-17: o que está funcionando fora, nicho borderline e nichos vizinhos (Vamos, chats cfef7de7 e 4bfb572a, 53 + 37 créditos)
+
+Pedido dele: "Vê o q está funcionando fora e traga temas", depois de dizer que a peça "Tem que bater meus gigantes". Duas pesquisas, PT e EN, Instagram e TikTok, corte de 5x o usual do perfil, com a lista de teses dele: (A) nicho borderline, 15/10 a 17/11; (B) nichos vizinhos (apego, família, regulação emocional, trauma, TDAH e autismo), 01/10 a 17/11. Cruzamento do Claude: histórico de 180 dias (até 12/10) mais as 110 legendas de 10/10 a 17/11 puxadas do Windsor.
+
+Posts de fora mais fortes:
+- [@danyribeiro.terapeuta, Maconha e borderline](https://www.instagram.com/p/DfmUyWrhvLQ/): 50.458 views, cerca de 13x, 2.326 envios (11/11). Fala à câmera, 143 s. Cita estudo com 79 pacientes. Comentários mais curtidos são relatos de uso e alívio. Segundo outlier do tema em duas semanas (o primeiro: [@psi.matheusmattos](https://www.instagram.com/p/DfQb1Dlg7NO/), 02/11, 3,4x em 4 dias, registrado em 07/11).
+- [@parismwendwa, você odeia rejeição porque não rejeita ninguém](https://www.tiktok.com/@parismwendwa/video/7706630417511746830): 2.516.255 views, cerca de 37x, 21.719 compartilhamentos (10/11). Fala à câmera, take único. Nicho de relacionamento.
+- [@innertune.affirmations, irritação quando os pais falam](https://www.instagram.com/p/DfIoq40RhO6/): 2.383.944 views, cerca de 20x, 56.364 compartilhamentos (30/10). Animação narrada, com UNGRATEFUL e BAD CHILD na tela.
+- [@therapy.with.blake, confusão depois do abuso](https://www.instagram.com/p/DfGatmKN8uT/): 774.601 views, cerca de 27x, 14.957 compartilhamentos (30/10). Já registrado em 07/11.
+- [@breebecoming, o lado solitário de parar de agradar](https://www.instagram.com/p/DfhtdwUt77t/): 225.200 views, cerca de 11x, 2.774 compartilhamentos (09/11).
+- [@shrink.think, Emerging BPD in Teens](https://www.tiktok.com/@shrink.think/video/7702965670354488606): 48.636 views, cerca de 5x, 241 envios (31/10). Fala à câmera, 191 s. Perguntas nos comentários: higiene pessoal (225 curtidas), como levantar a suspeita sem ouvir que é fase (67), diagnóstico no prontuário para sempre (29).
+- Fracos: [@matthiasjbarker, pai que dá conselho o tempo todo](https://www.tiktok.com/@matthiasjbarker/video/7707811004180106510), 45.231 views, 22x; [@therapywithkeller, coisas pequenas para parar de agradar](https://www.instagram.com/p/DfD6Ye_SutL/), 102.622 views, 11x e só 66 compartilhamentos.
+
+O que se repete (observação): no nicho, só dois posts passaram com tema novo em 30 dias, os dois em fala à câmera longa (143 e 191 s); nos vizinhos, os números grandes vêm de acusação moral escrita na tela e desfeita (ingrata, filho ruim) e de pergunta que divide o público. O Vamos não achou carrossel nem post em português nos vizinhos; salvos sem dado.
+
+Fontes conferidas no PubMed em 17/11: Mirabelli 2026, Can J Psychiatry, DOI 10.1177/07067437261486962 (79 pacientes ambulatoriais com borderline, questionários, corte transversal: com muito uso de maconha, os sintomas mais altos estavam em quem tinha muitas experiências parecidas com psicose e os mais baixos em quem tinha poucas; associação, não causa); Trull 2016, Addiction, DOI 10.1111/add.13471 (93 pacientes com borderline ou depressão, 28 dias, 6 registros por dia; 35 usaram maconha: mais impulsividade no dia do uso e mais hostilidade no momento).
+
+Temas entregues:
+1. Maconha e borderline, o que o estudo de 79 pacientes achou (Reel falado; novo; vizinhos: compulsão de 12/11 e vozes de 15/11). Passou no radar em 07/11 com 25/30 e nunca foi produzido.
+2. Você quer essa pessoa ou quer que ela te escolha? (Reel falado; parente de dependência emocional, 03/11, e de concorda para não perder, 30/10; diferença: a pergunta sobre o próprio gosto. Hipótese editorial para o borderline, apoiada nos critérios de medo de abandono e imagem de si instável; prova de fora é do nicho de relacionamento.)
+3. Reaproveitado de 14/11, ainda sem uso e sem reação dele: filmes que retratam o borderline, do que mais acerta ao que mais estigmatiza (@dracarlapsiquiatra, 239.308 views, cerca de 16x, 5.162 compartilhamentos).
+
+Descartados:
+- Adolescência ou borderline: carrossel dele de 29/10, apagado na primeira hora.
+- Irritação com os pais lida como ingratidão: mesmo mecanismo do Reel de 05/11 (com os outros está tudo bem, comigo desaba) e do gigante Lugar mais seguro; a palavra INGRATIDÃO já está riscada na capa das férias, ainda não postada.
+- Dúvida se tinha direito de sofrer: carrossel de 07/11 (Koivisto 2022), que teve 7,2 envios por mil.
+- Parar de agradar e a amizade ficar difícil: Reel de 30/10 (um dia mostra quem é e alguém vai embora).
+- Conselho constante da mãe: prova fraca, critica quem convive (lição do FRÁGIL) e encosta em Quando ajudar piora (22/10).
+- Tanto faz: 66 compartilhamentos; vizinho do carrossel de 19/06.
+- Higiene pessoal e diagnóstico no prontuário: só pergunta de comentário, sem prova de alcance e sem ligação clínica conferida.
+
+Limite: histórico de 180 dias vai até 12/10; de 10/10 a 17/11 a checagem foi pelas legendas do Windsor. Radar e termômetro ainda não rodaram sobre os temas 1 e 2 na forma final.
