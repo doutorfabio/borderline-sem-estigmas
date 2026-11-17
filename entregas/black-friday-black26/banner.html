@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'Archivo Black';src:url(fonts/f1.ttf)}
+@font-face{font-family:'Poppins';font-weight:400;src:url(fonts/f2.ttf)}
+@font-face{font-family:'Poppins';font-weight:500;src:url(fonts/f3.ttf)}
+@font-face{font-family:'Poppins';font-weight:600;src:url(fonts/f4.ttf)}
+:root{--cream:#EDE4D3;--ink:#1A1A1A;--brick:#A62B24;--paper:#F7F1E6;--line:#D9CDB8}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--cream)}
+body{width:1080px;height:var(--h);overflow:hidden;font-family:Poppins;color:var(--ink)}
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--pt) 130px var(--pb) 130px}
+.ab{font-family:'Archivo Black';line-height:.95;letter-spacing:-.01em}
+.foot{font-size:22px;opacity:.72;text-align:center;line-height:1.5;margin-top:40px}
+.fs{width:96px;height:96px;border-radius:24px;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Archivo Black';font-size:46px}
+.kick{font-weight:600;font-size:36px;letter-spacing:.02em}
+
+/* A: tipografia gigante */
+.A .big{font-size:380px;color:var(--brick);line-height:.85;margin-top:24px}
+.A .big small{font-size:150px}
+.A .sub{font-family:'Archivo Black';font-size:64px;text-align:center;line-height:1.02;margin-top:18px}
+.A .ticket{margin-top:46px;display:flex;align-items:center;gap:22px;border:4px dashed var(--ink);border-radius:20px;padding:18px 34px}
+.A .ticket span{font-size:30px;font-weight:500}
+.A .ticket b{font-family:'Archivo Black';font-size:52px;letter-spacing:.04em}
+.A .price{font-size:40px;font-weight:500;margin-top:34px}
+.A .price b{font-weight:600}
+.A .date{margin-top:18px;background:var(--brick);color:var(--cream);font-weight:600;font-size:34px;padding:8px 26px;border-radius:999px}
+
+/* B: checkout */
+.B .h{font-family:'Archivo Black';font-size:62px;text-align:center;line-height:1;margin-top:26px}
+.B .h em{font-style:normal;color:var(--brick)}
+.B .card{margin-top:44px;width:820px;background:var(--paper);border-radius:34px;box-shadow:0 30px 60px -30px rgba(26,26,26,.35),0 0 0 2px var(--line);padding:40px 44px}
+.B .row{display:flex;justify-content:space-between;align-items:center;font-size:32px;font-weight:500}
+.B .row .old{text-decoration:line-through;opacity:.55}
+.B .field{margin-top:28px;display:flex;align-items:center;justify-content:space-between;border:3px solid var(--ink);border-radius:18px;padding:16px 22px}
+.B .field b{font-family:'Archivo Black';font-size:42px;letter-spacing:.05em}
+.B .ok{display:flex;align-items:center;gap:10px;background:#2F6B3A;color:#fff;font-weight:600;font-size:26px;padding:8px 18px;border-radius:999px}
+.B .hr{height:2px;background:var(--line);margin:30px 0 22px}
+.B .tot{display:flex;justify-content:space-between;align-items:flex-end}
+.B .tot span{font-size:32px;font-weight:600}
+.B .tot b{font-family:'Archivo Black';font-size:96px;color:var(--brick);line-height:.9}
+.B .btn{margin-top:30px;background:var(--ink);color:var(--cream);border-radius:20px;text-align:center;font-weight:600;font-size:34px;padding:22px}
+.B .note{font-size:28px;font-weight:500;margin-top:30px;text-align:center}
+
+/* C: bilhete */
+.C{background:var(--ink)}
+.C .c{color:var(--cream)}
+.C .kick{color:var(--cream);opacity:.85;text-align:center;line-height:1.3;font-size:32px}
+.C .tk{margin-top:34px;width:800px;background:var(--cream);color:var(--ink);border-radius:30px;position:relative;overflow:hidden}
+.C .tk:before,.C .tk:after{content:'';position:absolute;top:calc(var(--cut) - 30px);width:60px;height:60px;border-radius:50%;background:var(--ink)}
+.C .tk:before{left:-30px}.C .tk:after{right:-30px}
+.C .top{padding:44px 50px 34px;height:var(--cut);display:flex;flex-direction:column;justify-content:center}
+.C .top .p{font-weight:600;font-size:32px}
+.C .top .v{font-family:'Archivo Black';font-size:140px;color:var(--brick);line-height:.9;margin-top:10px}
+.C .top .v small{display:block;font-size:52px;color:var(--ink);line-height:1.1}
+.C .perf{border-top:4px dashed #BFB29C;margin:0 46px}
+.C .bot{padding:30px 50px 40px;display:flex;justify-content:space-between;align-items:center}
+.C .bot .l{font-size:26px;font-weight:500;line-height:1.3}
+.C .bot .l b{display:block;font-family:'Archivo Black';font-size:50px;letter-spacing:.05em;font-weight:400}
+.C .bot .r{text-align:right;font-size:26px;font-weight:500;line-height:1.25}
+.C .bot .r b{display:block;font-family:'Archivo Black';font-size:50px;font-weight:400}
+.C .date{margin-top:40px;font-family:'Archivo Black';font-size:58px;color:var(--cream)}
+.C .date em{font-style:normal;color:#E0574B}
+.C .fs{background:var(--cream);color:var(--ink)}
+.C .foot{color:var(--cream)}
+</style></head>
+<body><div id="r"></div>
+<script>
+const q=new URLSearchParams(location.search),v=q.get('v')||'A',feed=q.get('s')==='feed';
+const H=feed?1350:1920;document.body.style.setProperty('--h',H+'px');
+document.body.style.setProperty('--pt',(feed?80:280)+'px');document.body.style.setProperty('--pb',(feed?70:400)+'px');
+document.body.style.setProperty('--cut','330px');document.body.className=v;
+const foot=`<div class="foot">Conteúdo educativo. Não substitui avaliação nem tratamento.<br>Dr. Fabio Schmidt, Médico, CRM-SP 183549</div>`;
+const T={
+A:`<div class="c"><div class="kick">Black Friday · Protocolo 7 Dias</div>
+<div class="ab big">25<small>%</small></div>
+<div class="sub">de desconto pra quem<br>convive com borderline</div>
+<div class="ticket"><span>Cupom</span><b>BLACK26</b></div>
+<div class="price">De R$ 219 por <b>R$ 164,25</b></div>
+<div class="date">Só até 25/11</div>${foot}</div>`,
+B:`<div class="c"><div class="fs">FS</div>
+<div class="h">Protocolo 7 Dias<br>com <em>25%</em> de desconto</div>
+<div class="card">
+ <div class="row"><span>Protocolo 7 Dias</span><span class="old">R$ 219,00</span></div>
+ <div class="field"><b>BLACK26</b><span class="ok">&#10003; Cupom aplicado</span></div>
+ <div class="hr"></div>
+ <div class="tot"><span>Total</span><b>R$ 164,25</b></div>
+ <div class="btn">Válido até 25/11</div>
+</div>
+<div class="note">Para quem convive com borderline. Garantia de 7 dias.</div>${foot}</div>`,
+C:`<div class="c"><div class="fs">FS</div>
+<div class="kick" style="margin-top:26px">Black Friday<br>para quem convive com borderline</div>
+<div class="tk"><div class="top"><div class="p">Protocolo 7 Dias</div><div class="v">25% <small>de desconto</small></div></div>
+<div class="perf"></div>
+<div class="bot"><div class="l">Cupom<b>BLACK26</b></div><div class="r">De R$ 219 por<b>R$ 164,25</b></div></div></div>
+<div class="date">Só até <em>25/11</em></div>${foot}</div>`};
+document.getElementById('r').innerHTML=T[v];
+document.fonts.ready.then(()=>{window.__ready=true});
+</script></body></html>
