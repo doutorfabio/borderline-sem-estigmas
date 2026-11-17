@@ -12,6 +12,7 @@
 - Fatos pessoais para Stories: família, Deus, explicar e quebrar estigma, pescar, colecionar selos, barzinho com rock ou MPB.
 - Consulta: o link para marcar é https://consultadrfabio.base44.app/ (25/10: "Consulta é pra mandar pra cá"). O `novo/hub.html` ainda aponta para cal.com/drfabioschmidt/consulta; em peça nova, usar o app.
 - Página de respiração: ele publicou no Base44 como app web, em https://respira.base44.app/, com o nome RESPIRA JÁ! (visto no vídeo de tela que ele mandou em 25/10: Safari, Compartilhar, Adicionar à Tela de Início, ícone na tela). O ícone é um traço ondulado verde-água sobre fundo claro. Quando ele falar "meu app" nesse contexto, é esse.
+- Black Friday 2026: cupom BLACK26, 25% (R$219 por R$164,25), até 25/11. Link com cupom, testado por ele em 17/11: https://pay.hotmart.com/S104212285E?offDiscount=BLACK26
 
 ## Mais fatos, de anotações antigas (branches lidos em 24/10)
 
