@@ -28,6 +28,7 @@ Esta página junta os erros que ele já pegou mais de uma vez. Não traz regra n
 - [ ] Nenhuma linha com só uma ou duas palavras curtas soltas (é o, ir, de). (24/10, duas vezes)
 - [ ] Lida em voz alta, sem duplo sentido ou gíria (dar, comer, pegar, ficar). (24/10, VOCÊ DÁ TUDO)
 - [ ] Sem clichê, sem drama, sem comédia sem querer, sem metáfora que precise ser decifrada. (30/10, corda)
+- [ ] Cena situada com em casa, nunca com na sala ou da sala. (aprendizados; 17/11, segunda vez)
 - [ ] A palavra borderline está na capa ou no título.
 - [ ] Envio para quem a pessoa quer que entenda, nunca para quem acusou ou errou (arruma briga). (28/10, 02/11)
 - [ ] Sem venda no feed orgânico. Sem COMEÇAR no carrossel de alcance. (24/10; [[termometro]])
