@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:M;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+@font-face{font-family:M;font-weight:900;src:url(fonts/montserrat-latin-900-normal.woff2)}
+@font-face{font-family:F;font-weight:900;font-style:italic;src:url(fonts/fraunces-latin-900-italic.woff2)}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}
+#bg{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#scrim{position:absolute;left:0;top:0;width:1080px;height:1000px;background:linear-gradient(180deg,rgba(13,13,13,.82) 0%,rgba(13,13,13,.74) 42%,rgba(13,13,13,.42) 72%,rgba(13,13,13,0) 100%)}
+#txt{position:absolute;left:108px;top:300px;width:864px;text-align:center;color:#fff;text-transform:uppercase;white-space:nowrap}
+#l1{font-family:M;font-weight:900;line-height:1;letter-spacing:-.01em;text-shadow:0 6px 22px rgba(0,0,0,.45)}
+#l2{font-family:M;font-weight:800;line-height:1;margin-top:20px;text-shadow:0 4px 16px rgba(0,0,0,.45)}
+#l3{font-family:F;font-weight:900;font-style:italic;line-height:1;margin-top:26px;display:inline-block;background:#CC0000;color:#F2EADB;padding:.06em .22em .14em;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.4)}
+</style></head><body>
+<img id="bg" src="thumb_bg.png"><div id="scrim"></div>
+<div id="txt"><div><span id="l1" style="display:inline-block">Borderline</span></div><div><span id="l2" style="display:inline-block">prefere sua cobrança</span></div><div><span id="l3">ao seu silêncio</span></div></div>
+<script>
+window.ready=(async()=>{await document.fonts.load('900 50px M');await document.fonts.load('800 50px M');await document.fonts.load('italic 900 50px F');await document.fonts.ready;
+ function fit(el,w,start){let s=start;el.style.fontSize=s+'px';while(el.getBoundingClientRect().width>w&&s>10){s-=1;el.style.fontSize=s+'px'}return s}
+ const a=fit(document.getElementById('l1'),864,170), b=fit(document.getElementById('l2'),864,90), c=fit(document.getElementById('l3'),864,120);
+ const m=Math.max(...['l1','l2','l3'].map(i=>document.getElementById(i).getBoundingClientRect().right));
+ const r=document.getElementById('txt').getBoundingClientRect(); return {sizes:[a,b,c],top:r.top,bottom:r.bottom,left:r.left,right:m};})();
+</script></body></html>
