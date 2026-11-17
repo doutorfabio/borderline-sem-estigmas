@@ -116,17 +116,25 @@ const END=49.727;
 const CAPY=1482;
 
 // ===================== CAPTIONS =====================
-const capGroups=G.map((g,gi)=>{
+const CO=68/24;   // abertura fria: a fala encenada dele (Hum, só agora veio perguntar...) antes do vídeo como estava
+const GC=[
+ [['Hum,',0.035,0.165,'q'],['só',0.185,0.40,'q'],['agora',0.403,0.863,'q']],
+ [['veio',0.863,1.183,'q'],['perguntar',1.183,1.703,'q']],
+ [['como',1.703,1.863,'q'],['que',1.863,2.023,'q'],['eu',2.023,2.143,'q']],
+ [['fiquei,',2.143,2.423,'q'],['né?',2.543,2.75,'q']],
+];
+function buildGroups(G,END){return G.map((g,gi)=>{
  const box=mk('div','abs',stage); st(box,{left:'502px',top:CAPY+'px',transform:'translate(-50%,-50%)',whiteSpace:'nowrap',textAlign:'center',display:'none'});
  const spans=g.map(w=>{const s=mk('span','cw'+(w[3]?' '+w[3]:''),box,w[0]);s._s=w[1];s._e=w[2];return s});
  const nextStart=gi<G.length-1?G[gi+1][0][1]:END;
  const lastEnd=g[g.length-1][2];
  return {box,spans,a:g[0][1],b:Math.min(nextStart,lastEnd+0.55),gi};
-});
-function fitCaptions(){capGroups.forEach(c=>{c.box.style.display='block';const w=c.box.getBoundingClientRect().width;c.fit=Math.min(1,800/w);c.box.style.display='none'})}
-function renderCaptions(t){
- for(const c of capGroups){
-  const vis=t>=c.a-0.02&&t<c.b&&!inOverlay(t);
+})}
+const capGroups=buildGroups(G,END), coldGroups=buildGroups(GC,CO);
+function fitCaptions(){[...capGroups,...coldGroups].forEach(c=>{c.box.style.display='block';const w=c.box.getBoundingClientRect().width;c.fit=Math.min(1,800/w);c.box.style.display='none'})}
+function renderGroups(groups,t,hidden){
+ for(const c of groups){
+  const vis=t>=c.a-0.02&&t<c.b&&!hidden;
   if(!vis){c.box.style.display='none';continue}
   c.box.style.display='block';
   const pin=E.ob(P(t,c.a-0.02,c.a+0.14));
@@ -144,16 +152,14 @@ function renderCaptions(t){
  }
 }
 
-// ===================== TÍTULO DE ABERTURA (0 - 3.75 s, até o primeiro corte dele) =====================
-// regra dele: o texto de abertura não repete o gancho falado. Título grande no topo, em fundo escuro; o vídeo fica na janela abaixo.
-const title=mk('div','abs',stage); st(title,{left:'130px',top:'170px',width:'820px',textAlign:'center',whiteSpace:'nowrap'});
-function tline(txt,cls,size,extra){const d=mk('div','',title); st(d,{lineHeight:'1'}); const sp=mk('span','w '+cls,d,txt); st(sp,Object.assign({fontSize:size+'px',color:'var(--cream)'},extra||{})); sp._max=size; return sp}
-const T1=tline('5 cenas do','m',78);
-const T2=tline('borderline','f plate',128,{padding:'.03em .2em .1em',margin:'14px 0 16px'});
-const T3=tline('que você só vê','m',78);
-const T4=tline('pela metade','m',78,{marginTop:'6px'});
-function fitTitle(){[T1,T2,T3,T4].forEach(sp=>{let z=sp._max; sp.style.fontSize=z+'px'; while(sp.getBoundingClientRect().width>820&&z>20){z-=1; sp.style.fontSize=z+'px'}})}
-function renderTitle(t){ title.style.display=(t<3.75)?'block':'none'; }
+// ===================== TÍTULO DA ABERTURA (só na abertura fria, some no corte) =====================
+// o texto de abertura não repete a fala; fica acima da cabeça dele, sem cobrir rosto, microfone nem o gesto do relógio
+const title=mk('div','abs',stage); st(title,{left:'130px',top:'152px',width:'820px',textAlign:'center',whiteSpace:'nowrap'});
+function tline(txt,cls,size,extra){const d=mk('div','',title); st(d,{lineHeight:'1'}); const sp=mk('span','w '+cls,d,txt); st(sp,Object.assign({fontSize:size+'px'},extra||{})); sp._max=size; return sp}
+const T1=tline('5 cenas do','m',58,{color:'#fff',textShadow:RING});
+const T2=tline('borderline','f plate',108,{padding:'.02em .2em .09em',marginTop:'8px',boxShadow:'0 10px 26px rgba(0,0,0,.45)'});
+function fitTitle(){[T1,T2].forEach(sp=>{let z=sp._max; sp.style.fontSize=z+'px'; while(sp.getBoundingClientRect().width>820&&z>20){z-=1; sp.style.fontSize=z+'px'}})}
+function renderTitle(t){ title.style.display=(t<CO)?'block':'none'; }
 
 // ===================== NUMERAL POPS =====================
 const nums=NUMS.map(([n,s])=>{const b=mk('div','abs',stage);st(b,{left:'104px',top:'420px',display:'none'});
@@ -352,7 +358,7 @@ O5.render=t=>{const {a,b}=O5.o;const R=O5.R; if(t<a||t>=b){R.style.display='none
 };
 
 // ===================== MASTER =====================
-window.render=function(t){renderTitle(t);renderCaptions(t);renderNums(t);O1.render(t);O2.render(t);O3.render(t);O4.render(t);O5.render(t)};
+window.render=function(t){const u=t-CO; renderTitle(t); renderGroups(coldGroups,t,t>=CO); renderGroups(capGroups,u,inOverlay(u)); renderNums(u); O1.render(u);O2.render(u);O3.render(u);O4.render(u);O5.render(u)};
 // safe-area audit: returns list of violations for visible text elements
 window.audit=function(t){const out=[];
  document.querySelectorAll('.w,.cw,.f,.m,.label').forEach(e=>{ if(!e.textContent.trim())return;
