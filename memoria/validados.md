@@ -381,3 +381,15 @@ Descartados:
 - Higiene pessoal e diagnóstico no prontuário: só pergunta de comentário, sem prova de alcance e sem ligação clínica conferida.
 
 Limite: histórico de 180 dias vai até 12/10; de 10/10 a 17/11 a checagem foi pelas legendas do Windsor. Radar e termômetro ainda não rodaram sobre os temas 1 e 2 na forma final.
+
+## 2026-11-17 (transcrições): sete vídeos virais de fora mandados por ele em texto
+
+Pedido dele: "Vê se algum desses vídeos virais transcrições podem servir como uma luva mas só só se superar os nosss". Vieram só as falas, sem link nem métrica. Cruzados com o histórico de 180 dias e as legendas do Windsor de 10/10 a 17/11. Nenhum passou.
+- Sensibilidade de processamento sensorial e criatividade (Elaine Aron, ínsula): neurobiologia e fora do tema da conta; vizinho Reel de 24/06 (sensibilidade sensorial, 10.156 views).
+- É fácil amar você (afirmações repetidas): bem-estar genérico, sem tese nem cena.
+- O que chama sua atenção revela seus interesses (anáfora): autoconhecimento genérico, sem ligação com borderline.
+- Intimidade de ter alguém que não te interpreta por um momento só: repete o carrossel de 03/09 (todo mundo viu o pior dia, 31.867 views, 366 envios) e o item 5 do Reel de 17/11 (não quer que o pior dia vire um resumo de quem é).
+- Fica forte quem está seguro de ser amado; a capacidade de ficar só se constrói com alguém (atribuído a Freud no vídeo; a ideia de ficar só na presença de alguém costuma ser atribuída a Winnicott, a conferir): repete o Reel de 18/09 (Borderline precisa ficar sozinho até melhorar? Não; 19.261 views, 197 envios) e cai no medo de abandono, cheio nos últimos 30 posts.
+- Explicar por que o leão te comeu de dentro da barriga dele (entender o motivo não obriga a aceitar): é a frase mais repetida da conta (carrossel de 29/04, Reel de 09/10 com 30.849 views e 602 envios, Reels de 02/11, 05/11, 12/11 e 14/11); a metáfora põe quem tem borderline no lugar do leão; a fala da terapeuta é anedota de outra pessoa.
+- A sua casa muda quem você é (Pedro Andrade): veio só a primeira frase; fora do tema.
+Lição: transcrição de viral de relacionamento em geral chega em tese que ele já fez; antes de adaptar, buscar a tese no histórico pela explicação, não pela cena.
