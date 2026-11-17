@@ -191,7 +191,7 @@ const S05: React.FC<P> = ({ t, k }) => (
 );
 const S06: React.FC<P> = ({ t, k }) => (
   <>
-    <Numbers5 t={t} k={timeline.scenes[4].keys as K} fixed out={k.quase - 0.35} />
+    <Numbers5 t={t} k={timeline.scenes.find((x) => x.id === 5)!.keys as K} fixed out={k.quase - 0.35} />
     <TitleBox top={290}>
       <FadeUp t={t} at={k.quase}>
         <Big size={104}>QUASE <span style={{ color: C.brick }}>4</span></Big>
@@ -410,7 +410,7 @@ const S12: React.FC<P> = ({ t, k, sc }) => {
           <Ground />
           <CapsBuilding x={190} y={GROUND} w={700} h={600} />
         </GUp>
-        <Person x={interpolate(walk, [0, 1], [150, 375])} y={GROUND} s={1.15} op={prog(t, 0, 0.3)} />
+        <Person x={interpolate(walk, [0, 1], [200, 375])} y={GROUND} s={1.15} op={prog(t, 0, 0.3)} />
       </SVG>
     </>
   );

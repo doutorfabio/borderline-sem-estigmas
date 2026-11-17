@@ -1,6 +1,6 @@
 {
  "fps": 30,
- "total": 2660,
+ "total": 2026,
  "scenes": [
   {
    "id": 1,
@@ -88,38 +88,10 @@
    "speechEnd": 8.8
   },
   {
-   "id": 4,
-   "audio": "audio/cena-04.wav",
-   "audioDur": 5.89,
-   "from_": 559,
-   "frames": 189,
-   "chunks": [
-    {
-     "text": "Eu sou médico, pós-graduado em psiquiatria.",
-     "start": 0.1,
-     "end": 2.29
-    },
-    {
-     "text": "Não tenho título de especialista.",
-     "start": 2.29,
-     "end": 3.93
-    },
-    {
-     "text": "Trabalhei mais de 5 anos em CAPS.",
-     "start": 3.93,
-     "end": 6.01
-    }
-   ],
-   "keys": {
-    "trabalhei": 3.93
-   },
-   "speechEnd": 5.66
-  },
-  {
    "id": 5,
    "audio": "audio/cena-05.wav",
    "audioDur": 11.0,
-   "from_": 748,
+   "from_": 559,
    "frames": 342,
    "chunks": [
     {
@@ -154,7 +126,7 @@
    "id": 6,
    "audio": "audio/cena-06.wav",
    "audioDur": 11.9,
-   "from_": 1090,
+   "from_": 901,
    "frames": 369,
    "chunks": [
     {
@@ -194,7 +166,7 @@
    "id": 7,
    "audio": "audio/cena-07.wav",
    "audioDur": 4.01,
-   "from_": 1459,
+   "from_": 1270,
    "frames": 132,
    "chunks": [
     {
@@ -217,7 +189,7 @@
    "id": 8,
    "audio": "audio/cena-08.wav",
    "audioDur": 9.72,
-   "from_": 1591,
+   "from_": 1402,
    "frames": 304,
    "chunks": [
     {
@@ -251,7 +223,7 @@
    "id": 9,
    "audio": "audio/cena-09.wav",
    "audioDur": 3.01,
-   "from_": 1895,
+   "from_": 1706,
    "frames": 102,
    "chunks": [
     {
@@ -271,81 +243,10 @@
    "speechEnd": 2.04
   },
   {
-   "id": 10,
-   "audio": "audio/cena-10.wav",
-   "audioDur": 5.34,
-   "from_": 1997,
-   "frames": 172,
-   "chunks": [
-    {
-     "text": "Repare em quem repete a frase.",
-     "start": 0.1,
-     "end": 1.83
-    },
-    {
-     "text": "Ele nunca diz quem vai atender",
-     "start": 1.83,
-     "end": 3.05
-    },
-    {
-     "text": "a pessoa em crise",
-     "start": 3.05,
-     "end": 3.67
-    },
-    {
-     "text": "numa cidade pequena do interior.",
-     "start": 3.67,
-     "end": 5.43
-    }
-   ],
-   "keys": {
-    "ele": 1.83
-   },
-   "speechEnd": 5.08
-  },
-  {
-   "id": 11,
-   "audio": "audio/cena-11.wav",
-   "audioDur": 8.71,
-   "from_": 2169,
-   "frames": 273,
-   "chunks": [
-    {
-     "text": "Título é formação séria.",
-     "start": 0.1,
-     "end": 1.97
-    },
-    {
-     "text": "Ninguém aqui está diminuindo residência.",
-     "start": 1.97,
-     "end": 3.99
-    },
-    {
-     "text": "O que eu não aceito",
-     "start": 3.99,
-     "end": 4.97
-    },
-    {
-     "text": "é usar o título para tirar o médico",
-     "start": 4.97,
-     "end": 6.67
-    },
-    {
-     "text": "de 269 cidades.",
-     "start": 6.67,
-     "end": 8.75
-    }
-   ],
-   "keys": {
-    "n269": 6.99
-   },
-   "speechEnd": 8.4
-  },
-  {
    "id": 12,
    "audio": "audio/cena-12.wav",
    "audioDur": 4.48,
-   "from_": 2442,
+   "from_": 1808,
    "frames": 218,
    "chunks": [
     {

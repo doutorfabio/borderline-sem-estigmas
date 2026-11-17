@@ -1,5 +1,7 @@
 # Monta src/timeline.json (duracao de cada cena = audio medido com ffprobe + 0,4 s) e out/legenda.srt
-import json, subprocess
+import json, subprocess, os
+KEEP=[int(x) for x in os.environ.get('KEEP','1,2,3,4,5,6,7,8,9,10,11,12').split(',')]
+SRT=os.environ.get('SRT','out/legenda.srt')
 FPS=30; RESPIRO=0.4; FECHO_EXTRA=2.4
 W=json.load(open('audio_src/words_cenas.json'))
 # legenda fiel ao roteiro, numeros em algarismos; o numero e o indice da palavra (transcricao) onde o trecho comeca
@@ -23,7 +25,7 @@ def dur(p): return float(subprocess.run(['ffprobe','-v','error','-show_entries',
 scenes=[];t=0;srt=[];n=1
 def ts(x):
     ms=int(round(x*1000)); return f"{ms//3600000:02d}:{ms//60000%60:02d}:{ms//1000%60:02d},{ms%1000:03d}"
-for k in range(1,13):
+for k in KEEP:
     d=dur(f'public/audio/cena-{k:02d}.wav')
     sec=d+RESPIRO+(FECHO_EXTRA if k==12 else 0)
     frames=round(sec*FPS)
@@ -39,5 +41,5 @@ for k in range(1,13):
     scenes.append(dict(id=k,audio=f'audio/cena-{k:02d}.wav',audioDur=round(d,3),from_=round(t*FPS),frames=frames,chunks=chunks,keys=keys,speechEnd=round(ws[-1][1],2)))
     t+=frames/FPS
 json.dump(dict(fps=FPS,total=sum(s['frames'] for s in scenes),scenes=scenes),open('src/timeline.json','w'),ensure_ascii=False,indent=1)
-open('out/legenda.srt','w').write('\n'.join(srt))
+open(SRT,'w').write('\n'.join(srt))
 print('total s',round(t,2)); [print(s['id'],s['audioDur'],s['frames'],s['keys']) for s in scenes]
