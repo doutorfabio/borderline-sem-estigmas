@@ -43,3 +43,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Sei não hein pede opinião do vamos e passa pelos funks".
 - Correção: mesa e ombro refeitas com a referência (um garfo de cada lado e título em 3 linhas; chaves na fechadura); praia corrigida por código; as cinco versões reprovadas marcadas no Painel como não usar.
 - Regra prática: antes de dizer que uma capa está conferida, (1) medir o halo em todas as linhas de texto, inclusive a última; (2) contar os objetos que a frase afirma serem iguais; (3) contar as mãos de cada pessoa; (4) deixar 8% ou mais de margem lateral, por causa do recorte da grade; (5) passar a imagem por um leitor independente.
+
+## 2026-11-17, a7 (envio para quem acusou ou errou)
+- O que aconteceu: no Reel do churrasco, a chamada do fecho veio ditada por ele (Manda pra quem já disse que é tudo igual.) e eu usei sem avisar que bate na regra de 02/11. O risco só foi apontado na v2, depois de ele pedir para mudar a frase final.
+- Frase dele: "As letras do churrasco não estão legais tem que ser mais discretas mas ainda visíveis e mudar a frase final".
+- Correção: chamada trocada pela redação aprovada em 02/11 (Manda pra quem você queria que entendesse.).
+- Regra prática: texto ditado por ele que bate num anti-pattern entra como pedido, mas o risco vai em uma linha antes da entrega, não depois.
