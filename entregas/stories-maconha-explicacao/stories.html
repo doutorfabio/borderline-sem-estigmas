@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/local.css">
+<style>
+  :root { --paper:#F1E9DA; --card:#FBF6EA; --ink:#111111; --red:#CC0000; --muted:#3A3530; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:#999; font-family:"Inter", sans-serif; }
+  .s { width:1080px; height:1920px; background:var(--paper); position:relative; overflow:hidden;
+       padding:360px 120px 400px; display:flex; flex-direction:column; justify-content:center; gap:44px; margin-bottom:20px; }
+  .s::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.05;
+       background-image:radial-gradient(#000 0.6px, transparent 0.7px); background-size:5px 5px; }
+  .n { position:absolute; top:270px; left:120px; font-family:"Anton"; font-size:40px; letter-spacing:2px; color:var(--ink); }
+  .n b { color:var(--red); font-weight:400; }
+  .k { font-family:"Anton"; font-size:58px; line-height:1.15; letter-spacing:1px; text-transform:uppercase; }
+  .h { font-family:"Anton"; font-size:132px; line-height:1.08; text-transform:uppercase; text-wrap:balance; }
+  .h.m { font-size:112px; }
+  .b { font-weight:700; font-size:54px; line-height:1.3; color:var(--ink); text-wrap:balance; }
+  .src { font-weight:500; font-size:30px; line-height:1.35; color:var(--muted); }
+  .safe { font-weight:700; font-size:34px; line-height:1.35; color:var(--ink); border-top:3px solid var(--ink); padding-top:22px; }
+  .red { color:var(--red); }
+  .center { text-align:center; align-items:center; }
+  .cards { display:flex; flex-direction:column; gap:34px; }
+  .card { background:var(--card); border:4px solid var(--ink); border-radius:10px; padding:44px 48px;
+          box-shadow:0 10px 0 rgba(0,0,0,.08); }
+  .row { display:flex; align-items:center; gap:40px; }
+  .arrow { font-family:"Anton"; font-size:150px; line-height:1; width:110px; text-align:center; }
+  .cta { font-family:"Anton"; font-size:56px; line-height:1.15; text-transform:uppercase; background:var(--red); color:#F1E9DA;
+         padding:26px 34px; border-radius:8px; text-align:center; }
+</style>
+</head>
+<body>
+
+<section class="s" id="s1">
+  <div class="n">1 <b>/</b> 6</div>
+  <div class="k red">Maconha e borderline</div>
+  <div class="h">Você fuma<br>e o peito<br>desaperta.</div>
+  <div class="b">Em casa dizem que<br>é isso que te piora.</div>
+  <div class="h red">Quem tem razão?</div>
+</section>
+
+<section class="s" id="s2">
+  <div class="n">2 <b>/</b> 6</div>
+  <div class="h">Um estudo<br>de 2026 olhou<br><span class="red">isso.</span></div>
+  <div class="b">Foram 79 pacientes<br>com borderline.</div>
+  <div class="b">O estudo mediu quanto cada um usava maconha e como estavam os sintomas.</div>
+  <div class="src">Mirabelli e colegas, Canadian Journal of Psychiatry, 2026</div>
+</section>
+
+<section class="s" id="s3">
+  <div class="n">3 <b>/</b> 6</div>
+  <div class="k">O resultado dependeu<br>de uma coisa:</div>
+  <div class="h m red">Já ter ouvido<br>vozes ou<br>desconfiado de<br>todo mundo.</div>
+  <div class="b">Acontece com parte das pessoas com borderline.</div>
+  <div class="safe">Se as vozes mandam você se machucar: CVV 188. Risco agora: SAMU 192.</div>
+</section>
+
+<section class="s" id="s4">
+  <div class="n">4 <b>/</b> 6</div>
+  <div class="k">Quanto mais maconha:</div>
+  <div class="cards">
+    <div class="card">
+      <div class="k">Quem tem isso</div>
+      <div class="row"><div class="arrow red">&uarr;</div><div class="h m red">Mais<br>sintomas</div></div>
+    </div>
+    <div class="card">
+      <div class="k">Quem quase não tem</div>
+      <div class="row"><div class="arrow">&darr;</div><div class="h m">Menos<br>sintomas</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="s5">
+  <div class="n">5 <b>/</b> 6</div>
+  <div class="h m">O estudo não<br>prova que<br>a maconha <span class="red">trata.</span></div>
+  <div class="b">Mediu uma vez só.<br>Pode ser que quem estava<br>melhor fumasse mais.</div>
+  <div class="b">Outro estudo seguiu pacientes por 28 dias. Nos dias de maconha, a <span class="red">impulsividade subiu.</span></div>
+  <div class="src">Trull e colegas, Addiction, 2016</div>
+</section>
+
+<section class="s" id="s6" style="gap:34px; padding-top:400px;">
+  <div class="n">6 <b>/</b> 6</div>
+  <div class="h m" style="font-size:96px">O que fazer com isso</div>
+  <div class="cards">
+    <div class="card">
+      <div class="k">Se você fuma</div>
+      <div class="b">Conte ao médico quanto fuma e se já ouviu vozes.</div>
+    </div>
+    <div class="card">
+      <div class="k red">Se você mora junto</div>
+      <div class="b">Antes da bronca, pergunte o que a maconha resolve pra pessoa.</div>
+    </div>
+  </div>
+  <div class="cta">Responde este story<br>com a sua dúvida</div>
+</section>
+
+</body>
+</html>
