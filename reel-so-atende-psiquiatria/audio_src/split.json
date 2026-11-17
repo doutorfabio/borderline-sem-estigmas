@@ -1,0 +1,98 @@
+[
+ {
+  "cena": 1,
+  "src_start": 0.27,
+  "src_end": 5.68,
+  "dur": 5.41,
+  "ponta_ini_db": -73.30000305175781,
+  "ponta_fim_db": -71.30000305175781
+ },
+ {
+  "cena": 2,
+  "src_start": 6.73,
+  "src_end": 10.3,
+  "dur": 3.15,
+  "ponta_ini_db": -60.900001525878906,
+  "ponta_fim_db": -66.30000305175781
+ },
+ {
+  "cena": 3,
+  "src_start": 10.31,
+  "src_end": 19.22,
+  "dur": 8.91,
+  "ponta_ini_db": -72.0999984741211,
+  "ponta_fim_db": -72.80000305175781
+ },
+ {
+  "cena": 4,
+  "src_start": 20.13,
+  "src_end": 26.02,
+  "dur": 5.89,
+  "ponta_ini_db": -63.29999923706055,
+  "ponta_fim_db": -75.30000305175781
+ },
+ {
+  "cena": 5,
+  "src_start": 26.43,
+  "src_end": 37.43,
+  "dur": 11.0,
+  "ponta_ini_db": -68.30000305175781,
+  "ponta_fim_db": -66.0
+ },
+ {
+  "cena": 6,
+  "src_start": 37.82,
+  "src_end": 50.28,
+  "dur": 11.9,
+  "ponta_ini_db": -71.0999984741211,
+  "ponta_fim_db": -58.70000076293945
+ },
+ {
+  "cena": 7,
+  "src_start": 50.54,
+  "src_end": 54.55,
+  "dur": 4.01,
+  "ponta_ini_db": -64.9000015258789,
+  "ponta_fim_db": -69.9000015258789
+ },
+ {
+  "cena": 8,
+  "src_start": 55.24,
+  "src_end": 64.96,
+  "dur": 9.72,
+  "ponta_ini_db": -64.5999984741211,
+  "ponta_fim_db": -72.19999694824219
+ },
+ {
+  "cena": 9,
+  "src_start": 65.39,
+  "src_end": 69.37,
+  "dur": 3.01,
+  "ponta_ini_db": -75.0999984741211,
+  "ponta_fim_db": -58.599998474121094
+ },
+ {
+  "cena": 10,
+  "src_start": 69.68,
+  "src_end": 75.02,
+  "dur": 5.34,
+  "ponta_ini_db": -72.0999984741211,
+  "ponta_fim_db": -73.5999984741211
+ },
+ {
+  "cena": 11,
+  "src_start": 76.99,
+  "src_end": 85.7,
+  "dur": 8.71,
+  "ponta_ini_db": -72.4000015258789,
+  "ponta_fim_db": -70.30000305175781
+ },
+ {
+  "cena": 12,
+  "src_start": 85.89,
+  "src_end": 91.4,
+  "dur": 4.48,
+  "ponta_ini_db": -71.0999984741211,
+  "ponta_fim_db": -55.400001525878906
+ }
+]

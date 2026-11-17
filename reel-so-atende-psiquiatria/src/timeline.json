@@ -1,0 +1,373 @@
+{
+ "fps": 30,
+ "total": 2660,
+ "scenes": [
+  {
+   "id": 1,
+   "audio": "audio/cena-01.wav",
+   "audioDur": 5.41,
+   "from_": 0,
+   "frames": 174,
+   "chunks": [
+    {
+     "text": "Você já ouviu essa frase.",
+     "start": 0.1,
+     "end": 1.67
+    },
+    {
+     "text": "Cuidado com ele.",
+     "start": 1.67,
+     "end": 2.89
+    },
+    {
+     "text": "Não é psiquiatra, só atende psiquiatria.",
+     "start": 2.89,
+     "end": 5.53
+    }
+   ],
+   "keys": {
+    "cuidado": 1.67
+   },
+   "speechEnd": 5.18
+  },
+  {
+   "id": 2,
+   "audio": "audio/cena-02.wav",
+   "audioDur": 3.15,
+   "from_": 174,
+   "frames": 106,
+   "chunks": [
+    {
+     "text": "Soa como proteção.",
+     "start": 0.81,
+     "end": 2.71
+    },
+    {
+     "text": "Não é.",
+     "start": 2.71,
+     "end": 3.41
+    }
+   ],
+   "keys": {
+    "naoe": 2.71
+   },
+   "speechEnd": 3.06
+  },
+  {
+   "id": 3,
+   "audio": "audio/cena-03.wav",
+   "audioDur": 8.91,
+   "from_": 280,
+   "frames": 279,
+   "chunks": [
+    {
+     "text": "Pela norma dos conselhos de medicina,",
+     "start": 0.1,
+     "end": 1.97
+    },
+    {
+     "text": "todo médico com CRM pode atender em qualquer área.",
+     "start": 1.97,
+     "end": 4.85
+    },
+    {
+     "text": "Proibido é outra coisa:",
+     "start": 4.85,
+     "end": 6.51
+    },
+    {
+     "text": "anunciar especialidade sem registro.",
+     "start": 6.51,
+     "end": 9.15
+    }
+   ],
+   "keys": {
+    "pode": 3.05,
+    "proibido": 4.85
+   },
+   "speechEnd": 8.8
+  },
+  {
+   "id": 4,
+   "audio": "audio/cena-04.wav",
+   "audioDur": 5.89,
+   "from_": 559,
+   "frames": 189,
+   "chunks": [
+    {
+     "text": "Eu sou médico, pós-graduado em psiquiatria.",
+     "start": 0.1,
+     "end": 2.29
+    },
+    {
+     "text": "Não tenho título de especialista.",
+     "start": 2.29,
+     "end": 3.93
+    },
+    {
+     "text": "Trabalhei mais de 5 anos em CAPS.",
+     "start": 3.93,
+     "end": 6.01
+    }
+   ],
+   "keys": {
+    "trabalhei": 3.93
+   },
+   "speechEnd": 5.66
+  },
+  {
+   "id": 5,
+   "audio": "audio/cena-05.wav",
+   "audioDur": 11.0,
+   "from_": 748,
+   "frames": 342,
+   "chunks": [
+    {
+     "text": "Agora faça a conta que ninguém faz.",
+     "start": 0.1,
+     "end": 2.63
+    },
+    {
+     "text": "Os CAPS do país têm 10.129 vínculos de médico.",
+     "start": 2.63,
+     "end": 6.39
+    },
+    {
+     "text": "3.127 são de clínico geral.",
+     "start": 6.39,
+     "end": 8.83
+    },
+    {
+     "text": "Mais 434 de residente.",
+     "start": 8.83,
+     "end": 11.19
+    }
+   ],
+   "keys": {
+    "n10129": 3.63,
+    "n3127": 6.39,
+    "n434": 8.99
+   },
+   "speechEnd": 10.84
+  },
+  {
+   "id": 6,
+   "audio": "audio/cena-06.wav",
+   "audioDur": 11.9,
+   "from_": 1090,
+   "frames": 369,
+   "chunks": [
+    {
+     "text": "Aplique a frase.",
+     "start": 0.1,
+     "end": 1.37
+    },
+    {
+     "text": "Só atende quem tem título.",
+     "start": 1.37,
+     "end": 3.51
+    },
+    {
+     "text": "No mesmo dia,",
+     "start": 3.51,
+     "end": 5.37
+    },
+    {
+     "text": "quase 4 em cada 10 postos de médico ficam vazios.",
+     "start": 5.37,
+     "end": 10.01
+    },
+    {
+     "text": "E esse é o mínimo.",
+     "start": 10.01,
+     "end": 11.15
+    }
+   ],
+   "keys": {
+    "quase": 5.37,
+    "vazios": 7.95,
+    "minimo": 10.01
+   },
+   "speechEnd": 10.8
+  },
+  {
+   "id": 7,
+   "audio": "audio/cena-07.wav",
+   "audioDur": 4.01,
+   "from_": 1459,
+   "frames": 132,
+   "chunks": [
+    {
+     "text": "269 cidades ficam com o CAPS",
+     "start": 0.81,
+     "end": 3.01
+    },
+    {
+     "text": "sem médico nenhum.",
+     "start": 3.01,
+     "end": 4.09
+    }
+   ],
+   "keys": {
+    "n269": 0.81
+   },
+   "speechEnd": 3.74
+  },
+  {
+   "id": 8,
+   "audio": "audio/cena-08.wav",
+   "audioDur": 9.72,
+   "from_": 1591,
+   "frames": 304,
+   "chunks": [
+    {
+     "text": "E quem entra no lugar?",
+     "start": 0.1,
+     "end": 1.67
+    },
+    {
+     "text": "No país inteiro,",
+     "start": 1.67,
+     "end": 2.81
+    },
+    {
+     "text": "13.581 médicos têm título de psiquiatra.",
+     "start": 2.81,
+     "end": 6.57
+    },
+    {
+     "text": "A residência recebe 650 por ano.",
+     "start": 6.57,
+     "end": 9.81
+    }
+   ],
+   "keys": {
+    "n13581": 2.81,
+    "n650": 7.77
+   },
+   "speechEnd": 9.46
+  },
+  {
+   "id": 9,
+   "audio": "audio/cena-09.wav",
+   "audioDur": 3.01,
+   "from_": 1895,
+   "frames": 102,
+   "chunks": [
+    {
+     "text": "Não fecha.",
+     "start": 0.1,
+     "end": 1.49
+    },
+    {
+     "text": "Nem perto.",
+     "start": 1.49,
+     "end": 2.39
+    }
+   ],
+   "keys": {
+    "nem": 1.49
+   },
+   "speechEnd": 2.04
+  },
+  {
+   "id": 10,
+   "audio": "audio/cena-10.wav",
+   "audioDur": 5.34,
+   "from_": 1997,
+   "frames": 172,
+   "chunks": [
+    {
+     "text": "Repare em quem repete a frase.",
+     "start": 0.1,
+     "end": 1.83
+    },
+    {
+     "text": "Ele nunca diz quem vai atender",
+     "start": 1.83,
+     "end": 3.05
+    },
+    {
+     "text": "a pessoa em crise",
+     "start": 3.05,
+     "end": 3.67
+    },
+    {
+     "text": "numa cidade pequena do interior.",
+     "start": 3.67,
+     "end": 5.43
+    }
+   ],
+   "keys": {
+    "ele": 1.83
+   },
+   "speechEnd": 5.08
+  },
+  {
+   "id": 11,
+   "audio": "audio/cena-11.wav",
+   "audioDur": 8.71,
+   "from_": 2169,
+   "frames": 273,
+   "chunks": [
+    {
+     "text": "Título é formação séria.",
+     "start": 0.1,
+     "end": 1.97
+    },
+    {
+     "text": "Ninguém aqui está diminuindo residência.",
+     "start": 1.97,
+     "end": 3.99
+    },
+    {
+     "text": "O que eu não aceito",
+     "start": 3.99,
+     "end": 4.97
+    },
+    {
+     "text": "é usar o título para tirar o médico",
+     "start": 4.97,
+     "end": 6.67
+    },
+    {
+     "text": "de 269 cidades.",
+     "start": 6.67,
+     "end": 8.75
+    }
+   ],
+   "keys": {
+    "n269": 6.99
+   },
+   "speechEnd": 8.4
+  },
+  {
+   "id": 12,
+   "audio": "audio/cena-12.wav",
+   "audioDur": 4.48,
+   "from_": 2442,
+   "frames": 218,
+   "chunks": [
+    {
+     "text": "Quem está em crise",
+     "start": 0.1,
+     "end": 1.05
+    },
+    {
+     "text": "não pergunta o número do registro.",
+     "start": 1.05,
+     "end": 3.25
+    },
+    {
+     "text": "Pergunta se tem médico.",
+     "start": 3.25,
+     "end": 4.73
+    }
+   ],
+   "keys": {
+    "pergunta": 3.25
+   },
+   "speechEnd": 4.38
+  }
+ ]
+}
