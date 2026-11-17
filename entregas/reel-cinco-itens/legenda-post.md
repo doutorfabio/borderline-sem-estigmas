@@ -1,6 +1,6 @@
-Você se magoou e ficou em silêncio.
-Para muita gente com borderline, esse silêncio soa como despedida.
-A mesma pergunta volta porque a sua resposta ainda não pareceu verdade por dentro.
+Você voltou depois da briga e ouviu: só agora veio perguntar como eu fiquei?
+Muita gente com borderline guarda exatamente o jeito que você voltou.
+Cada volta dessas deixa mais fácil acreditar que uma briga não acaba com tudo.
 
 O vídeo mostra cinco cenas que quem convive só vê pela metade.
 
