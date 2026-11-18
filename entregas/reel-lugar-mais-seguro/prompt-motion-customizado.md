@@ -1,4 +1,4 @@
-# Reel 30 s: Você é o lugar mais seguro que ele tem
+# Reel 35 s: Você é o lugar mais seguro que ele tem
 
 Carrossel de origem: postado em 29/09 (112 mil views, 4.343 curtidas, 70 comentários, 394 reposts, 1.879 envios; números do print dele de 18/11).
 Template: Engraving-style Claude ad, de @LexnLin, em https://prompt-motion.com/lexnlin-038035 (9:16, 14,5 s, 60 qps, gravura em P&B + elementos pintados em vermelho + texto que se transforma).
@@ -8,7 +8,7 @@ Rodar no Claude com Opus 5.5 e esforço no máximo, anexando as imagens da pasta
 
 - What it's for: Instagram Reel for a Brazilian physician about borderline personality disorder, video version of a carousel.
 - Format: 9:16
-- Length: 30
+- Length: 35
 - Colours: aged paper #EFE5D0, ink #1A1A1A, brick red #8B1E1A. Nothing else.
 - Typeface: Anton (titles), Fraunces 900 Italic (key word), Courier Prime (note card).
 - Anything else: colar o prompt final abaixo inteiro.
@@ -16,9 +16,9 @@ Rodar no Claude com Opus 5.5 e esforço no máximo, anexando as imagens da pasta
 ## Prompt final
 
 ```
-You are a world-class motion designer. Make a 30.00-second vertical Reel in engraved-illustration style for Dr. Fabio Schmidt, a Brazilian physician who explains borderline personality disorder without stigma. It is the video version of his carousel: when someone with borderline breaks down in front of you, it is because you are the safest place they have. The viewer is the person who lives with them. Reference video attached: study its smoothness, timing, shot lengths, painted red elements on top of engravings and morphing text, then make it your own. Do not ask me anything. Build it.
+You are a world-class motion designer. Make a 35.00-second vertical Reel in engraved-illustration style for Dr. Fabio Schmidt, a Brazilian physician who explains borderline personality disorder without stigma. It is the video version of his carousel: when someone with borderline breaks down in front of you, it is because you are the safest place they have. The viewer is the person who lives with them. Reference video attached: study its smoothness, timing, shot lengths, painted red elements on top of engravings and morphing text, then make it your own. Do not ask me anything. Build it.
 
-FORMAT: one HTML file, 1080x1920, 30fps, exactly 30.00s, no audio. Render an MP4 (H.264, 1080x1920, 30fps) and give me the MP4 and the HTML.
+FORMAT: one HTML file, 1080x1920, 30fps, exactly 35.00s, no audio. Render an MP4 (H.264, 1080x1920, 30fps) and give me the MP4 and the HTML.
 SAFE AREA: all text stays inside x 7%–88% and y 14%–78% at all times, including entrances and exits. The right 12% and bottom 20% belong to the Instagram interface. Images may bleed to the edges; text may not.
 
 ASSETS (attached, use all of them, never redraw them, never add other images):
@@ -56,14 +56,14 @@ S8 close: SE É VOCÊ QUEM DESABA, / MANDA PRA QUEM SEMPRE TE ACOLHE.  then, red
 End lockup, small: DR. FABIO SCHMIDT · MÉDICO · CRM-SP 183549
 
 TIMELINE:
-0.0–3.5s  S1. A01 fills the lower half. A red circle draws around the crab. The four title lines land one by one; MAIS SEGURO arrives last in red. The empty shell A02 slides out of frame to the left.
-3.5–7.5s  S2. A03 enters as three vertical panels that join into one. A red stroke draws a line from the smile down to the frog. Title holds. Support line writes in under it.
-7.5–11.0s  S3. Hard cut to A04, push-in on the back of the woman. Then A05 (or V02): the door closes, a red underline snaps under PORTA at the exact moment it shuts.
-11.0–15.0s  S4. A06 fills the frame. The tear trail is traced in red from top to bottom. Title fades in on the fogged glass area. Support line under it.
-15.0–18.0s  S5. Paper only. The shell icon I02 sits small in the centre while the title lands above it. A red dot travels from the shell to CONFIA.
-18.0–22.0s  S6. First line alone. Then it morphs into the second line while A07 rises from the bottom, small, then grows. Red circle around the hands.
-22.0–26.0s  S7. The note card drops in, a brass pin lands on it, the items type in one by one with a red check mark drawn next to each.
-26.0–30.0s  S8. Back to A01 (or V01, the crab walking from the shell onto the palm). The two closing blocks stack, ink first, red second. Lockup line under them. Hold the last 1.5s perfectly still on the same framing as the first second, so the loop is seamless.
+0.0–4.0s  S1. A01 fills the lower half. A red circle draws around the crab. The four title lines land one by one; MAIS SEGURO arrives last in red. The empty shell A02 slides out of frame to the left.
+4.0–8.5s  S2. A03 enters as three vertical panels that join into one. A red stroke draws a line from the smile down to the frog. Title holds. Support line writes in under it.
+8.5–12.5s  S3. Hard cut to A04, push-in on the back of the woman. Then A05 (or V02): the door closes, a red underline snaps under PORTA at the exact moment it shuts.
+12.5–17.0s  S4. A06 fills the frame. The tear trail is traced in red from top to bottom. Title fades in on the fogged glass area. Support line under it.
+17.0–20.0s  S5. Paper only. The shell icon I02 sits small in the centre while the title lands above it. A red dot travels from the shell to CONFIA.
+20.0–24.5s  S6. First line alone. Then it morphs into the second line while A07 rises from the bottom, small, then grows. Red circle around the hands.
+24.5–29.0s  S7. The note card drops in, a brass pin lands on it, the items type in one by one with a red check mark drawn next to each.
+29.0–35.0s  S8. Back to A01 (or V01, the crab walking from the shell onto the palm). The two closing blocks stack, ink first, red second. Lockup line under them. Hold the last 1.5s perfectly still on the same framing as the first second, so the loop is seamless.
 Icons I01–I06 morph into one another as transition marks between scenes, each on screen under 0.6s.
 
 BUILD:
@@ -102,4 +102,5 @@ Clipes opcionais (Seedance 2.0, 4 s, 1080p, a partir da imagem):
 - Competência aparente: no carrossel, a definição era engolir sapo e chegar em casa de saco cheio. No vídeo ficou a situação (segura o dia inteiro fora de casa) e o nome do conceito, que é mais fiel ao termo da Linehan.
 - Só ficar virou Basta estar perto: ficar tem duplo sentido.
 - Saiu Desabar perto de você é sinal de confiança do cartão: repetia o S5.
+- 35 s em vez de 30: o texto tem cerca de 130 palavras; em 30 s não dá 1,2 s parado por título.
 - O fecho volta ao enquadramento da abertura para o vídeo rodar em loop.
