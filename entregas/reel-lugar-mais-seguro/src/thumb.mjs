@@ -10,7 +10,7 @@ await p.goto('file://'+process.cwd()+'/'+html+'?render'); await p.waitForFunctio
 const r=await p.evaluate(()=>{
   const c=document.createElement('canvas'); c.width=1080; c.height=1920; const x=c.getContext('2d',{willReadFrequently:true});
   x.imageSmoothingQuality='high'; x.drawImage(paperC,0,0);
-  const B=mkBlock({cx:540,top:336,maxW:864,maxH:548,gap:0.21,lines:[{k:1.38,segs:['SE O BORDERLINE']},{segs:['DESABA NA SUA FRENTE,']},{segs:['VOCÊ É O LUGAR']},{k:1.27,segs:['*MAIS SEGURO']},{segs:['QUE ELE TEM.']}]});
+  const B=mkBlock({cx:540,top:336,maxW:864,maxH:548,gap:0.21,lines:[{k:1.38,segs:['SE O BORDERLINE']},{segs:['DESABA NA SUA FRENTE,']},{segs:['VOCÊ É O LUGAR']},{k:1.2,segs:['*MAIS SEGURO']},{segs:['QUE ELE TEM.']}]});
   const T=tr('A01',0.47,0.675,507.6,1452,1.0); drawT(x,T);
   const cc=pt(T,0.47,0.678); brush(x,ellipsePts(cc[0],cc[1],0.246*T.w,0.099*T.h,-0.1,-2.3,1.07,3),0,1,10.5);
   // text-only pass for measuring
