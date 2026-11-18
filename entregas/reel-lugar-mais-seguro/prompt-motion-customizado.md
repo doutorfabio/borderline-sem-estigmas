@@ -104,3 +104,9 @@ Clipes opcionais (Seedance 2.0, 4 s, 1080p, a partir da imagem):
 - Saiu Desabar perto de você é sinal de confiança do cartão: repetia o S5.
 - 35 s em vez de 30: o texto tem cerca de 130 palavras; em 30 s não dá 1,2 s parado por título.
 - O fecho volta ao enquadramento da abertura para o vídeo rodar em loop.
+
+## Imagens geradas em 18/11 (GPT Image 2.6, alta, 2k; job_id no Higgsfield)
+
+A01 11c7fe37 · A02 dc5129cd · A03 11aabc72 · A04 afbd86e5 · A05 2306132a · A06 1d33fc0a · A07 fb4e4af5
+I01 a4928636 · I02 b034ae76 · I03 ede2755e · I04 82c7d392 · I05 b4c35d69 · I06 e1060845
+Cenas em 1520x2688 (9:16), ícones em 2048x2048. Os PNGs não sobem para o repositório (cerca de 100 MB); ficam no Higgsfield.
