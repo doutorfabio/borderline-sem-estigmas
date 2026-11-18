@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lugar mais seguro · Reel 35 s</title>
+<style>
+@font-face{font-family:'Anton';font-weight:400;font-style:normal;src:url(data:font/woff2;base64,__FONT_ANTON__) format('woff2');}
+@font-face{font-family:'Fraunces';font-weight:400;font-style:normal;src:url(data:font/woff2;base64,__FONT_FRAUNCES_400__) format('woff2');}
+@font-face{font-family:'Bodoni Moda';font-weight:900;font-style:italic;src:url(data:font/woff2;base64,__FONT_KEY__) format('woff2');}
+@font-face{font-family:'Courier Prime';font-weight:400;font-style:normal;src:url(data:font/woff2;base64,__FONT_COURIER_400__) format('woff2');}
+@font-face{font-family:'Courier Prime';font-weight:700;font-style:normal;src:url(data:font/woff2;base64,__FONT_COURIER_700__) format('woff2');}
+html,body{margin:0;height:100%;background:#1A1A1A;overflow:hidden}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#stage{display:block;height:calc(100vh - 14px);max-width:100vw;aspect-ratio:9/16;background:#EFE5D0;cursor:pointer}
+#bar{width:min(100vw,calc((100vh - 14px)*9/16));height:6px;margin-top:4px;background:#3a3a3a;cursor:pointer}
+#fill{height:100%;width:0;background:#8B1E1A}
+body.render #wrap{position:static;display:block}
+body.render #stage{height:1920px;width:1080px;max-width:none}
+body.render #bar{display:none}
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="stage" width="1080" height="1920"></canvas><div id="bar"><div id="fill"></div></div></div>
+<script>
+'use strict';
+/* Reel "Lugar mais seguro" · 1080x1920 · 30 fps · 35.00 s
+   Every visual is a pure function of time: drawScene(ctx, t). No timers, no state between frames. */
+const W=1080,H=1920,FPS=30,DUR=35,NF=FPS*DUR,SUB=4,SHUTTER=0.36;
+const PAPER='#EFE5D0',INK='#1A1A1A',RED='#8B1E1A';
+const SAFE={x0:0.07*W,x1:0.88*W,y0:0.14*H,y1:0.78*H};
+const CX=(SAFE.x0+SAFE.x1)/2;            // centre of the text-safe area
+const AR=2688/1520;                      // every engraving has this height/width
+const TAU=Math.PI*2;
+const ASSETS=__ASSETS_JSON__;
+
+// ---------- maths
+const clamp=(v,a=0,b=1)=>v<a?a:v>b?b:v;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const prog=(t,a,b)=>clamp((t-a)/(b-a));
+const eo3=x=>1-Math.pow(1-x,3), ei3=x=>x*x*x, ei2=x=>x*x;
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const smooth=x=>x*x*(3-2*x);
+// closed-form step response of a damped spring (f in Hz, z = damping ratio)
+function spring(t,f=3.6,z=0.68){
+  if(t<=0)return 0; if(t>1.4)return 1;
+  const w=TAU*f; let v;
+  if(z>=1){v=1-Math.exp(-w*t)*(1+w*t);}
+  else{const wd=w*Math.sqrt(1-z*z); v=1-Math.exp(-z*w*t)*(Math.cos(wd*t)+(z*w/wd)*Math.sin(wd*t));}
+  return (t>0.5&&Math.abs(1-v)<0.0015)?1:v;
+}
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+// ---------- canvases
+const stage=document.getElementById('stage'), acc=stage.getContext('2d');
+const subC=document.createElement('canvas'); subC.width=W; subC.height=H; const sub=subC.getContext('2d',{willReadFrequently:false});
+const paperC=document.createElement('canvas'); paperC.width=W; paperC.height=H;
+const mC=document.createElement('canvas'); const mX=mC.getContext('2d',{willReadFrequently:true});
+const IMG={}, SDFI={};
+let LAYER='all';                          // 'text' draws only type (used to measure the safe area)
+
+function makePaper(){
+  const x=paperC.getContext('2d'); x.fillStyle=PAPER; x.fillRect(0,0,W,H);
+  const d=x.getImageData(0,0,W,H), p=d.data, r=rng(20261118);
+  for(let i=0;i<p.length;i+=4){const n=(r()+r()-1)*5.5; p[i]+=n; p[i+1]+=n; p[i+2]+=n;}
+  x.putImageData(d,0,0);
+}
+async function loadImage(src){const im=new Image(); im.src=src; await im.decode(); return im;}
+// ink coverage map (+ optional red map) -> RGBA layer: ink or brick red, alpha = coverage
+async function inkLayer(aSrc,sSrc){
+  const a=await loadImage(aSrc), c=document.createElement('canvas'); c.width=a.naturalWidth; c.height=a.naturalHeight;
+  const x=c.getContext('2d',{willReadFrequently:true}); x.drawImage(a,0,0);
+  const d=x.getImageData(0,0,c.width,c.height), p=d.data; let sd=null;
+  if(sSrc){const s=await loadImage(sSrc), c2=document.createElement('canvas'); c2.width=c.width; c2.height=c.height;
+    const x2=c2.getContext('2d',{willReadFrequently:true}); x2.drawImage(s,0,0,c.width,c.height); sd=x2.getImageData(0,0,c.width,c.height).data;}
+  for(let i=0;i<p.length;i+=4){const al=p[i], k=sd?sd[i]/255:0; p[i]=26+113*k; p[i+1]=26+4*k; p[i+2]=26; p[i+3]=al;}
+  x.putImageData(d,0,0); return c;
+}
+// ---------- signed distance fields (exact EDT, anti-aliased edges) for perfect morphs
+const INF=1e20;
+function edt1d(g,off,stride,n,f,v,z){
+  v[0]=0; z[0]=-INF; z[1]=INF; f[0]=g[off];
+  for(let q=1,k=0,s=0;q<n;q++){
+    f[q]=g[off+q*stride]; const q2=q*q;
+    do{const r=v[k]; s=(f[q]-f[r]+q2-r*r)/(q-r)/2;}while(s<=z[k]&&--k>-1);
+    k++; v[k]=q; z[k]=s; z[k+1]=INF;
+  }
+  for(let q=0,k=0;q<n;q++){while(z[k+1]<q)k++; const r=v[k], d=q-r; g[off+q*stride]=f[r]+d*d;}
+}
+function sdfFromAlpha(al,w,h,R){
+  const n=w*h, go=new Float64Array(n), gi=new Float64Array(n), m=Math.max(w,h);
+  const f=new Float64Array(m), v=new Uint16Array(m), z=new Float64Array(m+1);
+  for(let i=0;i<n;i++){const a=al[i];
+    if(a<=0){go[i]=INF;gi[i]=0;} else if(a>=1){go[i]=0;gi[i]=INF;}
+    else{const d=0.5-a; go[i]=d>0?d*d:0; gi[i]=d<0?d*d:0;}}
+  for(const g of [go,gi]){for(let x=0;x<w;x++)edt1d(g,x,w,h,f,v,z); for(let y=0;y<h;y++)edt1d(g,y*w,1,w,f,v,z);}
+  const out=new Float32Array(n);
+  for(let i=0;i<n;i++)out[i]=clamp(Math.sqrt(gi[i])-Math.sqrt(go[i]),-R,R*0.34);   // positive inside
+  return out;
+}
+
+// ---------- type
+let capA=0.7,capK=0.7,KS=1;
+const fAnton=s=>`400 ${s}px Anton`, fKey=s=>`italic 900 ${s}px "Bodoni Moda"`, fSup=s=>`400 ${s}px Fraunces`;
+const fCP=s=>`400 ${s}px "Courier Prime"`, fCPB=s=>`700 ${s}px "Courier Prime"`;
+function measureSegs(segs,size,color){
+  let x=0; const out=[];
+  for(const raw of segs){
+    const key=raw[0]==='*', t=key?raw.slice(1):raw, fs=key?size*KS:size;
+    const font=key?fKey(fs):fAnton(fs), ls=key?0:size*0.012;
+    mX.font=font; mX.letterSpacing=ls+'px';
+    const w=mX.measureText(t).width-(ls);
+    out.push({t,font,ls,key,color:key?RED:color,x,w}); x+=w+(key?size*0.03:0);
+  }
+  const last=out[out.length-1]; const w=last.x+last.w;
+  return {segs:out,w};
+}
+function mkBlock(o){
+  const color=o.color||INK, gapK=o.gap??0.2;
+  const fit=base=>{let y=o.top,mw=0; const ls=[];
+    for(const l of o.lines){const size=base*(l.k||1), m=measureSegs(l.segs,size,color), cap=capA*size;
+      if(ls.length&&/[ÁÉÍÓÚÂÊÔÃÕÀ]/.test(l.segs.join('')))y+=size*0.13;
+      y+=cap;
+      ls.push({segs:m.segs,w:m.w,size,cap,by:y,cx:o.cx}); y+=base*gapK; mw=Math.max(mw,m.w);}
+    return {ls,mw,h:y-base*gapK-o.top};};
+  let lo=16,hi=o.maxSize||190;
+  for(let i=0;i<26;i++){const mid=(lo+hi)/2, r=fit(mid); if(r.mw<=o.maxW&&r.h<=o.maxH)lo=mid; else hi=mid;}
+  const base=Math.floor(lo), r=fit(base);
+  return {lines:r.ls,base,h:r.h,top:o.top,bottom:o.top+r.h,cx:o.cx};
+}
+// st: {dy,a,sc}; which: undefined | 'ink' | 'red' ; keySt: separate state for the key word
+function drawLine(ctx,L,st,keySt,which,cx,by){
+  cx=cx??L.cx; by=by??L.by;
+  for(const s of L.segs){
+    if(which==='ink'&&s.color!==INK)continue; if(which==='red'&&s.color!==RED)continue;
+    const q=(s.key&&keySt!==undefined)?keySt:st; if(!q||q.a<=0.001)continue;
+    ctx.save(); ctx.globalAlpha=clamp(q.a); ctx.font=s.font; ctx.letterSpacing=s.ls+'px'; ctx.fillStyle=s.color; ctx.textBaseline='alphabetic';
+    const sx=cx-L.w/2+s.x;
+    if(q.sc&&q.sc!==1){
+      const solo=s.key&&keySt!==undefined, px=solo?sx+s.w/2:cx, py=by-L.cap/2+(q.dy||0), hw=(solo?s.w:L.w)/2+6;
+      // a scale-in may never push type past the safe area
+      const sc=Math.min(q.sc,(px-SAFE.x0)/hw,(SAFE.x1-px)/hw);
+      ctx.translate(px,py); ctx.scale(sc,sc); ctx.translate(-px,-py);
+    }
+    ctx.fillText(s.t,sx,by+(q.dy||0)); ctx.restore();
+  }
+}
+const ON={dy:0,a:1,sc:1};
+function land(t,t0,dy=46){const u=t-t0; if(u<=0)return null; const s=spring(u,3.7,0.7); return {dy:(1-s)*dy,a:clamp(u/0.09),sc:1};}
+function pop(t,t0){const u=t-t0; if(u<=0)return null; const s=spring(u,4.4,0.56); return {dy:0,a:clamp(u/0.06),sc:1+(1-s)*0.26};}
+function fadeIn(t,t0,d=0.35,dy=14){const p=prog(t,t0,t0+d); if(p<=0)return null; return {dy:(1-eo3(p))*dy,a:smooth(p),sc:1};}
+function out(st,t,t0,d=0.22){if(!st)return null; const p=prog(t,t0,t0+d); if(p>=1)return null; if(p<=0)return st; return {dy:st.dy,a:st.a*(1-smooth(p)),sc:(st.sc||1)*(1-0.035*p)};}
+
+let MBIAS=0.27;
+// line morph: two rasters -> two distance fields -> one interpolated outline
+function mkMorph(A,B){
+  const pad=34, size=Math.max(A.size,B.size), w=Math.ceil(Math.max(A.w,B.w))+pad*2, asc=Math.ceil(size*1.02), h=asc+Math.ceil(size*0.3)+pad*2, baseY=pad+asc, R=Math.max(14,size*0.2);
+  const ras=(L,which)=>{mC.width=w; mC.height=h; mX.clearRect(0,0,w,h); drawLine(mX,L,ON,undefined,which,w/2,baseY);
+    const d=mX.getImageData(0,0,w,h).data, al=new Float32Array(w*h); let any=false;
+    for(let i=0;i<al.length;i++){al[i]=d[i*4+3]/255; if(al[i]>0)any=true;} return any?al:null;};
+  const layers=[];
+  for(const [which,rgb] of [['ink',[26,26,26]],['red',[139,30,26]]]){
+    const a=ras(A,which), b=ras(B,which); if(!a&&!b)continue;
+    const empty=()=>new Float32Array(w*h).fill(-R);
+    const c=document.createElement('canvas'); c.width=w; c.height=h;
+    layers.push({a:a?sdfFromAlpha(a,w,h,R):empty(), b:b?sdfFromAlpha(b,w,h,R):empty(), solo:!a||!b, rgb, c, x:c.getContext('2d'), id:new ImageData(w,h)});
+  }
+  return {A,B,w,h,baseY,layers,R};
+}
+function drawMorph(ctx,M,p){
+  const cx=lerp(M.A.cx,M.B.cx,p), by=lerp(M.A.by,M.B.by,p), q=1-p, bias=M.R*MBIAS*Math.sin(Math.PI*p)+0.5;
+  for(const Ly of M.layers){
+    const d=Ly.id.data, a=Ly.a, b=Ly.b, [r,g,bl]=Ly.rgb;
+    for(let i=0,j=0;i<a.length;i++,j+=4){
+      const v=(a[i]*q+b[i]*p)+(Ly.solo?0.5:bias);
+      if(v<=0){d[j+3]=0;continue;}
+      d[j]=r; d[j+1]=g; d[j+2]=bl; d[j+3]=v>=1?255:v*255;
+    }
+    Ly.x.putImageData(Ly.id,0,0);
+    ctx.drawImage(Ly.c,cx-M.w/2,by-M.baseY);
+  }
+}
+
+// ---------- red paint
+function resample(pts,step=1.6){
+  const xs=[pts[0][0]], ys=[pts[0][1]]; let carry=0;
+  for(let i=1;i<pts.length;i++){
+    const dx=pts[i][0]-pts[i-1][0], dy=pts[i][1]-pts[i-1][1], d=Math.hypot(dx,dy); let s=step-carry;
+    while(s<=d){xs.push(pts[i-1][0]+dx*s/d); ys.push(pts[i-1][1]+dy*s/d); s+=step;}
+    carry=d-(s-step);
+  }
+  return {xs,ys,n:xs.length};
+}
+function catmull(P,seg=24){
+  const o=[]; const g=i=>P[clamp(i,0,P.length-1)];
+  for(let i=0;i<P.length-1;i++){const p0=g(i-1),p1=g(i),p2=g(i+1),p3=g(i+2);
+    for(let k=0;k<seg;k++){const t=k/seg,t2=t*t,t3=t2*t;
+      o.push([0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+              0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)]);}}
+  o.push(P[P.length-1]); return o;
+}
+// hand-drawn ellipse: wobbles, drifts outwards and overlaps its own start
+function ellipsePts(cx,cy,rx,ry,rot,start,turns=1.07,seed=1){
+  const o=[], n=220, c=Math.cos(rot), s=Math.sin(rot);
+  for(let i=0;i<=n;i++){const u=i/n, a=start+u*turns*TAU, k=0.975+0.05*u+0.018*Math.sin(a*2+seed)+0.01*Math.sin(a*3.3+seed*2.1);
+    const x=Math.cos(a)*rx*k, y=Math.sin(a)*ry*k; o.push([cx+x*c-y*s, cy+x*s+y*c]);}
+  return o;
+}
+const wTaper=u=>0.34+0.66*Math.pow(Math.sin(Math.PI*clamp(0.04+u*0.92)),0.5);
+const wLine=u=>(0.45+0.55*Math.pow(Math.sin(Math.PI*clamp(0.06+u*0.5)),0.6))*(1-0.3*u);
+function brush(ctx,pts,u0,u1,width,wf=wTaper,color=RED,alpha=1){
+  if(u1<=u0||alpha<=0)return; const P=resample(pts), n=P.n;
+  const i0=Math.floor(u0*(n-1)), i1=Math.floor(u1*(n-1));
+  ctx.save(); ctx.globalAlpha=alpha; ctx.fillStyle=color; ctx.beginPath();
+  for(let i=i0;i<=i1;i++){const r=Math.max(0.6,width*wf(i/(n-1))/2); ctx.moveTo(P.xs[i]+r,P.ys[i]); ctx.arc(P.xs[i],P.ys[i],r,0,TAU);}
+  ctx.fill(); ctx.restore();
+}
+function dot(ctx,x,y,r,color=RED,alpha=1){if(r<=0||alpha<=0)return; ctx.save(); ctx.globalAlpha=alpha; ctx.fillStyle=color; ctx.beginPath(); ctx.arc(x,y,r,0,TAU); ctx.fill(); ctx.restore();}
+const bez=(a,c,b,t)=>[(1-t)*(1-t)*a[0]+2*(1-t)*t*c[0]+t*t*b[0],(1-t)*(1-t)*a[1]+2*(1-t)*t*c[1]+t*t*b[1]];
+
+// ---------- engravings
+function tr(key,ax,ay,fx,fy,s){const w=W*s,h=w*AR; return {key,ox:fx-ax*w,oy:fy-ay*h,w,h,s};}
+const pt=(T,nx,ny)=>[T.ox+nx*T.w,T.oy+ny*T.h];
+function drawT(ctx,T,alpha=1){if(alpha<=0)return; ctx.globalAlpha=alpha; ctx.drawImage(IMG[T.key],T.ox,T.oy,T.w,T.h); ctx.globalAlpha=1;}
+function paperDisc(ctx,x,y,r){if(r<=0.5)return; ctx.save(); ctx.beginPath(); ctx.arc(x,y,r,0,TAU); ctx.clip(); ctx.drawImage(paperC,0,0); ctx.restore();}
+
+// door leaf swinging on its hinges (left edge), true perspective, built from the engraving itself
+function drawDoor(ctx,T,theta){
+  const img=IMG.A05, iw=img.width, ih=img.height;
+  if(theta<0.003){drawT(ctx,T);return;}
+  const L0=0.3965,L1=0.7675,Y0=0.4905,Y1=0.8765,KX=0.793,KY0=0.686,KY1=0.738;
+  ctx.save(); ctx.beginPath(); ctx.rect(0,0,W,H);
+  ctx.rect(T.ox+L0*T.w,T.oy+Y0*T.h,(L1-L0)*T.w,(Y1-Y0)*T.h);
+  ctx.rect(T.ox+L1*T.w-1,T.oy+KY0*T.h,(KX-L1)*T.w+1,(KY1-KY0)*T.h);
+  ctx.clip('evenodd'); drawT(ctx,T); ctx.restore();
+  const wpx=(L1-L0)*T.w, D=3.3*wpx, xc=T.ox+(L0+L1)/2*T.w, yh=T.oy+0.665*T.h, co=Math.cos(theta), si=Math.sin(theta);
+  const proj=u=>{const X=-wpx/2+u*wpx*co, Z=D-u*wpx*si; return [xc+D*X/Z,D/Z];};
+  const strip=(u0,u1,y0,y1)=>{const [xa,va]=proj(u0),[xb,vb]=proj(u1), v=(va+vb)/2;
+    const top=T.oy+y0*T.h, dy=yh-(yh-top)*v, dh=(y1-y0)*T.h*v;
+    ctx.drawImage(img,(L0+u0*(L1-L0))*iw,y0*ih,(u1-u0)*(L1-L0)*iw,(y1-y0)*ih,xa-0.35,dy,xb-xa+0.7,dh);};
+  const N=72; for(let j=0;j<N;j++)strip(j/N,(j+1)/N,Y0,Y1);
+  const uk=(KX-L0)/(L1-L0), M=5; for(let j=0;j<M;j++)strip(1+(uk-1)*j/M,1+(uk-1)*(j+1)/M,KY0,KY1);
+}
+
+// ---------- transition marks: icon -> red shape morph -> icon, inside a painted ring
+const MK=[CX,1064], MR=176, MD=292;
+const MARKS=[
+  {tc:4.0, a:'I02',b:'I01'},
+  {tc:8.5, a:'I01',b:'I05'},
+  {tc:10.4,a:'I05',b:'I03'},
+  {tc:12.5,a:'I03',b:'I04'},
+  {tc:17.0,a:'I04',b:'I02',stay:19.58},
+  {tc:20.0,a:'I02',b:'I06',fromStay:true},
+  {tc:24.5,a:'I06',b:'I03'},
+  {tc:29.0,a:'I03',b:'I02'},
+];
+const blobC=document.createElement('canvas'); blobC.width=blobC.height=320; const blobX=blobC.getContext('2d'); const blobID=new ImageData(320,320);
+function drawBlob(ctx,a,b,p,x,y,size,alpha){
+  const A=SDFI[a], B=SDFI[b], d=blobID.data, q=1-p;
+  for(let i=0,j=0;i<A.length;i++,j+=4){const v=(A[i]*q+B[i]*p)*0.9+0.5; if(v<=0){d[j+3]=0;continue;} d[j]=139;d[j+1]=30;d[j+2]=26;d[j+3]=v>=1?255:v*255;}
+  blobX.putImageData(blobID,0,0);
+  ctx.save(); ctx.globalAlpha=alpha; ctx.imageSmoothingQuality='high'; ctx.drawImage(blobC,x-size/2,y-size/2,size,size); ctx.restore();
+}
+function drawIcon(ctx,key,x,y,size,alpha,rot=0){
+  if(alpha<=0||size<=1)return; ctx.save(); ctx.globalAlpha=alpha; ctx.translate(x,y); if(rot)ctx.rotate(rot);
+  ctx.imageSmoothingQuality='high'; ctx.drawImage(IMG[key],-size/2,-size/2,size,size); ctx.restore();
+}
+function drawMark(ctx,t,m){
+  const [x,y]=MK, tc=m.tc, t0=tc-0.42, tEnd=m.stay?m.stay:tc+0.42;
+  if(t<t0||t>tEnd)return;
+  const leaving=m.stay?0:ei3(prog(t,tc+0.30,tc+0.42));
+  const pin=m.fromStay?1:spring(t-t0,5.2,0.82);
+  paperDisc(ctx,x,y,MR*pin*(1-leaving));
+  // ring
+  const ru1=eio(prog(t,t0+0.03,t0+0.25)), ru0=eio(prog(t,tc+0.2,tc+0.4));
+  if(ru1>ru0)brush(ctx,ellipsePts(x,y,MR,MR,-0.2,-2.1,1.06,tc),ru0,ru1,7.5);
+  // icons
+  const u=prog(t,tc-0.15,tc+0.15), live=1-leaving;
+  const k=m.fromStay?1.035*1.05:(1+0.035*smooth(prog(t,t0,tc+0.42)))*(m.stay?1+0.05*smooth(prog(t,tc+0.15,m.stay)):1);
+  const scA=m.fromStay?1:lerp(0.62,1,spring(t-t0,4.6,0.7));
+  drawIcon(ctx,m.a,x,y,MD*scA*k,(1-prog(u,0.02,0.34)));
+  drawIcon(ctx,m.b,x,y,MD*k*(1-0.5*leaving),prog(u,0.66,0.98)*live);
+  const ba=Math.min(prog(u,0,0.26),1-prog(u,0.74,1));
+  if(ba>0)drawBlob(ctx,m.a,m.b,eio(prog(u,0.16,0.84)),x,y,MD*k,ba);
+}
+// the red dot that leaves a mark and lands where the next red paint starts
+function flight(ctx,t,t0,t1,from,to,lift=-160){
+  if(t<t0-0.06||t>t1)return false;
+  if(t<t0){dot(ctx,from[0],from[1],10*prog(t,t0-0.06,t0));return true;}
+  const p=eio(prog(t,t0,t1)), c=[(from[0]+to[0])/2,Math.min(from[1],to[1])+lift], q=bez(from,c,to,p);
+  dot(ctx,q[0],q[1],10); return true;
+}
+
+// ---------- copy (locked)
+let T1,T2,T3,T4,T5,T6a,T6b,T8a,T8b,LOCK,SUP2,SUP4,MORPHS;
+const LOCKUP='DR. FABIO SCHMIDT · MÉDICO · CRM-SP 183549';
+const CARD={x:90,y:548,w:846,h:700,rot:-0.022,size:39,
+  head:['PRA LEMBRAR NO PRÓXIMO','DIA DIFÍCIL:'],
+  items:[['1. Segurar o dia inteiro','   custa caro.'],['2. Você não precisa resolver.','   Basta estar perto.'],['3. Tem tratamento.']]};
+function layout(){
+  mX.font=fAnton(200); capA=mX.measureText('H').actualBoundingBoxAscent/200;
+  mX.font=fKey(200); capK=mX.measureText('H').actualBoundingBoxAscent/200; KS=capA/capK*1.03;
+  T1=mkBlock({cx:CX,top:286,maxW:846,maxH:452,gap:0.2,lines:[{k:1.2,segs:['SE O BORDERLINE']},{segs:['DESABA NA SUA FRENTE,']},{segs:['VOCÊ É O LUGAR']},{k:1.06,segs:['*MAIS SEGURO']},{segs:['QUE ELE TEM.']}]});
+  T2=mkBlock({cx:CX,top:286,maxW:846,maxH:318,gap:0.2,lines:[{segs:['FORA DE CASA,']},{segs:['SEGURA O DIA']},{k:1.08,segs:['*INTEIRO.']}]});
+  T3=mkBlock({cx:CX,top:300,maxW:846,maxH:330,gap:0.21,lines:[{segs:['NINGUÉM DESCONFIOU.']},{segs:['A CRISE ESPEROU']},{segs:['A ','*PORTA',' FECHAR.']}]});
+  T4=mkBlock({cx:540,top:392,maxW:748,maxH:350,gap:0.22,lines:[{segs:['A PRIMEIRA']},{segs:['LÁGRIMA DO DIA']},{segs:['SAI QUANDO ESCUTA']},{segs:['A ','*SUA VOZ.']}]});
+  T5=mkBlock({cx:CX,top:686,maxW:846,maxH:196,gap:0.24,lines:[{segs:['NINGUÉM DESABA NA FRENTE']},{segs:['DE QUEM NÃO ','*CONFIA.']}]});
+  T6a=mkBlock({cx:CX,top:452,maxW:846,maxH:410,gap:0.2,lines:[{segs:['ENTENDER ISSO']},{segs:['NÃO SIGNIFICA']},{segs:['AGUENTAR TUDO.']}]});
+  T6b=mkBlock({cx:CX,top:318,maxW:846,maxH:318,gap:0.22,lines:[{segs:['QUEM CONVIVE']},{segs:['TAMBÉM SE CANSA']},{segs:['E MERECE ','*CUIDADO.']}]});
+  T8a=mkBlock({cx:CX,top:290,maxW:846,maxH:140,gap:0.26,lines:[{segs:['SE É VOCÊ QUEM DESABA,']},{segs:['MANDA PRA QUEM SEMPRE TE ACOLHE.']}]});
+  T8b=mkBlock({cx:CX,top:T8a.bottom+46,maxW:846,maxH:220,gap:0.26,maxSize:T8a.base,color:RED,lines:[{segs:['SE É VOCÊ QUEM RECEBE,']},{segs:['MANDA PRA QUEM DESABA COM VOCÊ']},{segs:['E DIZ QUE AGORA ','*ENTENDEU.']}]});
+  LOCK={size:27,by:T8b.bottom+70};
+  SUP2={size:39,cx:CX,lines:['Marsha Linehan, criadora da DBT,','chamou isso de competência aparente.'],by:[T2.bottom+62,T2.bottom+62+52]};
+  SUP4={size:41,cx:540,lines:['Depois vem a culpa por mostrar','o pior justo pra você.'],by:[T4.bottom+64,T4.bottom+64+54]};
+  MORPHS=[
+    {t0:3.62,t1:4.12,M:[mkMorph(T1.lines[0],T2.lines[0]),mkMorph(T1.lines[1],T2.lines[1]),mkMorph(T1.lines[3],T2.lines[2])]},
+    {t0:8.3,t1:8.75,M:[mkMorph(T2.lines[0],T3.lines[0])]},
+    {t0:19.75,t1:20.25,M:[mkMorph(T5.lines[0],T6a.lines[0]),mkMorph(T5.lines[1],T6a.lines[1])]},
+    {t0:21.75,t1:22.25,M:[mkMorph(T6a.lines[0],T6b.lines[0]),mkMorph(T6a.lines[1],T6b.lines[1]),mkMorph(T6a.lines[2],T6b.lines[2])]},
+  ];
+}
+function supLine(ctx,S,i,wipe,alpha){
+  if(alpha<=0||wipe<=0)return; ctx.save(); ctx.font=fSup(S.size); ctx.letterSpacing='0px'; ctx.fillStyle=INK; ctx.textBaseline='alphabetic';
+  const w=ctx.measureText(S.lines[i]).width, x=S.cx-w/2;
+  if(wipe<1){ctx.beginPath(); ctx.rect(x-4,S.by[i]-S.size*1.1,(w+8)*wipe,S.size*1.6); ctx.clip();}
+  ctx.globalAlpha=alpha; ctx.fillText(S.lines[i],x,S.by[i]); ctx.restore();
+}
+const keySeg=L=>L.segs.find(s=>s.key);
+
+// ---------- scene geometry shared by images, paint and type
+function a01T(t){
+  let s,e;
+  let al;
+  if(t<10){s=1+0.06*smooth(prog(t,0,4.0)); e=ei3(prog(t,3.6,3.97)); al=1-smooth(prog(t,3.68,3.97));}
+  else{s=1+0.05*(1-eo3(prog(t,29.0,33.3))); e=1-eo3(prog(t,28.93,29.5)); al=smooth(prog(t,28.93,29.22));}
+  const T=tr('A01',0.47,0.675,507.6-170*e,1376+255*e,s); T.al=al; return T;
+}
+function a03T(t){return tr('A03',0.45,0.5,486,10+0.5*W*AR,1+0.06*smooth(prog(t,5.2,8.5)));}
+function a04T(t){const p=prog(t,8.5,10.4); return tr('A04',0.30,0.56,324,10+0.56*W*AR,1+0.2*(1-Math.pow(1-p,1.7)));}
+function a05T(t){
+  const s=(1+0.05*smooth(prog(t,10.4,12.7)))*(1+0.028*(1-eo3(prog(t,10.4,10.8))));
+  const u=t-11.2, sh=u>0?5.5*Math.exp(-u*13)*Math.sin(u*74):0;
+  return tr('A05',0.58,0.69,626.4+sh*0.4,10+0.69*W*AR+sh,s);
+}
+const doorTheta=t=>0.84*(1-0.07*prog(t,10.4,10.82))*(1-ei2(prog(t,10.82,11.2)))*(t<11.2?1:0);
+const M6=[540,822];
+function a06T(t){return tr('A06',0.49,0.365,M6[0],M6[1],1.2+0.06*smooth(prog(t,12.5,17.0)));}
+function a07T(t){
+  const rise=(1-spring(t-21.8,2.0,0.9))*420, sink=380*ei3(prog(t,24.18,24.5));
+  const s=0.6+0.52*eio(prog(t,22.35,23.05))+0.04*smooth(prog(t,23.05,24.4)), w=W*s, h=w*AR;
+  return {key:'A07',ox:540-w/2,oy:H-h+rise+sink,w,h,s,al:clamp((t-21.8)/0.16)*(1-smooth(prog(t,24.22,24.5)))};
+}
+const TEAR=[[0.647,0.398],[0.644,0.428],[0.640,0.458],[0.636,0.490],[0.632,0.520],[0.630,0.546],[0.632,0.566],[0.635,0.579]];
+function portaUnder(){const L=T3.lines[2], k=keySeg(L), x0=L.cx-L.w/2+k.x; return {x0:x0+2,x1:x0+k.w-4,y:L.by+L.size*0.15};}
+function confiaUnder(){const L=T5.lines[1], k=keySeg(L), x0=L.cx-L.w/2+k.x; return {x0:x0+2,x1:x0+k.w-10,y:L.by+L.size*0.16};}
+const PIN=[CARD.x+CARD.w/2,CARD.y+50];
+function cardM(t){
+  const s=spring(t-24.42,2.5,0.72), ex=ei3(prog(t,28.58,28.92)), u=t-25.05;
+  const nud=u>0?0.011*Math.exp(-u*9)*Math.sin(u*31):0;
+  return {dy:-(1-s)*520+600*ex, rot:CARD.rot+(1-s)*0.07+nud+0.12*ex, al:clamp((t-24.42)/0.13)*(1-smooth(prog(t,28.62,28.92)))};
+}
+
+// ---------- the frame
+function drawScene(ctx,t){
+  const all=LAYER==='all';
+  ctx.setTransform(1,0,0,1,0,0); ctx.globalAlpha=1; ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+  if(all)ctx.drawImage(paperC,0,0); else ctx.clearRect(0,0,W,H);
+
+  // ===== engravings and paint
+  if(all){
+    // S1 / S8: crab on the open palm
+    if(t<3.97||t>=28.93){
+      const T=a01T(t); drawT(ctx,T,T.al);
+      const e=t<10?ei3(prog(t,1.9,2.55)):1-eo3(prog(t,30.0,30.75));
+      if(e<1){ctx.save(); ctx.translate(112-340*e,1004); ctx.rotate(-1.5*e); ctx.drawImage(IMG.A02,-95,-64.3,190,128.6); ctx.restore();}
+      if(t<4){const c=pt(T,0.47,0.678), u1=eio(prog(t,0.55,1.3)), u0=eio(prog(t,3.28,3.58));
+        brush(ctx,ellipsePts(c[0],c[1],0.246*T.w,0.099*T.h,-0.1,-2.3,1.07,3),u0,u1,9.5*T.s);}
+    }
+    // S2: the dinner, three panels that join
+    if(t>=3.96&&t<8.5){
+      const T=a03T(t), join=eio(prog(t,4.75,5.2));
+      if(join>=1){drawT(ctx,T);}
+      else for(let i=0;i<3;i++){
+        const u=t-(3.96+i*0.07), rise=(1-spring(u,2.6,0.8))*300, drift=Math.max(0,t-4.3)*16;
+        const ox=[-30,0,30][i]*(1-join), oy=([150,0,230][i]-drift)*(1-join)+rise;
+        ctx.save(); ctx.beginPath(); ctx.rect(i*360+ox,-10,360,H+20); ctx.clip(); ctx.translate(ox,oy); drawT(ctx,T,clamp(u/0.15)); ctx.restore();
+      }
+      const er=eio(prog(t,7.95,8.2));
+      const line=catmull([pt(T,0.150,0.486),pt(T,0.20,0.497),pt(T,0.262,0.512),pt(T,0.318,0.515),pt(T,0.352,0.505)]);
+      brush(ctx,line,er,eio(prog(t,5.4,5.86)),8*T.s,wLine);
+      const c=pt(T,0.405,0.497);
+      brush(ctx,ellipsePts(c[0],c[1],0.052*T.w,0.0295*T.h,0.05,2.9,1.08,5),er,eio(prog(t,5.8,6.36)),7.5*T.s);
+    }
+    // S3: the vanity, then the door
+    if(t>=8.5&&t<10.4)drawT(ctx,a04T(t));
+    if(t>=10.4&&t<12.5)drawDoor(ctx,a05T(t),doorTheta(t));
+    // S4: the fogged mirror
+    if(t>=12.5&&t<16.98){
+      const T=a06T(t), pi=eio(prog(t,12.5,13.08)), pc=eio(prog(t,16.52,16.98));
+      ctx.save();
+      if(pi<1||pc>0){
+        const cx=lerp(M6[0],MK[0],pc), cy=lerp(M6[1],MK[1],pc);
+        const rx=pc>0?lerp(1250,168,pc):lerp(40,1150,pi), ry=pc>0?lerp(1250,168,pc):lerp(52,1420,pi);
+        ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,TAU); ctx.clip();
+      }
+      drawT(ctx,T);
+      const u=Math.pow(prog(t,13.25,14.35),1.25), fa=1-prog(t,16.5,16.68);
+      const path=catmull(TEAR.map(p=>pt(T,p[0],p[1])));
+      brush(ctx,path,0,u,8.5*T.s,x=>0.5+0.5*x,RED,fa);
+      if(u>0&&u<1){const P=resample(path), i=Math.floor(u*(P.n-1)); dot(ctx,P.xs[i],P.ys[i],7*T.s,RED,fa);}
+      if(u>=1){const c=pt(T,0.6355,0.5865), k=spring(t-14.35,4.2,0.6); ctx.save(); ctx.globalAlpha=fa; ctx.fillStyle=RED; ctx.beginPath();
+        const r=13*T.s*k; ctx.moveTo(c[0],c[1]-r*2.1); ctx.bezierCurveTo(c[0]+r*0.5,c[1]-r*1.2,c[0]+r*1.05,c[1]-r*0.5,c[0]+r,c[1]+r*0.15);
+        ctx.arc(c[0],c[1]+r*0.15,r,0,Math.PI); ctx.bezierCurveTo(c[0]-r*1.05,c[1]-r*0.5,c[0]-r*0.5,c[1]-r*1.2,c[0],c[1]-r*2.1); ctx.fill(); ctx.restore();}
+      ctx.restore();
+    }
+    // S6: the two hands
+    if(t>=21.8&&t<24.5){
+      const T=a07T(t); drawT(ctx,T,T.al);
+      const c=pt(T,0.495,0.70);
+      brush(ctx,ellipsePts(c[0],c[1],0.294*T.w,0.136*T.h,0.06,-1.9,1.07,7),eio(prog(t,24.0,24.2)),eio(prog(t,23.05,23.78)),10*T.s);
+    }
+  }
+
+  // ===== S7: the pinned note
+  if(t>=24.42&&t<28.93){
+    const m=cardM(t), C=CARD;
+    ctx.save(); ctx.translate(PIN[0],PIN[1]+m.dy); ctx.rotate(m.rot); ctx.translate(-PIN[0],-PIN[1]);
+    if(all){
+      // engraved (hatched) shadow, then the card
+      ctx.save(); ctx.beginPath(); ctx.rect(C.x+16,C.y+18,C.w,C.h); ctx.clip(); ctx.strokeStyle=INK; ctx.lineWidth=1.6; ctx.globalAlpha=0.55*m.al; ctx.beginPath();
+      for(let k=-C.h;k<C.w+C.h;k+=7){ctx.moveTo(C.x+16+k,C.y+18); ctx.lineTo(C.x+16+k+C.h,C.y+18+C.h);} ctx.stroke(); ctx.restore();
+      ctx.save(); ctx.beginPath(); ctx.rect(C.x,C.y,C.w,C.h); ctx.clip(); ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(paperC,0,0); ctx.restore();
+      ctx.globalAlpha=m.al; ctx.strokeStyle=INK; ctx.lineWidth=2.6; ctx.strokeRect(C.x,C.y,C.w,C.h); ctx.globalAlpha=1;
+    }
+    const ta=(1-smooth(prog(t,28.55,28.68)))*m.al;
+    if(ta>0){
+      ctx.globalAlpha=ta; ctx.fillStyle=INK; ctx.textBaseline='alphabetic'; ctx.letterSpacing='0px';
+      const tx=C.x+124, lh=57;
+      ctx.font=fCPB(C.size);
+      const hp=prog(t,25.08,25.38)*(C.head[0].length+C.head[1].length);
+      ctx.fillText(C.head[0].slice(0,Math.round(clamp(hp,0,C.head[0].length))),tx-62,C.y+158);
+      ctx.fillText(C.head[1].slice(0,Math.round(clamp(hp-C.head[0].length,0,C.head[1].length))),tx-62,C.y+158+lh-4);
+      ctx.font=fCP(C.size);
+      const win=[[25.42,25.87],[26.05,26.70],[26.88,27.13]], ys=[C.y+324,C.y+470,C.y+616];
+      for(let i=0;i<3;i++){
+        const it=C.items[i], n0=it[0].length, n=n0+(it[1]?it[1].length:0), k=prog(t,win[i][0],win[i][1])*n;
+        ctx.fillText(it[0].slice(0,Math.round(clamp(k,0,n0))),tx,ys[i]);
+        if(it[1])ctx.fillText(it[1].slice(0,Math.round(clamp(k-n0,0,it[1].length))),tx,ys[i]+lh);
+        if(all){const cu=eo3(prog(t,win[i][1],win[i][1]+0.15)), bx=C.x+58, by=ys[i]-13;
+          brush(ctx,catmull([[bx,by],[bx+11,by+13],[bx+17,by+18],[bx+29,by-2],[bx+47,by-29]],10),0,cu,8,u=>0.55+0.45*Math.sin(Math.PI*clamp(u*0.9+0.05)),RED,ta);}
+      }
+      ctx.globalAlpha=1;
+    }
+    if(all&&t>=25.05){ // the pin (the red dot of the last mark lands here)
+      const k=spring(t-25.05,4.6,0.5), r=15*(1+(1-k)*0.9);
+      ctx.save(); ctx.globalAlpha=0.6*m.al; ctx.strokeStyle=INK; ctx.lineWidth=1.5; ctx.beginPath();
+      for(let i=0;i<5;i++){ctx.moveTo(PIN[0]+6+i*4,PIN[1]+12+i*2.2); ctx.lineTo(PIN[0]+20+i*4,PIN[1]+24+i*2.2);} ctx.stroke(); ctx.restore();
+      dot(ctx,PIN[0],PIN[1],r,RED,m.al); dot(ctx,PIN[0]-4.5,PIN[1]-5,3.6,PAPER,0.9*m.al);
+    }
+    ctx.restore();
+  }
+
+  // ===== type
+  // S1 hook
+  if(t<4.12){
+    const L=T1.lines, go=3.62;
+    if(t<go){
+      drawLine(ctx,L[0],land(t,-0.6)); drawLine(ctx,L[1],land(t,0.30)); drawLine(ctx,L[2],land(t,0.70));
+      drawLine(ctx,L[4],land(t,1.10)); drawLine(ctx,L[3],pop(t,1.48));
+    }else{drawLine(ctx,L[2],out(ON,t,go,0.2)); drawLine(ctx,L[4],out(ON,t,go,0.2));}
+  }
+  // S2
+  if(t>=4.12&&t<8.5){
+    const L=T2.lines;
+    if(t<8.3)for(const l of L)drawLine(ctx,l,ON);
+    else{drawLine(ctx,L[1],out(ON,t,8.3,0.2)); drawLine(ctx,L[2],out(ON,t,8.3,0.2));}
+    const sa=1-smooth(prog(t,8.12,8.3));
+    supLine(ctx,SUP2,0,prog(t,5.0,5.42),sa); supLine(ctx,SUP2,1,prog(t,5.4,5.9),sa);
+  }
+  // S3
+  if(t>=8.75&&t<12.5){
+    const L=T3.lines, ex=12.26;
+    drawLine(ctx,L[0],out(ON,t,ex)); drawLine(ctx,L[1],out(land(t,10.42),t,ex)); drawLine(ctx,L[2],out(land(t,10.6),t,ex));
+    if(all&&t>=11.2){const U=portaUnder(), a=1-smooth(prog(t,ex,ex+0.2));
+      brush(ctx,[[U.x0,U.y+2],[lerp(U.x0,U.x1,0.5),U.y-1],[U.x1,U.y+1]],0,eo3(prog(t,11.2,11.29)),9,u=>0.75+0.25*Math.sin(Math.PI*u),RED,a);}
+  }
+  // S4
+  if(t>=13.0&&t<16.75){
+    const ex=16.5; T4.lines.forEach((l,i)=>drawLine(ctx,l,out(fadeIn(t,13.0+i*0.12),t,ex)));
+    const sa=1-smooth(prog(t,ex,ex+0.2));
+    supLine(ctx,SUP4,0,prog(t,14.4,14.72),sa); supLine(ctx,SUP4,1,prog(t,14.66,14.95),sa);
+  }
+  // S5
+  if(t>=17.2&&t<19.75){
+    drawLine(ctx,T5.lines[0],land(t,17.25)); drawLine(ctx,T5.lines[1],land(t,17.5),pop(t,17.74));
+  }
+  if(all&&t>=18.0&&t<19.76){
+    const U=confiaUnder(), from=[MK[0]+64,MK[1]+34], to=[U.x0,U.y];
+    if(t<18.5){const p=eio(prog(t,18.05,18.5)), q=bez(from,[MK[0]+300,880],to,p); dot(ctx,q[0],q[1],10*smooth(prog(t,18.0,18.08)));}
+    else brush(ctx,[[U.x0,U.y],[lerp(U.x0,U.x1,0.5),U.y-2],[U.x1,U.y+1]],eio(prog(t,19.55,19.75)),Math.max(0.012,eo3(prog(t,18.5,18.72))),10,u=>0.8+0.2*Math.sin(Math.PI*u));
+  }
+  // S6
+  if(t>=20.12&&t<21.75){const L=T6a.lines; if(t>=20.25){drawLine(ctx,L[0],ON); drawLine(ctx,L[1],ON);} drawLine(ctx,L[2],land(t,20.12));}
+  if(t>=22.25&&t<24.4)for(const l of T6b.lines)drawLine(ctx,l,out(ON,t,24.15));
+  // S8 close + lockup
+  if(t>=29.4){
+    drawLine(ctx,T8a.lines[0],land(t,29.45,36)); drawLine(ctx,T8a.lines[1],land(t,29.62,36));
+    drawLine(ctx,T8b.lines[0],land(t,30.9,36)); drawLine(ctx,T8b.lines[1],land(t,31.06,36)); drawLine(ctx,T8b.lines[2],land(t,31.22,36),pop(t,31.46));
+    const f=fadeIn(t,31.9,0.4,10);
+    if(f){ctx.save(); ctx.globalAlpha=f.a; ctx.font=fAnton(LOCK.size); ctx.letterSpacing='2.6px'; ctx.fillStyle=INK; ctx.textBaseline='alphabetic';
+      const w=ctx.measureText(LOCKUP).width-2.6; ctx.fillText(LOCKUP,CX-w/2,LOCK.by+f.dy); ctx.restore();}
+  }
+  // text morphs
+  for(const G of MORPHS)if(t>=G.t0&&t<G.t1){const p=eio(prog(t,G.t0,G.t1)); for(const M of G.M)drawMorph(ctx,M,p);}
+
+  // ===== marks and travelling dots (always on top)
+  if(all){
+    for(const m of MARKS)drawMark(ctx,t,m);
+    const U=portaUnder(); if(!flight(ctx,t,10.84,11.1,MK,[U.x0,U.y],-120)&&t>11.1&&t<11.2)dot(ctx,U.x0,U.y,10);
+    const T=a06T(13.25), tp=pt(T,TEAR[0][0],TEAR[0][1]); flight(ctx,t,12.92,13.25,MK,tp,-90);
+    flight(ctx,t,24.92,25.05,MK,PIN,-60);
+  }
+}
+
+// ---------- frames: 4 sub-frames blended (motion blur)
+function seek(t){drawScene(acc,t);}
+function renderFrame(i,n=SUB){
+  for(let k=0;k<n;k++){drawScene(sub,(i+k*SHUTTER/n)/FPS); acc.globalAlpha=1/(k+1); acc.drawImage(subC,0,0);}
+  acc.globalAlpha=1;
+}
+function frameJPEG(i,q=0.97){renderFrame(i); return stage.toDataURL('image/jpeg',q);}
+function framePNG(i){renderFrame(i); return stage.toDataURL('image/png');}
+function textBBox(t){ // bounding box of every text pixel at time t
+  LAYER='text'; drawScene(sub,t); LAYER='all';
+  const d=new Uint32Array(sub.getImageData(0,0,W,H).data.buffer); let x0=W,y0=H,x1=-1,y1=-1;
+  for(let y=0;y<H;y++){const o=y*W; let a=-1,b=-1; for(let x=0;x<W;x++)if((d[o+x]>>>24)>10){a=x;break;}
+    if(a<0)continue; for(let x=W-1;x>=a;x--)if((d[o+x]>>>24)>10){b=x;break;}
+    if(a<x0)x0=a; if(b>x1)x1=b; if(y<y0)y0=y; if(y>y1)y1=y;}
+  return x1<0?null:[x0,y0,x1,y1];
+}
+Object.assign(window,{seek,renderFrame,frameJPEG,framePNG,textBBox,drawScene,W,H,FPS,DUR,NF});
+
+(async function init(){
+  const R=new URLSearchParams(location.search).has('render'); if(R)document.body.classList.add('render');
+  makePaper();
+  await Promise.all([document.fonts.load(fAnton(80),'AÉ'),document.fonts.load(fKey(80),'AÉ'),document.fonts.load(fSup(40),'aé'),document.fonts.load(fCP(40),'aé'),document.fonts.load(fCPB(40),'AÉ')]);
+  for(const k of Object.keys(ASSETS)){
+    IMG[k]=await inkLayer(ASSETS[k].a,ASSETS[k].s);
+    if(ASSETS[k].m){const im=await loadImage(ASSETS[k].m); mC.width=mC.height=320; mX.clearRect(0,0,320,320); mX.drawImage(im,0,0,320,320);
+      const d=mX.getImageData(0,0,320,320).data, al=new Float32Array(320*320); for(let i=0;i<al.length;i++)al[i]=d[i*4]/255; SDFI[k]=sdfFromAlpha(al,320,320,46);}
+  }
+  layout();
+  window.ready=true;
+  if(R){renderFrame(0);return;}
+  // live preview: click to pause, bar to scrub
+  let playing=true, base=performance.now(), cur=-1, cost=0;
+  const fill=document.getElementById('fill'), bar=document.getElementById('bar');
+  stage.addEventListener('click',()=>{playing=!playing; if(playing)base=performance.now()-cur/FPS*1000;});
+  bar.addEventListener('click',e=>{const r=bar.getBoundingClientRect(); cur=Math.floor((e.clientX-r.left)/r.width*NF); base=performance.now()-cur/FPS*1000; renderFrame(cur); fill.style.width=(cur/NF*100)+'%';});
+  (function loop(){
+    if(playing){const i=Math.floor(((performance.now()-base)/1000*FPS)%NF);
+      if(i!==cur){const a=performance.now(); renderFrame(i,cost>26?(cost>52?1:2):SUB); cost=(performance.now()-a)*(cost>26?(cost>52?4:2):1); cur=i; fill.style.width=(i/NF*100)+'%';}}
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
