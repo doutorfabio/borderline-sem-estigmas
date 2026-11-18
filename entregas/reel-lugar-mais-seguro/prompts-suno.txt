@@ -1,0 +1,11 @@
+PROMPTS PARA O SUNO - Reel Lugar mais seguro (35 s)
+
+Como usar: modo Custom, Instrumental ligado, campo de letra vazio. Cole o texto no campo Style of Music.
+
+1. MUSICA DE FUNDO (396 caracteres)
+
+Instrumental, 120 BPM, 4/4, D major, steady pulse from the first second, no fade-in. Chamber folk: pizzicato strings, upright bass, soft brushed snare, warm cello lead. No piano, no vocals. Present, tender, hopeful, not sad, not heavy. [0:00] pizzicato alone [0:04] bass joins [0:08] sparse, one held cello note [0:12] cello melody [0:20] full and warm [0:29] resolve [0:33] last chord, ends 0:35
+
+2. EFEITOS SONOROS EM SEQUENCIA (377 caracteres)
+
+Sound effects only. No music, no melody, no voice, no bass, no reverb. Dry close-mic foley, one sound at a time, 2 seconds of silence between sounds: 1 soft brush stroke on paper, 2 paper sheet sliding, 3 small ink drop pop, 4 wooden door closing with latch click, 5 single water drop, 6 short typewriter burst, 7 thumbtack pushed into cork, 8 quick pencil check mark on paper.
