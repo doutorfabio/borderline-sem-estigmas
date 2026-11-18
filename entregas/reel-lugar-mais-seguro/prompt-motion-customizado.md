@@ -21,16 +21,16 @@ You are a world-class motion designer. Make a 35.00-second vertical Reel in engr
 FORMAT: one HTML file, 1080x1920, 30fps, exactly 35.00s, no audio. Render an MP4 (H.264, 1080x1920, 30fps) and give me the MP4 and the HTML.
 SAFE AREA: all text stays inside x 7%–88% and y 14%–78% at all times, including entrances and exits. The right 12% and bottom 20% belong to the Instagram interface. Images may bleed to the edges; text may not.
 
-ASSETS (attached, use all of them, never redraw them, never add other images):
-A01_caranguejo_mao.png  hermit crab out of its shell, resting on an open palm
-A02_concha_vazia.png  empty spiral shell
-A03_jantar_sapo.png  woman at a formal dinner, smiling, swallowing a frog
-A04_penteadeira.png  woman at a vanity taking off her pearl necklace, frog on the table
-A05_porta.png  front door closing, key in the lock
-A06_espelho.png  fogged mirror with one tear trail
-A07_maos_concha.png  two hands cupping the hermit crab
-I01 to I06 icons (frog, shell, key, teardrop, pearl necklace, cupped hands), isolated on paper
-V01_caranguejo.mp4, V02_porta.mp4 (optional short clips; if present, play them inside their scene, muted, one shot each)
+ASSETS (13 images attached; file names come from a phone, so identify each one by what it shows; use all of them, never redraw them, never add other images):
+A01 IMG_3799  hermit crab out of its shell, resting on an open palm, empty shell beside it
+A02 IMG_3803  empty spiral shell alone on paper (vertical)
+A03 IMG_3801  woman at a formal dinner, eyes closed, swallowing a frog from her fork
+A04 IMG_3805  woman seen from behind at a vanity taking off her pearl necklace, frog on the table
+A05 IMG_3798  front door from inside, key in the lock, coat on a hook
+A06 IMG_3797  fogged oval mirror with one tear trail, sink below
+A07 IMG_3796  two hands cupping the hermit crab in its shell
+Icons (square): I01 IMG_3795 frog · I02 IMG_3800 shell · I03 IMG_3802 key · I04 IMG_3794 teardrop · I05 IMG_3804 pearl necklace · I06 IMG_3806 empty cupped hands
+Cut every icon out of its paper background before using it.
 
 STYLE:
 - Light mode on aged paper #EFE5D0 with a very fine grain. Ink #1A1A1A. One accent only: brick red #8B1E1A, used for painted strokes, circles, underlines and the key word.
