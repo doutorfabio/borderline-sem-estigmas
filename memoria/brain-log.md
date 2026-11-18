@@ -49,3 +49,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "As letras do churrasco não estão legais tem que ser mais discretas mas ainda visíveis e mudar a frase final".
 - Correção: chamada trocada pela redação aprovada em 02/11 (Manda pra quem você queria que entendesse.).
 - Regra prática: texto ditado por ele que bate num anti-pattern entra como pedido, mas o risco vai em uma linha antes da entrega, não depois.
+
+## 2026-11-18, a11 (clipe gerado usado sem conferir voz e boca)
+- O que aconteceu: no Reel fica bem sozinho montei duas versões com os três clipes de estante do Seedance (video_edit) sem medir boca contra voz. A imagem desses clipes vem comprimida no tempo (até 0,3 s adiantada no fim de cada um), e os cortes internos apareciam antes do fim da frase. Também emendei os clipes sem ver que o áudio deles se sobrepõe.
+- Frase dele: "Está mal editado com cenas vazando cortes da seguinte, brools entrando atrasada música um pouco alta".
+- Correção: remontagem sobre a gravação original (achada pelo job no Higgsfield), com mapa quadro a quadro, cortes presos aos dele e sincronia medida por código (média de 21 ms).
+- Regra prática: antes de montar com clipe gerado a partir de gravação dele, (1) comparar duração e cortes do clipe com o original; (2) medir a abertura da boca contra a voz no começo, no meio e no fim de cada clipe; (3) só então posicionar cortes, zoom e B-roll.

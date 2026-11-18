@@ -149,7 +149,7 @@
       "erro": "Clipe gerado usado sem conferir a voz",
       "consequencia": "Pq não colocou minha voz?",
       "acao": "Conferir voz e boca antes; trocar com voice_change no elemento Fabio.",
-      "ultima_violacao": "2026-11-04",
+      "ultima_violacao": "2026-11-18",
       "fonte": "memoria/correcoes.md:208"
     },
     {
