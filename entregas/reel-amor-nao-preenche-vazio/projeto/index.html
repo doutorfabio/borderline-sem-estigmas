@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Reel: Todo o amor da casa não preenche o vazio do borderline</title>
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:Serif4;font-style:italic;font-weight:500;src:url(fonts/source-serif-4-latin-500-italic.woff2) format('woff2')}
+@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+:root{--paper:#F4F0E6;--ink:#0D0D0D;--red:#B3261E;--redn:#D2362C}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+#cam{position:absolute;inset:0;transform-origin:540px 845px}
+#grain{position:absolute;inset:0;opacity:.07;mix-blend-mode:multiply;pointer-events:none}
+.sc{position:absolute;inset:0;visibility:hidden}
+.blk{position:absolute;display:flex;flex-direction:column;align-items:flex-start}
+.blk.c{align-items:center}
+.ln{overflow:hidden;line-height:1.4;margin-bottom:-.34em;white-space:nowrap;padding:0 .03em}
+.ln>span{display:inline-block}
+.A{font-family:Anton;text-transform:uppercase;color:var(--ink)}
+.I{font-family:Serif4;font-style:italic;font-weight:500;color:var(--ink)}
+.I .ln{margin-bottom:0;line-height:1.5}
+.red{color:var(--red)}
+.dark .A,.dark .I{color:var(--paper)}
+.dark .red{color:var(--redn)}
+.hollow{color:transparent!important;-webkit-text-stroke:5px var(--paper)}
+.at{position:absolute;font-family:Mont;font-weight:600;font-size:30px;color:var(--ink);letter-spacing:.01em}
+#hearts{position:absolute;inset:0;pointer-events:none;z-index:3}
+#s1a,#s1b{z-index:5}
+.h{position:absolute;left:0;top:0;width:0;height:0;visibility:hidden}
+.h svg{position:absolute;left:-50px;top:-45px;width:100px;height:90px;overflow:visible;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22))}
+#g{position:absolute;inset:0}
+</style>
+</head>
+<body>
+<div id="stage"><div id="cam">
+
+  <!-- CENA 1: capa -->
+  <div class="sc" id="s1">
+    <div class="blk c A" id="s1a" data-fit="800" style="left:103px;width:800px;top:160px">
+      <div class="ln"><span>TODO O AMOR DA CASA</span></div>
+      <div class="ln"><span>NÃO PREENCHE O</span></div>
+    </div>
+    <div id="vzwrap" style="position:absolute;left:73px;top:430px;width:860px;height:540px;overflow:hidden">
+      <svg id="vz" width="860" height="540" style="position:absolute;left:0;top:0;overflow:visible"></svg>
+    </div>
+    <div class="blk c A" id="s1b" data-fit="720" style="left:143px;width:720px;top:1272px">
+      <div class="ln"><span>DO BORDERLINE</span></div>
+    </div>
+    <div class="at" id="s1at" style="left:103px;width:800px;text-align:center;top:1462px">@drfabioschmidt</div>
+  </div>
+
+  <!-- CENA 2 clara -->
+  <div class="sc" id="s2">
+    <div class="blk A" id="s2a" data-fit="720" style="left:74px;top:300px">
+      <div class="ln"><span>A TARDE</span></div>
+      <div class="ln"><span>FOI BOA.</span></div>
+    </div>
+  </div>
+
+  <!-- CENA 2 escura -->
+  <div class="sc dark" id="s2n">
+    <div class="blk A" id="s2h" data-fit="720" style="left:74px;top:300px">
+      <div class="ln"><span class="hollow">A TARDE</span></div>
+      <div class="ln"><span class="hollow">FOI BOA.</span></div>
+    </div>
+    <div class="blk I" id="s2i" style="left:76px;top:880px;font-size:76px">
+      <div class="ln"><span>à noite,</span></div>
+    </div>
+    <div class="blk A" id="s2r" data-fit="850" style="left:74px;top:975px">
+      <div class="ln"><span class="red">PARECIA QUE NUNCA</span></div>
+      <div class="ln"><span class="red">TINHA ACONTECIDO.</span></div>
+    </div>
+  </div>
+
+  <!-- CENA 3 escura -->
+  <div class="sc dark" id="s3">
+    <div class="blk I" id="s3i" style="left:76px;top:640px;font-size:56px">
+      <div class="ln"><span>sente de verdade, às vezes demais.</span></div>
+    </div>
+    <div class="blk A" id="s3a" data-fit="850" style="left:74px;top:810px">
+      <div class="ln"><span>QUANDO ACABA,</span></div>
+      <div class="ln"><span class="red">NÃO SOBRA NADA.</span></div>
+    </div>
+  </div>
+
+  <!-- CENA 4 gráfico -->
+  <div class="sc" id="s4">
+    <div class="blk A" id="s4a" data-fit="620" style="left:74px;top:150px">
+      <div class="ln"><span>UM DIA BOM,</span></div>
+      <div class="ln"><span>EM GRÁFICO.</span></div>
+    </div>
+    <svg id="g" width="1080" height="1920" viewBox="0 0 1080 1920">
+      <path id="ax" d="M112 570 L112 1182 L932 1182" fill="none" stroke="#0D0D0D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="up" d="M112 1182 L270 1044 L450 902 L650 724" fill="none" stroke="#B3261E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="dn" d="M650 724 L652 1182" fill="none" stroke="#B3261E" stroke-width="8" stroke-linecap="round"/>
+      <path id="fl" d="M652 1182 L932 1182" fill="none" stroke="#B3261E" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <div class="blk I lab" id="l1" style="right:846px;top:962px;font-size:44px"><div class="ln"><span>riu</span></div></div>
+    <div class="blk I lab" id="l2" style="right:672px;top:822px;font-size:44px"><div class="ln"><span>conversou</span></div></div>
+    <div class="blk I lab" id="l3" style="right:478px;top:646px;font-size:44px"><div class="ln"><span>ficou bem</span></div></div>
+    <div class="blk c A" id="s4p" style="left:502px;width:300px;top:1196px;font-size:50px">
+      <div class="ln"><span>FECHOU A PORTA</span></div>
+    </div>
+    <div class="blk c I" id="s4i" style="left:74px;width:860px;top:1350px;font-size:53px">
+      <div class="ln"><span>o que foi sentido não fica guardado.</span></div>
+    </div>
+  </div>
+
+  <!-- CENA 5 -->
+  <div class="sc" id="s5">
+    <div class="blk A" id="s5a" data-fit="850" style="left:74px;top:520px">
+      <div class="ln"><span>SEU AMOR</span></div>
+      <div class="ln"><span>NÃO ESTÁ FALHANDO.</span></div>
+    </div>
+    <div class="blk A" id="s5r" data-fit="760" style="left:74px;top:850px">
+      <div class="ln"><span class="red">O VAZIO SE CUIDA</span></div>
+      <div class="ln"><span class="red">COM TRATAMENTO.</span></div>
+    </div>
+  </div>
+
+  <!-- CENA 6 -->
+  <div class="sc" id="s6">
+    <div class="blk A" id="s6a" data-fit="850" style="left:74px;top:560px">
+      <div class="ln"><span>MANDE PARA QUEM</span></div>
+      <div class="ln"><span>ACHA QUE NÃO AMOU</span></div>
+      <div class="ln"><span class="red">O BASTANTE.</span></div>
+    </div>
+    <div class="at" id="s6at" style="left:78px;top:1440px">@drfabioschmidt</div>
+  </div>
+
+  <div id="hearts"></div>
+  <svg id="grain" width="1080" height="1920"><filter id="nz"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0"/></filter><rect width="1080" height="1920" filter="url(#nz)"/></svg>
+</div></div>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const eOut=p=>p>=1?1:1-Math.pow(2,-10*p);          // expo out
+const eIn=p=>p*p*p;
+const eIO=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const eBack=p=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2);};
+const sstep=p=>{p=cl(p);return p*p*(3-2*p);};
+// pseudoaleatório fixo
+let _s=20261119;const rnd=()=>{_s=(_s*1664525+1013904223)>>>0;return _s/4294967296;};
+const rr=(a,b)=>a+(b-a)*rnd();
+
+const DUR=20, G=3000;
+const HEART='M50 88 C20 62 2 44 2 26 C2 11 14 2 27 2 C37 2 46 8 50 17 C54 8 63 2 73 2 C86 2 98 11 98 26 C98 44 80 62 50 88 Z';
+const COLS=['#B3261E','#C1332A','#A9221B','#C93B31','#B82B22'];
+const hearts=[];
+function mkHeart(size,fn){
+  const el=document.createElement('div');el.className='h';
+  const c=COLS[Math.floor(rnd()*COLS.length)];
+  el.innerHTML='<svg viewBox="0 0 100 90"><path d="'+HEART+'" fill="'+c+'"/><path d="M50 17 C54 8 63 2 73 2 C86 2 98 11 98 26 C98 44 80 62 50 88 Z" fill="#000" opacity=".13"/><path d="M50 17 L50 88" stroke="#000" stroke-opacity=".18" stroke-width="1.5"/></svg>';
+  $('hearts').appendChild(el);
+  hearts.push({el,size,fn});
+}
+// queda de papel: velocidade quase constante com balanço; pousa em (sx,sy) no tempo L
+function paperFall(t,L,x0,sx,sy,rest,o={}){
+  const v=o.v||1050, tau=L-t;
+  if(tau>0){
+    const y=sy-v*tau, total=(sy+120)/v, u=1-cl(tau/total);
+    if(y<-120) return null;
+    const defl=o.defl==null?sy-320:o.defl;
+    const p=sstep((y-defl)/(sy-defl));
+    const sway=Math.sin((t*5.2)+(o.ph||0))*14*(1-p);
+    return {x:lerp(x0,sx,p)+sway,y,rot:rest+(o.spin||160)*(1-u)*(o.dir||1)+Math.sin(t*7+(o.ph||0))*10*(1-p)};
+  }
+  const a=-tau; // depois de pousar
+  return {x:sx,y:sy-14*Math.exp(-9*a)*Math.abs(Math.sin(17*a)),rot:rest+9*Math.exp(-7*a)*Math.sin(15*a)*(o.dir||1)};
+}
+// soltar: cai com gravidade a partir de R
+function drop(p,t,R,o={}){
+  if(t<R) return p;
+  const a=t-R;
+  return {x:p.x+(o.vx||0)*a,y:p.y+(o.vy||0)*a+.5*G*a*a,rot:p.rot+(o.w||120)*a};
+}
+
+let M={};      // medidas
+function fitAll(){
+  document.querySelectorAll('[data-fit]').forEach(b=>{
+    const W=+b.dataset.fit; b.style.fontSize='100px';
+    let mx=0; b.querySelectorAll('.ln>span').forEach(s=>mx=Math.max(mx,s.getBoundingClientRect().width));
+    b.style.fontSize=(100*W/mx).toFixed(2)+'px';
+  });
+}
+const cv=document.createElement('canvas').getContext('2d');
+function capBox(span){ // topo e base das maiúsculas de uma linha Anton
+  const fs=parseFloat(getComputedStyle(span).fontSize);
+  cv.font=fs+'px Anton'; const m=cv.measureText('H');
+  const r=span.getBoundingClientRect();
+  const base=r.top+(r.height-(m.fontBoundingBoxAscent+m.fontBoundingBoxDescent))/2+m.fontBoundingBoxAscent;
+  return {top:base-m.actualBoundingBoxAscent,base,left:r.left,right:r.right,fs};
+}
+const span=(id,i)=>$(id).querySelectorAll('.ln>span')[i];
+
+function buildVazio(){
+  // VAZIO vazado, alto, com traço uniforme
+  const svg=$('vz'), W=860, H=540, st=9;
+  cv.font='400px Anton'; const m=cv.measureText('VAZIO');
+  const w=m.actualBoundingBoxLeft+m.actualBoundingBoxRight, h=m.actualBoundingBoxAscent;
+  const kx=(W-st-6)/w, ky=(H-st-6)/h;
+  svg.innerHTML='<text id="vzt" x="'+((st/2+3)+m.actualBoundingBoxLeft*kx)/kx+'" y="'+(H-st/2-3)/ky+'" transform="scale('+kx+','+ky+')" font-family="Anton" font-size="400" fill="none" stroke="#0D0D0D" stroke-width="'+st+'" stroke-linejoin="miter" vector-effect="non-scaling-stroke">VAZIO</text>';
+}
+
+function setup(){
+  document.querySelectorAll('.sc').forEach(s=>s.style.visibility='visible');
+  fitAll(); buildVazio();
+  // ---------- medidas ----------
+  M.s1b=capBox(span('s1b',0));
+  M.s2a=capBox(span('s2a',0));
+  M.s3a=capBox(span('s3a',0));
+  M.s5b=capBox(span('s5a',1)); M.s5a=capBox(span('s5a',0));
+  M.s6a=capBox(span('s6a',0));
+  document.querySelectorAll('.sc').forEach(s=>s.style.visibility='hidden');
+
+  // ---------- CENA 1: fila que atravessa VAZIO e monte sobre DO BORDERLINE ----------
+  const floor1=M.s1b.top-10, cx=503;
+  const rows=[11,10,9,7,6,4,2], slots=[];
+  rows.forEach((n,r)=>{for(let i=0;i<n;i++){
+    slots.push({x:cx+(i-(n-1)/2)*56+rr(-9,9), y:floor1-30-r*40+rr(-6,6), d:Math.abs(i-(n-1)/2)+r*1.5});
+  }});
+  // soltos na base
+  [-352,-318,-286,296,330,360,-250,262].forEach(dx=>slots.push({x:cx+dx+rr(-6,6),y:floor1-24+rr(-3,3),d:9+rnd()}));
+  slots.sort((a,b)=>a.d-b.d+rr(-1.2,1.2));
+  const N=slots.length;
+  slots.forEach((s,i)=>{
+    const L=0.22+i*(2.78/N), x0=cx+rr(-16,16), rest=rr(-75,75), size=rr(.62,1.02), ph=rr(0,6), dir=rnd()<.5?-1:1;
+    const R=3.06+rr(0,.14), vx=rr(-140,140), w=rr(-260,260);
+    mkHeart(size,t=>{
+      if(t>4.4) return null;
+      let p=paperFall(Math.min(t,Math.max(R,0)),L,x0,s.x,s.y,rest,{defl:floor1-330,ph,dir,v:1080});
+      if(!p) return null;
+      return drop(p,t,R,{vx,w,vy:(L>R?1080:520)});
+    });
+  });
+
+  // ---------- CENA 2: três corações sobre A TARDE; caem na troca para a noite ----------
+  const f2=M.s2a.top;
+  [[.16,3.86,-28,.95],[.48,4.02,22,1.1],[.80,4.18,-40,.9]].forEach(([fx,L,rest,size],i)=>{
+    const sx=lerp(M.s2a.left,M.s2a.right,fx), sy=f2-40*size, x0=sx+rr(-40,40), ph=rr(0,6);
+    mkHeart(size,t=>{
+      if(t<3.0||t>5.6) return null;
+      const p=paperFall(Math.min(t,4.70),L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
+      if(!p) return null;
+      // na noite o bloco some; o coração cai a partir de onde estava
+      return drop(p,t,4.70+i*.05,{vx:(i-1)*70,w:(i-1)*180+90});
+    });
+  });
+
+  // ---------- CENA 3: um coração sobre QUANDO ACABA, escorrega e cai ----------
+  {
+    const b=M.s3a, size=1.25, sx=lerp(b.left,b.right,.74), sy=b.top-41*size, edge=b.right+26;
+    mkHeart(size,t=>{
+      if(t<6.5||t>9.6) return null;
+      let p=paperFall(Math.min(t,7.86),7.02,sx-30,sx,sy,-18,{ph:1.3});
+      if(!p) return null;
+      const T0=7.86, T1=8.34;           // escorrega até a ponta da palavra
+      if(t>T0){
+        const u=eIn(cl((t-T0)/(T1-T0)));
+        p={x:lerp(sx,edge,u),y:sy,rot:-18+70*u};
+      }
+      return drop(p,t,T1,{vx:260,w:230});
+    });
+  }
+
+  // ---------- CENA 4: corações na linha do gráfico ----------
+  [[270,1044,10.50],[450,902,11.00],[650,724,11.55]].forEach(([px,py,T],i)=>{
+    const size=.82;
+    mkHeart(size,t=>{
+      if(t<T||t>14.0) return null;
+      const s=eBack(cl((t-T)/.28));
+      const p={x:px,y:py-8,rot:[-10,8,-6][i],sc:s};
+      const q=drop(p,t,12.03+(2-i)*.05,{vx:[-50,30,90][i],w:[-150,120,200][i]});
+      q.sc=s; return q;
+    });
+  });
+
+  // ---------- CENAS 5 e 6: corações que ficam ----------
+  const b5=M.s5b, f5=b5.top, b6=M.s6a, f6=b6.top;
+  const a5right=M.s5a.right;
+  const stay=[ // [fração x na cena 5, pouso, repouso, tamanho, fração x na cena 6]
+    [.00,14.55,-24,1.15,.08],[.33,14.72,30,.92,.30],[.64,14.90,-42,1.05,.52],[1.0,15.06,16,.88,.74]
+  ];
+  stay.forEach(([fx,L,rest,size,fx6],i)=>{
+    const sx=lerp(a5right+100,b5.right-50,fx), sy=f5-41*size, x0=sx+rr(-30,30), ph=rr(0,6);
+    const tx=lerp(b6.left+40,b6.right-40,fx6), ty=f6-41*size, H0=17.12+i*.05, HD=.42;
+    mkHeart(size,t=>{
+      if(t<13.9) return null;
+      if(t<H0) return paperFall(t,L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
+      const u=cl((t-H0)/HD);
+      if(u<1){const e=eIO(u);return {x:lerp(sx,tx,e),y:lerp(sy,ty,e)-170*Math.sin(Math.PI*u),rot:rest+360*e*(i%2?1:-1)};}
+      const a=t-H0-HD;
+      return {x:tx,y:ty-10*Math.exp(-9*a)*Math.abs(Math.sin(17*a)),rot:rest+8*Math.exp(-7*a)*Math.sin(15*a)};
+    });
+  });
+  [[.19,17.75,34,.8],[.41,17.98,-30,.98],[.63,18.20,26,.84],[.86,18.42,-36,1.0],[.97,18.64,20,.78]].forEach(([fx,L,rest,size],i)=>{
+    const sx=lerp(b6.left+40,b6.right-40,fx), sy=f6-41*size, x0=sx+rr(-40,40), ph=rr(0,6);
+    mkHeart(size,t=>{
+      if(t<17.0) return null;
+      return paperFall(t,L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
+    });
+  });
+
+  // comprimentos das linhas do gráfico
+  ['ax','up','dn','fl'].forEach(id=>{const p=$(id),l=p.getTotalLength();p.dataset.l=l;p.style.strokeDasharray=l+' '+l;});
+  const up=$('up'); M.upSeg=[0];
+  [[112,1182],[270,1044],[450,902],[650,724]].reduce((a,b)=>{M.upSeg.push(M.upSeg[M.upSeg.length-1]+Math.hypot(b[0]-a[0],b[1]-a[1]));return b;});
+}
+
+// ---------- linhas de texto: sobem da máscara e saem por cima ----------
+function line(sp,t,tin,tout,din=.5){
+  let y=0;
+  if(t<tin) y=112; else if(t<tin+din) y=112*(1-eOut((t-tin)/din));
+  if(tout!=null&&t>tout) y=-112*eIn(cl((t-tout)/.15));
+  sp.style.transform='translateY('+y.toFixed(3)+'%)';
+}
+function lines(id,t,tin,tout,stg=.07,din=.5){
+  $(id).querySelectorAll('.ln>span').forEach((sp,i)=>line(sp,t,tin+i*stg,tout==null?null:tout+i*.03,din));
+}
+function dash(id,p){const e=$(id),l=+e.dataset.l;e.style.strokeDashoffset=(l*(1-cl(p))).toFixed(2);e.style.opacity=p>0?1:0;}
+const show=(id,on)=>{$(id).style.visibility=on?'visible':'hidden';};
+
+const CUTS=[0,3.4,4.7,6.6,9.4,14.0,17.2];
+window.seek=function(t){
+  t=cl(t,0,DUR);
+  // fundo: claro, escuro de 4,7 a 9,4
+  const dark=t>=4.7&&t<9.4;
+  $('stage').style.background=dark?'#0D0D0D':'#F4F0E6';
+  $('grain').style.visibility=dark?'hidden':'visible';
+  // câmera: empurra 3% por cena
+  let k=0; for(let i=0;i<CUTS.length;i++) if(t>=CUTS[i]) k=i;
+  const a=CUTS[k], b=k==CUTS.length-1?19.0:CUTS[k+1];
+  $('cam').style.transform='scale('+(1+.03*eIO(cl((t-a)/(b-a)))*1).toFixed(5)+')';
+
+  // CENA 1
+  show('s1',t<3.42);
+  if(t<3.42){
+    const o=t>3.24?-112*eIn(cl((t-3.24)/.15)):0;
+    $('s1a').querySelectorAll('.ln>span').forEach((sp,i)=>{const oo=t>3.24+i*.02?-112*eIn(cl((t-3.24-i*.02)/.15)):0;sp.style.transform='translateY('+oo+'%)';});
+    $('vz').style.transform='translateY('+(t>3.26?-104*eIn(cl((t-3.26)/.14)):0)+'%)';
+    span('s1b',0).style.transform='translateY('+(t>3.22?112*eIn(cl((t-3.22)/.15)):0)+'%)';
+    $('s1at').style.opacity=t>3.2?0:1;
+  }
+  // CENA 2 clara
+  show('s2',t>=3.4&&t<4.7);
+  if(t>=3.4&&t<4.7) lines('s2a',t,3.40,null,.08,.45);
+  // CENA 2 escura
+  show('s2n',t>=4.7&&t<6.62);
+  if(t>=4.7&&t<6.62){
+    lines('s2h',t,-1,6.47); lines('s2i',t,4.72,6.48,0,.35); lines('s2r',t,4.82,6.49,.09,.45);
+  }
+  // CENA 3
+  show('s3',t>=6.6&&t<9.4);
+  if(t>=6.6&&t<9.4){
+    lines('s3i',t,6.62,9.27,0,.45);
+    line(span('s3a',0),t,6.74,9.28,.45); line(span('s3a',1),t,7.58,9.30,.4);
+  }
+  // CENA 4
+  show('s4',t>=9.4&&t<14.0);
+  if(t>=9.4&&t<14.0){
+    lines('s4a',t,9.40,13.86,.08,.45);
+    dash('ax',eIO(cl((t-9.62)/.42)));
+    const S=M.upSeg,T=S[3];
+    let d=0;
+    if(t>=10.10) d=lerp(0,S[1],eIO(cl((t-10.10)/.40)));
+    if(t>=10.62) d=lerp(S[1],S[2],eIO(cl((t-10.62)/.38)));
+    if(t>=11.14) d=lerp(S[2],S[3],eIO(cl((t-11.14)/.41)));
+    dash('up',d/T);
+    dash('dn',eIn(cl((t-12.0)/.13)));
+    dash('fl',eOut(cl((t-12.13)/.45)));
+    lines('l1',t,10.52,13.84,0,.3); lines('l2',t,11.02,13.84,0,.3); lines('l3',t,11.57,13.84,0,.3);
+    lines('s4p',t,12.16,13.85,0,.3); lines('s4i',t,12.80,13.86,0,.5);
+    const out=t>13.86?1-cl((t-13.86)/.12):1; $('g').style.opacity=out;
+  }
+  // CENA 5
+  show('s5',t>=14.0&&t<17.2);
+  if(t>=14.0&&t<17.2){ lines('s5a',t,14.00,17.06,.08,.45); lines('s5r',t,15.40,17.07,.09,.45); }
+  // CENA 6
+  show('s6',t>=17.2);
+  if(t>=17.2){ lines('s6a',t,17.20,null,.09,.45); $('s6at').style.opacity=cl((t-18.0)/.3); }
+
+  // corações
+  for(const h of hearts){
+    const p=h.fn(t);
+    if(!p||p.y>2050||p.y<-130){h.el.style.visibility='hidden';continue;}
+    h.el.style.visibility='visible';
+    h.el.style.transform='translate('+p.x.toFixed(2)+'px,'+p.y.toFixed(2)+'px) rotate('+p.rot.toFixed(2)+'deg) scale('+(h.size*(p.sc==null?1:p.sc)).toFixed(4)+')';
+  }
+};
+document.fonts.load('100px Anton').then(()=>document.fonts.load('italic 500 50px Serif4')).then(()=>document.fonts.load('600 30px Mont')).then(()=>document.fonts.ready).then(()=>{setup();window.seek(0);window.ready=true;});
+</script>
+</body>
+</html>
