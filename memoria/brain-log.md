@@ -12,6 +12,12 @@ Cada vez que uma peça ou resposta violar um anti-pattern de [[BRAIN]] (ids em `
 
 Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · como foi corrigido`
 
+## 2026-11-19, a25 (resposta longa) e regra 9 (limite avisado no começo)
+- O que aconteceu: na entrega da primeira versão do filme tipográfico do Protocolo 7 Dias, a resposta saiu com três blocos e cerca de 300 palavras, e o limite técnico (número alto em Archivo Black só cabia esticado) só apareceu no fim, como escolha para aprovar, em vez de ser avisado antes de montar.
+- Frase dele: "Ficou péssimo" (sobre a peça).
+- Correção: peça refeita sem esticar letra; resposta da segunda entrega curta, com o arquivo e a única decisão que muda o texto dele (preço promocional).
+- Regra prática: limite de fonte ou de layout que muda o desenho pedido vai em uma linha antes de montar; a entrega leva o arquivo e, no máximo, três linhas.
+
 ## 2026-11-16, a3 (palavra curta solta), regra 10 (veredito) e nota de cena
 - O que aconteceu: no Reel dos cinco itens, a primeira entrega e a versão com trilha saíram com blocos de legenda de palavra curta solta (QUEM TEM, COMO QUE, VALE PRA, OUVIU DA, VIRE UM); a primeira entrega foi sem legenda do post, capa e veredito; o gancho escrito repetia o falado; e a nota de cena não foi tirada antes de editar, o que deixou três retalhos de 4 a 7 quadros entre o fim de uma tela e um corte dele.
 - Frase dele: "Thunb e descrição tbm" e "Esse texto na tela de início não tá legal né é pequeno".
