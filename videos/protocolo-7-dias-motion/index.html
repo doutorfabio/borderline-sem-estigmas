@@ -80,11 +80,12 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
 
 <section id="s6" class="scene dark clip" data-start="11.2" data-duration="3.8" data-track-index="0">
   <div class="bg"></div>
-  <div class="card" style="top:690px"><span class="t" id="c1" style="font-family:Anton;font-size:116px;line-height:1">PROTOCOLO 7 DIAS</span></div>
-  <svg class="mark" width="1080" height="1920"><path id="ul3" pathLength="1" stroke="var(--red)" stroke-width="8" d="M 166 846 C 330 838, 620 846, 914 836"/></svg>
-  <div class="card mont" style="top:880px"><span class="t" id="c2" style="font-size:42px;line-height:1.2">Para quem convive com borderline</span></div>
-  <div class="card" style="top:990px"><span class="t" id="c3" style="font-family:Anton;font-size:78px;line-height:1">R$ 219 ou 12x R$ 21,90</span></div>
-  <div class="card mont" style="top:1110px"><span class="t" id="c4" style="font-size:42px;line-height:1.2">Garantia de 7 dias</span></div>
+  <div class="card" style="top:640px"><span class="t" id="c1" style="font-family:Anton;font-size:116px;line-height:1">PROTOCOLO 7 DIAS</span></div>
+  <svg class="mark" width="1080" height="1920"><path id="ul3" pathLength="1" stroke="var(--red)" stroke-width="8" d="M 166 796 C 330 788, 620 796, 914 786"/></svg>
+  <div class="card mont" style="top:826px"><span class="t" id="c2" style="font-size:42px;line-height:1.2">Para quem convive com borderline</span></div>
+  <div class="card mont" style="top:938px"><span class="t" id="c7" style="font-size:40px;line-height:1.2">Cupom <span style="color:var(--red)">BLACK26</span>: 25% de desconto</span></div>
+  <div class="card" style="top:1000px"><span class="t" id="c8" style="font-family:Anton;font-size:100px;line-height:1">R$ 164,25 até 25/11</span></div>
+  <div class="card mont" style="top:1140px"><span class="t" id="c4" style="font-size:42px;line-height:1.2">Garantia de 7 dias</span></div>
   <div class="card mont" style="top:1398px;opacity:.78"><span class="t" id="c5" style="font-size:24px;line-height:1.4">Conteúdo educativo. Não substitui avaliação nem tratamento.</span></div>
   <div class="card mont" style="top:1434px;opacity:.78"><span class="t" id="c6" style="font-size:24px;line-height:1.4">Dr. Fabio Schmidt, médico, CRM-SP 183549</span></div>
 </section>
@@ -136,11 +137,13 @@ S(["#b5a","#b5b"],8.62,0.1);
 draw("#circ",10.0,0.36,"power1.inOut");
 write("hand3",10.3,0.6);
 // Cena 6: cartão final, tudo parado a partir de 13,5 s
-tl.set("#c1,#c2,#c3,#c4,#c5,#c6",{opacity:0},0);
+tl.set("#c1,#c2,#c4,#c5,#c6,#c7,#c8",{opacity:0},0);
 S("#c1",11.24,0);
 draw("#ul3",11.78,0.28,"power2.out");
-tl.fromTo(["#c2","#c3","#c4"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.14},11.6);
-tl.fromTo(["#c5","#c6"],{opacity:0},{opacity:1,duration:0.4,ease:"power1.out"},12.3);
+tl.fromTo(["#c2","#c7"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.12},11.6);
+S("#c8",11.86,0);
+tl.fromTo(["#c4"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.12},12.2);
+tl.fromTo(["#c5","#c6"],{opacity:0},{opacity:1,duration:0.4,ease:"power1.out"},12.5);
 tl.set({},{},15);
 window.__timelines["main"] = tl;
 tl.seek(0);
