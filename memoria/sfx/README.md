@@ -14,6 +14,7 @@ Uso livre, no nível baixo de sempre (efeito abaixo da voz, com ducking):
 - UI_Interface6.mp3 (2,1 s): tela, celular, notificação, interface.
 - Shutter_Camera.mp3, Shutter_Camera2.mp3 (0,8 a 0,9 s), Shutter_Vintage4.mp3 (3,5 s), Digital_Camera2.mp3 (1,1 s): foto, recorte que aparece, colagem que se fixa.
 - Riser_Ouro_Curto.mp3 (2,8 s): subida curta antes de uma revelação.
+- Riser_Whoosh_Perfeito.mp3 (7,8 s; sobe de 0 a 2,9 s, auge em 2,9 s, cauda até 5 s; sem grave): subida de ar por baixo de uma sequência que cresce. Veio do Drive em 19/11/2026 (arquivo solto do pacote EditorPro) para o filme tipográfico do Protocolo 7 Dias. Medição: o Riser_Ouro_Curto tem 41% da energia abaixo de 120 Hz e o auge logo em 0,4 s; para subida longa, usar este.
 
 Ambiente (cama baixa, só quando a cena pedir lugar):
 - Ambiente_Sala_de_Espera2.mp3 (12 s): consultório, espera, serviço de saúde.
@@ -36,3 +37,12 @@ Escolhidos por medição entre duas versões de cada. Secos, sem grave. Usar no 
 - Letreiro_de_aeroporto.m4a (4,4 s; corrida de 0,05 a 3,75 s, batida final em 4,10 s): lista, troca de palavra, letreiro correndo.
 - Ficha_deslizando_e_carimbo.m4a (11,5 s; deslize em 1,55 s, carimbo limpo em 3,24 s; o resto são batidas repetidas): ficha, papel, registro.
 - Rising Ticks não foi guardado: as duas versões vieram graves.
+
+## No Drive dele (conferido em 19/11/2026)
+
+Fala dele: "Drive tem Swoosh, huds, clicks etc".
+- O pacote EditorPro completo está no Drive como arquivos soltos compartilhados por assetseditorpro (nome termina em `_byEditorPro.mp3`): Futurista Click 1 a 10, HUD Pop-Up 1 a 6, HUD Sound 1 a 15, HUD Rise Fino Crescente (tom fino de 2 kHz que cresce por 5 s), HUD Pulso Relógio, HUD Alerta, HUD Acerto e Erro Pop-Up, Riser Whoosh Perfeito, entre outros. Achar pelo conector com `mimeType contains 'audio/' and title contains 'HUD'` (ou Click, Whoosh, Riser), com página pequena: cada página grande custa muito contexto.
+- Pastas: `SFX_PunchRole` (glitch) e `SFX_OVERLAYS` (warp), também do EditorPro; `Efeitos – padrão Dr. Fabio` (clique e whoosh do padrão de 06/10).
+- Como baixar sem gastar contexto: `curl -L "https://drive.google.com/uc?export=download&id=<id>" -o arquivo.mp3`. Funciona para os arquivos do EditorPro (link aberto). Não usar `download_file_content` para áudio: devolve o arquivo em base64 dentro da conversa.
+- O que for usado numa peça entra aqui em `editorpro/`, com duração e medição.
+
