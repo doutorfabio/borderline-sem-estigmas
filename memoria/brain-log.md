@@ -20,6 +20,7 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 
 ## Registros
 
+- 2026-11-19 · r9 · Pedido de 20 temas com estrategistas: o tempo do painel por subagente não foi avisado no começo; levou mais de 30 minutos, dois dos três estrategistas pararam no limite de uso e a sessão reiniciou antes da entrega. Correção: lista entregue com o estrategista que terminou, quatro rodadas do Vamos e o funil. Regra prática: avisar o tempo no começo e dar prazo de 15 minutos ao painel.
 - 2026-11-13 · a8/r10 · Veredito de feed dado pelo Claude para a v6/v7 do Reel pergunta do passado, recorte de peça que já tinha flopado na v3. Flopou de novo. Ele: "Flopou absurdamente como nunca aconteceu". Correção: tese que flopou sai da fila do feed; tema novo só com prova do Vamos antes da gravação.
 - 2026-11-13 · r10 · Reel pergunta do passado entregue em três versões (12/11) sem veredito feed ou teste e sem linha no placar; Claude escreveu que não fez veredito porque o pedido era só legenda e Sfx. Postado, flopou. Ele: "Flopou / Arruma / Se vira". Correção: v4 recortada e veredito de teste dado e registrado antes de postar.
 - 2026-11-10 · a1 · Capa 12 do desafio (A EMOÇÃO DO BORDERLINE CHEGA EM ONDA, NÃO EM GOTA.) saiu com fórmula de contraste X, não Y. Achado pelo próprio Claude no funil pedido por ele. Barrada.
