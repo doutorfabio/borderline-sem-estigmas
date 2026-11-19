@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Protocolo 7 Dias, filme tipográfico</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html,body{margin:0;background:#0D0D0D;}
+  body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh;}
+  canvas{display:block;width:min(100vw, calc(100vh * 9 / 16));height:auto;background:#0D0D0D;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>/*OPENTYPE*/</script>
+<script>
+"use strict";
+// ---------------------------------------------------------------------------
+// Fontes embutidas (WOFF, base64). Contornos lidos com opentype.js.
+// ---------------------------------------------------------------------------
+const FONT_B64 = {
+  serif: "/*BODONI600*/",
+  heavy: "/*ARCHIVOBLACK*/",
+  mont7: "/*MONT700*/",
+  mont5: "/*MONT500*/"
+};
+function b64ToBuf(b64){ const s = atob(b64); const u = new Uint8Array(s.length); for (let i=0;i<s.length;i++) u[i]=s.charCodeAt(i); return u.buffer; }
+const F = {}; for (const k in FONT_B64) F[k] = opentype.parse(b64ToBuf(FONT_B64[k]));
+
+// ---------------------------------------------------------------------------
+// Constantes
+// ---------------------------------------------------------------------------
+const W = 1080, H = 1920, FPS = 30, DUR = 15.0;
+const BG = "#0D0D0D", PAPER = "#F2EADB", RED = "#CC0000";
+const SAFE = { l: W*0.05, r: W*(1-0.12), t: H*0.08, b: H*(1-0.20) }; // 54, 950.4, 153.6, 1536
+const SW = SAFE.r - SAFE.l;                                           // 896.4
+const G = 1400;            // linha de base das colunas (chão)
+const COL_H = 380;         // altura das colunas
+const SLAB_H = 260;        // espessura da laje CRISE
+const Y_FINAL = G - COL_H; // face de baixo da laje nivelada (1020)
+
+const cv = document.getElementById("c");
+const ctx = cv.getContext("2d");
+
+// ---------------------------------------------------------------------------
+// Tipografia: corridas de glifos com contorno real
+// ---------------------------------------------------------------------------
+function run(font, text, size){
+  const glyphs = font.stringToGlyphs(text);
+  const sc = size / font.unitsPerEm;
+  const items = []; let x = 0;
+  for (let i=0;i<glyphs.length;i++){
+    const g = glyphs[i];
+    const p = g.getPath(0, 0, size);
+    const bb = p.getBoundingBox();
+    items.push({ ch: text[i], x, adv: g.advanceWidth*sc, path: new Path2D(p.toPathData(3)), bb });
+    x += g.advanceWidth*sc;
+    if (i < glyphs.length-1) x += font.getKerningValue(g, glyphs[i+1]) * sc;
+  }
+  // caixa do conjunto
+  let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;
+  for (const it of items){ if (!isFinite(it.bb.x1) || it.bb.x1===it.bb.x2) continue;
+    x0=Math.min(x0,it.x+it.bb.x1); x1=Math.max(x1,it.x+it.bb.x2); y0=Math.min(y0,it.bb.y1); y1=Math.max(y1,it.bb.y2); }
+  return { items, width: x, ink: {x0,y0,x1,y1}, size, font };
+}
+function fitSize(font, text, maxW, maxSize){
+  const r = run(font, text, 100); const inkW = r.ink.x1 - r.ink.x0;
+  return Math.min(maxSize, 100 * maxW / inkW);
+}
+
+// ---------------------------------------------------------------------------
+// Curvas de tempo (todas analíticas)
+// ---------------------------------------------------------------------------
+const clamp01 = x => Math.max(0, Math.min(1, x));
+const lerp = (a,b,u) => a + (b-a)*u;
+function ease(t, t0, t1){ const u = clamp01((t-t0)/(t1-t0)); return u*u*(3-2*u); }
+function easeInOutSine(t, t0, t1){ const u = clamp01((t-t0)/(t1-t0)); return 0.5 - 0.5*Math.cos(Math.PI*u); }
+function easeInQuad(t, t0, t1){ const u = clamp01((t-t0)/(t1-t0)); return u*u; }
+// Amortecimento crítico 0→1 que chega exatamente a 1 em t0+T (sem ultrapassar).
+function cd(t, t0, w, T){
+  if (t <= t0) return 0; const tau = t - t0; if (tau >= T) return 1;
+  const f = x => 1 - (1 + w*x)*Math.exp(-w*x);
+  return Math.min(1, f(tau)/f(T));
+}
+
+// ---------------------------------------------------------------------------
+// Layout calculado uma vez
+// ---------------------------------------------------------------------------
+const L = {};
+(function layout(){
+  // Laje CRISE
+  const sz = fitSize(F.heavy, "CRISE", SW - 30, 999);
+  L.crise = run(F.heavy, "CRISE", sz);
+  L.criseInkH = L.crise.ink.y1 - L.crise.ink.y0;     // altura real das maiúsculas
+  L.criseSY = SLAB_H / L.criseInkH;
+  L.criseW = L.crise.ink.x1 - L.crise.ink.x0;
+  L.xc = SAFE.l + SW/2;                               // centro horizontal da área segura
+
+  // Frase 1 em serifa, duas linhas
+  const s1 = Math.min(fitSize(F.serif, "Na crise do borderline,", SW - 6, 84), fitSize(F.serif, "você improvisa.", SW - 6, 84));
+  L.s1 = s1;
+  L.l1a = run(F.serif, "Na crise do ", s1); L.l1b = run(F.serif, "borderline", s1); L.l1c = run(F.serif, ",", s1);
+  L.l2a = run(F.serif, "você ", s1); L.l2b = run(F.serif, "improvisa", s1); L.l2c = run(F.serif, ".", s1);
+  L.l1W = L.l1a.width + L.l1b.width + L.l1c.width;
+  L.l2W = L.l2a.width + L.l2b.width + L.l2c.width;
+  L.l1X = SAFE.l - L.l1a.ink.x0; L.l2X = SAFE.l - L.l2a.ink.x0;
+  L.line1Y = 720;  // linha de base
+  L.ascTop = Math.min(L.l1a.ink.y0, L.l1b.ink.y0); // topo das ascendentes (negativo)
+
+  // IMPROVISA pesada
+  const si = fitSize(F.heavy, "IMPROVISA", SW - 60, 999);
+  L.imp = run(F.heavy, "IMPROVISA", si);
+  L.impCap = -L.imp.ink.y0;
+  L.impX0 = L.xc - (L.imp.ink.x0 + L.imp.ink.x1)/2;    // origem da corrida centrada
+  // versão casada com a palavra em serifa (mesma largura de tinta, mesma linha de base)
+  const serifInkW = L.l2b.ink.x1 - L.l2b.ink.x0;
+  L.impSrcScale = serifInkW / (L.imp.ink.x1 - L.imp.ink.x0);
+
+  // Frases de serifa no vão de cima
+  L.cada = run(F.serif, "Cada vez de um jeito.", fitSize(F.serif, "Cada vez de um jeito.", SW, 84));
+  L.sete = run(F.serif, "Sete dias.", 112);
+
+  // Colunas 1 a 7
+  const digits = ["1","2","3","4","5","6","7"];
+  const slot = SW / 7;
+  let dsz = 999; for (const d of digits){ dsz = Math.min(dsz, fitSize(F.heavy, d, slot - 16, 999)); }
+  L.cols = digits.map((d,i)=>{ const r = run(F.heavy, d, dsz); const h = r.ink.y1 - r.ink.y0;
+    return { r, cx: SAFE.l + slot*(i+0.5), sy: COL_H / h, inkTop: r.ink.y0, inkBot: r.ink.y1 }; });
+  L.colStart = digits.map((_,i)=> 5.05 + 0.3*i);
+
+  // Piso
+  L.piso = run(F.heavy, "UM PROCEDIMENTO POR DIA", fitSize(F.heavy, "UM PROCEDIMENTO POR DIA", SW, 999));
+  L.pisoCap = -L.piso.ink.y0;
+
+  // Fecho
+  L.p7 = run(F.serif, "Protocolo 7 Dias.", fitSize(F.serif, "Protocolo 7 Dias.", SW, 118));
+  L.pq = run(F.serif, "Para quem convive com borderline.", fitSize(F.serif, "Para quem convive com borderline.", SW, 58));
+  L.bf1a = run(F.mont7, "Black Friday: cupom ", 50);
+  L.bf1b = run(F.mont7, "BLACK26", 72);
+  L.bf2 = run(F.mont7, "De R$ 219 por R$ 164,25", 54);
+  L.bf3 = run(F.mont7, "Até 25/11. Garantia de 7 dias", 46);
+  L.ft = ["Conteúdo educativo. Não substitui", "avaliação nem tratamento.", "Dr. Fabio Schmidt, médico, CRM-SP 183549."]
+          .map(s => run(F.mont5, s, 32));
+
+  // Apoios IMPROVISA: posição, altura do pé e ângulo fixos (tabela, sem aleatório)
+  const OFF = [6, 0, 14, 3, 10, 1, 12, 4, 8];
+  const ROT = [-2.6, 1.8, -1.2, 3.1, -3.4, 1.0, 2.7, -1.9, 2.2].map(d => d*Math.PI/180);
+  L.props = L.imp.items.map((it,i)=>{
+    const cxLocal = it.x + (it.bb.x1 + it.bb.x2)/2;
+    return { it, i, off: OFF[i], rot: ROT[i], tx: L.impX0 + cxLocal, w: it.bb.x2 - it.bb.x1, cxLocal };
+  });
+  // posição de origem (palavra em serifa convertida)
+  L.srcBase = null; // calculado no tempo (linha 2 se move)
+
+  // Câmera: piso no terço de cima
+  L.camD = Y_FINAL - SAFE.t;   // colunas inteiras no quadro; a laje sai exatamente pela borda de cima
+})();
+
+// ---------------------------------------------------------------------------
+// Pose da laje
+// ---------------------------------------------------------------------------
+const A2_ANGLE = -2.3 * Math.PI/180;  // inclinação sobre os apoios
+const A2_Y = Y_FINAL + 28;            // face de baixo média sobre os apoios
+function line1Base(t){ return L.line1Y; }
+function line2Base(t){ return L.line1Y + lerp(98, 86, easeInOutSine(t, 0.3, 2.6)); }
+function slabAct1Bottom(t){
+  const yStart = SAFE.t + 20 + SLAB_H;                            // topo da laje em 173.6
+  const yEnd = line1Base(t) + L.ascTop - 20;                       // abertura de 20 px sobre as ascendentes
+  return lerp(yStart, yEnd, easeInOutSine(t, 0.15, 2.6));
+}
+function colStep(t, k){ return cd(t, L.colStart[k] + 0.28, 14, 0.55); }
+function slabPose(t){
+  let yb, a;
+  const y1 = slabAct1Bottom(2.6);
+  if (t < 3.3){ yb = slabAct1Bottom(t); a = 0; }
+  else {
+    const p = cd(t, 3.3, 8.5, 0.95);
+    yb = lerp(y1, A2_Y, p); a = A2_ANGLE * p;
+  }
+  // nivelamento pelas colunas
+  let s = 0; for (let k=0;k<7;k++) s += colStep(t,k);
+  s /= 7;
+  if (t >= 5.0){ yb = lerp(A2_Y, Y_FINAL, s); a = A2_ANGLE*(1-s); }
+  return { xc: L.xc, yb, a };
+}
+function slabUnder(x, pose){ const dx = (x - pose.xc); return pose.yb + Math.tan(pose.a)*dx; }
+
+// ---------------------------------------------------------------------------
+// Desenho
+// ---------------------------------------------------------------------------
+let REG = null;  // registro de caixas para a medição da área segura
+function reg(name, m, bb, localClip){
+  if (!REG) return;
+  // m: DOMMatrix; bb: caixa local {x1,y1,x2,y2}
+  const pts = [[bb.x1,bb.y1],[bb.x2,bb.y1],[bb.x1,bb.y2],[bb.x2,bb.y2]].map(([x,y])=>{ const p = m.transformPoint(new DOMPoint(x,y)); return [p.x,p.y]; });
+  let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;
+  for (const [x,y] of pts){ x0=Math.min(x0,x); x1=Math.max(x1,x); y0=Math.min(y0,y); y1=Math.max(y1,y); }
+  if (localClip){ y1 = Math.min(y1, localClip.b - CAMNOW); }
+  if (y1 <= y0 || x1 <= x0) return;
+  REG.push({ name, x0, y0, x1, y1 });
+}
+function drawRun(r, x, y, color, alpha, name, localClip){
+  if (alpha <= 0) return;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color;
+  ctx.translate(x, y);
+  for (const it of r.items){
+    if (!isFinite(it.bb.x1) || it.bb.x1===it.bb.x2) continue;
+    ctx.save(); ctx.translate(it.x, 0); ctx.fill(it.path);
+    reg(name, ctx.getTransform(), it.bb, localClip);
+    ctx.restore();
+  }
+  ctx.restore();
+}
+function drawGlyph(it, color, alpha, name, localClip){
+  if (alpha <= 0 || !isFinite(it.bb.x1) || it.bb.x1===it.bb.x2) return;
+  ctx.save(); ctx.globalAlpha *= alpha; ctx.fillStyle = color; ctx.fill(it.path);
+  reg(name, ctx.getTransform(), it.bb, localClip);
+  ctx.restore();
+}
+function enter(t, t0, dur){ const p = cd(t, t0, 12, dur); return { a: clamp01((t-t0)/(dur*0.6)), dy: (1-p)*28 }; }
+
+let CLIP_SAFE = true; let CAMNOW = 0;
+function render(t){
+  t = Math.max(0, Math.min(DUR, t));
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = BG; ctx.fillRect(0,0,W,H);
+  REG = window.__measure ? [] : null;
+
+  ctx.save();
+  if (CLIP_SAFE){ ctx.beginPath(); ctx.rect(SAFE.l, SAFE.t, SAFE.r-SAFE.l, SAFE.b-SAFE.t); ctx.clip(); }
+
+  const cam = L.camD * cd(t, 11.0, 7.5, 1.0); CAMNOW = cam;
+  ctx.translate(0, -cam);
+  const camClip = c => c; // registro já em coordenadas de tela via getTransform
+
+  const pose = slabPose(t);
+
+  // ---- Frase 1 -----------------------------------------------------------
+  const y1 = line1Base(t), y2 = line2Base(t);
+  const fadeOthers = 1 - ease(t, 2.62, 2.95);
+  const in1 = clamp01(t / 0.35);
+  if (t < 3.0){
+    const a = in1 * fadeOthers;
+    let x = L.l1X;
+    drawRun(L.l1a, x, y1, PAPER, a, "frase1"); x += L.l1a.width;
+    drawRun(L.l1b, x, y1, RED, a, "frase1"); x += L.l1b.width;
+    drawRun(L.l1c, x, y1, PAPER, a, "frase1");
+    x = L.l2X;
+    drawRun(L.l2a, x, y2, PAPER, a, "frase1"); x += L.l2a.width;
+    const wx = x; // início da palavra improvisa
+    // troca serifa → pesada por oclusão: borda vertical que varre a palavra
+    const e = lerp(wx + L.l2b.ink.x0 - 6, wx + L.l2b.ink.x1 + 6, ease(t, 2.6, 2.92));
+    ctx.save(); ctx.beginPath(); ctx.rect(e, 0, W, H*3); ctx.clip();
+    drawRun(L.l2b, wx, y2, PAPER, in1, "frase1");
+    ctx.restore();
+    drawRun(L.l2c, wx + L.l2b.width, y2, PAPER, a, "frase1");
+    L._wordX = wx; L._wordY = y2;
+    if (t >= 2.6){
+      ctx.save(); ctx.beginPath(); ctx.rect(-W, 0, e + W, H*3); ctx.clip();
+      // pesada casada: mesma largura de tinta e mesma linha de base
+      const s = L.impSrcScale;
+      ctx.translate(wx + L.l2b.ink.x0, y2); ctx.scale(s, s); ctx.translate(-L.imp.ink.x0, 0);
+      for (const it of L.imp.items){ ctx.save(); ctx.translate(it.x,0); drawGlyph(it, PAPER, 1, "improvisa"); ctx.restore(); }
+      ctx.restore();
+    }
+  }
+
+  // ---- Apoios IMPROVISA (2,98 s em diante) ------------------------------
+  if (t >= 2.98 && t < 8.0){
+    const wx = L.l2X + L.l2a.width, y2s = line2Base(2.98);
+    const s = L.impSrcScale;
+    const poseA2 = { xc: L.xc, yb: A2_Y, a: A2_ANGLE };
+    ctx.save(); ctx.beginPath(); ctx.rect(-W, -H, 3*W, G + H); ctx.clip(); // chão
+    for (const pr of L.props){
+      const it = pr.it;
+      // origem
+      const sx0 = wx + L.l2b.ink.x0 + (pr.cxLocal - L.imp.ink.x0)*s;
+      const sb0 = y2s; const sc0 = s;
+      // destino
+      const baseY = G - pr.off;
+      const hTarget = baseY - slabUnder(pr.tx, poseA2);
+      const live = baseY - slabUnder(pr.tx, pose);
+      const hNow = (t < 5.0) ? hTarget : live;
+      const q = cd(t, 2.98 + 0.022*pr.i, 11, 0.62);
+      const x = lerp(sx0, pr.tx, q);
+      const yb = lerp(sb0, baseY, q);
+      const scx = lerp(sc0, 1, q);
+      const scy = lerp(sc0, hNow / L.impCap, q);
+      const rot = lerp(0, pr.rot, q);
+      // deformação elástica controlada ao receber a laje
+      const tau = t - 3.9;
+      const bulge = tau > 0 ? 1 + 0.07*Math.exp(-6*tau)*Math.sin(15*tau) : 1;
+      // saída por baixo, antes da coluna que ocupa o mesmo lugar
+      const ex = L.exitT[pr.i];
+      const drop = easeInQuad(t, ex - 0.3, ex) * (hNow + 40);
+      if (t >= ex) continue;
+      ctx.save();
+      ctx.translate(x, yb + drop); ctx.rotate(rot); ctx.scale(scx*bulge, scy);
+      ctx.translate(-pr.cxLocal + it.x, 0);
+      drawGlyph(it, PAPER, 1, "improvisa", { b: G });
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  // ---- Colunas 1 a 7 ----------------------------------------------------
+  if (t >= 5.0){
+    ctx.save(); ctx.beginPath(); ctx.rect(-W, -H, 3*W, G + H); ctx.clip();
+    L.cols.forEach((c,k)=>{
+      const p = cd(t, L.colStart[k], 13, 0.6);
+      if (p <= 0) return;
+      const top = lerp(G, slabUnder(c.cx, pose), p);
+      ctx.save();
+      ctx.translate(c.cx, top); ctx.scale(1, c.sy);
+      ctx.translate(-(c.r.ink.x0 + c.r.ink.x1)/2, -c.inkTop);
+      for (const it of c.r.items){ ctx.save(); ctx.translate(it.x,0); drawGlyph(it, PAPER, 1, "coluna", { b: G }); ctx.restore(); }
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  // ---- Laje CRISE -------------------------------------------------------
+  {
+    const a = clamp01(t/0.3);
+    ctx.save();
+    ctx.translate(pose.xc, pose.yb); ctx.rotate(pose.a); ctx.scale(1, L.criseSY);
+    ctx.translate(-(L.crise.ink.x0 + L.crise.ink.x1)/2, -L.crise.ink.y1);
+    for (const it of L.crise.items){ ctx.save(); ctx.translate(it.x,0); drawGlyph(it, PAPER, a, "laje"); ctx.restore(); }
+    ctx.restore();
+  }
+
+  // ---- Cada vez de um jeito. --------------------------------------------
+  {
+    const e = enter(t, 4.0, 0.45); const out = 1 - ease(t, 6.0, 6.3);
+    const a = e.a * out;
+    if (a > 0){ const x = L.xc - (L.cada.ink.x0 + L.cada.ink.x1)/2; drawRun(L.cada, x, 520 + e.dy, PAPER, a, "cada"); }
+  }
+  // ---- Sete dias. --------------------------------------------------------
+  {
+    const e = enter(t, 7.35, 0.42); const out = 1 - ease(t, 8.4, 8.62);
+    const a = e.a * out; const up = ease(t, 8.4, 8.62) * 10;
+    if (a > 0){ const x = L.xc - (L.sete.ink.x0 + L.sete.ink.x1)/2; drawRun(L.sete, x, 540 + e.dy - up, PAPER, a, "sete"); }
+  }
+
+  // ---- Piso -------------------------------------------------------------
+  if (t >= 8.62){
+    const p = cd(t, 8.62, 10, 0.8);
+    const yb = G + L.pisoCap + (1-p)*70;
+    const x = SAFE.l - L.piso.ink.x0;
+    drawRun(L.piso, x, yb, RED, clamp01((t-8.62)/0.25), "piso");
+  }
+
+  // ---- Fecho: Protocolo 7 Dias. -----------------------------------------
+  const wy = y => y + cam; // coordenadas de tela → mundo
+  {
+    const e1 = enter(t, 11.55, 0.6);
+    if (e1.a > 0){ const x = SAFE.l - L.p7.ink.x0; drawRun(L.p7, x, wy(730) + e1.dy, PAPER, e1.a, "p7"); }
+    const e2 = enter(t, 11.85, 0.6);
+    if (e2.a > 0){ const x = SAFE.l - L.pq.ink.x0; drawRun(L.pq, x, wy(815) + e2.dy, PAPER, e2.a, "pq"); }
+  }
+  // ---- Fecho: Black Friday ----------------------------------------------
+  {
+    const e1 = enter(t, 12.6, 0.5);
+    if (e1.a > 0){ const x = SAFE.l - L.bf1a.ink.x0; drawRun(L.bf1a, x, wy(950) + e1.dy, PAPER, e1.a, "bf1");
+      drawRun(L.bf1b, x + L.bf1a.width, wy(950) + e1.dy, RED, e1.a, "bf1"); }
+    const e2 = enter(t, 12.78, 0.5);
+    if (e2.a > 0){ const x = SAFE.l - L.bf2.ink.x0; drawRun(L.bf2, x, wy(1035) + e2.dy, PAPER, e2.a, "bf2"); }
+    const e3 = enter(t, 12.96, 0.5);
+    if (e3.a > 0){ const x = SAFE.l - L.bf3.ink.x0; drawRun(L.bf3, x, wy(1110) + e3.dy, PAPER, e3.a, "bf3"); }
+    const ef = ease(t, 12.9, 13.4);
+    L.ft.forEach((r,i)=>{ if (ef > 0) drawRun(r, SAFE.l - r.ink.x0, wy(1388 + 42*i), PAPER, ef*0.85, "rodape"); });
+  }
+
+  ctx.restore();
+  return REG;
+}
+
+// saídas de IMPROVISA: cada letra sai antes da primeira coluna que ocupa o seu lugar
+(function computeExits(){
+  const colRanges = L.cols.map(c => { const w = c.r.ink.x1 - c.r.ink.x0; return [c.cx - w/2 - 8, c.cx + w/2 + 8]; });
+  L.exitT = L.props.map(pr => {
+    const half = pr.w/2 + 14;
+    const a = pr.tx - half, b = pr.tx + half;
+    for (let k=0;k<7;k++){ const [c0,c1] = colRanges[k]; if (b > c0 && a < c1) return L.colStart[k]; }
+    return L.colStart[6];
+  });
+})();
+
+// ---------------------------------------------------------------------------
+// API determinística
+// ---------------------------------------------------------------------------
+window.seek = function(t){ return render(t); };
+window.FRAMES = Math.round(DUR*FPS); // 450
+window.SAFE = SAFE;
+window.setSafeClip = v => { CLIP_SAFE = !!v; };
+
+// prévia: toca em tempo real se aberto no navegador sem automação
+if (!navigator.webdriver){
+  const t0 = performance.now();
+  (function loop(){ const t = ((performance.now()-t0)/1000) % (DUR + 1.0); render(Math.min(t, DUR)); requestAnimationFrame(loop); })();
+} else { render(0); }
+</script>
+</body>
+</html>
