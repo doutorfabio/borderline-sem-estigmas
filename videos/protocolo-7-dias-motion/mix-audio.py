@@ -12,16 +12,16 @@ cut('flip',F1,0.05,0.4,hp=200)
 # (file, time, gain dB)
 ev=[]
 # tipo grande caindo (só uma batida leve por bloco)
-for t in [0.28,2.56,4.8,6.36,12.24]: ev.append(('k1',t-0.005,-10))
+for t in [0.28,2.56,5.8,7.36,12.82]: ev.append(('k1',t-0.005,-10))
 # trocas secas: virada de papel com pico no corte
-for t in [3.8,8.4,11.2]: ev.append(('flip',t-0.17,-5))
+for t in [3.8,5.6,9.0,11.0,12.6]: ev.append(('flip',t-0.17,-5))
 # canetão
-ev+= [('scrape',1.3,-12),('scrape',7.86,-11),('scrape',8.04,-13),('scrape',10.0,-11),('scrape',12.5,-13)]
-for t0 in [1.5,7.2,10.3]:
+ev+= [('scrape',1.3,-12),('scrape',8.24,-11),('scrape',8.42,-13),('scrape',10.1,-11),('scrape',13.0,-13)]
+for t0 in [1.5,7.6,10.4]:
     ev+=[('scrape',t0,-12),('scrape',t0+0.21,-14),('scrape',t0+0.42,-13)]
 # sete blocos: pouso e quique
 for n in range(1,8):
-    t=8.42+(n-1)*0.075; T=0.36 if n<=4 else 0.44
+    t=9.02+(n-1)*0.075; T=0.36 if n<=4 else 0.44
     ev.append((f'k{n-1}',t+T-0.005,-7)); ev.append((f'k{n-1}',t+T+0.36-0.005,-16))
 ins=[];fl=[]
 for i,(f,t,g) in enumerate(ev):

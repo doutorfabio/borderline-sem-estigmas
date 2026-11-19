@@ -59,7 +59,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
   ${hand('hand1','faz',380,480,'var(--navy)')}
 </section>
 
-<section id="s34" class="scene dark clip" data-start="3.8" data-duration="4.6" data-track-index="0">
+<section id="s34" class="scene dark clip" data-start="3.8" data-duration="5.2" data-track-index="0">
   <div class="bg"></div>
   <div class="big" id="b3" style="top:780px">
     <span class="ln t" id="b3a" style="font-size:104px">O PROTOCOLO 7 DIAS</span>
@@ -73,7 +73,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
   <svg class="mark" width="1080" height="1920"><path id="ul1" pathLength="1" stroke="var(--red)" stroke-width="8" d="M 88 1000 C 200 994, 380 1003, 586 992"/><path id="ul2" pathLength="1" stroke="var(--red)" stroke-width="8" d="M 104 1026 C 260 1019, 420 1028, 572 1020"/></svg>
 </section>
 
-<section id="s5" class="scene light clip" data-start="8.4" data-duration="2.8" data-track-index="0">
+<section id="s5" class="scene light clip" data-start="9.0" data-duration="2.0" data-track-index="0">
   <div class="bg"></div>
   <svg class="grain" width="1080" height="1920"><rect width="1080" height="1920" filter="url(#grainf)"/></svg>
   ${sq}
@@ -85,7 +85,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
   ${hand('hand3','voce',330,520,'var(--red)')}
 </section>
 
-<section id="s6" class="scene dark clip" data-start="11.2" data-duration="3.8" data-track-index="0">
+<section id="s6" class="scene dark clip" data-start="11.0" data-duration="4.0" data-track-index="0">
   <div class="bg"></div>
   <div class="card" style="top:640px"><span class="t" id="c1" style="font-family:Anton;font-size:116px;line-height:1">PROTOCOLO 7 DIAS</span></div>
   <svg class="mark" width="1080" height="1920"><path id="ul3" pathLength="1" stroke="var(--red)" stroke-width="8" d="M 166 796 C 330 788, 620 796, 914 786"/></svg>
@@ -96,8 +96,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
   <div class="card mont" style="top:1398px;opacity:.78"><span class="t" id="c5" style="font-size:24px;line-height:1.4">Conteúdo educativo. Não substitui avaliação nem tratamento.</span></div>
   <div class="card mont" style="top:1434px;opacity:.78"><span class="t" id="c6" style="font-size:24px;line-height:1.4">Dr. Fabio Schmidt, médico, CRM-SP 183549</span></div>
 </section>
-<video id="vA" class="clip vid" src="assets/cozinha-1080.mp4" data-start="3.8" data-duration="0.8" data-media-start="2.0" data-track-index="1" muted playsinline></video>
-<video id="vB" class="clip vid" src="assets/cozinha-1080.mp4" data-start="11.2" data-duration="0.8" data-media-start="7.5" data-track-index="1" muted playsinline></video>
+<video id="vA" class="clip vid" src="assets/cozinha-1080.mp4" data-start="3.8" data-duration="1.8" data-media-start="3.4" data-track-index="1" muted playsinline></video>
+<video id="vB" class="clip vid" src="assets/cozinha-1080.mp4" data-start="11.0" data-duration="1.6" data-media-start="6.0" data-track-index="1" muted playsinline></video>
 </div>
 <script>
 const tl = gsap.timeline({ paused: true });
@@ -122,16 +122,16 @@ tl.set("#b2a,#b2b",{opacity:0},0);
 S(["#b2a","#b2b"],2.36,0.08);
 // Cena 3
 tl.set("#b3a,#b3b",{opacity:0},0);
-S(["#b3a","#b3b"],4.6,0.08);
+S(["#b3a","#b3b"],5.6,0.08);
 // Cena 4
-X(["#b3a","#b3b"],6.0);
+X(["#b3a","#b3b"],7.0);
 tl.set("#b4a,#b4b",{opacity:0},0);
-S(["#b4a","#b4b"],6.16,0.08);
-write("hand2",7.2,0.62);
-draw("#ul1",7.86,0.16); draw("#ul2",8.04,0.15);
+S(["#b4a","#b4b"],7.16,0.08);
+write("hand2",7.6,0.6);
+draw("#ul1",8.24,0.15); draw("#ul2",8.42,0.14);
 // Cena 5: quadrados caem com gravidade, quicam pouco
 const rot=[-7,5,-4,8,-6,4,-5];
-for(let n=1;n<=7;n++){const s="#sq"+n,t=8.42+(n-1)*0.075,off=n<=4?-370:-560;const T=n<=4?0.36:0.44;
+for(let n=1;n<=7;n++){const s="#sq"+n,t=9.02+(n-1)*0.075,off=n<=4?-370:-560;const T=n<=4?0.36:0.44;
   tl.fromTo(s,{y:off,opacity:0,rotation:rot[n-1],scaleY:1.12,scaleX:0.93},{opacity:1,duration:0.05,ease:"none"},t);
   tl.to(s,{y:0,rotation:0,duration:T,ease:"power2.in"},t);
   tl.to(s,{scaleY:1.12,scaleX:0.93,duration:T,ease:"none"},t);
@@ -142,17 +142,17 @@ for(let n=1;n<=7;n++){const s="#sq"+n,t=8.42+(n-1)*0.075,off=n<=4?-370:-560;cons
   tl.to(s,{scaleY:1,scaleX:1,duration:0.2,ease:"elastic.out(1,0.5)"},t+T+0.41);
 }
 tl.set("#b5a,#b5b",{opacity:0},0);
-S(["#b5a","#b5b"],8.62,0.1);
-draw("#circ",10.0,0.36,"power1.inOut");
-write("hand3",10.3,0.6);
+S(["#b5a","#b5b"],9.22,0.1);
+draw("#circ",10.1,0.32,"power1.inOut");
+write("hand3",10.4,0.5);
 // Cena 6: cartão final, tudo parado a partir de 13,5 s
 tl.set("#c1,#c2,#c4,#c5,#c6,#c7,#c8",{opacity:0},0);
-S("#c1",12.04,0);
-draw("#ul3",12.5,0.26,"power2.out");
-tl.fromTo(["#c2","#c7"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.1},12.3);
-S("#c8",12.5,0);
-tl.fromTo(["#c4"],{opacity:0,y:28},{opacity:1,y:0,duration:0.38,ease:"power3.out",stagger:0.12},12.85);
-tl.fromTo(["#c5","#c6"],{opacity:0},{opacity:1,duration:0.35,ease:"power1.out"},12.95);
+S("#c1",12.62,0);
+draw("#ul3",13.0,0.24,"power2.out");
+tl.fromTo(["#c2","#c7"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.1},12.8);
+S("#c8",12.95,0);
+tl.fromTo(["#c4"],{opacity:0,y:28},{opacity:1,y:0,duration:0.38,ease:"power3.out",stagger:0.12},13.08);
+tl.fromTo(["#c5","#c6"],{opacity:0},{opacity:1,duration:0.35,ease:"power1.out"},13.1);
 tl.set({},{},15);
 window.__timelines["main"] = tl;
 tl.seek(0);
