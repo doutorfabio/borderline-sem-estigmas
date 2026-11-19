@@ -330,6 +330,11 @@
       "se": "Seedance ilimitado",
       "entao": "Não funciona pelo Claude Code; só no Claude chat, Cowork ou ChatGPT. Daqui custa 48 créditos por clipe de 4 s em 1080p (Seedance 2.0). Escrever os prompts para ele rodar lá.",
       "fonte": "memoria/correcoes.md (10/11)"
+    },
+    {
+      "se": "Peça montada em código (página, HyperFrames, Remotion, artifact, slide em HTML)",
+      "entao": "Passar pelos 10 ajustes finos: raio concêntrico, borda com transparência, cores e degradê em OKLCH, ícone no peso do texto, pontas com máscara, troca com desfoque, superfícies claras no escuro, dvh no lugar de vh, multiply em foto com fundo branco.",
+      "fonte": "memoria/ajustes-design.md (19/11)"
     }
   ],
   "lacunas": [

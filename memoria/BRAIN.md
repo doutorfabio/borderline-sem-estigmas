@@ -87,4 +87,4 @@ O detalhe fica nos arquivos de `memoria/`. Aqui só o que muda decisão. Linhas 
 
 ## PONTEIROS
 
-Regras com prova: `aprendizados.md` · Correções novas: `correcoes.md` · Checagem antes de entregar: `checklist-entrega.md` · Veredito: `termometro.md`, `placar-vereditos.md` · Reel: `reels-certeiros.md`, `efeitos-video-aprovados.md` · Capa: `capas-base-tecnica.md` (nota G × P), `capas-gigantes.md`, `mecanismos-gigantes.md` · Teses usadas: `ja-produzido.md` e skill `historico-borderline-180d` · Oferta e preços: `conta.md` · Em aberto: `a-decidir.md`
+Regras com prova: `aprendizados.md` · Correções novas: `correcoes.md` · Checagem antes de entregar: `checklist-entrega.md` · Veredito: `termometro.md`, `placar-vereditos.md` · Reel: `reels-certeiros.md`, `efeitos-video-aprovados.md` · Capa: `capas-base-tecnica.md` (nota G × P), `capas-gigantes.md`, `mecanismos-gigantes.md` · Teses usadas: `ja-produzido.md` e skill `historico-borderline-180d` · Oferta e preços: `conta.md` · Em aberto: `a-decidir.md` · Ajustes de design em código: `ajustes-design.md`
