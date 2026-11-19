@@ -147,7 +147,9 @@ const sstep=p=>{p=cl(p);return p*p*(3-2*p);};
 let _s=20261119;const rnd=()=>{_s=(_s*1664525+1013904223)>>>0;return _s/4294967296;};
 const rr=(a,b)=>a+(b-a)*rnd();
 
-const DUR=20, G=3000;
+// tempos de cada entrada, em segundos. Sem narração: padrão abaixo. Com narração: window.CUES (render.mjs injeta).
+const C=Object.assign({s2:3.4,s2b:3.48,s2n:4.7,s2r:4.82,s2rb:4.91,s3:6.6,s3q:6.74,s3n:7.58,s4:9.4,s4b:9.48,r1:10.5,r2:11.0,r3:11.55,door:12.0,s4i:12.8,s5:14.0,s5b:14.08,s5r:15.4,s5rb:15.49,s6:17.2,s6b:17.29,s6c:17.38,end:20},window.CUES||{});
+const DUR=C.end, G=3000; window.DUR=DUR;
 const HEART='M50 88 C20 62 2 44 2 26 C2 11 14 2 27 2 C37 2 46 8 50 17 C54 8 63 2 73 2 C86 2 98 11 98 26 C98 44 80 62 50 88 Z';
 const COLS=['#B3261E','#C1332A','#A9221B','#C93B31','#B82B22'];
 const hearts=[];
@@ -209,7 +211,6 @@ function buildVazio(){
 function setup(){
   document.querySelectorAll('.sc').forEach(s=>s.style.visibility='visible');
   fitAll(); buildVazio();
-  // ---------- medidas ----------
   M.s1b=capBox(span('s1b',0));
   M.s2a=capBox(span('s2a',0));
   M.s3a=capBox(span('s3a',0));
@@ -223,16 +224,15 @@ function setup(){
   rows.forEach((n,r)=>{for(let i=0;i<n;i++){
     slots.push({x:cx+(i-(n-1)/2)*56+rr(-9,9), y:floor1-30-r*40+rr(-6,6), d:Math.abs(i-(n-1)/2)+r*1.5});
   }});
-  // soltos na base
   [-352,-318,-286,296,330,360,-250,262].forEach(dx=>slots.push({x:cx+dx+rr(-6,6),y:floor1-24+rr(-3,3),d:9+rnd()}));
   slots.sort((a,b)=>a.d-b.d+rr(-1.2,1.2));
   const N=slots.length;
   slots.forEach((s,i)=>{
-    const L=0.22+i*(2.78/N), x0=cx+rr(-16,16), rest=rr(-75,75), size=rr(.62,1.02), ph=rr(0,6), dir=rnd()<.5?-1:1;
-    const R=3.06+rr(0,.14), vx=rr(-140,140), w=rr(-260,260);
+    const L=0.22+i*((C.s2-0.62)/N), x0=cx+rr(-16,16), rest=rr(-75,75), size=rr(.62,1.02), ph=rr(0,6), dir=rnd()<.5?-1:1;
+    const R=C.s2-0.34+rr(0,.14), vx=rr(-140,140), w=rr(-260,260);
     mkHeart(size,t=>{
-      if(t>4.4) return null;
-      let p=paperFall(Math.min(t,Math.max(R,0)),L,x0,s.x,s.y,rest,{defl:floor1-330,ph,dir,v:1080});
+      if(t>C.s2+1.0) return null;
+      let p=paperFall(Math.min(t,R),L,x0,s.x,s.y,rest,{defl:floor1-330,ph,dir,v:1080});
       if(!p) return null;
       return drop(p,t,R,{vx,w,vy:(L>R?1080:520)});
     });
@@ -240,56 +240,46 @@ function setup(){
 
   // ---------- CENA 2: três corações sobre A TARDE; caem na troca para a noite ----------
   const f2=M.s2a.top;
-  [[.16,3.86,-28,.95],[.48,4.02,22,1.1],[.80,4.18,-40,.9]].forEach(([fx,L,rest,size],i)=>{
-    const sx=lerp(M.s2a.left,M.s2a.right,fx), sy=f2-40*size, x0=sx+rr(-40,40), ph=rr(0,6);
+  [[.16,.46,-28,.95],[.48,.62,22,1.1],[.80,.78,-40,.9]].forEach(([fx,dl,rest,size],i)=>{
+    const sx=lerp(M.s2a.left,M.s2a.right,fx), sy=f2-40*size, x0=sx+rr(-40,40), ph=rr(0,6), L=C.s2+dl;
     mkHeart(size,t=>{
-      if(t<3.0||t>5.6) return null;
-      const p=paperFall(Math.min(t,4.70),L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
+      if(t<C.s2-0.4||t>C.s2n+0.9) return null;
+      const p=paperFall(Math.min(t,C.s2n),L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
       if(!p) return null;
-      // na noite o bloco some; o coração cai a partir de onde estava
-      return drop(p,t,4.70+i*.05,{vx:(i-1)*70,w:(i-1)*180+90});
+      return drop(p,t,C.s2n+i*.05,{vx:(i-1)*70,w:(i-1)*180+90});
     });
   });
 
   // ---------- CENA 3: um coração sobre QUANDO ACABA, escorrega e cai ----------
   {
     const b=M.s3a, size=1.25, sx=lerp(b.left,b.right,.74), sy=b.top-41*size, edge=b.right+26;
+    const L=C.s3q+0.30, T0=C.s3n+0.36, T1=T0+0.46;
     mkHeart(size,t=>{
-      if(t<6.5||t>9.6) return null;
-      let p=paperFall(Math.min(t,7.86),7.02,sx-30,sx,sy,-18,{ph:1.3});
+      if(t<C.s3-0.1||t>C.s4+0.6) return null;
+      let p=paperFall(Math.min(t,T0),L,sx-30,sx,sy,-18,{ph:1.3});
       if(!p) return null;
-      const T0=7.86, T1=8.34;           // escorrega até a ponta da palavra
-      if(t>T0){
-        const u=eIn(cl((t-T0)/(T1-T0)));
-        p={x:lerp(sx,edge,u),y:sy,rot:-18+70*u};
-      }
+      if(t>T0){const u=eIn(cl((t-T0)/(T1-T0)));p={x:lerp(sx,edge,u),y:sy,rot:-18+70*u};}
       return drop(p,t,T1,{vx:260,w:230});
     });
   }
 
   // ---------- CENA 4: corações na linha do gráfico ----------
-  [[270,1044,10.50],[450,902,11.00],[650,724,11.55]].forEach(([px,py,T],i)=>{
-    const size=.82;
-    mkHeart(size,t=>{
-      if(t<T||t>14.0) return null;
+  [[270,1044,C.r1],[450,902,C.r2],[650,724,C.r3]].forEach(([px,py,T],i)=>{
+    mkHeart(.82,t=>{
+      if(t<T||t>C.s5) return null;
       const s=eBack(cl((t-T)/.28));
-      const p={x:px,y:py-8,rot:[-10,8,-6][i],sc:s};
-      const q=drop(p,t,12.03+(2-i)*.05,{vx:[-50,30,90][i],w:[-150,120,200][i]});
+      const q=drop({x:px,y:py-8,rot:[-10,8,-6][i]},t,C.door+0.03+(2-i)*.05,{vx:[-50,30,90][i],w:[-150,120,200][i]});
       q.sc=s; return q;
     });
   });
 
   // ---------- CENAS 5 e 6: corações que ficam ----------
-  const b5=M.s5b, f5=b5.top, b6=M.s6a, f6=b6.top;
-  const a5right=M.s5a.right;
-  const stay=[ // [fração x na cena 5, pouso, repouso, tamanho, fração x na cena 6]
-    [.00,14.55,-24,1.15,.08],[.33,14.72,30,.92,.30],[.64,14.90,-42,1.05,.52],[1.0,15.06,16,.88,.74]
-  ];
-  stay.forEach(([fx,L,rest,size,fx6],i)=>{
-    const sx=lerp(a5right+100,b5.right-50,fx), sy=f5-41*size, x0=sx+rr(-30,30), ph=rr(0,6);
-    const tx=lerp(b6.left+40,b6.right-40,fx6), ty=f6-41*size, H0=17.12+i*.05, HD=.42;
+  const b5=M.s5b, f5=b5.top, b6=M.s6a, f6=b6.top, a5right=M.s5a.right;
+  [[.00,.55,-24,1.15,.08],[.33,.72,30,.92,.30],[.64,.90,-42,1.05,.52],[1.0,1.06,16,.88,.74]].forEach(([fx,dl,rest,size,fx6],i)=>{
+    const sx=lerp(a5right+100,b5.right-50,fx), sy=f5-41*size, x0=sx+rr(-30,30), ph=rr(0,6), L=C.s5+dl;
+    const tx=lerp(b6.left+40,b6.right-40,fx6), ty=f6-41*size, H0=C.s6-0.08+i*.05, HD=.42;
     mkHeart(size,t=>{
-      if(t<13.9) return null;
+      if(t<C.s5-0.1) return null;
       if(t<H0) return paperFall(t,L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
       const u=cl((t-H0)/HD);
       if(u<1){const e=eIO(u);return {x:lerp(sx,tx,e),y:lerp(sy,ty,e)-170*Math.sin(Math.PI*u),rot:rest+360*e*(i%2?1:-1)};}
@@ -297,91 +287,91 @@ function setup(){
       return {x:tx,y:ty-10*Math.exp(-9*a)*Math.abs(Math.sin(17*a)),rot:rest+8*Math.exp(-7*a)*Math.sin(15*a)};
     });
   });
-  [[.19,17.75,34,.8],[.41,17.98,-30,.98],[.63,18.20,26,.84],[.86,18.42,-36,1.0],[.97,18.64,20,.78]].forEach(([fx,L,rest,size],i)=>{
-    const sx=lerp(b6.left+40,b6.right-40,fx), sy=f6-41*size, x0=sx+rr(-40,40), ph=rr(0,6);
+  [[.19,.55,34,.8],[.41,.78,-30,.98],[.63,1.00,26,.84],[.86,1.22,-36,1.0],[.97,1.44,20,.78]].forEach(([fx,dl,rest,size],i)=>{
+    const sx=lerp(b6.left+40,b6.right-40,fx), sy=f6-41*size, x0=sx+rr(-40,40), ph=rr(0,6), L=C.s6+dl;
     mkHeart(size,t=>{
-      if(t<17.0) return null;
+      if(t<C.s6-0.2) return null;
       return paperFall(t,L,x0,sx,sy,rest,{ph,dir:i%2?1:-1});
     });
   });
 
-  // comprimentos das linhas do gráfico
   ['ax','up','dn','fl'].forEach(id=>{const p=$(id),l=p.getTotalLength();p.dataset.l=l;p.style.strokeDasharray=l+' '+l;});
-  const up=$('up'); M.upSeg=[0];
+  M.upSeg=[0];
   [[112,1182],[270,1044],[450,902],[650,724]].reduce((a,b)=>{M.upSeg.push(M.upSeg[M.upSeg.length-1]+Math.hypot(b[0]-a[0],b[1]-a[1]));return b;});
 }
 
 // ---------- linhas de texto: sobem da máscara e saem por cima ----------
-function line(sp,t,tin,tout,din=.5){
+function line(sp,t,tin,tout,din=.45){
   let y=0;
   if(t<tin) y=112; else if(t<tin+din) y=112*(1-eOut((t-tin)/din));
   if(tout!=null&&t>tout) y=-112*eIn(cl((t-tout)/.15));
   sp.style.transform='translateY('+y.toFixed(3)+'%)';
 }
-function lines(id,t,tin,tout,stg=.07,din=.5){
-  $(id).querySelectorAll('.ln>span').forEach((sp,i)=>line(sp,t,tin+i*stg,tout==null?null:tout+i*.03,din));
+// tins: um tempo de entrada por linha
+function lines(id,t,tins,tout,din=.45){
+  $(id).querySelectorAll('.ln>span').forEach((sp,i)=>line(sp,t,tins[Math.min(i,tins.length-1)],tout==null?null:tout+i*.03,din));
 }
 function dash(id,p){const e=$(id),l=+e.dataset.l;e.style.strokeDashoffset=(l*(1-cl(p))).toFixed(2);e.style.opacity=p>0?1:0;}
 const show=(id,on)=>{$(id).style.visibility=on?'visible':'hidden';};
 
-const CUTS=[0,3.4,4.7,6.6,9.4,14.0,17.2];
 window.seek=function(t){
   t=cl(t,0,DUR);
-  // fundo: claro, escuro de 4,7 a 9,4
-  const dark=t>=4.7&&t<9.4;
+  const dark=t>=C.s2n&&t<C.s4;
   $('stage').style.background=dark?'#0D0D0D':'#F4F0E6';
   $('grain').style.visibility=dark?'hidden':'visible';
   // câmera: empurra 3% por cena
+  const CUTS=[0,C.s2,C.s2n,C.s3,C.s4,C.s5,C.s6];
   let k=0; for(let i=0;i<CUTS.length;i++) if(t>=CUTS[i]) k=i;
-  const a=CUTS[k], b=k==CUTS.length-1?19.0:CUTS[k+1];
-  $('cam').style.transform='scale('+(1+.03*eIO(cl((t-a)/(b-a)))*1).toFixed(5)+')';
+  const a=CUTS[k], b=k==CUTS.length-1?DUR-1.0:CUTS[k+1];
+  $('cam').style.transform='scale('+(1+.03*eIO(cl((t-a)/(b-a)))).toFixed(5)+')';
 
   // CENA 1
-  show('s1',t<3.42);
-  if(t<3.42){
-    const o=t>3.24?-112*eIn(cl((t-3.24)/.15)):0;
-    $('s1a').querySelectorAll('.ln>span').forEach((sp,i)=>{const oo=t>3.24+i*.02?-112*eIn(cl((t-3.24-i*.02)/.15)):0;sp.style.transform='translateY('+oo+'%)';});
-    $('vz').style.transform='translateY('+(t>3.26?-104*eIn(cl((t-3.26)/.14)):0)+'%)';
-    span('s1b',0).style.transform='translateY('+(t>3.22?112*eIn(cl((t-3.22)/.15)):0)+'%)';
-    $('s1at').style.opacity=t>3.2?0:1;
+  show('s1',t<C.s2+0.02);
+  if(t<C.s2+0.02){
+    const x=C.s2-0.16;
+    $('s1a').querySelectorAll('.ln>span').forEach((sp,i)=>{sp.style.transform='translateY('+(t>x+i*.02?-112*eIn(cl((t-x-i*.02)/.15)):0)+'%)';});
+    $('vz').style.transform='translateY('+(t>x+.02?-104*eIn(cl((t-x-.02)/.14)):0)+'%)';
+    span('s1b',0).style.transform='translateY('+(t>x-.02?112*eIn(cl((t-x+.02)/.15)):0)+'%)';
+    $('s1at').style.opacity=t>x-.04?0:1;
   }
   // CENA 2 clara
-  show('s2',t>=3.4&&t<4.7);
-  if(t>=3.4&&t<4.7) lines('s2a',t,3.40,null,.08,.45);
+  show('s2',t>=C.s2&&t<C.s2n);
+  if(t>=C.s2&&t<C.s2n) lines('s2a',t,[C.s2,C.s2b],null);
   // CENA 2 escura
-  show('s2n',t>=4.7&&t<6.62);
-  if(t>=4.7&&t<6.62){
-    lines('s2h',t,-1,6.47); lines('s2i',t,4.72,6.48,0,.35); lines('s2r',t,4.82,6.49,.09,.45);
+  show('s2n',t>=C.s2n&&t<C.s3+0.02);
+  if(t>=C.s2n&&t<C.s3+0.02){
+    lines('s2h',t,[-1],C.s3-0.13); lines('s2i',t,[C.s2n+0.02],C.s3-0.12,.35); lines('s2r',t,[C.s2r,C.s2rb],C.s3-0.11);
   }
   // CENA 3
-  show('s3',t>=6.6&&t<9.4);
-  if(t>=6.6&&t<9.4){
-    lines('s3i',t,6.62,9.27,0,.45);
-    line(span('s3a',0),t,6.74,9.28,.45); line(span('s3a',1),t,7.58,9.30,.4);
+  show('s3',t>=C.s3&&t<C.s4);
+  if(t>=C.s3&&t<C.s4){
+    lines('s3i',t,[C.s3+0.02],C.s4-0.13);
+    lines('s3a',t,[C.s3q,C.s3n],C.s4-0.12,.4);
   }
   // CENA 4
-  show('s4',t>=9.4&&t<14.0);
-  if(t>=9.4&&t<14.0){
-    lines('s4a',t,9.40,13.86,.08,.45);
-    dash('ax',eIO(cl((t-9.62)/.42)));
+  show('s4',t>=C.s4&&t<C.s5);
+  if(t>=C.s4&&t<C.s5){
+    const o=C.s5-0.15;
+    lines('s4a',t,[C.s4,C.s4b],o);
+    dash('ax',eIO(cl((t-C.s4-0.22)/.42)));
     const S=M.upSeg,T=S[3];
     let d=0;
-    if(t>=10.10) d=lerp(0,S[1],eIO(cl((t-10.10)/.40)));
-    if(t>=10.62) d=lerp(S[1],S[2],eIO(cl((t-10.62)/.38)));
-    if(t>=11.14) d=lerp(S[2],S[3],eIO(cl((t-11.14)/.41)));
+    if(t>=C.r1-.40) d=lerp(0,S[1],eIO(cl((t-C.r1+.40)/.40)));
+    if(t>=C.r2-.38) d=lerp(S[1],S[2],eIO(cl((t-C.r2+.38)/.38)));
+    if(t>=C.r3-.41) d=lerp(S[2],S[3],eIO(cl((t-C.r3+.41)/.41)));
     dash('up',d/T);
-    dash('dn',eIn(cl((t-12.0)/.13)));
-    dash('fl',eOut(cl((t-12.13)/.45)));
-    lines('l1',t,10.52,13.84,0,.3); lines('l2',t,11.02,13.84,0,.3); lines('l3',t,11.57,13.84,0,.3);
-    lines('s4p',t,12.16,13.85,0,.3); lines('s4i',t,12.80,13.86,0,.5);
-    const out=t>13.86?1-cl((t-13.86)/.12):1; $('g').style.opacity=out;
+    dash('dn',eIn(cl((t-C.door)/.13)));
+    dash('fl',eOut(cl((t-C.door-.13)/.45)));
+    lines('l1',t,[C.r1+.02],o,.3); lines('l2',t,[C.r2+.02],o,.3); lines('l3',t,[C.r3+.02],o,.3);
+    lines('s4p',t,[C.door+.16],o,.3); lines('s4i',t,[C.s4i],o,.5);
+    $('g').style.opacity=t>o?1-cl((t-o)/.12):1;
   }
   // CENA 5
-  show('s5',t>=14.0&&t<17.2);
-  if(t>=14.0&&t<17.2){ lines('s5a',t,14.00,17.06,.08,.45); lines('s5r',t,15.40,17.07,.09,.45); }
+  show('s5',t>=C.s5&&t<C.s6);
+  if(t>=C.s5&&t<C.s6){ lines('s5a',t,[C.s5,C.s5b],C.s6-0.14); lines('s5r',t,[C.s5r,C.s5rb],C.s6-0.13); }
   // CENA 6
-  show('s6',t>=17.2);
-  if(t>=17.2){ lines('s6a',t,17.20,null,.09,.45); $('s6at').style.opacity=cl((t-18.0)/.3); }
+  show('s6',t>=C.s6);
+  if(t>=C.s6){ lines('s6a',t,[C.s6,C.s6b,C.s6c],null); $('s6at').style.opacity=cl((t-C.s6-0.8)/.3); }
 
   // corações
   for(const h of hearts){

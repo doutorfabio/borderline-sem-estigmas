@@ -9,13 +9,18 @@ import path from 'node:path';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const mode = process.argv[2] || 'probe';
-const FPS = 30, DUR = 20;
+const FPS = 30;
+const cuesFile = process.env.CUES; // arquivo .js com window.CUES=...
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
 page.on('console', m => console.log('[page]', m.text()));
 page.on('pageerror', e => console.log('[erro]', e.message));
+if (cuesFile) await page.addInitScript({ path: cuesFile });
 await page.goto('file://' + path.join(dir, 'index.html'));
 await page.waitForFunction('window.ready===true');
+const DUR = await page.evaluate(() => window.DUR);
+const NF = Math.round(DUR * FPS);
+console.log('duração', DUR, 'quadros', NF);
 
 if (mode === 'probe') {
   mkdirSync(path.join(dir, 'probe'), { recursive: true });
@@ -28,7 +33,7 @@ if (mode === 'probe') {
   // área segura: 5% à esquerda, 12% à direita, 20% embaixo. Mede a tinta visível de cada linha.
   const L = 54, R = 1080 - 130, B = 1920 - 384;
   let worst = { l: 9999, r: 0, b: 0 }, fails = [];
-  for (let f = 0; f < FPS * DUR; f++) {
+  for (let f = 0; f < NF; f++) {
     const t = f / FPS;
     const res = await page.evaluate(t => {
       window.seek(t);
@@ -53,10 +58,10 @@ if (mode === 'probe') {
     }
   }
   console.log('limites', { L, R, B }, 'extremos medidos', worst);
-  console.log(fails.length ? 'FORA: ' + fails.length + '\n' + fails.slice(0, 20).join('\n') : 'OK: todo texto dentro da área segura nos 600 quadros');
+  console.log(fails.length ? 'FORA: ' + fails.length + '\n' + fails.slice(0, 20).join('\n') : 'OK: todo texto dentro da área segura em todos os quadros');
 } else {
   mkdirSync(path.join(dir, 'frames'), { recursive: true });
-  for (let f = 0; f < FPS * DUR; f++) {
+  for (let f = 0; f < NF; f++) {
     await page.evaluate(t => window.seek(t), f / FPS);
     await page.screenshot({ path: path.join(dir, 'frames', String(f).padStart(4, '0') + '.png') });
   }
