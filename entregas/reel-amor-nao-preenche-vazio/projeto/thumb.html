@@ -1,0 +1,45 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Thumb</title>
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+html,body{margin:0;background:#F4F0E6}
+#st{position:relative;width:1080px;height:1920px;overflow:hidden;background:#F4F0E6}
+.A{position:absolute;font-family:Anton;text-transform:uppercase;color:#0D0D0D;text-align:center;white-space:nowrap;line-height:1.05}
+.A div{line-height:1.08}
+#hearts{position:absolute;inset:0;z-index:3}
+.h{position:absolute;left:0;top:0;width:0;height:0}
+.h svg{position:absolute;left:-50px;top:-45px;width:100px;height:90px;overflow:visible;filter:drop-shadow(0 4px 3px rgba(0,0,0,.22))}
+#vz{position:absolute;left:110px;top:640px;overflow:visible}
+#b{z-index:5}
+.at{position:absolute;left:0;width:1080px;text-align:center;font-family:Mont;font-weight:600;font-size:30px;color:#0D0D0D;top:1572px}
+#g{position:absolute;inset:0;opacity:.07;mix-blend-mode:multiply;pointer-events:none;z-index:6}
+</style></head><body><div id="st">
+<div class="A" id="t" style="left:0;width:1080px;top:318px"><div>TODO O AMOR DA CASA</div><div>NÃO PREENCHE O</div></div>
+<svg id="vz" width="860" height="470"></svg>
+<div class="A" id="b" style="left:0;width:1080px;top:1352px"><div>DO BORDERLINE</div></div>
+<div class="at">@drfabioschmidt</div>
+<div id="hearts"></div>
+<svg id="g" width="1080" height="1920"><filter id="nz"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0"/></filter><rect width="1080" height="1920" filter="url(#nz)"/></svg>
+</div>
+<script>
+let _s=20261119;const rnd=()=>{_s=(_s*1664525+1013904223)>>>0;return _s/4294967296;};const rr=(a,b)=>a+(b-a)*rnd();
+const HEART='M50 88 C20 62 2 44 2 26 C2 11 14 2 27 2 C37 2 46 8 50 17 C54 8 63 2 73 2 C86 2 98 11 98 26 C98 44 80 62 50 88 Z';
+const COLS=['#B3261E','#C1332A','#A9221B','#C93B31','#B82B22'];
+function heart(x,y,rot,sc){const e=document.createElement('div');e.className='h';const c=COLS[Math.floor(rnd()*5)];
+ e.innerHTML='<svg viewBox="0 0 100 90"><path d="'+HEART+'" fill="'+c+'"/><path d="M50 17 C54 8 63 2 73 2 C86 2 98 11 98 26 C98 44 80 62 50 88 Z" fill="#000" opacity=".13"/><path d="M50 17 L50 88" stroke="#000" stroke-opacity=".18" stroke-width="1.5"/></svg>';
+ e.style.transform='translate('+x+'px,'+y+'px) rotate('+rot+'deg) scale('+sc+')';document.getElementById('hearts').appendChild(e);}
+function fit(el,W){el.style.fontSize='100px';let m=0;el.querySelectorAll('div').forEach(d=>{const r=document.createRange();r.selectNodeContents(d);m=Math.max(m,r.getBoundingClientRect().width)});el.style.fontSize=(100*W/m)+'px';}
+document.fonts.load('100px Anton').then(()=>document.fonts.load('600 30px Mont')).then(()=>document.fonts.ready).then(()=>{
+ fit(document.getElementById('t'),800); fit(document.getElementById('b'),860);
+ const cv=document.createElement('canvas').getContext('2d');cv.font='400px Anton';const m=cv.measureText('VAZIO');
+ const w=m.actualBoundingBoxLeft+m.actualBoundingBoxRight,h=m.actualBoundingBoxAscent,W=860,H=470,st=9;
+ const kx=(W-st-6)/w,ky=(H-st-6)/h;
+ document.getElementById('vz').innerHTML='<text x="'+((st/2+3)+m.actualBoundingBoxLeft*kx)/kx+'" y="'+(H-st/2-3)/ky+'" transform="scale('+kx+','+ky+')" font-family="Anton" font-size="400" fill="none" stroke="#0D0D0D" stroke-width="'+st+'" vector-effect="non-scaling-stroke">VAZIO</text>';
+ // fila caindo pelo meio de VAZIO
+ for(let i=0;i<9;i++){const y=420+i*78;heart(540+rr(-18,18)+Math.sin(i*1.7)*16,y,rr(-60,60),.5+i*.055);}
+ // monte sobre DO BORDERLINE
+ const top=document.getElementById('b').getBoundingClientRect().top;const fl=top+48,cx=540;
+ [11,10,9,7,6,4,2].forEach((n,r)=>{for(let i=0;i<n;i++)heart(cx+(i-(n-1)/2)*58+rr(-9,9),fl-30-r*42+rr(-6,6),rr(-75,75),rr(.66,1.04));});
+ [-372,-338,-300,296,336,372,-262,262].forEach(dx=>heart(cx+dx+rr(-6,6),fl-22+rr(-3,3),rr(-80,80),rr(.6,.9)));
+ window.ready=true;});
+</script></body></html>

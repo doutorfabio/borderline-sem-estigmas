@@ -1,0 +1,10 @@
+import { createRequire } from 'node:module';
+const { chromium } = createRequire(import.meta.url)(process.env.PW || 'playwright');
+import { fileURLToPath } from 'node:url'; import path from 'node:path';
+const dir = path.dirname(fileURLToPath(import.meta.url));
+const b = await chromium.launch(); const p = await b.newPage({ viewport:{width:1080,height:1920}, deviceScaleFactor:2 });
+await p.goto('file://'+path.join(dir,'thumb.html')); await p.waitForFunction('window.ready===true');
+const m = await p.evaluate(()=>[...document.querySelectorAll('#t div,#b div,.at')].map(e=>{const r=e.getBoundingClientRect();return [Math.round(r.top),Math.round(r.bottom)]}));
+console.log('caixas de texto (topo,base):', JSON.stringify(m), ' recorte 3:4 = 240 a 1680');
+await p.screenshot({ path: path.join(dir,'..','thumb-1080x1920@2x.png') });
+await b.close();
