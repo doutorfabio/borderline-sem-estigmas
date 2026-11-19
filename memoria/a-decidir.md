@@ -25,3 +25,9 @@ Os oito pontos de 24/10/2026 foram decididos e estão em `aprendizados.md`, seç
 ## Capa com contraste nos gigantes (02/11/2026)
 
 A regra de 24/10 proíbe fórmula de contraste (não é X, é Y) e frase começando com ela. A engenharia reversa de 02/11 achou contraste explícito na capa de 3 dos 5 gigantes (NADA DISSO PARECE AMOR. MAS É ASSIM QUE ELA AMA.; QUANDO A DOR VIRA ALÍVIO) e legendas começando com "ela" no 5 coisas. Dado contra regra. Decisão dele pendente: a regra vale para capa nova mesmo assim, ou contraste verdadeiro e sustentado pelo vídeo pode voltar? Ver `mecanismos-gigantes.md`, item 9.
+
+## Palavra riscada na capa (19/11/2026)
+
+- Base técnica (gramática 7, retórica 8) e três gigantes (hipersexual, love bombing, chamar atenção) usam palavra riscada como correção.
+- Ele, em 19/11: "as pessoas estão reclamando essas coisas ambíguas tipo a afirmação riscada". Em 14/11 o Vamos já tinha barrado ESQUIZOFRENIA riscada.
+- Regra provisória: capa nova sem risco, com frase afirmativa de uma leitura só. Perguntar se o risco fica vetado de vez ou só quando risca a frase inteira.
