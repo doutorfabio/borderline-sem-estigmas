@@ -29,6 +29,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
 .sq span{font-family:"Anton";font-size:112px;line-height:1;color:var(--paper);}
 .card{position:absolute;left:0;right:0;text-align:center;color:var(--paper);white-space:nowrap;}
 .card span{display:inline-block;}
+.vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .mont{font-family:"Montserrat";font-weight:600;}
 </style>
 </head>
@@ -89,6 +90,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--ink);}
   <div class="card mont" style="top:1398px;opacity:.78"><span class="t" id="c5" style="font-size:24px;line-height:1.4">Conteúdo educativo. Não substitui avaliação nem tratamento.</span></div>
   <div class="card mont" style="top:1434px;opacity:.78"><span class="t" id="c6" style="font-size:24px;line-height:1.4">Dr. Fabio Schmidt, médico, CRM-SP 183549</span></div>
 </section>
+<video id="vA" class="clip vid" src="assets/cozinha-1080.mp4" data-start="3.8" data-duration="0.8" data-media-start="2.0" data-track-index="1" muted playsinline></video>
+<video id="vB" class="clip vid" src="assets/cozinha-1080.mp4" data-start="11.2" data-duration="0.8" data-media-start="7.5" data-track-index="1" muted playsinline></video>
 </div>
 <script>
 const tl = gsap.timeline({ paused: true });
@@ -113,7 +116,7 @@ tl.set("#b2a,#b2b",{opacity:0},0);
 S(["#b2a","#b2b"],2.36,0.08);
 // Cena 3
 tl.set("#b3a,#b3b",{opacity:0},0);
-S(["#b3a","#b3b"],3.8,0.08);
+S(["#b3a","#b3b"],4.6,0.08);
 // Cena 4
 X(["#b3a","#b3b"],6.0);
 tl.set("#b4a,#b4b",{opacity:0},0);
@@ -138,12 +141,12 @@ draw("#circ",10.0,0.36,"power1.inOut");
 write("hand3",10.3,0.6);
 // Cena 6: cartão final, tudo parado a partir de 13,5 s
 tl.set("#c1,#c2,#c4,#c5,#c6,#c7,#c8",{opacity:0},0);
-S("#c1",11.24,0);
-draw("#ul3",11.78,0.28,"power2.out");
-tl.fromTo(["#c2","#c7"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.12},11.6);
-S("#c8",11.86,0);
-tl.fromTo(["#c4"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.12},12.2);
-tl.fromTo(["#c5","#c6"],{opacity:0},{opacity:1,duration:0.4,ease:"power1.out"},12.5);
+S("#c1",12.04,0);
+draw("#ul3",12.5,0.26,"power2.out");
+tl.fromTo(["#c2","#c7"],{opacity:0,y:28},{opacity:1,y:0,duration:0.42,ease:"power3.out",stagger:0.1},12.3);
+S("#c8",12.5,0);
+tl.fromTo(["#c4"],{opacity:0,y:28},{opacity:1,y:0,duration:0.38,ease:"power3.out",stagger:0.12},12.85);
+tl.fromTo(["#c5","#c6"],{opacity:0},{opacity:1,duration:0.35,ease:"power1.out"},12.95);
 tl.set({},{},15);
 window.__timelines["main"] = tl;
 tl.seek(0);
