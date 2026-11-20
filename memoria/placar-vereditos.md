@@ -94,3 +94,4 @@ Observação, não regra.
 - O saldo do termômetro não previu o resultado nesses casos. Ver a lição de 31/10 em [[correcoes]].
 - Ele mede na primeira hora. O carro, flop na primeira hora, tinha 11.889 views públicas em 7 dias. Registrar sempre as duas leituras antes de fechar o "Bateu?".
 - Fontes diferentes dão views diferentes (Windsor x contador público). Não misturar na mesma coluna.
+| 20/11 | Reel o que é dissociação (vídeo gerado da mesa e da cama, retícula, narração clonada, 44,5 s) | Teste. Riscos: dissociação já saiu 8 vezes (último resultado baixo), voz clonada, cenas geradas; a favor: ângulo novo de quando procurar avaliação, cena de família, envio a pessoa específica | Teste ("Descrição e Thumb pra teste") | | |
