@@ -46,3 +46,9 @@ Fala dele: "Drive tem Swoosh, huds, clicks etc".
 - Como baixar sem gastar contexto: `curl -L "https://drive.google.com/uc?export=download&id=<id>" -o arquivo.mp3`. Funciona para os arquivos do EditorPro (link aberto). Não usar `download_file_content` para áudio: devolve o arquivo em base64 dentro da conversa.
 - O que for usado numa peça entra aqui em `editorpro/`, com duração e medição.
 
+## Vindos do Drive em 20/11/2026 (Reel dissociação)
+
+- Riser_Reverso.mp3 (5,1 s; pico em 0,9 s e cauda longa; 0% abaixo de 120 Hz): chegada, volta, corte que traz de volta. Pico posto no corte.
+- Ambiente_Abafado.mp3 (10,1 s; muito baixo, -49 dB RMS; centroide 333 Hz): som de debaixo d'água, trecho dissociado, isolamento.
+- WARP_SFX_02.wav (1,0 s; 67% abaixo de 120 Hz): distorção de imagem, troca de estado. Usar só com passa-alta em 180 Hz (regra sem grave).
+- Glitch_01.wav (0,8 s; 69% abaixo de 120 Hz): falha, apagão, texto se desfazendo. Usar só com passa-alta em 250 Hz.
