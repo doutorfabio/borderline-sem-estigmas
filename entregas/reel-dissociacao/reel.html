@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:InterB;src:url(fonts/inter-latin-900-normal.woff2)}
+:root{--yel:#F7E040;--coral:#EA6060;--ink:#161412;--cream:#F2ECDF}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+.blk{position:absolute;inset:0;display:none;overflow:hidden}
+.fill{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+.big{font-family:Anton;text-transform:uppercase;line-height:.98}
+.big .w{display:inline-block;white-space:nowrap}
+.big .c{display:inline-block;will-change:transform}
+.sm{font-family:InterB;font-size:44px;line-height:1.18;letter-spacing:-.01em}
+.lab{font-family:InterB;font-size:30px;letter-spacing:.14em;text-transform:uppercase;display:inline-block;padding:10px 18px 9px;border:4px solid var(--ink)}
+.shadow{text-shadow:0 4px 18px rgba(0,0,0,.55),0 2px 4px rgba(0,0,0,.45)}
+.tx{position:absolute;left:64px;right:140px}
+.cap{position:absolute;left:64px;right:140px;top:1300px;text-align:center;font-family:InterB;font-size:42px;color:#fff}
+.cap span{background:var(--ink);padding:10px 18px;line-height:1.6}
+.cap b{color:var(--yel)}
+#fade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+</style></head><body><div id="stage">
+
+<div class="blk" id="b1">
+ <img class="fill" id="v1">
+ <img class="fill" id="v1h">
+ <div class="tx shadow" style="top:250px;color:#fff">
+  <div class="sm" id="b1s" style="font-size:46px">você está rindo na mesa e, de repente,</div>
+  <div class="big" id="b1b" style="font-size:132px;margin-top:10px;white-space:nowrap">TUDO FICA LONGE.</div>
+ </div>
+ <div class="cap" id="b2c"><span>parece que você <b>ASSISTE DE FORA</b></span></div>
+</div>
+
+<div class="blk" id="b3" style="background:var(--coral)">
+ <div id="b3y" style="position:absolute;inset:0;background:var(--yel);clip-path:polygon(0 985px,115px 932px,150px 1012px,300px 872px,360px 972px,470px 1034px,560px 852px,640px 972px,760px 792px,900px 902px,1080px 732px,1080px 1920px,0 1920px)"></div>
+ <div id="b3i" style="position:absolute;inset:0;clip-path:polygon(0 1010px,120px 960px,150px 1040px,300px 900px,360px 1000px,470px 1060px,560px 880px,640px 1000px,760px 820px,900px 930px,1080px 760px,1080px 1920px,0 1920px)">
+  <img class="fill" id="v3" style="top:420px;transform-origin:50% 0">
+ </div>
+ <div class="tx" style="top:260px;color:var(--ink)">
+  <div class="big" id="b3b" style="font-size:168px;white-space:nowrap">DISSOCIAÇÃO</div>
+  <div class="sm" id="b3s" style="margin-top:26px;font-size:50px">a mente se desconecta<br>do que está acontecendo.</div>
+ </div>
+</div>
+
+<div class="blk" id="b4" style="background:var(--cream)">
+ <div class="tx" style="top:200px;color:var(--ink)">
+  <div class="big" id="b4b" style="font-size:118px">O CORPO PARECE<br>DE OUTRA PESSOA.</div>
+ </div>
+ <div style="position:absolute;left:130px;top:560px;width:760px;height:820px;overflow:hidden"><img id="i4" src="ht/rosto.png" style="width:100%;height:100%;object-fit:cover"></div>
+ <div id="b4l" style="position:absolute;left:130px;top:1410px"><span class="lab">despersonalização</span></div>
+</div>
+
+<div class="blk" id="b5">
+ <img class="fill" id="i5" src="ht/sala.png">
+ <div style="position:absolute;left:0;right:0;top:0;height:560px;background:var(--coral)"></div>
+ <div style="position:absolute;left:0;right:0;top:560px;height:26px;background:var(--yel)"></div>
+ <div class="tx" style="top:220px;color:var(--ink)">
+  <div class="big" id="b5b" style="font-size:118px">O MUNDO PARECE<br>UM CENÁRIO.</div>
+ </div>
+ <div id="b5l" style="position:absolute;left:64px;top:1440px"><span class="lab" style="background:var(--yel)">desrealização</span></div>
+</div>
+
+<div class="blk" id="b6" style="background:var(--yel)">
+ <div class="tx" style="top:560px;color:var(--ink)">
+  <div class="big" id="b6b" style="font-size:122px;white-space:nowrap">SOME UM PEDAÇO<br>DO SEU DIA.</div>
+  <div class="sm" id="b6s" style="margin-top:34px;font-size:50px">você não lembra o que disse ou fez.</div>
+  <div id="b6l" style="margin-top:46px"><span class="lab">lacuna de memória</span></div>
+ </div>
+</div>
+
+<div class="blk" id="b7">
+ <img class="fill" id="v7">
+ <div class="tx shadow" style="top:1060px;color:#fff">
+  <div class="sm" id="b7s" style="font-size:44px">aparece no estresse forte e passa.</div>
+  <div class="big" id="b7b" style="font-size:118px;margin-top:8px">DE FORA, QUASE<br>NINGUÉM PERCEBE.</div>
+ </div>
+</div>
+
+<div class="blk" id="b8">
+ <img class="fill" id="v8">
+ <div class="tx shadow" style="top:230px;color:#fff">
+  <div class="sm" id="b8s" style="font-size:44px">na hora, traga o corpo de volta</div>
+  <div class="big" style="font-size:94px;margin-top:14px;line-height:1.08;white-space:nowrap"><div id="b8a">1 PÉ NO CHÃO</div><div id="b8b">2 ÁGUA FRIA NAS MÃOS</div><div id="b8c">3 DIGA ONDE ESTÁ</div></div>
+ </div>
+</div>
+
+<div class="blk" id="b9" style="background:var(--cream)">
+ <div class="tx" style="top:230px;color:var(--ink)">
+  <div class="big" id="b9b" style="font-size:132px">VALE AVALIAR SE</div>
+  <div id="b9r" style="height:14px;background:var(--coral);margin:30px 0 40px;transform-origin:0 50%"></div>
+  <div class="sm" style="font-size:56px;line-height:1.2;white-space:nowrap">
+   <div class="it" style="margin-bottom:34px">está ficando frequente</div>
+   <div class="it" style="margin-bottom:34px">você perde pedaços do dia</div>
+   <div class="it" style="margin-bottom:34px">já se machucou sem sentir</div>
+   <div class="it">nunca tinha acontecido antes</div>
+  </div>
+ </div>
+</div>
+
+<div class="blk" id="b10" style="background:var(--coral)">
+ <div class="tx" style="top:520px;color:var(--ink)">
+  <div class="big" id="b10b" style="font-size:126px">MANDA PARA<br>QUEM VOCÊ QUER<br>QUE ENTENDA<br>ESSE MOMENTO.</div>
+  <div class="sm" id="b10s" style="margin-top:40px;font-size:40px">@drfabioschmidt</div>
+ </div>
+</div>
+
+<div id="fade"></div>
+</div>
+<script>
+const FPS=30, DUR=39.5;
+const B=[['b1',0,8],['b3',8,11.5],['b4',11.5,14.5],['b5',14.5,17.5],['b6',17.5,20.5],['b7',20.5,24.5],['b8',24.5,30],['b9',30,35.5],['b10',35.5,39.5]];
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(4,'0');
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const ease=x=>{x=clamp(x,0,1);return 1-Math.pow(1-x,3)};
+// mola fechada: resposta a degrau subamortecida
+const spring=dt=>dt<=0?0:1-Math.exp(-dt*13)*Math.cos(dt*21);
+// quebra cada .big em letras, mantendo palavras inteiras
+function split(el){const html=el.innerHTML.split(/<br\s*\/?>/i);el.innerHTML=html.map(line=>line.split(' ').map(w=>'<span class="w">'+[...w].map(ch=>'<span class="c">'+ch+'</span>').join('')+'</span>').join(' ')).join('<br>');}
+['b1b','b3b','b4b','b5b','b6b','b7b','b9b','b10b','b8a','b8b','b8c'].forEach(id=>split($(id)));
+function letters(id,t0,t,stag=0.028,dy=70){const cs=$(id).querySelectorAll('.c');cs.forEach((c,i)=>{const p=spring(t-t0-i*stag);c.style.transform='translateY('+((1-p)*dy)+'px)';c.style.opacity=clamp((t-t0-i*stag)*6,0,1);});}
+function fadeUp(id,t0,t,d=0.35){const e=typeof id==='string'?$(id):id;const p=ease((t-t0)/d);e.style.opacity=p;e.style.transform='translateY('+((1-p)*24)+'px)';}
+// desalinhamento de impressao: 4 quadros depois que a frase assenta
+function misreg(id,t0,t,col,base=''){const on=t>=t0&&t<t0+4/FPS;$(id).style.textShadow=on?('6px 4px 0 '+col+', -4px -2px 0 rgba(234,96,96,.6)'):base;}
+// troca por mascara de baixo para cima
+function wipe(el,t0,t){const p=ease((t-t0)/0.28);el.style.clipPath=p>=1?'none':'inset('+((1-p)*100)+'% 0 0 0)';}
+function setImg(el,src){if(el.getAttribute('src')!==src)el.setAttribute('src',src);}
+const WIPED=['b3','b4','b5','b6','b9','b10'];
+window.seek=async function(t){
+ let k=B.findIndex(([id,a,b])=>t>=a&&t<b); if(k<0)k=B.length-1;
+ const [cid,ca]=B[k]; const under=WIPED.includes(cid)&&t<ca+0.3&&k>0;
+ B.forEach(([id],i)=>{$(id).style.display=(i===k||(under&&i===k-1))?'block':'none'});
+ const imgs=[];
+ if(under) await draw(ca-0.001,imgs);
+ await draw(t,imgs);
+ $('fade').style.opacity=clamp((t-(DUR-0.1))/0.1,0,1);
+ await Promise.all(imgs.map(i=>i.complete&&i.naturalWidth?Promise.resolve():i.decode().catch(()=>{})));
+};
+async function draw(t,imgs){
+ if(t<8){ // B1 + B2
+  const f=clamp(1+Math.round(t*FPS),1,449);
+  setImg($('v1'),'src/mesa_jpg/'+pad(f)+'.jpg');
+  const v1h=$('v1h');
+  if(t>=4.0){setImg(v1h,'src/mesa_ht/'+pad(clamp(f,100,335))+'.jpg');v1h.style.display='block';
+   const p=ease((t-4.0)/1.8), y=1920-p*2300; // borda irregular sobe
+   const pts=[];for(let i=0;i<=12;i++){const x=i*90;const j=((i*37)%5-2)*28;pts.push(x+'px '+(y+j+(i%2?40:-10))+'px')}
+   v1h.style.clipPath='polygon('+pts.join(',')+',1080px 1920px,0 1920px)';imgs.push(v1h);}
+  else v1h.style.display='none';
+  imgs.push($('v1'));
+  letters('b1b',0.25,t); fadeUp('b1s',0.05,t);
+  const out=ease((t-3.3)/0.3); $('b1b').parentElement.style.opacity=1-out;
+  $('b2c').style.opacity=t<5.6?0:ease((t-5.6)/0.3); $('b2c').style.transform='translateY('+(1-ease((t-5.6)/0.3))*20+'px)';
+ }
+ else if(t<11.5){const lt=t-8; wipe($('b3'),8,t);
+  const f=clamp(241+Math.floor(lt*FPS*0.9),241,335); setImg($('v3'),'src/mesa_ht/'+pad(f)+'.jpg'); imgs.push($('v3'));
+  $('v3').style.transform='scale('+(1+0.06*lt/3.5)+')';
+  letters('b3b',8.2,t,0.04,90); misreg('b3b',8.85,t,'rgba(247,224,64,.95)','5px 3px 0 rgba(247,224,64,.85)'); fadeUp('b3s',8.8,t);}
+ else if(t<14.5){wipe($('b4'),11.5,t); letters('b4b',11.65,t); misreg('b4b',12.4,t,'rgba(247,224,64,.95)'); $('i4').style.transform='scale('+(1+0.07*(t-11.5)/3)+')'; fadeUp('b4l',12.6,t);}
+ else if(t<17.5){wipe($('b5'),14.5,t); letters('b5b',14.65,t); misreg('b5b',15.35,t,'rgba(247,224,64,.95)'); $('i5').style.transform='scale('+(1+0.06*(t-14.5)/3)+')'; fadeUp('b5l',15.6,t);}
+ else if(t<20.5){wipe($('b6'),17.5,t); letters('b6b',17.65,t); fadeUp('b6s',18.4,t); fadeUp('b6l',18.7,t);
+  const X=110-ease((t-19.0)/1.4)*75; // fim da frase vira pontos
+  const m='linear-gradient(90deg,#000 '+(X-40)+'%,transparent '+X+'%),radial-gradient(circle,#000 38%,transparent 42%)';
+  const e=$('b6b');e.style.webkitMaskImage=m;e.style.webkitMaskSize='100% 100%,14px 14px';}
+ else if(t<24.5){const f=clamp(331+Math.round((t-20.5)*FPS),1,449); setImg($('v7'),'src/mesa_jpg/'+pad(f)+'.jpg'); imgs.push($('v7'));
+  fadeUp('b7s',20.8,t); letters('b7b',21.1,t);}
+ else if(t<30){const f=clamp(286+Math.round((t-24.5)*FPS),1,449); const v=$('v8');
+  setImg(v, f<340?'src/cama_ht/'+pad(f)+'.jpg':'src/cama_jpg/'+pad(f)+'.jpg'); imgs.push(v);
+  const s=$('b8s');s.style.opacity=t<26.4?0:1; if(t>=26.4)fadeUp('b8s',26.4,t);
+  letters('b8a',26.8,t);letters('b8b',27.7,t);letters('b8c',28.6,t);}
+ else if(t<35.5){wipe($('b9'),30,t); letters('b9b',30.15,t); const r=ease((t-30.6)/0.4); $('b9r').style.transform='scaleX('+r+')';
+  document.querySelectorAll('#b9 .it').forEach((e,i)=>fadeUp(e,31.0+i*0.75,t));}
+ else {wipe($('b10'),35.5,t); letters('b10b',35.65,t,0.022); fadeUp('b10s',36.9,t);}
+}
+</script></body></html>
