@@ -108,22 +108,18 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 <div id="fade"></div>
 </div>
 <script>
-const FPS=30, DUR=39.5;
-const B=[['b1',0,8],['b3',8,11.5],['b4',11.5,14.5],['b5',14.5,17.5],['b6',17.5,20.5],['b7',20.5,24.5],['b8',24.5,30],['b9',30,35.5],['b10',35.5,39.5]];
+const FPS=30, DUR=44.5;
+const B=[['b1',0,8.05],['b3',8.05,12.95],['b4',12.95,16.75],['b5',16.75,20.25],['b6',20.25,24.05],['b7',24.05,28.1],['b8',28.1,33.45],['b9',33.45,40.9],['b10',40.9,44.5]];
 const $=id=>document.getElementById(id);
 const pad=n=>String(n).padStart(4,'0');
 const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
 const ease=x=>{x=clamp(x,0,1);return 1-Math.pow(1-x,3)};
-// mola fechada: resposta a degrau subamortecida
 const spring=dt=>dt<=0?0:1-Math.exp(-dt*13)*Math.cos(dt*21);
-// quebra cada .big em letras, mantendo palavras inteiras
 function split(el){const html=el.innerHTML.split(/<br\s*\/?>/i);el.innerHTML=html.map(line=>line.split(' ').map(w=>'<span class="w">'+[...w].map(ch=>'<span class="c">'+ch+'</span>').join('')+'</span>').join(' ')).join('<br>');}
 ['b1b','b3b','b4b','b5b','b6b','b7b','b9b','b10b','b8a','b8b','b8c'].forEach(id=>split($(id)));
 function letters(id,t0,t,stag=0.028,dy=70){const cs=$(id).querySelectorAll('.c');cs.forEach((c,i)=>{const p=spring(t-t0-i*stag);c.style.transform='translateY('+((1-p)*dy)+'px)';c.style.opacity=clamp((t-t0-i*stag)*6,0,1);});}
 function fadeUp(id,t0,t,d=0.35){const e=typeof id==='string'?$(id):id;const p=ease((t-t0)/d);e.style.opacity=p;e.style.transform='translateY('+((1-p)*24)+'px)';}
-// desalinhamento de impressao: 4 quadros depois que a frase assenta
 function misreg(id,t0,t,col,base=''){const on=t>=t0&&t<t0+4/FPS;$(id).style.textShadow=on?('6px 4px 0 '+col+', -4px -2px 0 rgba(234,96,96,.6)'):base;}
-// troca por mascara de baixo para cima
 function wipe(el,t0,t){const p=ease((t-t0)/0.28);el.style.clipPath=p>=1?'none':'inset('+((1-p)*100)+'% 0 0 0)';}
 function setImg(el,src){if(el.getAttribute('src')!==src)el.setAttribute('src',src);}
 const WIPED=['b3','b4','b5','b6','b9','b10'];
@@ -138,38 +134,38 @@ window.seek=async function(t){
  await Promise.all(imgs.map(i=>i.complete&&i.naturalWidth?Promise.resolve():i.decode().catch(()=>{})));
 };
 async function draw(t,imgs){
- if(t<8){ // B1 + B2
+ if(t<8.05){
   const f=clamp(1+Math.round(t*FPS),1,449);
   setImg($('v1'),'src/mesa_jpg/'+pad(f)+'.jpg');
   const v1h=$('v1h');
-  if(t>=4.0){setImg(v1h,'src/mesa_ht/'+pad(clamp(f,100,335))+'.jpg');v1h.style.display='block';
-   const p=ease((t-4.0)/1.8), y=1920-p*2300; // borda irregular sobe
+  if(t>=3.8){setImg(v1h,'src/mesa_ht/'+pad(clamp(f,100,335))+'.jpg');v1h.style.display='block';
+   const p=ease((t-3.8)/1.8), y=1920-p*2300;
    const pts=[];for(let i=0;i<=12;i++){const x=i*90;const j=((i*37)%5-2)*28;pts.push(x+'px '+(y+j+(i%2?40:-10))+'px')}
    v1h.style.clipPath='polygon('+pts.join(',')+',1080px 1920px,0 1920px)';imgs.push(v1h);}
   else v1h.style.display='none';
   imgs.push($('v1'));
-  letters('b1b',0.25,t); fadeUp('b1s',0.05,t);
-  const out=ease((t-3.3)/0.3); $('b1b').parentElement.style.opacity=1-out;
-  $('b2c').style.opacity=t<5.6?0:ease((t-5.6)/0.3); $('b2c').style.transform='translateY('+(1-ease((t-5.6)/0.3))*20+'px)';
+  $('b1s').style.opacity=1;$('b1s').style.transform='none';
+  letters('b1b',2.3,t);
+  const out=ease((t-3.7)/0.3); $('b1b').parentElement.style.opacity=1-out;
+  $('b2c').style.opacity=t<6.3?0:ease((t-6.3)/0.3); $('b2c').style.transform='translateY('+(1-ease((t-6.3)/0.3))*20+'px)';
  }
- else if(t<11.5){const lt=t-8; wipe($('b3'),8,t);
-  const f=clamp(241+Math.floor(lt*FPS*0.9),241,335); setImg($('v3'),'src/mesa_ht/'+pad(f)+'.jpg'); imgs.push($('v3'));
-  $('v3').style.transform='scale('+(1+0.06*lt/3.5)+')';
-  letters('b3b',8.2,t,0.04,90); misreg('b3b',8.85,t,'rgba(247,224,64,.95)','5px 3px 0 rgba(247,224,64,.85)'); fadeUp('b3s',8.8,t);}
- else if(t<14.5){wipe($('b4'),11.5,t); letters('b4b',11.65,t); misreg('b4b',12.4,t,'rgba(247,224,64,.95)'); $('i4').style.transform='scale('+(1+0.07*(t-11.5)/3)+')'; fadeUp('b4l',12.6,t);}
- else if(t<17.5){wipe($('b5'),14.5,t); letters('b5b',14.65,t); misreg('b5b',15.35,t,'rgba(247,224,64,.95)'); $('i5').style.transform='scale('+(1+0.06*(t-14.5)/3)+')'; fadeUp('b5l',15.6,t);}
- else if(t<20.5){wipe($('b6'),17.5,t); letters('b6b',17.65,t); fadeUp('b6s',18.4,t); fadeUp('b6l',18.7,t);
-  const X=110-ease((t-19.0)/1.4)*75; // fim da frase vira pontos
+ else if(t<12.95){const lt=t-8.05; wipe($('b3'),8.05,t);
+  const f=clamp(241+Math.floor(lt*FPS*0.65),241,335); setImg($('v3'),'src/mesa_ht/'+pad(f)+'.jpg'); imgs.push($('v3'));
+  $('v3').style.transform='scale('+(1+0.06*lt/4.9)+')';
+  letters('b3b',8.85,t,0.04,90); misreg('b3b',9.45,t,'rgba(247,224,64,.95)','5px 3px 0 rgba(247,224,64,.85)'); fadeUp('b3s',10.2,t);}
+ else if(t<16.75){wipe($('b4'),12.95,t); letters('b4b',15.0,t); misreg('b4b',15.65,t,'rgba(247,224,64,.95)'); $('i4').style.transform='scale('+(1+0.07*(t-12.95)/3.8)+')'; fadeUp('b4l',15.9,t);}
+ else if(t<20.25){wipe($('b5'),16.75,t); letters('b5b',17.75,t); misreg('b5b',18.45,t,'rgba(247,224,64,.95)'); $('i5').style.transform='scale('+(1+0.06*(t-16.75)/3.5)+')'; fadeUp('b5l',19.4,t);}
+ else if(t<24.05){wipe($('b6'),20.25,t); letters('b6b',20.7,t); fadeUp('b6s',22.4,t); fadeUp('b6l',22.9,t);
+  const X=110-ease((t-21.9)/1.8)*75;
   const m='linear-gradient(90deg,#000 '+(X-40)+'%,transparent '+X+'%),radial-gradient(circle,#000 38%,transparent 42%)';
   const e=$('b6b');e.style.webkitMaskImage=m;e.style.webkitMaskSize='100% 100%,14px 14px';}
- else if(t<24.5){const f=clamp(331+Math.round((t-20.5)*FPS),1,449); setImg($('v7'),'src/mesa_jpg/'+pad(f)+'.jpg'); imgs.push($('v7'));
-  fadeUp('b7s',20.8,t); letters('b7b',21.1,t);}
- else if(t<30){const f=clamp(286+Math.round((t-24.5)*FPS),1,449); const v=$('v8');
+ else if(t<28.1){const f=clamp(331+Math.round((t-24.05)*FPS),1,449); setImg($('v7'),'src/mesa_jpg/'+pad(f)+'.jpg'); imgs.push($('v7'));
+  fadeUp('b7s',24.8,t); letters('b7b',26.8,t);}
+ else if(t<33.45){const v=$('v8'); const f=t<29.3?304+Math.round((t-28.1)*FPS):clamp(340+Math.floor((t-29.3)*FPS*0.88),340,449);
   setImg(v, f<340?'src/cama_ht/'+pad(f)+'.jpg':'src/cama_jpg/'+pad(f)+'.jpg'); imgs.push(v);
-  const s=$('b8s');s.style.opacity=t<26.4?0:1; if(t>=26.4)fadeUp('b8s',26.4,t);
-  letters('b8a',26.8,t);letters('b8b',27.7,t);letters('b8c',28.6,t);}
- else if(t<35.5){wipe($('b9'),30,t); letters('b9b',30.15,t); const r=ease((t-30.6)/0.4); $('b9r').style.transform='scaleX('+r+')';
-  document.querySelectorAll('#b9 .it').forEach((e,i)=>fadeUp(e,31.0+i*0.75,t));}
- else {wipe($('b10'),35.5,t); letters('b10b',35.65,t,0.022); fadeUp('b10s',36.9,t);}
+  fadeUp('b8s',28.25,t); letters('b8a',30.0,t);letters('b8b',30.74,t);letters('b8c',31.92,t);}
+ else if(t<40.9){wipe($('b9'),33.45,t); letters('b9b',33.55,t); const r=ease((t-34.1)/0.4); $('b9r').style.transform='scaleX('+r+')';
+  [34.8,36.0,37.72,39.3].forEach((t0,i)=>fadeUp(document.querySelectorAll('#b9 .it')[i],t0,t));}
+ else {wipe($('b10'),40.9,t); letters('b10b',41.1,t,0.022); fadeUp('b10s',42.9,t);}
 }
 </script></body></html>
