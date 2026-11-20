@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:InterB;src:url(fonts/inter-latin-900-normal.woff2)}
+:root{--yel:#F7E040;--coral:#EA6060;--ink:#161412;--cream:#F2ECDF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#888}
+.f{width:1080px;height:1920px;position:relative;overflow:hidden;margin-bottom:40px}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.big{font-family:Anton;text-transform:uppercase;line-height:.98;letter-spacing:.005em}
+.sm{font-family:InterB;font-size:44px;line-height:1.18;letter-spacing:-.01em}
+.lab{font-family:InterB;font-size:30px;letter-spacing:.14em;text-transform:uppercase;display:inline-block;padding:10px 18px 9px;border:4px solid var(--ink)}
+.shadow{text-shadow:0 4px 18px rgba(0,0,0,.55),0 2px 4px rgba(0,0,0,.45)}
+.blk{position:absolute;left:64px;right:140px}
+.cap{position:absolute;left:64px;right:140px;top:1300px;text-align:center;font-family:InterB;font-size:42px;color:#fff;text-shadow:0 3px 10px rgba(0,0,0,.7)}
+.cap span{background:var(--ink);padding:10px 18px;box-decoration-break:clone;-webkit-box-decoration-break:clone;line-height:1.6;text-shadow:none}.cap b{color:var(--yel)}
+.tag{position:absolute;top:24px;left:24px;font:700 26px monospace;background:#000;color:#fff;padding:6px 12px;z-index:9;opacity:.75}
+</style></head><body>
+
+<!-- 1 GANCHO: video colorido, sorriso -->
+<div class="f" id="f1"><div class="tag">1 · 0–4 s · vídeo mesa (cor)</div>
+ <div class="bg" style="background-image:url(ht/c_m_0.5.png)"></div>
+ <div class="blk shadow" style="top:250px;color:#fff">
+  <div class="sm" style="font-size:46px">você está rindo na mesa e, de repente,</div>
+  <div class="big" style="font-size:132px;margin-top:10px;white-space:nowrap">TUDO FICA LONGE.</div>
+ </div>
+</div>
+
+<!-- 2 TRANSICAO: a retícula toma a imagem -->
+<div class="f" id="f2"><div class="tag">2 · 4–9 s · vídeo mesa + retícula crescendo</div>
+ <div class="bg" style="background-image:url(ht/trans.png)"></div>
+ <div class="cap"><span>parece que você <b>ASSISTE DE FORA</b></span></div>
+</div>
+
+<!-- 3 TERMO: ceu coral, recorte com contorno amarelo -->
+<div class="f" id="f3" style="background:var(--coral)"><div class="tag">3 · cartão do termo</div>
+ <svg width="1080" height="1920" style="position:absolute;inset:0">
+  <defs><clipPath id="cp"><polygon points="0,1010 120,960 150,1040 300,900 360,1000 470,1060 560,880 640,1000 760,820 900,930 1080,760 1080,1920 0,1920"/></clipPath></defs>
+  <polygon points="0,985 115,932 150,1012 300,872 360,972 470,1034 560,852 640,972 760,792 900,902 1080,732 1080,1920 0,1920" fill="#F7E040"/>
+  <image href="ht/sombra.png" x="0" y="420" width="1080" height="1920" preserveAspectRatio="xMidYMid slice" clip-path="url(#cp)"/>
+ </svg>
+ <div class="blk" style="top:260px;color:var(--ink)">
+  <div class="big" style="font-size:168px;text-shadow:5px 3px 0 rgba(247,224,64,.85)">DISSOCIAÇÃO</div>
+  <div class="sm" style="margin-top:26px;font-size:50px">a mente se desconecta<br>do que está acontecendo.</div>
+ </div>
+</div>
+
+<!-- 4 DESPERSONALIZACAO: estilo da mão (painel amarelo sobre creme) -->
+<div class="f" id="f4" style="background:var(--cream)"><div class="tag">4 · forma 1</div>
+ <div class="blk" style="top:200px;color:var(--ink)">
+  <div class="big" style="font-size:118px">O CORPO PARECE<br>DE OUTRA PESSOA.</div>
+ </div>
+ <div style="position:absolute;left:130px;top:560px;width:760px;height:820px;background:url(ht/rosto.png) center/cover"></div>
+ <div style="position:absolute;left:130px;top:1410px"><span class="lab">despersonalização</span></div>
+</div>
+
+<!-- 5 DESREALIZACAO: sala em retícula, faixa coral -->
+<div class="f" id="f5"><div class="tag">5 · forma 2</div>
+ <div class="bg" style="background-image:url(ht/sala.png)"></div>
+ <div style="position:absolute;left:0;right:0;top:0;height:560px;background:var(--coral)"></div>
+ <div style="position:absolute;left:0;right:0;top:560px;height:26px;background:var(--yel)"></div>
+ <div class="blk" style="top:220px;color:var(--ink)">
+  <div class="big" style="font-size:118px">O MUNDO PARECE<br>UM CENÁRIO.</div>
+ </div>
+ <div style="position:absolute;left:64px;top:1440px"><span class="lab" style="background:var(--yel)">desrealização</span></div>
+</div>
+
+<!-- 6 LACUNA: só tipografia, letras se desfazendo em pontos -->
+<div class="f" id="f6" style="background:var(--yel)"><div class="tag">6 · forma 3</div>
+ <div class="blk" style="top:560px;color:var(--ink)">
+  <div class="big" style="font-size:122px;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 100%),radial-gradient(circle,#000 38%,transparent 42%);-webkit-mask-size:100% 100%,14px 14px;-webkit-mask-composite:source-over">SOME UM PEDAÇO<br>DO SEU DIA.</div>
+  <div class="sm" style="margin-top:34px;font-size:50px">você não lembra o que disse ou fez.</div>
+  <div style="margin-top:46px"><span class="lab">lacuna de memória</span></div>
+ </div>
+</div>
+
+<!-- 7 DE FORA: plano aberto da família, cor -->
+<div class="f" id="f7"><div class="tag">7 · 11–14 s · vídeo mesa, plano aberto</div>
+ <div class="bg" style="background-image:url(ht/c_m_12.5.png)"></div>
+ <div class="blk shadow" style="top:1060px;color:#fff;text-align:left">
+  <div class="sm" style="font-size:44px">aparece no estresse forte e passa.</div>
+  <div class="big" style="font-size:118px;margin-top:8px">DE FORA, QUASE<br>NINGUÉM PERCEBE.</div>
+ </div>
+</div>
+
+<!-- 8 VOLTA: vídeo da cama, corte de volta ao close -->
+<div class="f" id="f8"><div class="tag">8 · vídeo cama, a partir de 11,3 s (volta)</div>
+ <div class="bg" style="background-image:url(ht/c_b_12.5.png)"></div>
+ <div class="blk shadow" style="top:230px;color:#fff">
+  <div class="sm" style="font-size:44px">na hora, traga o corpo de volta</div>
+  <div class="big" style="font-size:94px;margin-top:14px;line-height:1.08;white-space:nowrap">1 PÉ NO CHÃO<br>2 ÁGUA FRIA NAS MÃOS<br>3 DIGA ONDE ESTÁ</div>
+ </div>
+</div>
+
+<!-- 9 QUANDO AVALIAR: creme, lista -->
+<div class="f" id="f9" style="background:var(--cream)"><div class="tag">9 · quando procurar avaliação</div>
+ <div class="blk" style="top:230px;color:var(--ink)">
+  <div class="big" style="font-size:132px">VALE AVALIAR SE</div>
+  <div style="height:14px;background:var(--coral);margin:30px 0 40px"></div>
+  <div class="sm" style="font-size:56px;line-height:1.2;white-space:nowrap">
+   <div style="margin-bottom:34px">está ficando frequente</div>
+   <div style="margin-bottom:34px">você perde pedaços do dia</div>
+   <div style="margin-bottom:34px">já se machucou sem sentir</div>
+   <div>nunca tinha acontecido antes</div>
+  </div>
+ </div>
+</div>
+
+<!-- 10 CTA -->
+<div class="f" id="f10" style="background:var(--coral)"><div class="tag">10 · chamada</div>
+ <div class="blk" style="top:520px;color:var(--ink)">
+  <div class="big" style="font-size:126px">MANDA PARA<br>QUEM VOCÊ QUER<br>QUE ENTENDA<br>ESSE MOMENTO.</div>
+  <div class="sm" style="margin-top:40px;font-size:40px">@drfabioschmidt</div>
+ </div>
+</div>
+</body></html>
