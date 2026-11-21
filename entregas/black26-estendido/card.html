@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:A;src:url(anton.woff2)}
+@font-face{font-family:I;font-weight:700;src:url(Inter-700-latin.woff2)}
+@font-face{font-family:I;font-weight:400;src:url(Inter-400-latin.woff2)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;background:#0D0D0D;overflow:hidden}
+.c{position:absolute;left:140px;width:800px;text-align:center;color:#F3EBDD}
+#b1{top:520px}
+.lab{font:700 40px I;letter-spacing:.32em;color:#E0483A}
+.big{font:300px/1.08 A;margin-top:80px;letter-spacing:.01em}
+#b2{top:330px}
+.t{font:150px/0.95 A;letter-spacing:.01em}
+.s{font:400 44px/1.32 I;margin-top:44px;color:#D9CFBF}
+.tk{margin:70px auto 0;width:720px;border:4px dashed #E0483A;border-radius:18px;padding:44px 30px 48px}
+.k1{font:700 40px I;letter-spacing:.18em;color:#E0483A}
+.k2{font:150px/1 A;margin-top:14px}
+.k3{font:700 50px I;margin-top:22px}
+.k4{font:400 42px I;margin-top:14px;color:#D9CFBF}
+.g{font:700 36px I;letter-spacing:.14em;margin-top:44px;color:#F3EBDD}
+</style></head><body>
+<div id="b1" class="c"><div class="lab" id="l1">CUPOM ESTENDIDO</div><div class="big" id="l2">ATÉ 30/11</div></div>
+<div id="b2" class="c">
+ <div class="t" id="e1">PROTOCOLO<br>7 DIAS</div>
+ <div class="s" id="e2">Conviver com alguém em crise<br>sem virar o próximo<br>alvo da crise.</div>
+ <div class="tk" id="e3"><div class="k1">CUPOM</div><div class="k2">BLACK26</div><div class="k3">25% de desconto</div><div class="k4">R$ 164,25 até 30/11</div></div>
+ <div class="g" id="e4">GARANTIA DE 7 DIAS</div>
+</div>
+<script>
+const E=(x)=>1-Math.pow(1-Math.min(Math.max(x,0),1),3);
+function show(id,t0,t,dy=40){const p=E((t-t0)/0.35);const el=document.getElementById(id);el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`}
+window.render=function(t){
+ const b1=document.getElementById('b1'),b2=document.getElementById('b2');
+ b1.style.display=t<1.7?'block':'none'; b2.style.display=t>=1.7?'block':'none';
+ show('l1',0.0,t); const p=E(t/0.3); const l2=document.getElementById('l2'); l2.style.opacity=p; l2.style.transform=`scale(${1.25-0.25*p})`;
+ show('e1',1.7,t); show('e2',2.0,t); 
+ const q=E((t-2.45)/0.3); const e3=document.getElementById('e3'); e3.style.opacity=q; e3.style.transform=`scale(${1.12-0.12*q})`;
+ show('e4',2.9,t,20);
+}
+render(0);
+</script></body></html>
