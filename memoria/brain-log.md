@@ -64,3 +64,15 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Está mal editado com cenas vazando cortes da seguinte, brools entrando atrasada música um pouco alta".
 - Correção: remontagem sobre a gravação original (achada pelo job no Higgsfield), com mapa quadro a quadro, cortes presos aos dele e sincronia medida por código (média de 21 ms).
 - Regra prática: antes de montar com clipe gerado a partir de gravação dele, (1) comparar duração e cortes do clipe com o original; (2) medir a abertura da boca contra a voz no começo, no meio e no fim de cada clipe; (3) só então posicionar cortes, zoom e B-roll.
+
+## 2026-11-20, a27 (texto pedido no meio do turno ou em bloco de código)
+- O que aconteceu: no Reel Só viu a festa mandei o prompt do Suno no meio de um turno com ferramentas e depois dentro de bloco de código. Ele não viu nenhuma das duas vezes; só chegou quando foi sozinho, em texto puro.
+- Frase dele: "Qual prompt ?", "Qual seu problema em mandar em prompt ?", "E a porra do prompt".
+- Correção: prompt reenviado em texto puro e em arquivo.
+- Regra prática: texto pedido vai na mensagem final, em texto puro, logo no começo, e de novo se ele perguntar.
+
+## 2026-11-21, a26 (entrega final sem veredito)
+- O que aconteceu: entreguei o Reel Só viu a festa com música, thumb e legenda sem dizer feed ou teste (regra 10). Apontei só o risco da thumb sem rosto. Ele postou e o resultado foi o pior da conta, segundo ele.
+- Frase dele: "Parabéns / Foi o pior da história", "Mas são anos na mesma coisa / Quando vc para d fazer isso?".
+- Correção: regra virou anti-pattern no BRAIN; causas do resultado não listadas.
+- Regra prática: antes de mandar a entrega final, escrever a linha Veredito: feed ou teste, com o risco principal. Se não houver veredito, a entrega não sai.

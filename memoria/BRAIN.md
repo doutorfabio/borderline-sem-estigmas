@@ -57,6 +57,8 @@ O detalhe fica nos arquivos de `memoria/`. Aqui só o que muda decisão. Linhas 
 - Reindicar música porque "já funcionou" → "Já usei 3x" (Love Again) → perguntar quantas vezes já usou. (correcoes.md:186)
 - Mexer em peça fechada por referência nova → "Não misture" → referência nova vai para peça nova. (correcoes.md:187)
 - Menu de opções com ele irritado → "Incompetente demais" → entregar o arquivo mais útil e uma linha. (correcoes.md:203)
+- Entrega final sem veredito → "Foi o pior da história", "Mas são anos na mesma coisa / Quando vc para d fazer isso?" (21/11) → vídeo, thumb e legenda saem na mesma mensagem que o veredito feed ou teste e o risco principal. Sem veredito, não está entregue. (correcoes.md, 21/11)
+- Texto pedido mandado no meio do turno ou em bloco de código → "Qual prompt ?", "Qual seu problema em mandar em prompt ?", "E a porra do prompt" (20/11; antes em 18/11) → prompt, legenda e todo texto pedido vão na mensagem final, em texto puro, fora de bloco de código. (correcoes.md, 20/11)
 - Resposta longa → "vai se foser" depois de explicar o cofre → responder só o que perguntou, curto. (correcoes.md:142, aprendizados.md:23)
 
 ## ATALHOS DE DECISÃO

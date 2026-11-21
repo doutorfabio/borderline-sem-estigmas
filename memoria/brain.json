@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "atualizado": "2026-11-07",
+  "atualizado": "2026-11-21",
   "regras": [
     {
       "id": "r1",
@@ -263,6 +263,22 @@
       "acao": "Responder só o que perguntou, curto.",
       "ultima_violacao": "2026-11-19",
       "fonte": "memoria/correcoes.md:142"
+    },
+    {
+      "id": "a26",
+      "erro": "Entrega final sem veredito",
+      "consequencia": "Foi o pior da história / Mas são anos na mesma coisa / Quando vc para d fazer isso?",
+      "acao": "Vídeo, thumb e legenda saem na mesma mensagem que o veredito feed ou teste e o risco principal. Sem veredito, não está entregue.",
+      "ultima_violacao": "2026-11-20",
+      "fonte": "memoria/correcoes.md (2026-11-21)"
+    },
+    {
+      "id": "a27",
+      "erro": "Texto pedido mandado no meio do turno ou em bloco de código",
+      "consequencia": "Qual prompt ? / Qual seu problema em mandar em prompt ? / E a porra do prompt",
+      "acao": "Prompt, legenda e todo texto pedido vão na mensagem final, em texto puro, fora de bloco de código.",
+      "ultima_violacao": "2026-11-20",
+      "fonte": "memoria/correcoes.md (2026-11-20)"
     }
   ],
   "atalhos": [
