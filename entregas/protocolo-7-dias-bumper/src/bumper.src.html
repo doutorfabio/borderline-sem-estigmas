@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protocolo 7 Dias Bumper</title>
+<style>
+/*FONTS*/
+:root { --bg:#0D0D0D; --fg:#F5F5F5; }
+html, body { margin:0; height:100%; background:var(--bg); }
+body { display:flex; align-items:center; justify-content:center; }
+canvas { height:100vh; width:auto; max-width:100vw; aspect-ratio:9/16; display:block; cursor:pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+/* PROTOCOLO 7 DIAS, bumper 10.00 s, 1080x1920, 60 fps.
+   Every pixel is a pure function of t: seek(t). No CSS transitions, no timers.
+   Preview: click to replay. Render: ?render=1 then call seek(t) from outside. */
+
+const W = 1080, H = 1920, FPS = 60, DUR = 10;
+const BG = '#0D0D0D', RED = '#CC0000', WHITE = '#F5F5F5';
+// Safe area for type: 90 px left and top (brief), 130 px right and 384 px bottom
+// (Instagram buttons and caption zone, house rule).
+const SL = 90, SR = 950, ST = 90, SB = 1536, SW = SR - SL;
+const DISPLAY = '"Archivo Black"', SEC = '"Poppins"', MONO = '"IBM Plex Mono"';
+const TRACK_D = -0.04, TRACK_M = 0.02;
+const BEAT = 0.125;                          // 120 BPM sixteenth
+const G8 = v => Math.round(v / 8) * 8;       // 8 px baseline grid
+
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const acc = document.createElement('canvas'); acc.width = W; acc.height = H;
+const actx = acc.getContext('2d');
+const sub = document.createElement('canvas'); sub.width = W; sub.height = H;
+const sctx = sub.getContext('2d');
+
+// ---------- math ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const easeOutExpo = p => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p);
+const easeOutCubic = p => 1 - Math.pow(1 - p, 3);
+const easeInOutCubic = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+// closed-form damped spring, 0 -> 1
+function spring(t, zeta = 0.72, f = 3.0) {
+  if (t <= 0) return 0;
+  const w = 2 * Math.PI * f;
+  if (zeta < 1) {
+    const wd = w * Math.sqrt(1 - zeta * zeta);
+    return 1 - Math.exp(-zeta * w * t) * (Math.cos(wd * t) + (zeta * w / wd) * Math.sin(wd * t));
+  }
+  return 1 - Math.exp(-w * t) * (1 + w * t);
+}
+function hash(a, b, c) {
+  let h = (a * 73856093) ^ (b * 19349663) ^ (c * 83492791);
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  h = Math.imul(h ^ (h >>> 16), 2246822519);
+  return ((h ^ (h >>> 15)) >>> 0) / 4294967296;
+}
+
+// ---------- type layout ----------
+function setFont(c, fam, size) { c.font = `${size}px ${fam}`; }
+// ink width exactly as drawn glyph by glyph (first ink left to last ink right)
+function lineWidth(text, fam, size, track) {
+  setFont(ctx, fam, size);
+  const n = text.length;
+  const lastX = ctx.measureText(text.slice(0, n - 1)).width + (n - 1) * track * size;
+  return lastX + ctx.measureText(text[n - 1]).actualBoundingBoxRight;
+}
+function fitSize(text, fam, width, track) {
+  let s = Math.floor(100 * width / lineWidth(text, fam, 100, track));
+  while (lineWidth(text, fam, s, track) > width) s--;
+  return s;
+}
+function capH(fam, size) { setFont(ctx, fam, size); return ctx.measureText('H').actualBoundingBoxAscent; }
+// glyph positions with kerning preserved via prefix measurement
+function glyphs(text, fam, size, track, x0, baseline, color = WHITE) {
+  setFont(ctx, fam, size);
+  const out = [];
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === ' ') continue;
+    const x = x0 + ctx.measureText(text.slice(0, i)).width + i * track * size;
+    const adv = ctx.measureText(ch).width;
+    out.push({ ch, x, y: baseline, adv, fam, size, color, word: text.slice(0, i).split(' ').length - 1 });
+  }
+  return out;
+}
+
+let L = null; // layout, built after fonts load
+
+function buildLayout() {
+  const RULE_Y = 1152, RULE_H = 16;
+  const lay = { RULE_Y, RULE_H };
+
+  // HIT 1: A PORTA / BATEU, each line fit to the full measure, sitting on the rule
+  {
+    const s0 = fitSize('A PORTA', DISPLAY, SW, TRACK_D), s1 = fitSize('BATEU', DISPLAY, SW, TRACK_D);
+    const b1 = G8(RULE_Y - 72), c1 = capH(DISPLAY, s1);
+    const b0 = G8(b1 - c1 - 40);
+    const g0 = glyphs('A PORTA', DISPLAY, s0, TRACK_D, SL, b0);
+    const g1 = glyphs('BATEU', DISPLAY, s1, TRACK_D, SL, b1);
+    g0.forEach(g => g.w = g.word);           // A=0, PORTA=1
+    g1.forEach(g => g.w = 2);                // BATEU=2
+    lay.h1 = { glyphs: [...g0, ...g1] };
+  }
+  // HIT 2: VOCÊ NÃO / SABIA / O QUE / FAZER, fit to 811 so the 1.06 punch-in stays inside
+  {
+    const M = Math.floor(SW / 1.06);
+    const s = fitSize('VOCÊ NÃO', DISPLAY, M, TRACK_D);
+    const sF = fitSize('FAZER', DISPLAY, M, TRACK_D);
+    const c = capH(DISPLAY, s), cF = capH(DISPLAY, sF);
+    const pitch = G8(c * 1.32);
+    const b3 = G8(RULE_Y - 72);
+    const b2 = G8(b3 - cF - 32), b1 = b2 - pitch, b0 = b1 - pitch;
+    const lines = [['VOCÊ NÃO', s, b0], ['SABIA', s, b1], ['O QUE', s, b2], ['FAZER', sF, b3]];
+    const gl = [];
+    lines.forEach(([txt, sz, b], li) => {
+      glyphs(txt, DISPLAY, sz, TRACK_D, SL, b).forEach((g, k) => { g.line = li; g.k = k; gl.push(g); });
+    });
+    gl.forEach((g, i) => {
+      g.i = i;
+      // scramble pool: only letters that fit inside this glyph's own slot (no overflow, no stretching)
+      setFont(ctx, g.fam, g.size);
+      g.pool = [...SCR].filter(ch => ch !== g.ch && ctx.measureText(ch).width <= g.adv - 2);
+      if (!g.pool.length) g.pool = ['I'];
+    });
+    lay.h2 = { glyphs: gl, top: b0 - capH(DISPLAY, s) * 1.25, bottom: b3 };
+  }
+  // staircase
+  {
+    const GAP = 8, segW = (SW - 6 * GAP) / 7, STEP = 56;
+    lay.stair = { GAP, segW, STEP };
+  }
+  // HIT 3: UM PASSO / POR DIA above the top of the staircase
+  {
+    const topStair = RULE_Y - 7 * lay.stair.STEP;
+    const s0 = fitSize('UM PASSO', DISPLAY, SW, TRACK_D), s1 = fitSize('POR DIA', DISPLAY, SW, TRACK_D);
+    const b1 = G8(topStair - 96), c1 = capH(DISPLAY, s1);
+    const b0 = G8(b1 - c1 - 40);
+    const g0 = glyphs('UM PASSO', DISPLAY, s0, TRACK_D, SL, b0);
+    const g1 = glyphs('POR DIA', DISPLAY, s1, TRACK_D, SL, b1);
+    g0.forEach(g => g.w = g.word); g1.forEach(g => g.w = 2 + g.word);
+    lay.h3 = { glyphs: [...g0, ...g1] };
+  }
+  // crumbs, one under each segment
+  {
+    const sz = 28, base = 1440;
+    lay.crumbs = [];
+    for (let i = 0; i < 7; i++) {
+      const cx = SL + i * (lay.stair.segW + lay.stair.GAP) + lay.stair.segW / 2;
+      const txt = 'DIA ' + (i + 1);
+      const w = lineWidth(txt, MONO, sz, TRACK_M);
+      lay.crumbs.push({ txt, x: cx - w / 2, y: base, sz });
+    }
+    lay.dots = [];
+    for (let i = 0; i < 6; i++) {
+      const x = SL + (i + 1) * (lay.stair.segW + lay.stair.GAP) - lay.stair.GAP / 2;
+      lay.dots.push({ x, y: base });
+    }
+  }
+  // BRAND LOCKUP: PROTOCOLO / 7 DIAS, bar, slogan, name. Centered in the safe band.
+  {
+    const SWB = Math.floor(SW / 1.012); // room for the 1.010 breath
+    const sP = fitSize('PROTOCOLO', DISPLAY, SWB, TRACK_D);
+    const s7 = fitSize('7 DIAS', DISPLAY, Math.round(SWB * 0.86), TRACK_D);
+    const cP = capH(DISPLAY, sP), c7 = capH(DISPLAY, s7);
+    const BAR_H = 56;
+    const sS = 58, pitchS = 80, cS = capH(SEC, sS);
+    const sN = 34, cN = capH(MONO, sN);
+    // relative stack
+    let y = 0;
+    const bP = y + cP; y = bP + 40;
+    const b7 = y + c7; y = b7 + 48;
+    const barTop = y; y += BAR_H + 56;
+    const bS0 = y + cS, bS1 = bS0 + pitchS; y = bS1 + 64;
+    const bN = y + cN; const total = bN;
+    const off = G8((ST + SB) / 2 - total / 2);
+    const o = v => G8(v + off);
+    lay.brand = {
+      gP: glyphs('PROTOCOLO', DISPLAY, sP, TRACK_D, SL, o(bP)),
+      g7: glyphs('7 DIAS', DISPLAY, s7, TRACK_D, SL, o(b7)),
+      barTop: o(barTop), BAR_H,
+      slogan: [['O que fazer quando', o(bS0)], ['a crise chega em casa.', o(bS1)]], sS,
+      name: { txt: 'Dr. Fabio Schmidt', y: o(bN), sz: sN },
+      cy: off + total / 2,
+    };
+    lay.brand.g7[0].color = RED;
+    lay.brand.gP.forEach(g => g.w = 0);
+    lay.brand.g7.forEach(g => g.w = g.ch === '7' ? 1 : 2);
+  }
+  lay.anchor = {};
+  return lay;
+}
+
+// ---------- audit (safe-area check, used by the render script) ----------
+let AUDIT = null;
+function auditBox(c, x, y, w, asc, desc, tag) {
+  if (!AUDIT) return;
+  const m = c.getTransform();
+  const pts = [[x, y - asc], [x + w, y - asc], [x, y + desc], [x + w, y + desc]].map(([px, py]) => [m.a * px + m.c * py + m.e, m.b * px + m.d * py + m.f]);
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  AUDIT.push({ tag, x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) });
+}
+
+function drawGlyph(c, g, ch, dx, dy, color, alpha = 1, audit = true) {
+  setFont(c, g.fam, g.size);
+  c.globalAlpha = alpha;
+  c.fillStyle = color;
+  const mw = c.measureText(ch);
+  const x = g.x + dx + (g.adv - mw.width) / 2;
+  c.fillText(ch, x, g.y + dy);
+  if (audit && alpha > 0.02) auditBox(c, x - mw.actualBoundingBoxLeft, g.y + dy, mw.actualBoundingBoxLeft + mw.actualBoundingBoxRight, mw.actualBoundingBoxAscent, mw.actualBoundingBoxDescent, ch);
+  c.globalAlpha = 1;
+}
+function drawText(c, txt, fam, size, track, x, y, color, alpha = 1) {
+  setFont(c, fam, size);
+  c.globalAlpha = alpha; c.fillStyle = color;
+  if ('letterSpacing' in c) c.letterSpacing = (track * size) + 'px';
+  c.fillText(txt, x, y);
+  const m = c.measureText(txt);
+  if (alpha > 0.02) auditBox(c, x - m.actualBoundingBoxLeft, y, m.actualBoundingBoxLeft + m.actualBoundingBoxRight, m.actualBoundingBoxAscent, m.actualBoundingBoxDescent, txt);
+  if ('letterSpacing' in c) c.letterSpacing = '0px';
+  c.globalAlpha = 1;
+}
+
+// ---------- timeline ----------
+const T = {
+  h1Words: [0.10, 0.10 + BEAT, 0.10 + 2 * BEAT],
+  ruleIn: 0.70,
+  tr1: [1.62, 1.92],
+  h2Start: 1.80, h2Lock: 2.00,
+  camIn: [1.80, 3.82],
+  tr2: [3.82, 4.12],
+  breakAt: 4.05, stairAt: 4.25,
+  h3Words: [4.10, 4.10 + BEAT, 4.10 + 2 * BEAT, 4.10 + 3 * BEAT],
+  tr3: [6.35, 6.65],
+  fuseAt: 6.55,
+  brandWords: [6.95, 6.95 + BEAT, 6.95 + 2 * BEAT],
+  sloganAt: 8.00, nameAt: 8.25,
+  breath: [8.00, 10.00],
+};
+
+function camera(t) {
+  if (t < T.camIn[0]) return 1;
+  if (t < T.camIn[1]) return 1 + 0.06 * easeOutCubic((t - T.camIn[0]) / (T.camIn[1] - T.camIn[0]));
+  if (t < T.tr2[1]) return 1 + 0.06 * (1 - easeInOutCubic((t - T.tr2[0]) / (T.tr2[1] - T.tr2[0])));
+  return 1;
+}
+function applyCamera(c, t) {
+  const s = camera(t);
+  const cy = (L.h2.top + L.h2.bottom) / 2;
+  c.translate(SL, cy); c.scale(s, s); c.translate(-SL, -cy);
+}
+function applyBreath(c, t) {
+  if (t < T.breath[0]) return;
+  const s = 1 + 0.010 * Math.sin(Math.PI * clamp((t - T.breath[0]) / (T.breath[1] - T.breath[0])));
+  const cx = SL, cy = L.brand.cy;   // breathe from the flush-left edge so type never crosses the margin
+  c.translate(cx, cy); c.scale(s, s); c.translate(-cx, -cy);
+}
+
+// ---------- scenes (text only; t is absolute) ----------
+const DROP = 220;
+function sceneHit1(c, t, settled = false) {
+  for (const g of L.h1.glyphs) {
+    const ts = T.h1Words[g.w];
+    if (!settled && t < ts) continue;
+    const p = settled ? 1 : spring(t - ts, 0.72, 3.0);
+    const a = settled ? 1 : clamp((t - ts) / 0.05);
+    drawGlyph(c, g, g.ch, 0, -DROP * (1 - p), WHITE, a);
+  }
+}
+const SCR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function sceneHit2(c, t, settled = false) {
+  for (const g of L.h2.glyphs) {
+    const appear = T.h2Start + 0.022 * g.i;
+    const lock = T.h2Lock + 2 * BEAT * g.line + BEAT * g.k;
+    if (!settled && t < appear) continue;
+    if (settled || t >= lock) {
+      // locked: settle onto the 8 px grid baseline with a short critically damped snap
+      const off = (hash(g.i, 7, 3) - 0.5) * 48;
+      const p = settled ? 1 : spring(t - lock, 1.0, 9.0);
+      drawGlyph(c, g, g.ch, 0, off * (1 - p), WHITE, 1);
+    } else {
+      const tick = Math.floor(t * 20);
+      const ch = g.pool[Math.floor(hash(g.i, tick, 11) * g.pool.length)];
+      const off = (hash(g.i, 7, 3) - 0.5) * 48;
+      const a = clamp((t - appear) / 0.06);
+      drawGlyph(c, g, ch, 0, off, RED, a);
+    }
+  }
+}
+function sceneHit3(c, t, settled = false) {
+  const STEP = L.stair.STEP;
+  for (const g of L.h3.glyphs) {
+    const ts = T.h3Words[g.w];
+    if (!settled && t < ts) continue;
+    const p = settled ? 1 : spring(t - ts, 0.78, 4.0);
+    const a = settled ? 1 : clamp((t - ts) / 0.05);
+    drawGlyph(c, g, g.ch, 0, STEP * (1 - p), WHITE, a);
+  }
+}
+function sceneBrand(c, t) {
+  const B = L.brand;
+  const DROPB = 180;
+  for (const g of [...B.gP, ...B.g7]) {
+    const ts = T.brandWords[g.w];
+    if (t < ts) continue;
+    const p = spring(t - ts, 0.72, 3.0);
+    const a = clamp((t - ts) / 0.05);
+    drawGlyph(c, g, g.ch, 0, -DROPB * (1 - p), g.color, a);
+  }
+  B.slogan.forEach(([txt, y], i) => {
+    const ts = T.sloganAt + i * BEAT;
+    if (t < ts) return;
+    const p = spring(t - ts, 1.0, 5.0);
+    drawText(c, txt, SEC, B.sS, 0, SL, y + 24 * (1 - p), WHITE, clamp((t - ts) / 0.12));
+  });
+  if (t >= T.nameAt) {
+    const p = spring(t - T.nameAt, 1.0, 5.0);
+    drawText(c, B.name.txt, MONO, B.name.sz, TRACK_M, SL, B.name.y + 16 * (1 - p), WHITE, clamp((t - T.nameAt) / 0.12));
+  }
+}
+
+// ---------- persistent layer: rule, staircase, bar, crumbs ----------
+function segPose(i, t) {
+  const S = L.stair;
+  const g = easeOutExpo(clamp((t - T.breakAt) / 0.12));
+  const segW = (SW - 6 * S.GAP * g) / 7;
+  const x = SL + i * (segW + S.GAP * g);
+  const rise = (i + 1) * S.STEP * spring(t - (T.stairAt + i * BEAT), 0.8, 4.0);
+  return { x, y: L.RULE_Y - rise, w: segW, h: L.RULE_H };
+}
+function persistent(c, t) {
+  c.fillStyle = RED;
+  if (t < T.breakAt) {
+    if (t >= T.ruleIn) {
+      const w = SW * easeOutExpo(clamp((t - T.ruleIn) / 0.16));
+      c.fillRect(SL, L.RULE_Y, w, L.RULE_H);
+    }
+  } else {
+    for (let i = 0; i < 7; i++) {
+      let p = segPose(i, t);
+      if (t >= T.fuseAt) {
+        const q = spring(t - (T.fuseAt + i * BEAT), 0.85, 3.2);
+        const qc = Math.min(q, 1);
+        const strip = 6 - i;
+        const hS = L.brand.BAR_H / 7;
+        const target = { x: SL, y: L.brand.barTop + strip * hS, w: SW, h: hS };
+        p = { x: lerp(p.x, target.x, qc), y: lerp(p.y, target.y, q), w: lerp(p.w, target.w, qc), h: lerp(p.h, target.h, qc) };
+        // overlap the seams by 1 px so the fused bar reads as one solid block
+        if (qc > 0.98) p.h += 1;
+      }
+      c.fillRect(p.x, p.y, p.w, p.h);
+    }
+  }
+  // crumbs
+  if (t >= 4.10 && t < 7.10) {
+    const fade = 1 - clamp((t - 6.70) / 0.30);
+    for (let i = 0; i < 7; i++) {
+      const cr = L.crumbs[i];
+      const on = T.stairAt + i * BEAT;
+      const appear = clamp((t - (4.10 + i * 0.02)) / 0.08);
+      const a = t >= on ? 1 : 0.32;
+      drawText(c, cr.txt, MONO, cr.sz, TRACK_M, cr.x, cr.y, WHITE, a * appear * fade);
+      // current day: short red tick under the label (red stays on large shapes only, for contrast)
+      if (t >= on && (t < on + BEAT || i === 6)) {
+        c.globalAlpha = appear * fade; c.fillStyle = RED;
+        c.fillRect(SL + i * (L.stair.segW + L.stair.GAP), cr.y + 18, L.stair.segW, 6);
+        c.globalAlpha = 1;
+      }
+    }
+    for (const d of L.dots) {
+      drawText(c, '·', MONO, 28, 0, d.x - 8, d.y, WHITE, 0.32 * fade);
+    }
+  }
+}
+
+// ---------- mask wipe: outgoing word flies through the camera ----------
+// The outgoing hit is the matte: it scales about a point inside one of its own
+// gaps until the gap swallows the frame, revealing the incoming hit.
+function computeAnchor(drawFn, key) {
+  if (L.anchor[key]) return L.anchor[key];
+  const k = 4, w = W / k, h = H / k;
+  const m = document.createElement('canvas'); m.width = W; m.height = H;
+  const mc = m.getContext('2d');
+  const saveA = AUDIT; AUDIT = null;
+  drawFn(mc);
+  AUDIT = saveA;
+  const data = mc.getImageData(0, 0, W, H).data;
+  // bbox of ink
+  let x0 = W, y0 = H, x1 = 0, y1 = 0;
+  const ink = new Uint8Array(w * h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const a = data[((y * k) * W + x * k) * 4 + 3];
+    if (a > 60) { ink[y * w + x] = 1; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  }
+  // chamfer distance to ink
+  const INF = 1e9, d = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) d[i] = ink[i] ? 0 : INF;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = y * w + x; let v = d[i];
+    if (x > 0) v = Math.min(v, d[i - 1] + 1);
+    if (y > 0) v = Math.min(v, d[i - w] + 1);
+    if (x > 0 && y > 0) v = Math.min(v, d[i - w - 1] + 1.414);
+    if (x < w - 1 && y > 0) v = Math.min(v, d[i - w + 1] + 1.414);
+    d[i] = v;
+  }
+  for (let y = h - 1; y >= 0; y--) for (let x = w - 1; x >= 0; x--) {
+    const i = y * w + x; let v = d[i];
+    if (x < w - 1) v = Math.min(v, d[i + 1] + 1);
+    if (y < h - 1) v = Math.min(v, d[i + w] + 1);
+    if (x < w - 1 && y < h - 1) v = Math.min(v, d[i + w + 1] + 1.414);
+    if (x > 0 && y < h - 1) v = Math.min(v, d[i + w - 1] + 1.414);
+    d[i] = v;
+  }
+  // best gap point inside the inner 70% of the ink bbox, biased to the center
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, rx = (x1 - x0) * 0.35, ry = (y1 - y0) * 0.35;
+  let best = -INF, bx = cx, by = cy, br = 1;
+  for (let y = Math.floor(cy - ry); y <= cy + ry; y++) for (let x = Math.floor(cx - rx); x <= cx + rx; x++) {
+    const v = d[y * w + x];
+    const score = v - 0.04 * Math.hypot(x - cx, y - cy);
+    if (score > best) { best = score; bx = x; by = y; br = v; }
+  }
+  const ax = bx * k, ay = by * k, r = Math.max(br * k, 6);
+  const far = Math.max(Math.hypot(ax, ay), Math.hypot(W - ax, ay), Math.hypot(ax, H - ay), Math.hypot(W - ax, H - ay));
+  return (L.anchor[key] = { x: ax, y: ay, S: Math.min(far / r * 1.15, 400) });
+}
+function flyThrough(c, t, tr, drawFn, key, camFn) {
+  const u = clamp((t - tr[0]) / (tr[1] - tr[0]));
+  const A = computeAnchor(cc => { cc.save(); if (camFn) camFn(cc, tr[0]); drawFn(cc); cc.restore(); }, key);
+  const s = Math.exp(Math.log(A.S) * Math.pow(u, 2.4));
+  c.save();
+  c.translate(A.x, A.y); c.scale(s, s); c.translate(-A.x, -A.y);
+  if (camFn) camFn(c, t);
+  const saveA = AUDIT; AUDIT = null;     // transition matte, not reading type
+  drawFn(c);
+  AUDIT = saveA;
+  c.restore();
+}
+
+// ---------- one subframe ----------
+function renderAt(c, t) {
+  c.setTransform(1, 0, 0, 1, 0, 0);
+  c.globalAlpha = 1;
+  c.fillStyle = BG; c.fillRect(0, 0, W, H);
+  c.textBaseline = 'alphabetic';
+  c.save();
+  applyCamera(c, t);
+  applyBreath(c, t);
+  // incoming / current scene
+  if (t < T.tr1[0]) sceneHit1(c, t);
+  else if (t < T.tr2[0]) sceneHit2(c, t);
+  else if (t < T.tr3[0]) sceneHit3(c, t);
+  else sceneBrand(c, t);
+  c.restore();
+  // outgoing hit as fly-through matte
+  if (t >= T.tr1[0] && t < T.tr1[1]) flyThrough(c, t, T.tr1, cc => sceneHit1(cc, 0, true), 'h1', null);
+  if (t >= T.tr2[0] && t < T.tr2[1]) flyThrough(c, t, T.tr2, cc => sceneHit2(cc, 0, true), 'h2', applyCamera);
+  if (t >= T.tr3[0] && t < T.tr3[1]) flyThrough(c, t, T.tr3, cc => sceneHit3(cc, 0, true), 'h3', null);
+  // persistent layer on top
+  c.save();
+  applyCamera(c, t);
+  applyBreath(c, t);
+  persistent(c, t);
+  c.restore();
+}
+
+// ---------- seek: 4 blended subframes, 180 degree shutter ----------
+const SUBS = 4, SHUTTER = 0.5 / FPS;
+function seek(t) {
+  t = clamp(t, 0, DUR);
+  for (let k = 0; k < SUBS; k++) {
+    const tk = clamp(t + ((k + 0.5) / SUBS - 0.5) * SHUTTER, 0, DUR);
+    const isCenter = k === SUBS / 2;
+    const saveA = AUDIT; if (!isCenter) AUDIT = null;
+    renderAt(sctx, tk);
+    AUDIT = saveA;
+    actx.globalAlpha = 1 / (k + 1);
+    actx.globalCompositeOperation = k === 0 ? 'copy' : 'source-over';
+    actx.drawImage(sub, 0, 0);
+  }
+  actx.globalAlpha = 1; actx.globalCompositeOperation = 'source-over';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(acc, 0, 0);
+}
+function audit(t) { AUDIT = []; seek(t); const r = AUDIT; AUDIT = null; return r; }
+
+// ---------- boot ----------
+window.seek = seek; window.audit = audit;
+const params = new URLSearchParams(location.search);
+Promise.all([
+  document.fonts.load(`100px ${DISPLAY}`, 'AÊÃ7'),
+  document.fonts.load(`600 60px ${SEC}`, 'Oa'),
+  document.fonts.load(`500 30px ${MONO}`, 'DIA 1'),
+]).then(() => {
+  L = buildLayout();
+  window.L = L;
+  window.ready = true;
+  if (params.has('t')) { seek(parseFloat(params.get('t'))); return; }
+  if (params.has('render')) { seek(0); return; }
+  let t0 = performance.now();
+  const loop = now => { const t = (now - t0) / 1000; seek(Math.min(t, DUR)); if (t < DUR) requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+  cv.addEventListener('click', () => { t0 = performance.now(); requestAnimationFrame(loop); });
+});
+</script>
+</body>
+</html>
