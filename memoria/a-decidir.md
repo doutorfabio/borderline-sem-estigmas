@@ -31,3 +31,9 @@ A regra de 24/10 proíbe fórmula de contraste (não é X, é Y) e frase começa
 - Base técnica (gramática 7, retórica 8) e três gigantes (hipersexual, love bombing, chamar atenção) usam palavra riscada como correção.
 - Ele, em 19/11: "as pessoas estão reclamando essas coisas ambíguas tipo a afirmação riscada". Em 14/11 o Vamos já tinha barrado ESQUIZOFRENIA riscada.
 - Regra provisória: capa nova sem risco, com frase afirmativa de uma leitura só. Perguntar se o risco fica vetado de vez ou só quando risca a frase inteira.
+
+## Título no anúncio pago e regra do CFM (aberto em 22/11/2026)
+
+- Preferência fixa dele: apresentar como médico, pós-graduado em psiquiatria ou médico com foco em TPB; nunca psiquiatra nem especialista.
+- Busca do Claude em 22/11, só por resumos de busca (o site do CFM não abre na rede da sessão; texto oficial não lido): a Resolução CFM 2.336/2023 permitiria anunciar pós-graduação lato sensu cadastrada no CRM, em forma de currículo, seguida de NÃO ESPECIALISTA em caixa alta; e um parecer do CFM, na leitura de terceiros, diria que médico sem RQE não pode anunciar que trata doença específica.
+- Regra provisória: em anúncio pago, usar Médico, CRM-SP 183549, como na página de venda. Perguntar se pós-graduado em psiquiatria (com NÃO ESPECIALISTA) e foco em TPB podem entrar.

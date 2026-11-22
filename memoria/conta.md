@@ -3,6 +3,7 @@
 ## Fatos informados pelo Dr. Fabio
 
 - Protocolo 7 Dias: R$219 (12x R$21,90). Para quem mora com alguém com borderline. Um procedimento por dia. A pessoa com borderline não precisa assistir nem concordar. CTA: comentar COMEÇAR. Site: curso.drfabioschmidt.net. PDFs na Hotmart, para quem comprou.
+- Roteiro escrito do Protocolo 7 Dias (arquivo Curso_escrito_P7D_2.txt, enviado por ele em 22/11; o texto não vai para o repositório, que é público): 6 aulas de 12 a 18 min estimados no roteiro, mais um encerramento de 30 s. As aulas 1 a 5 ensinam o ciclo da crise em 4 etapas, validação com limite, limite sem briga e o pós-crise de 10 minutos; o plano de 7 dias é a aula 6. A aula 1 chama o curso de Pare de alimentar a crise. Duração real, formato e liberação das aulas na Hotmart: não informados.
 - Livro "Quem sofre não escolhe como gritar": R$69.
 - Guias interativos: só para clientes dos planos dele.
 - Agenda do consultório com bastante horário livre (23/10). Objetivo atual dele: vender ("FOCO TOTAL / Preciso vender").
