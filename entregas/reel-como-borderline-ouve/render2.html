@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// v2: tela cheia, câmera segue a narração. Coordenadas de foco em pixels da imagem de 1116x2000.
+const W=1080,H=1920, SRC_W=1536, SRC_H=2500, D2S=1536/1116;
+const FW=994, FK=FW/SRC_W, FH=SRC_H*FK;           // vista inteira: 994 x 1618
+const SCX=502, SCY=816;                              // centro da área segura (x 54..950, y 96..1536)
+const BOX_W=896, BOX_H=1440;
+let CUES;
+// [x0,y0,x1,y1] em 1116x2000
+const SL=[
+ {f:'src/s1.png'},
+ {f:'src/s2.png', L:[30,780,560,1300],  R:[560,95,1116,1700]},
+ {f:'src/s3.png', L:[30,480,560,1440],  R:[560,95,1116,1590]},
+ {f:'src/s4.png', L:[30,500,560,1420],  R:[560,95,1116,1590]},
+ {f:'src/s5.png', L:[30,500,560,1340],  R:[560,95,1116,1560]},
+ {f:'src/s6.png', L:[30,620,560,1600],  R:[560,95,1116,1700]},
+ {f:'src/s7.png', L:[30,580,560,1520],  R:[560,95,1116,1700]},
+ {f:'src/s8.png', R:[600,95,1100,1300]},
+];
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+const e3=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function rng(s){return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;}}
+function load(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.src=src;});}
+const FULL={z:1,cx:FW/2,cy:FH/2};                    // câmera em coordenadas da folha (já em escala FK)
+function camFor(rect){ if(!rect) return FULL;
+ const x0=rect[0]*D2S*FK,y0=rect[1]*D2S*FK,x1=rect[2]*D2S*FK,y1=rect[3]*D2S*FK;
+ const z=cl(Math.min(BOX_W/(x1-x0),BOX_H/(y1-y0)),1,2.1);
+ return {z,cx:(x0+x1)/2,cy:(y0+y1)/2};}
+function lerpCam(a,b,p){return {z:a.z+(b.z-a.z)*p,cx:a.cx+(b.cx-a.cx)*p,cy:a.cy+(b.cy-a.cy)*p};}
+
+// timeline de câmera por slide: lista de [tempo, alvo, duração da transição, tipo]
+function track(i){
+ const s=SL[i], st=CUES.starts[i], nx=i+1<SL.length?CUES.starts[i+1]:CUES.end;
+ if(i===0) return [[0,{z:1.0,cx:FW/2,cy:FH*0.42},0],[0.01,{z:1.06,cx:FW/2,cy:FH*0.42},2.3,'slow']];
+ if(i===7) return [[st,camFor(s.R),0],[CUES.manda-0.1,FULL,0.45]];
+ const h=CUES.hear[i-1], pe=CUES.phrase_end[i-1];
+ return [[st,camFor(s.L),0],[h-0.12,camFor(s.R),0.24,'whip'],[Math.min(pe+0.12,nx-0.55),FULL,0.4]];
+}
+function camAt(i,t){
+ const tr=track(i); let cam=tr[0][1], slam=0;
+ for(let k=1;k<tr.length;k++){const [t0,tg,d,ty]=tr[k]; if(t<t0) break;
+  const p=d?cl((t-t0)/d,0,1):1; const e=ty==='slow'?p:e3(p); cam=lerpCam(cam,tg,e);
+  if(ty==='whip'){const u=t-(t0+d); if(u>0&&u<0.4) slam=Math.exp(-u*12)*Math.sin(u*30);} }
+ // um pouco de vida: deriva lenta
+ const life=1+0.012*cl((t-tr[0][0])/3,0,1);
+ return {z:cam.z*life*(1+0.035*slam),cx:cam.cx,cy:cam.cy,slam};
+}
+let G,BG={};
+function drawView(ctx,i,t){
+ const s=SL[i]; const cam=camAt(i,t);
+ ctx.fillStyle=s.bg; ctx.fillRect(0,0,W,H);
+ ctx.save(); ctx.translate(SCX,SCY); ctx.scale(cam.z,cam.z); ctx.translate(-cam.cx,-cam.cy);
+ ctx.drawImage(s.img,0,0,SRC_W,SRC_H,0,0,FW,FH); ctx.restore();
+}
+const c=document.getElementById('c'), x=c.getContext('2d');
+const A=document.createElement('canvas');A.width=W;A.height=H;const ax=A.getContext('2d');
+const B=document.createElement('canvas');B.width=W;B.height=H;const bx=B.getContext('2d');
+function frame(t){
+ let i=0; for(let k=0;k<SL.length;k++) if(t>=CUES.starts[k]-0.22) i=k;
+ const st=CUES.starts[i], DROP=0.26, t0=st-0.22;
+ if(i>0 && t<t0+DROP){
+  drawView(ax,i-1,t); x.drawImage(A,0,0);
+  const p=cl((t-t0)/DROP,0,1), e=p*p;
+  drawView(bx,i,Math.max(t,st)); x.save(); x.translate(0,-(H+80)*(1-e));
+  x.shadowColor='rgba(0,0,0,.35)';x.shadowBlur=40;x.shadowOffsetY=18; x.drawImage(B,0,0); x.restore();
+ } else { drawView(x,i,Math.max(t, i?st:0)); }
+}
+window.draw=function(t){
+ // desfoque de movimento: média de subquadros só nas transições rápidas
+ const SUB=5, dt=1/30/SUB; let fast=false;
+ for(let i=1;i<SL.length;i++){const st=CUES.starts[i]; if(t>st-0.25&&t<st+0.06) fast=true;
+   if(i<7){const h=CUES.hear[i-1]; if(t>h-0.14&&t<h+0.14) fast=true;}}
+ if(!fast){frame(t);} else {
+  const acc=document.createElement('canvas');acc.width=W;acc.height=H;const cx2=acc.getContext('2d');
+  for(let k=0;k<SUB;k++){frame(t-0.5/30+k*dt*1); cx2.globalAlpha=1/(k+1); cx2.drawImage(c,0,0);} x.globalAlpha=1; x.drawImage(acc,0,0);}
+ x.drawImage(G,0,0);
+ const fo=CUES.end-t; if(fo<0.1){x.fillStyle=`rgba(0,0,0,${cl(1-fo/0.1,0,1)})`;x.fillRect(0,0,W,H);}
+};
+window.ready=(async()=>{CUES=await (await fetch('cues.json')).json(); window.TOTAL=CUES.end;
+ for(const s of SL){s.img=await load(s.f); const t=document.createElement('canvas');t.width=60;t.height=60;const tx=t.getContext('2d');
+  tx.drawImage(s.img,1300,40,60,60,0,0,60,60);const d=tx.getImageData(0,0,60,60).data;const ch=[[],[],[]];
+  for(let k=0;k<d.length;k+=4){ch[0].push(d[k]);ch[1].push(d[k+1]);ch[2].push(d[k+2]);}
+  const md=a=>a.sort((p,q)=>p-q)[a.length>>1]; s.bg=`rgb(${md(ch[0])},${md(ch[1])},${md(ch[2])})`;}
+ G=document.createElement('canvas');G.width=W;G.height=H;const g=G.getContext('2d');const id=g.createImageData(W,H);const R=rng(7);
+ for(let k=0;k<id.data.length;k+=4){const v=R()*255;id.data[k]=id.data[k+1]=id.data[k+2]=v;id.data[k+3]=9;} g.putImageData(id,0,0);
+ return true;})();
+</script></body></html>

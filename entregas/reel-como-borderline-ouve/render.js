@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const FPS=30, out=process.argv[2]||'work/video.mp4', only=process.argv[3];
 (async()=>{
   const b=await chromium.launch(); const p=await b.newPage({viewport:{width:1080,height:1920}});
-  await p.goto('http://127.0.0.1:8765/render.html'); await p.evaluate(()=>window.ready);
+  await p.goto('http://127.0.0.1:8765/'+(process.env.PAGE||'render.html')+''); await p.evaluate(()=>window.ready);
   const TOTAL=await p.evaluate(()=>window.TOTAL);
   if(only){ for(const t of only.split(',').map(Number)){ const d=await p.evaluate(t=>{draw(t);return document.getElementById('c').toDataURL('image/png');},t);
       require('fs').writeFileSync(`work/f_${t.toFixed(2)}.png`,Buffer.from(d.split(',')[1],'base64'));} await b.close(); return; }
