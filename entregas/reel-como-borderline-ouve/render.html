@@ -1,0 +1,116 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Folha: área segura (5% esq, 12% dir, 20% embaixo). Recorte da fonte: 1536 x 2500 (sem rodapé).
+const W=1080,H=1920, SX=20, SY=22, SW=930, SH=Math.round(930*2500/1536); // 1514
+const SRC_W=1536, SRC_H=2500, K=SW/SRC_W;
+// tempos: [inicio, rasgo (relativo), duração]
+const SLIDES=[
+ {f:'src/s1.png', dur:2.4, rip:null, tear:750},
+ {f:'src/s2.png', dur:3.0, rip:1.00, tear:750},
+ {f:'src/s3.png', dur:3.0, rip:1.05, tear:760},
+ {f:'src/s4.png', dur:3.2, rip:1.25, tear:750},
+ {f:'src/s5.png', dur:3.3, rip:1.00, tear:780},
+ {f:'src/s6.png', dur:3.4, rip:1.30, tear:770},
+ {f:'src/s7.png', dur:3.5, rip:1.20, tear:770},
+ {f:'src/s8.png', dur:4.2, rip:1.40, tear:770},
+];
+let t0=0; for(const s of SLIDES){s.t=t0; t0+=s.dur;}
+const TOTAL=t0;
+const c=document.getElementById('c'), x=c.getContext('2d');
+function rng(seed){return function(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}}
+const ease={inQ:t=>t*t, out3:t=>1-Math.pow(1-t,3), inOut:t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2};
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+function loadImg(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.src=src;});}
+
+// textura de grão
+function grain(){const g=document.createElement('canvas');g.width=W;g.height=H;const gx=g.getContext('2d');
+ const d=gx.createImageData(W,H);const R=rng(7);for(let i=0;i<d.data.length;i+=4){const v=R()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=10;}gx.putImageData(d,0,0);return g;}
+
+// aba de papel em branco cobrindo o lado direito, com borda rasgada
+function makeFlap(s){
+ const fc=document.createElement('canvas');fc.width=SRC_W;fc.height=SRC_H;const f=fc.getContext('2d');
+ // cor do papel: mediana de uma faixa limpa do próprio slide (lado direito, alto)
+ const tmp=document.createElement('canvas');tmp.width=SRC_W;tmp.height=SRC_H;const tx=tmp.getContext('2d');tx.drawImage(s.img,0,0);
+ const px=tx.getImageData(1300,40,200,40).data;const rs=[],gs=[],bs=[];for(let i=0;i<px.length;i+=4){rs.push(px[i]);gs.push(px[i+1]);bs.push(px[i+2]);}
+ const med=a=>a.sort((p,q)=>p-q)[a.length>>1];const col=[med(rs),med(gs),med(bs)];
+ const R=rng(s.tear*13+5);const pts=[];let ex=s.tear-48;
+ for(let y=-10;y<=SRC_H+20;y+=14){ex+= (R()-.5)*16; ex=cl(ex,s.tear-70,s.tear-30); pts.push([ex,y]);}
+ s.flapEdge=pts;
+ f.save();f.beginPath();f.moveTo(SRC_W+10,-10);pts.forEach(p=>f.lineTo(p[0],p[1]));f.lineTo(SRC_W+10,SRC_H+20);f.closePath();
+ // sombra que a aba projeta sobre o lado esquerdo
+ f.shadowColor='rgba(0,0,0,.22)';f.shadowBlur=18;f.shadowOffsetX=-6;
+ f.fillStyle=`rgb(${col})`;f.fill();f.restore();
+ // fibra branca da borda rasgada
+ f.save();f.beginPath();pts.forEach((p,i)=>i?f.lineTo(p[0]+2,p[1]):f.moveTo(p[0]+2,p[1]));
+ f.strokeStyle='rgba(255,255,255,.95)';f.lineWidth=9;f.stroke();
+ f.beginPath();pts.forEach((p,i)=>i?f.lineTo(p[0]+9,p[1]+3):f.moveTo(p[0]+9,p[1]+3));f.strokeStyle='rgba(205,198,188,.55)';f.lineWidth=3;f.stroke();f.restore();
+ // grão do papel na aba
+ const d=f.getImageData(0,0,SRC_W,SRC_H);const R2=rng(99);for(let i=0;i<d.data.length;i+=4){if(d.data[i+3]>200){const n=(R2()-.5)*10;d.data[i]+=n;d.data[i+1]+=n;d.data[i+2]+=n;}}
+ f.putImageData(d,0,0);
+ s.flap=fc;
+}
+
+let G, BG;
+function makeBG(){const b=document.createElement('canvas');b.width=W;b.height=H;const bx=b.getContext('2d');
+ bx.fillStyle='#181716';bx.fillRect(0,0,W,H);const rg=bx.createRadialGradient(W*.45,H*.4,200,W*.45,H*.4,1300);
+ rg.addColorStop(0,'rgba(60,55,50,.55)');rg.addColorStop(1,'rgba(0,0,0,.6)');bx.fillStyle=rg;bx.fillRect(0,0,W,H);
+ // pilha: duas folhas em branco por baixo
+ const sheet=(rot,dx,dy,col)=>{bx.save();bx.translate(SX+SW/2+dx,SY+SH/2+dy);bx.rotate(rot*Math.PI/180);
+  bx.shadowColor='rgba(0,0,0,.45)';bx.shadowBlur=30;bx.shadowOffsetY=8;bx.fillStyle=col;bx.fillRect(-SW/2,-SH/2,SW,SH);bx.restore();};
+ sheet(-1.8,-6,10,'#e6dfd3');sheet(1.2,6,4,'#ede6db');
+ return b;}
+
+function drawSheet(s,st){ // st: {dx,dy,rot,sx,sy,ax,ay, flap:{p}}
+ x.save();
+ const ax=st.ax??(SX+SW/2), ay=st.ay??(SY+SH/2);
+ x.translate(ax+(st.dx||0),ay+(st.dy||0));x.rotate((st.rot||0)*Math.PI/180);x.scale(st.sx||1,st.sy||1);x.translate(-ax,-ay);
+ x.save();x.shadowColor='rgba(0,0,0,.5)';x.shadowBlur=34;x.shadowOffsetY=10;x.fillStyle='#eee';x.fillRect(SX,SY,SW,SH);x.restore();
+ x.drawImage(s.img,0,0,SRC_W,SRC_H,SX,SY,SW,SH);
+ if(s.flap && st.flapP!==undefined && st.flapP<1){
+  const p=st.flapP; // 0 = colada, 1 = fora
+  const e=ease.inQ(p);
+  const px=SX+(s.tear-50)*K, py=SY+SH*0.12; // dobradiça do rasgo: puxa de cima
+  x.save();
+  x.beginPath();x.rect(SX-2000,SY-2000,SW+4000,SH+4000);x.clip();
+  x.translate(px,py);x.rotate(e*28*Math.PI/180);x.translate(e*980,-e*420);x.translate(-px,-py);
+  if(p>0){x.shadowColor='rgba(0,0,0,.35)';x.shadowBlur=30*p;x.shadowOffsetX=-10*p;x.shadowOffsetY=14*p;}
+  x.drawImage(s.flap,0,0,SRC_W,SRC_H,SX,SY,SW,SH);
+  x.restore();
+ }
+ x.restore();
+}
+
+function slideState(s,lt){ // lt = tempo local
+ const st={};
+ if(s.rip===null){ // capa: aproximação lenta
+  const sc=1+0.022*ease.inOut(cl(lt/s.dur,0,1)); st.sx=st.sy=sc; st.ax=SX+SW*0.5; st.ay=SY+SH*0.3; return st;}
+ // queda
+ const FALL=0.30;
+ if(lt<FALL){const p=ease.inQ(lt/FALL);st.dy=-(SH+260)*(1-p);st.rot=-3.2*(1-p);}
+ else{const u=lt-FALL; // pouso: achata e assenta com mola curta
+  const sq=Math.exp(-u*22)*Math.sin(u*38);st.sy=1-0.018*sq;st.sx=1+0.010*sq;st.ay=SY+SH;
+  st.rot=-3.2*0.0+(-0.6)*Math.exp(-u*14)*Math.cos(u*20);}
+ // aba
+ const rp=lt-s.rip; st.flapP= rp<0?0:cl(rp/0.34,0,1.0001);
+ // impacto do lado direito: soco ancorado na borda direita, tremor curto
+ const ip=lt-(s.rip+0.10);
+ if(ip>0&&ip<0.45){const k=Math.exp(-ip*10);const sc=1+0.032*k*Math.sin(Math.min(ip*14,Math.PI/2)+0.0);
+  st.sx=(st.sx||1)*sc;st.sy=(st.sy||1)*sc;st.ax=SX+SW;st.ay=SY+SH*0.35;
+  st.dx=(st.dx||0)+Math.sin(ip*90)*5*Math.exp(-ip*14)-0; st.dy=(st.dy||0)+Math.cos(ip*77)*3*Math.exp(-ip*14);}
+ return st;
+}
+
+window.TOTAL=TOTAL; window.SLIDES=SLIDES.map(s=>({t:s.t,dur:s.dur,rip:s.rip}));
+window.draw=function(t){
+ x.setTransform(1,0,0,1,0,0);x.drawImage(BG,0,0);
+ let cur=SLIDES.length-1; for(let i=0;i<SLIDES.length;i++){if(t>=SLIDES[i].t)cur=i;}
+ const s=SLIDES[cur], lt=t-s.t;
+ if(cur>0 && lt<0.36){const pv=SLIDES[cur-1];drawSheet(pv,{flapP:1});}
+ drawSheet(s,slideState(s,lt));
+ x.drawImage(G,0,0);
+ const fo=TOTAL-t; if(fo<0.1){x.fillStyle=`rgba(0,0,0,${cl(1-fo/0.1,0,1)})`;x.fillRect(0,0,W,H);}
+};
+window.ready=(async()=>{for(const s of SLIDES){s.img=await loadImg(s.f);} for(const s of SLIDES.slice(1))makeFlap(s); G=grain(); BG=makeBG(); return true;})();
+</script></body></html>
