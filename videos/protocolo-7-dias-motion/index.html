@@ -1,0 +1,223 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Protocolo 7 Dias</title>
+<style>
+@font-face{font-family:AB;src:url(fonts/archivo-black.woff2)}
+@font-face{font-family:PP;src:url(fonts/poppins-500.woff2)}
+@font-face{font-family:PM;src:url(fonts/plex-500.woff2)}
+html,body{margin:0;background:#EDE4D3}canvas{display:block}
+</style></head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W=1080,H=1920,CREAM='#EDE4D3',INK='#1A1A1A',RED='#A62B24';
+const SAFE={l:90,r:950,t:90,b:1536}; // 90px direção + 12% direita + 20% embaixo (BRAIN regra 8)
+const CX=(SAFE.l+SAFE.r)/2;
+// batidas MEDIDAS no track.wav (fluxo espectral), 90 BPM
+const B=[0.288,0.955,1.621,2.288,2.955,3.621,4.288,4.955,5.621,6.288,6.955,7.621,8.288,8.955,9.621,10.288,10.955];
+const SPB=B[1]-B[0], DUR=12.45;
+const c=document.getElementById('c'),x=c.getContext('2d');
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)), lerp=(a,b,u)=>a+(b-a)*u;
+// mola fechada: chega em 1 exatamente após D segundos (primeiro cruzamento), depois pequeno overshoot e assentamento
+function spring(u,D,z=0.62){ if(u<=0)return 0; const wd1=Math.sqrt(1-z*z);
+  const w=(Math.PI-Math.atan(wd1/z))/(D*wd1), wd=w*wd1;
+  return 1-Math.exp(-z*w*u)*(Math.cos(wd*u)+(z*w/wd)*Math.sin(wd*u)); }
+const landAt=(t,land,D,z)=>spring(t-(land-D),D,z);
+const easeOut=u=>1-Math.pow(1-clamp(u),3), easeIn=u=>Math.pow(clamp(u),3), easeIO=u=>{u=clamp(u);return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2};
+
+// ---------- layout ----------
+const R0=34, DOT=18, STEPX=(900-140)/6, STEPY=80;
+const stair=[...Array(7)].map((_,i)=>({x:140+i*STEPX,y:1130-i*STEPY}));
+const LAND=[B[1],B[2],B[3],B[4],B[7],B[8],B[9]]; // pousos do ponto em DIA1..DIA7
+const JD=0.42; // duração do salto
+let L={}; // layout medido após fontes
+
+function measure(){
+  // wordmark
+  x.font='130px AB'; const wP=x.measureText('PROTOCOLO').width;
+  L.FP=Math.floor(130*(SAFE.r-SAFE.l)/wP);
+  x.font=L.FP+'px AB'; const mP=x.measureText('PROTOCOLO'); L.wP=mP.width; L.capP=mP.actualBoundingBoxAscent;
+  L.FD=L.FP; x.font=L.FD+'px AB'; L.wD=x.measureText('DIAS').width;
+  x.font='100px AB'; const w7u=x.measureText('7').width/100; L.gap=34;
+  L.F7=Math.min(560,Math.floor((SAFE.r-SAFE.l-L.gap-L.wD)/w7u));
+  x.font=L.F7+'px AB'; const m7=x.measureText('7'); L.w7=m7.width; L.cap7=m7.actualBoundingBoxAscent;
+  // escaneia o glifo 7 para achar o esqueleto
+  const oc=document.createElement('canvas');oc.width=Math.ceil(L.w7)+40;oc.height=Math.ceil(L.cap7)+80;const o=oc.getContext('2d');
+  o.font=L.F7+'px AB';o.fillStyle='#000';o.fillText('7',20,20+L.cap7);
+  const d=o.getImageData(0,0,oc.width,oc.height).data, ink=(i,j)=>d[(j*oc.width+i)*4+3]>128;
+  const rows=[];for(let j=0;j<oc.height;j++){let a=-1,b=-1;for(let i=0;i<oc.width;i++)if(ink(i,j)){if(a<0)a=i;b=i;}rows.push(a<0?null:[a,b]);}
+  let top=rows.findIndex(r=>r),bot=rows.length-1;while(!rows[bot])bot--;
+  let left=1e9,right=-1;rows.forEach(r=>{if(r){left=Math.min(left,r[0]);right=Math.max(right,r[1]);}});
+  let bT=top,bB=top;while(rows[bB+1]&&rows[bB+1][1]-rows[bB+1][0]>0.6*(right-left))bB++;
+  const barY=(bT+bB)/2, barH=bB-bT+1;
+  const r1=Math.round(bB+0.25*(bot-bB)), r2=Math.round(bot-0.08*(bot-bB));
+  const c1=(rows[r1][0]+rows[r1][1])/2,c2=(rows[r2][0]+rows[r2][1])/2;
+  const slope=(c2-c1)/(r2-r1), xd=c1+(barY-r1)*slope, xb=c1+(bot-r1)*slope;
+  const hw=rows[Math.round((r1+r2)/2)][1]-rows[Math.round((r1+r2)/2)][0];
+  const swd=hw/Math.sqrt(1+slope*slope);
+  // coordenadas locais: origem na linha de base, x do fillText
+  const ox=20, oy=20+L.cap7, P=(a,b)=>({x:a-ox,y:b-oy});
+  const p1=P(left+barH/2,barY), p4=P(xd,barY), p7=P(xb-slope*swd*0.5,bot-swd*0.5);
+  L.sk={barH,swd,pr:P(right-barH/2,barY),pts:[p1,P(lerp(p1.x+ox,xd,1/2),barY),p4,
+       {x:lerp(p4.x,p7.x,1/4),y:lerp(p4.y,p7.y,1/4)},{x:lerp(p4.x,p7.x,2/4),y:lerp(p4.y,p7.y,2/4)},{x:lerp(p4.x,p7.x,3/4),y:lerp(p4.y,p7.y,3/4)},p7],
+       left:left-ox,right:right-ox,top:top-oy,bot:bot-oy};
+  // slogan + nome
+  L.FS=50; x.font=L.FS+'px PP'; L.s1='O que fazer quando a crise'; L.s2='chega em casa';
+  L.ws1=x.measureText(L.s1).width; L.ws2=x.measureText(L.s2).width; L.pr=9; L.pgap=5;
+  // vertical
+  const blockTop=545;
+  L.yP=blockTop+L.capP; L.y7top=L.yP+46; L.y7=L.y7top+L.cap7;
+  L.x7=SAFE.l; L.xD=L.x7+L.w7+L.gap;
+  L.ys1=L.y7+118; L.ys2=L.ys1+70; L.yN=1440;
+  // PASSO
+  x.font='100px AB'; const wpu=x.measureText('PASSO').width/100;
+  const d4=stair[3]; L.FW=Math.floor((d4.x-DOT-12-SAFE.l-14)/wpu);
+  x.font=L.FW+'px AB'; L.wW=x.measureText('PASSO').width;
+  L.wx0=d4.x-DOT-12-L.wW; L.wy=d4.y+DOT;
+  L.lx=[];let acc=0;for(const ch of 'PASSO'){const w=x.measureText(ch).width;L.lx.push({ch,x:L.wx0+acc+w/2,w});acc+=w;}
+  // 7 em pontos (fase 11): mesma forma, escala menor, centrada
+  L.s0=0.9; const sk=L.sk; const cw=(sk.right+sk.left)/2, ch=(sk.top+sk.bot)/2;
+  L.O11={x:CX-cw*L.s0,y:930-ch*L.s0}; L.O12={x:L.x7,y:L.y7};
+}
+
+// ---------- estado em t (tudo calculado de t) ----------
+function jumpF(j,t){ // salto j: DIA j -> DIA j+1 (j=0..5)
+  return landAt(t,LAND[j+1],JD,0.6);
+}
+function segPt(j,f){ // percurso em degrau: sobe (espelho), depois anda
+  const a=stair[j],b=stair[j+1],rise=a.y-b.y,run=b.x-a.x,k=rise/(rise+run);
+  if(f<k)return{x:a.x,y:a.y-rise*(f/k)};
+  const g=(f-k)/(1-k);return{x:a.x+run*g,y:b.y};
+}
+function phases(t){
+  return{p10:landAt(t,B[10],0.42,0.7),p11:landAt(t,B[11],0.48,0.66),p12:landAt(t,B[12],0.5,0.7)};
+}
+function circlePos(i,t,ph){
+  const s=stair[i]; const n=7,rr=24,sp=2*rr+10; const row={x:CX+(i-3)*sp,y:930};
+  const sk=L.sk.pts[i];
+  const p11={x:L.O11.x+sk.x*L.s0,y:L.O11.y+sk.y*L.s0};
+  const sc=lerp(L.s0,1,ph.p12),O={x:lerp(L.O11.x,L.O12.x,ph.p12),y:lerp(L.O11.y,L.O12.y,ph.p12)};
+  const p12={x:O.x+sk.x*sc,y:O.y+sk.y*sc};
+  let p={x:lerp(s.x,row.x,ph.p10),y:lerp(s.y,row.y,ph.p10)};
+  if(t>B[11]-0.6){p={x:lerp(row.x,p11.x,ph.p11),y:lerp(row.y,p11.y,ph.p11)};}
+  if(t>B[12]-0.6){p=p12;}
+  return p;
+}
+function seven(t,ph){const sc=lerp(L.s0,1,ph.p12);return{O:{x:lerp(L.O11.x,L.O12.x,ph.p12),y:lerp(L.O11.y,L.O12.y,ph.p12)},sc};}
+
+function dotPos(t,ph){
+  if(t<LAND[0]-0.5)return null;
+  if(t<LAND[0]+0.3){const f=landAt(t,LAND[0],0.5,0.55);return{x:stair[0].x,y:lerp(stair[0].y-430,stair[0].y,f),s:easeOut((t-(LAND[0]-0.5))/0.12)};}
+  for(let j=5;j>=0;j--){if(t>=LAND[j+1]-JD){const f=jumpF(j,t);return{...segPt(j,f),s:1};}}
+  return{...stair[0],s:1};
+}
+
+function draw(t){
+  x.setTransform(1,0,0,1,0,0);x.fillStyle=CREAM;x.fillRect(0,0,W,H);
+  x.lineJoin='miter';x.lineCap='butt';
+  const ph=phases(t);
+  const pos=[...Array(7)].map((_,i)=>circlePos(i,t,ph));
+  const sv=seven(t,ph);
+  // fase final: dissolve do 7 em pontos para o glifo (mesma transformação)
+  const gA=clamp((t-(B[12]-0.13))/0.11), kA=1-gA;
+  // ---- linha (degraus -> reta -> traço do 7) ----
+  if(kA>0){
+    x.globalAlpha=kA;x.strokeStyle=INK;
+    const w=1-ph.p10; // peso do canto de degrau
+    const lwBar=lerp(7,L.sk.barH*sv.sc,ph.p12*(t>B[12]-0.6)), lwDiag=lerp(7,L.sk.swd*sv.sc,ph.p12*(t>B[12]-0.6));
+    for(let j=0;j<6;j++){
+      let f=1;
+      if(t<LAND[j+1]+0.6){f=clamp(jumpF(j,t));} if(f<=0)continue;
+      const a=pos[j],b=pos[j+1];
+      x.lineWidth=j<2?lwBar:lwDiag;
+      if(ph.p10<=0.0001){ // degrau desenhado pela MESMA função que move o ponto
+        x.beginPath();x.moveTo(a.x,a.y);const N=24;for(let k=1;k<=N;k++){const p=segPt(j,f*k/N);x.lineTo(p.x,p.y);}x.stroke();
+      }else{
+        const cx=lerp((a.x+b.x)/2,a.x,w),cy=lerp((a.y+b.y)/2,b.y,w);
+        x.beginPath();x.moveTo(a.x,a.y);x.lineTo(cx,cy);x.lineTo(b.x,b.y);x.stroke();
+      }
+    }
+    // extremidade direita da barra do 7 (cresce na fase 11)
+    if(t>B[11]-0.6){const u=clamp(ph.p11);const a=pos[2];const pr={x:sv.O.x+L.sk.pr.x*sv.sc,y:sv.O.y+L.sk.pr.y*sv.sc};
+      x.lineWidth=lwBar;x.lineCap='square';x.beginPath();x.moveTo(a.x,a.y);x.lineTo(lerp(a.x,pr.x,u),lerp(a.y,pr.y,u));x.stroke();
+      if(t>B[12]-0.6){x.beginPath();x.moveTo(pos[0].x,pos[0].y);x.lineTo(pos[1].x,pos[1].y);x.stroke();}
+      x.lineCap='butt';}
+    x.globalAlpha=1;
+  }
+  // ---- círculos ----
+  const filled=i=>{ if(i<6){const dep=LAND[i+1]-JD;return easeOut((t-dep-0.05)/0.22);} return easeOut((t-(B[10]-0.42))/0.2); };
+  for(let i=0;i<7&&kA>0;i++){
+    const pop=spring(t-i*0.045,0.3,0.6); if(pop<=0)continue;
+    let r=R0*pop; if(ph.p10>0)r=lerp(R0,24,clamp(ph.p10));
+    if(t>B[12]-0.6){const sw=(i<3?L.sk.barH:L.sk.swd)*sv.sc;r=lerp(24,sw/2,clamp(ph.p12));}
+    const p=pos[i]; x.globalAlpha=kA;
+    x.fillStyle=CREAM;x.beginPath();x.arc(p.x,p.y,r,0,Math.PI*2);x.fill();
+    const fl=filled(i);
+    x.fillStyle=INK;x.beginPath();x.arc(p.x,p.y,r,0,Math.PI*2);x.arc(p.x,p.y,Math.max(0,(r-6)*(1-fl)),0,Math.PI*2,true);x.fill('evenodd');
+    // rótulos
+    const la=clamp((t-0.12-i*0.045)/0.25)*(1-clamp(ph.p10*2.2));
+    if(la>0){x.globalAlpha=la*kA;x.fillStyle=INK;x.font='500 24px PM';x.letterSpacing='3px';x.textAlign='center';
+      x.fillText('DIA '+(i+1),p.x+1.5,p.y+R0+44+(1-la)*8);x.letterSpacing='0px';}
+    x.globalAlpha=1;
+  }
+  // ---- PASSO ----
+  drawPasso(t);
+  // ---- glifo 7 + wordmark ----
+  if(gA>0){x.save();x.translate(sv.O.x,sv.O.y);x.scale(sv.sc,sv.sc);x.globalAlpha=gA;x.fillStyle=INK;x.font=L.F7+'px AB';x.textAlign='left';x.fillText('7',0,0);x.restore();x.globalAlpha=1;}
+  drawWordmark(t);
+  // ---- ponto vermelho ----
+  let dp=null;
+  if(t<B[10]-0.42) dp=dotPos(t,ph);
+  else dp={...pos[6],s:1};
+  // ponto vira o ponto final do slogan
+  const per={x:CX+(L.ws2+L.pgap+2*L.pr)/2-L.pr,y:L.ys2-L.pr};
+  const mv=landAt(t,B[15],0.45,0.7);
+  let dr=DOT;
+  if(t>B[12]-0.6){dr=lerp(DOT,L.sk.swd*sv.sc*0.36,clamp(ph.p12));}
+  if(mv>0){const a=dp;dp={x:lerp(a.x,per.x,mv),y:lerp(a.y,per.y,mv),s:1};dr=lerp(dr,L.pr,clamp(mv));}
+  if(dp){x.fillStyle=RED;x.beginPath();x.arc(dp.x,dp.y,dr*dp.s,0,Math.PI*2);x.fill();}
+}
+function drawPasso(t){
+  const d4=stair[3]; const rel=LAND[4]-JD;
+  for(let i=0;i<5;i++){
+    const tin=B[4]+(i+1)*SPB/4; const f=spring(t-(tin-0.2),0.2,0.6); if(f<=0)continue;
+    const out=easeIn((t-rel-(4-i)*0.045)/0.26); if(out>=1)continue;
+    const L0=L.lx[i]; const px=lerp(d4.x,L0.x,f*(1-out)), sc=clamp(f*1.2,0,1.05)*(1-out);
+    const py=lerp(d4.y,L.wy,1)+0;
+    x.save();x.translate(px,L.wy-L.FW*0.36);x.scale(sc,sc);x.translate(0,L.FW*0.36);
+    x.font=L.FW+'px AB';x.textAlign='center';x.lineJoin='round';x.strokeStyle=CREAM;x.lineWidth=14;x.strokeText(L0.ch,0,0);
+    x.fillStyle=INK;x.fillText(L0.ch,0,0);x.restore();
+  }
+}
+function drawWordmark(t){
+  const top7=L.y7top;
+  // PROTOCOLO sobe de trás da linha do topo do 7
+  const fp=landAt(t,B[13],0.42,0.7);
+  if(fp>0){x.save();x.beginPath();x.rect(0,0,W,top7-14);x.clip();x.fillStyle=INK;x.font=L.FP+'px AB';x.textAlign='left';
+    x.fillText('PROTOCOLO',SAFE.l,L.yP+(1-fp)*(L.capP+40));x.restore();}
+  const fd=landAt(t,B[13]+0.08,0.42,0.7);
+  if(fd>0){x.save();const ex=L.x7+L.w7+L.gap*0.4;x.beginPath();x.rect(ex,0,W,H);x.clip();x.fillStyle=INK;x.font=L.FD+'px AB';x.textAlign='left';
+    x.fillText('DIAS',L.xD-(1-fd)*(L.wD+L.gap),L.y7);x.restore();}
+  // slogan escreve letra a letra
+  x.font=L.FS+'px PP';x.fillStyle=INK;x.textAlign='left';
+  const s0=B[13]+0.05, st=0.024;
+  const lines=[[L.s1,CX-L.ws1/2,L.ys1],[L.s2,CX-(L.ws2+L.pgap+2*L.pr)/2,L.ys2]];let k=0;
+  for(const [s,x0,y] of lines){for(let i=0;i<s.length;i++,k++){const a=clamp((t-s0-k*st)/0.14);if(a<=0)continue;
+    x.globalAlpha=a;x.fillText(s[i],x0+x.measureText(s.slice(0,i)).width,y+(1-easeOut(a))*10);}}
+  x.globalAlpha=1;
+  // nome
+  const n='Dr. Fabio Schmidt';x.font='500 30px PM';x.letterSpacing='4px';x.textAlign='left';
+  const wn=x.measureText(n).width; const n0=B[15]-0.36;
+  for(let i=0;i<n.length;i++){const a=clamp((t-n0-i*0.018)/0.12);if(a<=0)continue;x.globalAlpha=a;
+    x.fillText(n[i],CX-wn/2+x.measureText(n.slice(0,i)).width,L.yN);}
+  x.globalAlpha=1;x.letterSpacing='0px';
+}
+// caixas de texto para checagem de área segura
+function boxes(t){const b=[];
+  b.push(['PROTOCOLO',SAFE.l,L.yP-L.capP,SAFE.l+L.wP,L.yP]);
+  b.push(['7',L.x7,L.y7top,L.x7+L.w7,L.y7]);b.push(['DIAS',L.xD,L.y7-L.cap7*0+(-L.capP),L.xD+L.wD,L.y7]);
+  b.push(['slogan1',CX-L.ws1/2,L.ys1-40,CX+L.ws1/2,L.ys1+14]);b.push(['slogan2',CX-(L.ws2+L.pgap+2*L.pr)/2,L.ys2-40,CX+(L.ws2+L.pgap+2*L.pr)/2,L.ys2+14]);
+  x.font='500 30px PM';x.letterSpacing='4px';const wn=x.measureText('Dr. Fabio Schmidt').width;x.letterSpacing='0px';
+  b.push(['nome',CX-wn/2,L.yN-24,CX+wn/2,L.yN+6]);
+  b.push(['PASSO',L.wx0,L.wy-L.FW*0.72,L.wx0+L.wW,L.wy]);
+  stair.forEach((s,i)=>b.push(['DIA'+(i+1),s.x-R0-4,s.y-R0,s.x+R0+4,s.y+R0+50]));
+  return b.map(([n,a,c,d,e])=>({n,ok:a>=SAFE.l-0.5&&d<=SAFE.r+0.5&&c>=SAFE.t&&e<=SAFE.b,box:[a,c,d,e].map(Math.round)}));}
+window.seek=t=>draw(t);window.DUR=DUR;window.B=B;window.boxes=boxes;window.getL=()=>L;
+window.ready=Promise.all([document.fonts.load('130px AB'),document.fonts.load('50px PP'),document.fonts.load('500 24px PM')]).then(()=>{measure();draw(0);return true;});
+</script></body></html>
