@@ -2,6 +2,23 @@
 
 Métricas dos posts do @drfabioschmidt, registradas a cada leitura. Ativada em 26/10/2026, a pedido dele ("Ativa memória de insights").
 
+## Anúncios Meta, 17 a 22/11/2026, semana do cupom BLACK26 (Windsor, puxado em 22/11)
+
+Conta 1454243259689590, campanha P7D | Vendas | Estaticos | Out26. Só três anúncios gastaram; pelos nomes, nenhum é peça de Black Friday. Todos levam para a landing.
+
+| Anúncio | Conjunto | Gasto | Impressões | Alcance | Cliques no link | Visualizações da página | Checkouts iniciados | Compras (pixel) |
+|---|---|---|---|---|---|---|---|---|
+| L2 navy Tudo que você fala | A Estáticos, mulheres 35-65 | R$202,64 | 3.093 | 1.904 | 94 | 87 | 3 | 0 |
+| Vídeo Minha filha | B Vídeo Minha filha, mulheres 35-65 | R$50,81 | 859 | 623 | 34 | 31 | 1 | 0 |
+| IMG 8688 | A Estáticos | R$38,12 | 528 | 369 | 18 | 17 | 0 | 0 |
+| IMG 8690 | A Estáticos | R$0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| Total | | R$291,57 | 4.480 | | 146 | 136 | 4 | 0 |
+
+- Cliques no link por impressão: L2 3,0%; Minha filha 4,0%; IMG 8688 3,4%. Custo por visualização da página: R$1,64 a R$2,33.
+- Da página ao checkout: 4 de 136 (2,9%), perto dos 3,3% dos 30 dias anteriores. Duas leituras seguidas com número parecido.
+- Zero compra atribuída em 6 dias, com R$292 gastos. Base pequena; compras ainda podem ser atribuídas dentro da janela de 7 dias.
+- Leitura do Claude, não fato: a página em `site-curso/index.html` mostra R$219 e links sem o cupom. Se a página no ar for a mesma, o tráfego pago da Black Friday não vê o BLACK26.
+
 ## Anúncios Meta, últimos 30 dias até 17/11/2026 (Windsor)
 
 - Gasto total cerca de R$2.300, 9 compras atribuídas pelo pixel (todas em mulheres; 7 entre 45 e 64 anos).
