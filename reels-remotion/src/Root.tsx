@@ -10,6 +10,8 @@ import {
 } from "./ComparacaoLadoALado";
 import { MitoApego } from "./MitoApego";
 import { MitoRindo } from "./MitoRindo";
+import { IrEmbora, IrEmboraTexto } from "./IrEmbora/IrEmbora";
+import { IrEmboraCapa } from "./IrEmbora/Capa";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -40,6 +42,30 @@ export const RemotionRoot: React.FC = () => {
           rotuloDireita: "Lado B",
           corDestaque: "#c83c1e",
         }}
+      />
+      <Composition
+        id="IrEmbora"
+        component={IrEmbora}
+        durationInFrames={1291}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="IrEmboraCapa"
+        component={IrEmboraCapa}
+        durationInFrames={60}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="IrEmboraTexto"
+        component={IrEmboraTexto}
+        durationInFrames={1291}
+        fps={30}
+        width={1080}
+        height={1920}
       />
       <Composition
         id="MitoRindo"
