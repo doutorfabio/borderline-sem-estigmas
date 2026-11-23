@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "atualizado": "2026-11-21",
+  "atualizado": "2026-11-23",
   "regras": [
     {
       "id": "r1",
@@ -279,6 +279,14 @@
       "acao": "Prompt, legenda e todo texto pedido vão na mensagem final, em texto puro, fora de bloco de código.",
       "ultima_violacao": "2026-11-20",
       "fonte": "memoria/correcoes.md (2026-11-20)"
+    },
+    {
+      "id": "a28",
+      "erro": "Demora longa sem aviso em peça que ele vê como simples",
+      "consequencia": "Vc ficou todo esse tempo só pra fazer esses dois textos basicos?",
+      "acao": "Dizer o tempo na primeira mensagem e mandar uma primeira versão em poucos minutos; acabamento fino só depois de ele ver.",
+      "ultima_violacao": "2026-11-23",
+      "fonte": "memoria/correcoes.md (2026-11-23)"
     }
   ],
   "atalhos": [

@@ -60,6 +60,7 @@ O detalhe fica nos arquivos de `memoria/`. Aqui só o que muda decisão. Linhas 
 - Entrega final sem veredito → "Foi o pior da história", "Mas são anos na mesma coisa / Quando vc para d fazer isso?" (21/11) → vídeo, thumb e legenda saem na mesma mensagem que o veredito feed ou teste e o risco principal. Sem veredito, não está entregue. (correcoes.md, 21/11)
 - Texto pedido mandado no meio do turno ou em bloco de código → "Qual prompt ?", "Qual seu problema em mandar em prompt ?", "E a porra do prompt" (20/11; antes em 18/11) → prompt, legenda e todo texto pedido vão na mensagem final, em texto puro, fora de bloco de código. (correcoes.md, 20/11)
 - Resposta longa → "vai se foser" depois de explicar o cofre → responder só o que perguntou, curto. (correcoes.md:142, aprendizados.md:23)
+- Demora longa sem aviso em peça que ele vê como simples → "Vc ficou todo esse tempo só pra fazer esses dois textos basicos?" (23/11; antes em 05/11 e 18/11) → dizer o tempo na primeira mensagem e mandar uma primeira versão em poucos minutos; acabamento fino só depois de ele ver. (correcoes.md, 23/11)
 
 ## ATALHOS DE DECISÃO
 

@@ -76,3 +76,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Parabéns / Foi o pior da história", "Mas são anos na mesma coisa / Quando vc para d fazer isso?".
 - Correção: regra virou anti-pattern no BRAIN; causas do resultado não listadas.
 - Regra prática: antes de mandar a entrega final, escrever a linha Veredito: feed ou teste, com o risco principal. Se não houver veredito, a entrega não sai.
+
+## 2026-11-23, a28 (demora sem aviso em peça simples; regra 9)
+- O que aconteceu: dois overlays de tipografia cinética em Remotion. Não avisei o tempo no começo nem mandei uma primeira versão rápida; a sessão foi longa para duas telas de texto.
+- Frase dele: "Vc ficou todo esse tempo só pra fazer esses dois textos basicos?".
+- Correção: admitido em uma linha, sem lista de causas. A regra 9 ganhou o anti-pattern a28 no BRAIN.
+- Regra prática: tempo dito na primeira mensagem; primeira versão em poucos minutos; acabamento fino só depois de ele ver.
