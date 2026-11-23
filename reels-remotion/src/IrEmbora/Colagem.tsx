@@ -22,21 +22,22 @@ const recorte = (id: number, folga: number) => {
   return `polygon(0px ${a}px, ${e}% 0px, calc(100% - ${b}px) ${b * 0.6}px, 100% calc(100% - ${c}px), ${100 - e}% 100%, ${d}px calc(100% - ${d * 0.5}px))`;
 };
 
-const Pedaco: React.FC<{
+export const Pedaco: React.FC<{
   texto: string;
   tam: number;
   vermelho?: boolean;
+  carvao?: boolean;
   entra: number;
   id: number;
-}> = ({ texto, tam, vermelho, entra, id }) => {
+}> = ({ texto, tam, vermelho, carvao, entra, id }) => {
   const frame = useCurrentFrame();
   const lf = frame - entra;
   // Antes de entrar, o pedaço fica invisível mas ocupa o lugar exato,
   // para a linha não andar quando a palavra chegar.
   const invisivel = lf < 0;
 
-  const giroBase = (semente(id) - 0.5) * 3.2;
-  const sobeBase = (semente(id + 9) - 0.5) * 8;
+  const giroBase = (semente(id) - 0.5) * (carvao ? 1.6 : 3.2);
+  const sobeBase = (semente(id + 9) - 0.5) * (carvao ? 4 : 8);
 
   // Três poses, duas de 2 quadros cada, depois assenta.
   let escala = 1;
@@ -46,10 +47,10 @@ const Pedaco: React.FC<{
   if (invisivel) {
     // pose de descanso
   } else if (lf < 2) {
-    escala = 1.1;
-    giro = giroBase + (semente(id + 7) > 0.5 ? 3.5 : -3.5);
-    dy = sobeBase - 8;
-    sombra = 20;
+    escala = carvao ? 1.06 : 1.1;
+    giro = giroBase + (carvao ? 0 : semente(id + 7) > 0.5 ? 3.5 : -3.5);
+    dy = sobeBase - (carvao ? 4 : 8);
+    sombra = carvao ? 10 : 20;
   } else if (lf < 4) {
     escala = 0.965;
     giro = giroBase - 1.4;
@@ -62,8 +63,8 @@ const Pedaco: React.FC<{
     dy = sobeBase + (semente(id + passo * 29) - 0.5) * 1.6;
   }
 
-  const fundo = vermelho ? VERMELHO : CREME;
-  const cor = vermelho ? CREME : CARVAO;
+  const fundo = vermelho ? VERMELHO : carvao ? CARVAO : CREME;
+  const cor = vermelho || carvao ? CREME : CARVAO;
 
   const papel = (
     <div
@@ -75,7 +76,7 @@ const Pedaco: React.FC<{
       }}
     >
       {/* meio-tom impresso numa ponta do papel */}
-      {!vermelho && (
+      {!vermelho && !carvao && (
         <div
           style={{
             position: "absolute",
@@ -97,17 +98,18 @@ const Pedaco: React.FC<{
           inset: 0,
           backgroundImage: GRAO,
           mixBlendMode: "multiply",
-          opacity: vermelho ? 0.5 : 0.32,
+          opacity: carvao ? 0 : vermelho ? 0.5 : 0.32,
         }}
       />
       <span
         style={{
           position: "relative",
           display: "block",
-          fontFamily: "Anton",
+          fontFamily: carvao ? "InterSB" : "Anton",
+          fontWeight: carvao ? 600 : 400,
           fontSize: tam,
-          lineHeight: 1.08,
-          letterSpacing: "0.012em",
+          lineHeight: carvao ? 1.2 : 1.08,
+          letterSpacing: carvao ? "0" : "0.012em",
           color: cor,
           whiteSpace: "nowrap",
         }}

@@ -21,6 +21,10 @@ itens = [
  ('Futurista_Click4.mp3', 4.9, 309/30 - 0.086, -27.0),   # aproximação 1
  ('Futurista_Click7.mp3', 6.1, 544/30 - 0.051, -27.0),   # aproximação 2
  ('Futurista_Click4.mp3', 4.9, 1017/30 - 0.086, -27.0),  # aproximação 3
+ ('HUD_Pop-Up2.mp3',     -2.3, 54/30 + 0.067 - 0.062, -27.0),   # BORDERLINE na legenda
+ ('HUD_Pop-Up2.mp3',     -2.3, 243/30 + 0.067 - 0.062, -26.0),  # EU FICO
+ ('HUD_Pop-Up2.mp3',     -2.3, 751/30 + 0.067 - 0.062, -26.0),  # NÃO TERMINA ENTÃO?
+ ('HUD_Pop-Up2.mp3',     -2.3, 1058/30 + 0.067 - 0.062, -26.0), # MEDO
 ]
 ins = ''.join(f' -i {SFX}{f}' for f, *_ in itens)
 fc = ''

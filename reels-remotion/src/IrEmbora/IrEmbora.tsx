@@ -8,20 +8,21 @@ import {
   staticFile,
   useCurrentFrame,
 } from "remotion";
-import { Colagem } from "./Colagem";
+import { Colagem, Pedaco } from "./Colagem";
 import {
   APROXIMACOES,
   CENTRO_X,
-  FPS,
   INSERCAO_1,
   INSERCAO_2,
-  LEGENDAS,
+  INSERCAO_CEL,
+  INSERCAO_MESA,
   TEXTO_1,
   TEXTO_2,
   TEXTO_2_JANELA,
   TEXTO_ROSTO,
   TEXTO_ROSTO_LINHAS,
 } from "./dados";
+import { BLOCOS } from "./legenda";
 
 const useFontes = () => {
   const [handle] = useState(() => delayRender("fontes"));
@@ -41,15 +42,19 @@ const useFontes = () => {
   }, [handle]);
 };
 
+// Legenda palavra por palavra, abaixo do queixo. Até 3 palavras por bloco.
+// Palavra comum: etiqueta de papel carvão com Inter SemiBold creme (branco com
+// sombra sumia na camiseta branca), entra quando é dita.
+// Palavra de impacto: recorte de papel (o mesmo da colagem), bate na tela.
 const Legenda: React.FC = () => {
   const frame = useCurrentFrame();
-  const t = frame / FPS;
   const escondida =
     (frame >= INSERCAO_1.de && frame < TEXTO_ROSTO.ate) ||
     (frame >= TEXTO_2_JANELA.de && frame < TEXTO_2_JANELA.ate);
   if (escondida) return null;
-  const atual = LEGENDAS.find((l) => t >= l.de && t < l.ate);
-  if (!atual) return null;
+  const k = BLOCOS.findIndex((b) => frame >= b.de && frame < b.ate);
+  if (k < 0) return null;
+  const bloco = BLOCOS[k];
   return (
     <div
       style={{
@@ -57,22 +62,38 @@ const Legenda: React.FC = () => {
         left: CENTRO_X,
         top: 1250,
         transform: "translate(-50%, -50%)",
-        width: 800,
-        textAlign: "center",
-        fontFamily: "InterSB",
-        fontWeight: 600,
-        fontSize: 48,
-        lineHeight: 1.22,
-        color: "#FFFFFF",
-        textShadow:
-          "0 2px 10px rgba(0,0,0,0.62), 0 1px 3px rgba(0,0,0,0.55), 0 0 22px rgba(0,0,0,0.28)",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 9,
+        whiteSpace: "nowrap",
       }}
     >
-      {atual.linhas.map((l, i) => (
-        <div key={i} style={{ whiteSpace: "nowrap" }}>
-          {l}
-        </div>
-      ))}
+      {bloco.tokens.map((tk, j) => {
+        if (tk.tipo !== "n") {
+          return (
+            <Pedaco
+              key={j}
+              texto={tk.t}
+              tam={88}
+              vermelho={tk.tipo === "vermelho"}
+              entra={tk.f}
+              id={900 + k * 7 + j}
+            />
+          );
+        }
+        return (
+          <Pedaco
+            key={j}
+            texto={tk.t}
+            tam={52}
+            carvao
+            entra={tk.f}
+            id={900 + k * 7 + j}
+          />
+        );
+      })}
     </div>
   );
 };
@@ -124,6 +145,26 @@ export const IrEmbora: React.FC = () => {
       >
         <OffthreadVideo src={staticFile("ir-embora/talk.mp4")} muted />
       </AbsoluteFill>
+
+      <Sequence
+        from={INSERCAO_MESA.de}
+        durationInFrames={INSERCAO_MESA.ate - INSERCAO_MESA.de}
+        layout="none"
+      >
+        <AbsoluteFill>
+          <OffthreadVideo src={staticFile("ir-embora/brollMesa.mp4")} muted />
+        </AbsoluteFill>
+      </Sequence>
+
+      <Sequence
+        from={INSERCAO_CEL.de}
+        durationInFrames={INSERCAO_CEL.ate - INSERCAO_CEL.de}
+        layout="none"
+      >
+        <AbsoluteFill>
+          <OffthreadVideo src={staticFile("ir-embora/brollCel.mp4")} muted />
+        </AbsoluteFill>
+      </Sequence>
 
       <Sequence
         from={INSERCAO_1.de}
