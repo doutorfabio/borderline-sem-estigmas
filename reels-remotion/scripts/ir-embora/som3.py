@@ -49,7 +49,7 @@ fc += ''.join(f'[s{k}]' for k in range(len(sfx))) + f"amix=inputs={len(sfx)}:nor
 # música: versão 1 começa em 1,08 s da gravação; pulo 0,44 s para a quebra cair em "ameniza" (38,1 s)
 m = b + len(sfx)
 INI = 1.08 + 0.44
-GM = (vI - 16.0) - (-14.3)   # corpo da música 16 dB abaixo da voz
+GM = (vI - 12.0) - (-14.3)   # corpo da música 12 dB abaixo da voz
 fc += f"[{m}:a]atrim={INI:.2f}:{INI+43.034:.3f},asetpts=PTS-STARTPTS,highpass=f=70,afade=t=in:d=0.05,afade=t=out:st=42.2:d=0.83,volume={GM:.2f}dB[mus];"
 fc += "[v1][ambd][sfx][mus]amix=inputs=4:normalize=0:duration=first[mix]"
 r = run(f'ffmpeg -v error -y{ins} -filter_complex "{fc}" -map "[mix]" -ac 2 -ar 48000 -c:a pcm_s24le mix_pre3.wav')

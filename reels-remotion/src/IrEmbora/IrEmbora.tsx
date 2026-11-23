@@ -21,6 +21,8 @@ import {
   TEXTO_2_JANELA,
   TEXTO_ROSTO,
   TEXTO_ROSTO_LINHAS,
+  TITULO,
+  TITULO_JANELA,
 } from "./dados";
 import { BLOCOS } from "./legenda";
 
@@ -102,6 +104,9 @@ const Textos: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <>
+      {frame >= TITULO_JANELA.de && frame < TITULO_JANELA.ate && (
+        <Colagem linhas={TITULO} topo={1314} centroX={CENTRO_X} idBase={800} entrelinha={-6} />
+      )}
       {frame >= INSERCAO_1.de && frame < INSERCAO_1.ate && (
         <Colagem linhas={TEXTO_1} topo={215} centroX={CENTRO_X} idBase={100} />
       )}
@@ -141,7 +146,10 @@ export const IrEmbora: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#0d0d0d" }}>
       <AbsoluteFill
-        style={{ transform: `scale(${escala})`, transformOrigin: "50% 32%" }}
+        style={{
+          transform: `scale(${escala})`,
+          transformOrigin: ap?.origem ?? "50% 32%",
+        }}
       >
         <OffthreadVideo src={staticFile("ir-embora/talk.mp4")} muted />
       </AbsoluteFill>

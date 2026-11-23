@@ -24,7 +24,10 @@ export const INSERCAO_2 = { de: 1102, ate: 1239 }; // 36,73 a 41,30 s
 export const TEXTO_ROSTO = { de: 878, ate: 985 }; // 29,27 a 32,83 s
 
 // Aproximações secas no rosto, sempre em começo de frase e nunca em B-roll.
-export const APROXIMACOES = [
+export const APROXIMACOES: { de: number; ate: number; escala: number; origem?: string }[] = [
+  // borderline e pânico? A imagem muda antes dos 2 s. Origem baixa: o queixo fica onde está
+  // (ele se inclina para a câmera) e a legenda não encosta na barba.
+  { de: 54, ate: 95, escala: 1.06, origem: "50% 60%" },
   { de: 309, ate: 367, escala: 1.07 }, // perto de pessoas que não me aturam
   { de: 1017, ate: 1102, escala: 1.06 }, // ... o meu medo já escolheu por mim
 ];
@@ -99,3 +102,12 @@ export const TEXTO_2: Linha[] = [
   },
 ];
 export const TEXTO_2_JANELA = { de: 1168, ate: 1239 };
+
+// Título de abertura, no primeiro quadro, abaixo do queixo: a pergunta que o vídeo
+// responde, com palavras dele (dita em 24,5 s). Fica até o primeiro corte dele (3,17 s),
+// embaixo da legenda, que segue na posição de sempre.
+export const TITULO_JANELA = { de: 0, ate: 95 };
+export const TITULO: Linha[] = [
+  { tam: 76, palavras: [{ t: "POR QUE VOCÊ", f: -6 }] },
+  { tam: 94, palavras: [{ t: "NÃO TERMINA?", f: -6, vermelho: true }] },
+];
