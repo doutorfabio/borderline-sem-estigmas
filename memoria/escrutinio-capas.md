@@ -77,25 +77,25 @@ Ajustes pedidos pelo painel de 24/11 e já postos acima: repetição segura a ca
 
 ### Lote de 24/11/2026: 17 capas enviadas por ele no chat
 
-Como foi feito: funil da seção 3; repetição conferida no Windsor (200 posts de 01/09 a 24/11); três leituras independentes que abriram as imagens (E = alcance e envio, K = quem vive e quem convive com olhar clínico, A = arte e grade, com medidas por código) e a leitura do Claude (C). Nota = média das leituras. Vamos (chat dc8ad059, 30 créditos, só texto e descrição) na coluna V, com a posição que ele deu entre as 17. Teto = até onde a capa chega corrigida, pela tese. Nada foi gerado. Arquivos das capas não foram guardados no repositório.
+Como foi feito: funil da seção 3; repetição conferida no Windsor (200 posts de 01/09 a 24/11); três leituras independentes que abriram as imagens (E = alcance e envio, K = quem vive e quem convive com olhar clínico, A = arte e grade, com medidas por código) e a leitura do Claude (C). Nota = média das quatro leituras. Vamos (chat dc8ad059, 30 créditos, só texto e descrição) na coluna V, com a posição que ele deu entre as 17. Teto = até onde a capa chega corrigida, pela tese. Nada foi gerado. Arquivos das capas não foram guardados no repositório.
 
 | Nº | Capa (texto) | E | K | A | C | Nota | Teto | V | Situação |
 |---|---|---|---|---|---|---|---|---|---|
-| 16 | SOU BORDERLINE OU SÓ DIFÍCIL? (fundo preto, rosto trocado por lista) | 62 | 68 | [pendente] | 78 | 69 | 90 | 11º | corrige |
+| 16 | SOU BORDERLINE OU SÓ DIFÍCIL? (fundo preto, rosto trocado por lista) | 62 | 68 | 65 | 78 | 68 | 90 | 11º | corrige |
 | 7 | BORDERLINE: 6 SINAIS QUE O BORDERLINE ESCONDE ATÉ DE VOCÊ. (amarelo, mulher com urso atrás) | 66 | 60 | 62 | 67 | 64 | 85 | 10º | corrige |
 | 6 | NO PRIMEIRO ENCONTRO O BORDERLINE CONTA ATÉ O QUE NINGUÉM PERGUNTOU. (foto anos 50) | 62 | 65 | 62 | 66 | 64 | 80 | 3º | corrige |
-| 11 | JÁ TOMEI SETE REMÉDIOS. NENHUM TRATOU O BORDERLINE. (gravura, homem e rádio) | 60 | 46 | [pendente] | 67 | 58 | 75 | 16º | barra (segurança) |
-| 15 | CARTA PRA QUEM MORA COMIGO. De uma paciente com borderline. (cigarro, fundo vermelho) | 51 | 45 | [pendente] | 48 | 48 | 80 | 7º | segura (réplica; tese de 19/11) |
+| 11 | JÁ TOMEI SETE REMÉDIOS. NENHUM TRATOU O BORDERLINE. (gravura, homem e rádio) | 60 | 46 | 56 | 67 | 57 | 75 | 16º | barra (segurança) |
+| 15 | CARTA PRA QUEM MORA COMIGO. De uma paciente com borderline. (cigarro, fundo vermelho) | 51 | 45 | 45 | 48 | 47 | 80 | 7º | segura (réplica; tese de 19/11) |
 | 1 | CHAMARAM MINHA CRISE DE FALSIDADE riscada. EU TAMBÉM ACREDITEI. (choro com boca colada) | 42 | 42 | 47 | 49 | 45 | 85 | 14º | segura (tese de 24/11 e 13/11) |
-| 14 | JÁ TENTEI OS 256 JEITOS DE TER BORDERLINE. (homem com rosto de gráfico) | 41 | 38 | [pendente] | 55 | 45 | 85 | 17º | refaz |
+| 14 | JÁ TENTEI OS 256 JEITOS DE TER BORDERLINE. (homem com rosto de gráfico) | 41 | 38 | 47 | 55 | 45 | 85 | 17º | refaz |
 | 3 | BORDERLINE (etiqueta) A RAIVA VEM ANTES. O MOTIVO VEM DEPOIS. (rosto em sépia escuro) | 45 | 39 | 46 | 37 | 42 | 78 | 9º | refaz |
-| 17 | MEDO DE ABANDONO. MEDO DE SUFOCO. (porcos-espinhos em cartum, amarelo) | 38 | 42 | [pendente] | 44 | 41 | 80 | 2º | refaz |
-| 9 | EU TENHO MEDO DE MELHORAR (homem na gaiola aberta) | 32 | 32 | [pendente] | 48 | 37 | 88 | 4º | refaz |
-| 12 | ELE GRITOU VOCÊ É BORDERLINE (entre aspas) PRA FECHAR A BRIGA. (homem com fita vermelha) | 35 | 36 | [pendente] | 39 | 37 | 50 | 8º | segura (família de 23/11 e 20/10) |
-| 8 | EU GRITAVA POR DENTRO. TODO MUNDO ACHOU SILENCIO. (silhueta com janelas) | 34 | 32 | [pendente] | 42 | 36 | 75 | 12º | refaz |
-| 13 | ME DERAM CARINHO. EU PROCUREI O DEFEITO. (lupa na margarida, rosa-choque) | 34 | 22 | [pendente] | 39 | 32 | 60 | 5º | refaz |
+| 17 | MEDO DE ABANDONO. MEDO DE SUFOCO. (porcos-espinhos em cartum, amarelo) | 38 | 42 | 35 | 44 | 40 | 80 | 2º | refaz |
+| 8 | EU GRITAVA POR DENTRO. TODO MUNDO ACHOU SILENCIO. (silhueta com janelas) | 34 | 32 | 34 | 42 | 36 | 75 | 12º | refaz |
+| 9 | EU TENHO MEDO DE MELHORAR (homem na gaiola aberta) | 32 | 32 | 31 | 48 | 36 | 88 | 4º | refaz |
+| 12 | ELE GRITOU VOCÊ É BORDERLINE (entre aspas) PRA FECHAR A BRIGA. (homem com fita vermelha) | 35 | 36 | 20 | 39 | 33 | 50 | 8º | segura (família de 23/11 e 20/10) |
+| 13 | ME DERAM CARINHO. EU PROCUREI O DEFEITO. (lupa na margarida, rosa-choque) | 34 | 22 | 25 | 39 | 30 | 60 | 5º | refaz |
+| 10 | EU ME SINTO UMA FRAUDE (foto de sorriso na frente do rosto) | 28 | 22 | 32 | 32 | 29 | 55 | 13º | segura (tese de 24/11 e 13/11) |
 | 2 | ME PROTEGERAM TANTO QUE VIRARAM GAIOLA. (rosa na gaiola e tesoura) | 30 | 23 | 28 | 28 | 27 | 70 | 1º | barra (acusa a família) |
-| 10 | EU ME SINTO UMA FRAUDE (foto de sorriso na frente do rosto) | 28 | 22 | [pendente] | 32 | 27 | 55 | 13º | segura (tese de 24/11 e 13/11) |
 | 5 | BORDERLINE IMPULSO. EU SINTO URGENTE. QUASE NADA É AGORA. (fundo preto, mão laranja) | 24 | 26 | 23 | 28 | 25 | 60 | 6º | refaz do zero |
 | 4 | ELE ME IDEALIZOU. A ESTÁTUA CAIU. (estátua quebrada) | 21 | 18 | 27 | 29 | 24 | 55 | 15º | segura (tese de 24/11 e 18/11) |
 
@@ -105,7 +105,7 @@ O que falta para 100, capa por capa (frases propostas são hipótese editorial; 
 - 7: tirar a etiqueta BORDERLINE: do topo (2,0% da altura; some na miniatura); O BORDERLINE ESCONDE 6 SINAIS ATÉ DE VOCÊ., com BORDERLINE como maior palavra; abrir a entrelinha (acentos de ATÉ e VOCÊ fundidos na linha de cima); piso ou batente de casa sob os pés; urso sem mão que o segure e que some na miniatura: trocar por gesto adulto (K e Vamos leram infantilização; E manteria). Teto 85: lista não corrige crença; os seis sinais não podem repetir sorriso, máscara e vozes (13, 15, 19 e 24/11).
 - 6: cortar ATÉ O QUE NINGUÉM PERGUNTOU (as três leituras e o Vamos leram deboche): O BORDERLINE CONTA TUDO NO PRIMEIRO ENCONTRO., com BORDERLINE maior; cena atual, ela séria; margem direita de 4,85% para 6%. Teto 80: cena de casal; vizinha do Reel de 03/11 (5.515).
 - 11: barrada como está. NENHUM TRATOU lê remédio não serve; TOMEI SETE lê ingestão de uma vez; é depoimento em primeira pessoa sem fonte. Troca: O BORDERLINE PRECISA DE MAIS QUE REMÉDIO.; mulher em cena de casa no lugar do homem com rádio; sem comprimido; slide 2 com não pare remédio por conta própria. Teto 75: Reels de remédio de 29/10 a 16/11 ficaram entre 653 e 1.163 de alcance.
-- 15: tempo (a tese saiu em 19/11, Piora em casa; sai da janela dos 30 posts por volta de 30/11) e entra como teste por ser réplica de gigante; tirar cigarro e rabisco; BORDERLINE grande (hoje é subtítulo); PRA não fica sozinho na linha; BORDERLINE: CARTA PRA QUEM MORA COMIGO.; De uma paciente pede carta real e autorizada.
+- 15: tempo (a tese saiu em 19/11, Piora em casa, que em 24/11 era o 10º post mais recente; sai da janela dos 30 no começo de dezembro) e entra como teste por ser réplica de gigante; tirar cigarro e rabisco; BORDERLINE grande (hoje é subtítulo); PRA não fica sozinho na linha; BORDERLINE: CARTA PRA QUEM MORA COMIGO.; De uma paciente pede carta real e autorizada.
 - 1: tempo (mesma acusação do carrossel de 24/11, duas caras, e cena do de 13/11); A CRISE DO BORDERLINE NÃO É FALSIDADE., sem risco, sem primeira pessoa, sem boca colada e sem lágrima; EU TAMBÉM ACREDITEI vai para o slide 2. No recorte 3:4 da grade o texto fica a 1,7% da borda.
 - 14: JÁ TENTEI lê tentativa de suicídio e fingir a doença: BORDERLINE TEM 256 JEITOS DE APARECER. (256 em vermelho); tirar homem sem rosto, pizza, gráficos e binário; cena de sala de espera com mulheres bem diferentes; envio para quem disse que ela não parece borderline. A conta de 256 confere (5 ou mais de 9 critérios).
 - 3: O MOTIVO VEM DEPOIS lê motivo inventado, e o parceiro manda como prova: O BORDERLINE NÃO EXPLODE DO NADA.; BORDERLINE grande (hoje 1,7% da altura; na miniatura vira capa sem borderline); tirar @ (1,2%), seta, olhar duro e fundo escuro; cena de casa clara.
@@ -124,5 +124,9 @@ Aposta do painel por instinto, antes da conta: nas 7 primeiras, as três leitura
 Divergência com o Vamos: ele põe no topo a 2 (gaiola) e a 17 (porcos-espinhos) e deixa a 16 em 11º e a 7 em 10º. O Vamos não viu as artes, propôs quase todas as frases em primeira pessoa (EU PEÇO, ME PROTEGERAM), que a regra dele veta, e em 10/11 tinha escrito não posta para a gaiola por estar perto do carrossel de 31/10. Concorda com o painel em: 6 entre as três primeiras; 11 não sai; 1, 4 e 10 seguram por repetição; 15 espera. O argumento dele para a 17 fica registrado: envio entre parceiros e o precedente do cacto.
 
 Veredito do Claude (24/11, antes de postar): nenhuma das 17 fica lado a lado com os gigantes como está. Mais perto: 16, 7 e 6, nessa ordem, com os ajustes. Refações de teto alto: 9 e 14 (teses fora dos últimos 30 posts). Risco escrito: a régua é nova e não tem resultado próprio; a 16 é vizinha da avó nervosa; pergunta de dois polos foi de 87 mil (autismo) a 5 mil (dependência emocional) na conta.
+
+Medidas da leitura de arte que mudam a correção (por código; menor linha em % da altura, menor margem lateral em % da largura): 16, DIFÍCIL na caixa vermelha pega o olho antes de BORDERLINE (BORDERLINE tem de ficar maior) e as notas do fundo têm cerca de 3%; 11, margem de 4,3%; 14, binário com 1,15% e gráfico a 4,3% da borda; 15, linha do BORDERLINE com 3,1% e mão do tamanho do rosto com só três dedos nítidos; 17, margem de 3,1%, e no recorte 3:4 da grade a primeira linha encosta nas duas bordas; 8, margem de 4,7%; 9, linha de cima com 5,2%; 12, letra com 5,9%; 1 e 6, a 1,7% da borda no recorte 3:4; 3, BORDERLINE com 1,7% e @ com 1,2%; 5, frases com 3,7% e 4,2%; 7, etiqueta com 2,0%. O recorte 3:4 da grade come 3,1% de cada lado: conferir sempre.
+
+Ajustes de régua pedidos pela leitura de arte, para o próximo lote: em B, medir o que o olho pega primeiro, não só o tamanho; em E, primeira pessoa com destinatário embutido não zera (a Carta fez 38,5 envios por mil); pergunta de dois polos não perde ponto em L.
 
 Resultado (preencher quando ele postar): capa | data | alcance | envios | envios por mil | a nota ordenou certo?
