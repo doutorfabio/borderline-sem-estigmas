@@ -16,7 +16,7 @@ assert i==len(W)
 def t(s):
   h=int(s//3600);m=int(s%3600//60);sec=s%60;return f"{h}:{m:02d}:{sec:05.2f}"
 FLASH=[0.10,8.10,13.43,30.97]
-LAB=[("O QUE JÁ TOMOU","DE TUDO"),("O FIEL DO","RIVOTRIL"),("O DO TRATAMENTO","NATURAL"),("O QUE SE DEU","ALTA SOZINHO")]
+LAB=[("O QUE JÁ TOMOU","DE TUDO"),("O FIEL DO","RIVOTRIL"),("O QUE OLHA COM","ESSA CARA"),("O QUE SE DEU","ALTA SOZINHO")]
 ENDS=[8.07,13.40,30.93,35.43]
 BW=(19.80,21.62)  # take preto e branco: some o crachá
 CX=502

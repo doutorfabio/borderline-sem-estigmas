@@ -109,11 +109,11 @@ Dialogue: 4,0:00:08.10,0:00:13.40,Pill,,0,0,0,,{\pos(502,200)\c&H303BFF&\fad(0,1
 Dialogue: 4,0:00:08.16,0:00:13.40,Lab,,0,0,0,,{\pos(502,302)\fs80\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}O FIEL DO
 Dialogue: 4,0:00:08.20,0:00:13.40,Lab,,0,0,0,,{\pos(502,402)\fs132\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}RIVOTRIL
 Dialogue: 4,0:00:13.43,0:00:19.80,Pill,,0,0,0,,{\pos(502,200)\c&H303BFF&\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}PACIENTE 3
-Dialogue: 4,0:00:13.49,0:00:19.80,Lab,,0,0,0,,{\pos(502,302)\fs80\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}O DO TRATAMENTO
-Dialogue: 4,0:00:13.53,0:00:19.80,Lab,,0,0,0,,{\pos(502,402)\fs132\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}NATURAL
+Dialogue: 4,0:00:13.49,0:00:19.80,Lab,,0,0,0,,{\pos(502,302)\fs80\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}O QUE OLHA COM
+Dialogue: 4,0:00:13.53,0:00:19.80,Lab,,0,0,0,,{\pos(502,402)\fs132\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}ESSA CARA
 Dialogue: 4,0:00:21.67,0:00:30.93,Pill,,0,0,0,,{\pos(502,200)\c&H303BFF&\fad(0,120)\fad(150,120)}PACIENTE 3
-Dialogue: 4,0:00:21.73,0:00:30.93,Lab,,0,0,0,,{\pos(502,302)\fs80\blur1\fad(0,120)\fad(150,120)}O DO TRATAMENTO
-Dialogue: 4,0:00:21.77,0:00:30.93,Lab,,0,0,0,,{\pos(502,402)\fs132\blur1\fad(0,120)\fad(150,120)}NATURAL
+Dialogue: 4,0:00:21.73,0:00:30.93,Lab,,0,0,0,,{\pos(502,302)\fs80\blur1\fad(0,120)\fad(150,120)}O QUE OLHA COM
+Dialogue: 4,0:00:21.77,0:00:30.93,Lab,,0,0,0,,{\pos(502,402)\fs132\blur1\fad(0,120)\fad(150,120)}ESSA CARA
 Dialogue: 4,0:00:30.97,0:00:35.43,Pill,,0,0,0,,{\pos(502,200)\c&H303BFF&\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}PACIENTE 4
 Dialogue: 4,0:00:31.03,0:00:35.43,Lab,,0,0,0,,{\pos(502,302)\fs80\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}O QUE SE DEU
 Dialogue: 4,0:00:31.07,0:00:35.43,Lab,,0,0,0,,{\pos(502,402)\fs120\blur1\fad(0,120)\fscx130\fscy130\t(0,160,\fscx100\fscy100)}ALTA SOZINHO
