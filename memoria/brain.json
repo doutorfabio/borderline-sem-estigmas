@@ -296,6 +296,11 @@
       "fonte": "memoria/capas-base-tecnica.md:25-77"
     },
     {
+      "se": "Ele mandou capas para avaliar ou pediu ranking",
+      "entao": "Rodar escrutinio-capas.md: funil, nota de viral até 100 com o que falta para 100 ao lado de cada capa, três leituras que abrem as imagens e Vamos; só as capas enviadas; a melhor primeiro.",
+      "fonte": "memoria/escrutinio-capas.md (24/11)"
+    },
+    {
       "se": "Pediu roteiros ou temas virais",
       "entao": "Vamos primeiro, com prova por tema, depois escrever.",
       "fonte": "memoria/correcoes.md:134"

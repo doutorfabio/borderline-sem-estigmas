@@ -65,6 +65,7 @@ O detalhe fica nos arquivos de `memoria/`. Aqui só o que muda decisão. Linhas 
 ## ATALHOS DE DECISÃO
 
 - Capa de carrossel → rodar `capas-base-tecnica.md` (G × P). N de 80 a 100 posta; 60 a 79 ajusta; abaixo de 60 ou G = 0 barra. Registrar N e envios por mil de alcance no placar. (capas-base-tecnica.md:25-77)
+- Ele mandou capas para avaliar ou pediu ranking → rodar `escrutinio-capas.md`: funil, nota de viral até 100 com o que falta para 100 ao lado de cada capa, três leituras que abrem as imagens e Vamos; só as capas enviadas; a melhor primeiro. Pedido dele em 24/11: "escreve a nota e ao lado exatamente o que falta nele para chegar aos 100". (escrutinio-capas.md)
 - Pediu roteiros ou temas virais → Vamos primeiro, com prova por tema, depois escrever. (correcoes.md:134)
 - Pediu só legenda e capa → entregar só isso; erro do vídeo em uma linha, sem reeditar. (correcoes.md:70)
 - Pediu para não mudar o texto → nem uma palavra. (aprendizados.md:48)
@@ -90,4 +91,4 @@ O detalhe fica nos arquivos de `memoria/`. Aqui só o que muda decisão. Linhas 
 
 ## PONTEIROS
 
-Regras com prova: `aprendizados.md` · Correções novas: `correcoes.md` · Checagem antes de entregar: `checklist-entrega.md` · Veredito: `termometro.md`, `placar-vereditos.md` · Reel: `reels-certeiros.md`, `efeitos-video-aprovados.md` · Capa: `capas-base-tecnica.md` (nota G × P), `capas-gigantes.md`, `mecanismos-gigantes.md` · Teses usadas: `ja-produzido.md` e skill `historico-borderline-180d` · Oferta e preços: `conta.md` · Em aberto: `a-decidir.md` · Ajustes de design em código: `ajustes-design.md`
+Regras com prova: `aprendizados.md` · Correções novas: `correcoes.md` · Checagem antes de entregar: `checklist-entrega.md` · Veredito: `termometro.md`, `placar-vereditos.md` · Reel: `reels-certeiros.md`, `efeitos-video-aprovados.md` · Capa: `escrutinio-capas.md` (funil e nota de viral dos lotes que ele manda), `capas-base-tecnica.md` (nota G × P), `capas-gigantes.md`, `mecanismos-gigantes.md` · Teses usadas: `ja-produzido.md` e skill `historico-borderline-180d` · Oferta e preços: `conta.md` · Em aberto: `a-decidir.md` · Ajustes de design em código: `ajustes-design.md`

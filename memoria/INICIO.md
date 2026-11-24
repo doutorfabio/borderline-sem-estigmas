@@ -14,6 +14,7 @@ Página de entrada do cofre. Regras em `CLAUDE.md` desta pasta.
 
 - [[checklist-entrega]]
 - [[placar-vereditos]]
+- [[escrutinio-capas]]: funil e nota de viral para as capas que ele manda avaliar
 
 ## Antes de criar qualquer peça
 

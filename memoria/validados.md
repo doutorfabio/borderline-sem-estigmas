@@ -457,3 +457,12 @@ Caíram no radar: O CINEMA ENSINOU O BORDERLINE ERRADO. (22; prova de 17x, mas t
 Leitura do estrategista de envio (observação, não regra): os carrosséis recentes com menos envios por mil (prato, espaço, almoço, filha: 2,7 a 3,4) são cena pequena de um dia com a culpa em quem está na casa; os de mais envio (autismo, chamar atenção, todo o amor: 21,5 a 31,4) são frase geral que tira um rótulo de fora e põe quem tem e quem convive do mesmo lado.
 
 Limite: histórico de 180 dias só até 12/10; de 10/10 a 18/11, legendas do Windsor. Dois dos três estrategistas não terminaram.
+
+## 2026-11-24: Vamos sobre 17 capas enviadas por ele (chat dc8ad059, 12 + 18 créditos)
+
+Pedido dele: "discuta com estrategistas e com VAMOS aí já conectado antes de falar besteira". O Vamos recebeu o texto exato e a descrição de cada capa, os números do Windsor de 01/09 a 24/11 e os posts recentes. Não viu as artes.
+- Ordem do Vamos (numeração do lote em [[escrutinio-capas]]): 2 gaiola, 17 porcos-espinhos, 6 primeiro encontro, 9 medo de melhorar, 13 carinho e defeito, 5 impulso, 15 Carta, 12 você é borderline, 3 raiva, 7 seis sinais, 16 borderline ou só difícil, 8 gritava por dentro, 10 fraude, 1 falsidade, 4 estátua, 11 sete remédios, 14 256 jeitos.
+- Feed depois de corrigir: 2, 17 e 6. Teste: 9, 13, 5, 12 e 3 reformuladas, 7 só com promessa definida. Não posta: 16, 8, 10, 1, 4, 11, 14. Guardar: 15 (tese refeita em 19/11).
+- Comparação de fora: sem amostra suficiente de carrosséis recentes em português sobre borderline; ficou sem conclusão. Nenhuma prova de post validado veio desta consulta.
+- Avisos úteis do Vamos: a 11 pode ser lida como abandono de tratamento e traz depoimento em primeira pessoa sem fonte; a 1 repete o carrossel de hoje e a cena do de 13/11; o lote tem excesso de máscara, confinamento e coisa escondida.
+- Leitura do Claude (interpretação): a ordem do Vamos bate com o painel na 6 entre as três primeiras e no fim da fila (1, 4, 10, 11). Diverge na 2, que acusa a família e que o próprio Vamos tinha deixado como não posta em 10/11 por estar perto do carrossel de 31/10, e na 16 e na 7, que as três leituras do painel puseram no topo. Quase todas as frases propostas pelo Vamos estão em primeira pessoa (EU PEÇO PRA VOCÊ FICAR; ME PROTEGERAM TANTO), o que a regra dele veta e o histórico desaconselha (1 gigante, 10 flops).

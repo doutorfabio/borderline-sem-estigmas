@@ -88,3 +88,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Cadê as imagens ?".
 - Correção: as 8 imagens foram geradas e entregues logo depois da pergunta, em uma rodada.
 - Regra prática: pedido de criar carrossel é pedido de imagem; se o disparo for barrado, avisar em uma linha e pedir o ok na hora; leitura de memória curta, primeira entrega em poucos minutos.
+
+## 2026-11-24, a28 (tempo estimado estourado; regra 9)
+- O que aconteceu: escrutínio de 17 capas enviadas por ele. Disse cerca de 5 minutos para abrir a memória e cerca de 8 para o ranking. A entrega saiu perto de 30 minutos depois do primeiro lote, com painel, Vamos e um segundo lote de 10 capas no meio. Houve avisos curtos a cada etapa, mas nenhuma primeira versão do ranking.
+- Frase dele: nenhuma até a entrega.
+- Correção: ranking único das 17 entregue com nota e o que falta para 100.
+- Regra prática: com painel e Vamos, dizer 15 minutos por lote de até 10 capas; em até 5 minutos mandar o ranking do próprio Claude como primeira versão, avisando que painel e Vamos ainda estão rodando.
