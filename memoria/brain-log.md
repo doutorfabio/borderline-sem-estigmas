@@ -82,3 +82,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Vc ficou todo esse tempo só pra fazer esses dois textos basicos?".
 - Correção: admitido em uma linha, sem lista de causas. A regra 9 ganhou o anti-pattern a28 no BRAIN.
 - Regra prática: tempo dito na primeira mensagem; primeira versão em poucos minutos; acabamento fino só depois de ele ver.
+
+## 2026-11-24, a28 (demora antes da primeira entrega; regra 9)
+- O que aconteceu: carrossel 5 formas de splitting, com roteiro trazido por ele. Li a memória por muito tempo antes de mandar qualquer coisa, o disparo das imagens foi barrado pela sessão e entreguei só texto e prompts pedindo um vai.
+- Frase dele: "Cadê as imagens ?".
+- Correção: as 8 imagens foram geradas e entregues logo depois da pergunta, em uma rodada.
+- Regra prática: pedido de criar carrossel é pedido de imagem; se o disparo for barrado, avisar em uma linha e pedir o ok na hora; leitura de memória curta, primeira entrega em poucos minutos.

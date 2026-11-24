@@ -39,9 +39,9 @@ Teste. Observação de post: a tese de splitting já saiu no carrossel de 25/04 
 
 ## Estado
 
-Imagens não geradas. A geração em lote no GPT Image 2.6 (alta, 2k, 4:5, 8 imagens, 22 créditos) foi barrada pela sessão, porque o texto colado começava com só os prompts e os textos, sem gerar nada. Roteiro e legenda em `entregas/carrossel-splitting/roteiro.md` no branch claude/eager-feynman-6bf7m4. Aguardando o ok dele para gerar e a reação ao texto.
+Imagens geradas em 24/11/2026, depois de ele perguntar "Cadê as imagens ?" (a primeira tentativa de disparo tinha sido barrada pela sessão por causa do sem gerar nada do texto colado). GPT Image 2.6, alta, 2k, 4:5, 22 créditos; jobs 987aea58, cedb72fb, b6ee20c2, 329ab363, 3f335aaf, 054faece, a0f42e5e, 8f4ef168. Texto conferido sem erro nos oito; margem dos slides 5, 6, 7 e 8 aberta por código. Arquivos e roteiro em `entregas/carrossel-splitting/` no branch claude/eager-feynman-6bf7m4. Veredito teste lançado no [[placar-vereditos]]. Aguardando a reação dele.
 
 ## A verificar
 
-- Se ele quer as imagens geradas pelo Claude ou só textos e prompts para rodar fora. [verificar]
 - Fonte para pensamento de tudo ou nada no TPB, se a peça for para o feed. [verificar]
+- Últimos 30 posts no Windsor (G1 da capa). [verificar]
