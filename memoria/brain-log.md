@@ -100,3 +100,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: nenhuma até a entrega.
 - Correção: custo real dito na entrega e gravado em `escrutinio-capas.md`.
 - Regra prática: chamar a estimativa de custo antes de qualquer disparo e dizer o número que ela devolver.
+
+## 2026-11-24, a7 (envio para quem acusou ou errou)
+- O que aconteceu: na refação das 17 capas, BORDERLINE TAMBÉM TEM RAZÃO NA BRIGA. foi entregue como nota 100. O envio natural dessa capa vai para a pessoa com quem ela brigou.
+- Frase dele: "Fala a vdd vai" (riu das notas 100).
+- Correção: apontado na resposta seguinte; capa fora da fila.
+- Regra prática: em capa refeita, escrever ao lado quem manda para quem antes de dar a nota.
