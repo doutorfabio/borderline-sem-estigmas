@@ -15,10 +15,9 @@ for p in PL:
 assert i==len(W)
 def t(s):
   h=int(s//3600);m=int(s%3600//60);sec=s%60;return f"{h}:{m:02d}:{sec:05.2f}"
-FLASH=[0.10,8.10,13.43,30.97]
-LAB=[("O QUE JÁ TOMOU","DE TUDO"),("O FIEL DO","RIVOTRIL"),("O QUE OLHA COM","ESSA CARA"),("O QUE SE DEU","ALTA SOZINHO")]
-ENDS=[8.07,13.40,30.93,35.43]
-BW=(19.80,21.62)  # take preto e branco: some o crachá
+FLASH=[0.033,8.033,13.367,21.433,30.900]
+LAB=[("O QUE JÁ TOMOU","DE TUDO"),("O FIEL DO","RIVOTRIL"),("O DO TRATAMENTO","NATURAL"),("O QUE OLHA COM","ESSA CARA"),("O QUE SE DEU","ALTA SOZINHO")]
+ENDS=[8.033,13.367,19.833,30.900,35.43]
 CX=502
 hdr=f"""[Script Info]
 ScriptType: v4.00+
@@ -51,14 +50,13 @@ for gi,g in enumerate(groups):
       else: txt=word
       if k==j: txt=r"{\fscx112\fscy112\t(0,90,\fscx100\fscy100)}"+txt+r"{\fscx100\fscy100}"
       parts.append(txt)
-    ev.append(f"Dialogue: 2,{t(st)},{t(en)},Cap,,0,0,0,,{{\\pos({CX},{CY})\\blur1.2}}"+" ".join(parts))
+    ev.append(f"Dialogue: 2,{t(st)},{t(en)},Cap,,0,0,0,,{{\\an2\\pos({CX},1335)\\blur1.2}}"+" ".join(parts))
+import json
+P=json.load(open("labpos.json")) if __import__("os").path.exists("labpos.json") else {"pill":200,"l1":302,"l2":402}
+def mv(y): return f"\\move({CX},{y+24},{CX},{y},0,200)\\fad(120,100)"
 for i,(f,(l1,l2),end) in enumerate(zip(FLASH,LAB,ENDS)):
-  spans=[(f,end)]
-  if i==2: spans=[(f,BW[0]),(BW[1]+0.05,end)]
-  for k,(a,b) in enumerate(spans):
-    anim = r"\fad(0,120)" + (r"\fscx130\fscy130\t(0,160,\fscx100\fscy100)" if k==0 else r"\fad(150,120)")
-    ev.append(f"Dialogue: 4,{t(a)},{t(b)},Pill,,0,0,0,,{{\\pos({CX},200)\\c&H303BFF&{anim}}}PACIENTE {i+1}")
-    ev.append(f"Dialogue: 4,{t(a+0.06)},{t(b)},Lab,,0,0,0,,{{\\pos({CX},302)\\fs80\\blur1{anim}}}{l1}")
-    ev.append(f"Dialogue: 4,{t(a+0.10)},{t(b)},Lab,,0,0,0,,{{\\pos({CX},402)\\fs{132 if len(l2)<10 else 120}\\blur1{anim}}}{l2}")
+  a,b=f,end
+  ev.append(f"Dialogue: 4,{t(a)},{t(b)},Pill,,0,0,0,,{{{mv(P['pill'])}\\c&H303BFF&}}PACIENTE {i+1}")
+  ev.append(f"Dialogue: 4,{t(a)},{t(b)},Lab,,0,0,0,,{{{mv(P['l1'])}\\fs80\\blur1}}{l1}")
+  ev.append(f"Dialogue: 4,{t(a)},{t(b)},Lab,,0,0,0,,{{{mv(P['l2'])}\\fs124\\blur1}}{l2}")
 open("cap.ass","w").write(hdr+"\n".join(ev)+"\n")
-for g in groups: print(f"{g[0][0]:.2f}", " ".join(x[2] for x in g))
