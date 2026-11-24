@@ -106,3 +106,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Fala a vdd vai" (riu das notas 100).
 - Correção: apontado na resposta seguinte; capa fora da fila.
 - Regra prática: em capa refeita, escrever ao lado quem manda para quem antes de dar a nota.
+
+## 2026-11-24, regra 9 (limite de uso estourado por painéis)
+- O que aconteceu: no escrutínio de capas o Claude lançou nove subagentes (dois painéis de três e um painel cego de três). O limite de uso de 5 horas da conta estourou no meio do painel cego; duas leituras morreram com erro 429.
+- Frase dele: "Errou sim".
+- Correção: sem novos painéis; resposta fechada com as duas leituras que chegaram.
+- Regra prática: um painel de três por pedido, com o custo dito antes; reavaliação depois da entrega usa no máximo uma leitura de fora.
