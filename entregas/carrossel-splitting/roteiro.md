@@ -8,7 +8,7 @@ Configuração: GPT Image 2.6, alta, 2k, 4:5. Imagem só nos slides 1, 2, 4 e 8.
 
 ## Texto por slide
 
-1. Capa. BORDERLINE: / 5 FORMAS DE SPLITTING. / CHAMAM DE DRAMA. (DRAMA em creme, resto preto). Retrato de mulher de uns 30 anos, rosto dividido ao meio por luz âmbar e luz azul, fundo ferrugem.
+1. Capa. BORDERLINE: / SEU SPLITTING, 5 FORMAS. / CHAMAM DE DRAMA. (DRAMA em creme, resto preto). Retrato de mulher de uns 30 anos, rosto dividido ao meio por luz âmbar e luz azul, fundo ferrugem.
 2. 1. SPLITTING / EM BRASA. Alguém te machuca e, em minutos, vira o vilão da história. O carinho de ontem some. Lista: raiva que chega de uma vez; vontade de bloquear a pessoa; certeza de que sempre foi assim. Linha: SPLITTING: VER TUDO BOM OU TUDO RUIM, SEM MEIO-TERMO. Foto de brasas em faixa embaixo.
 3. 2. SPLITTING / EM LUA DE MEL. O outro extremo. A pessoa é perfeita e enfim alguém te enxergou. A alegria é verdadeira, e ninguém é perfeito por muito tempo. Lista: só o lado bom aparece; planos pra vida toda em poucos dias; depois, a queda do mesmo tamanho. Tipografia.
 4. 3. SPLITTING / DO SILÊNCIO. A dor cresce e a conclusão vem pronta: ninguém vai entender. Você para de responder e se tranca. Lista: silêncio pra se proteger; anestesia no lugar do choro; a solidão chega mais tarde. Foto de vidro com chuva em faixa embaixo.
@@ -19,9 +19,9 @@ Configuração: GPT Image 2.6, alta, 2k, 4:5. Imagem só nos slides 1, 2, 4 e 8.
 
 ## Legenda
 
-Uma frase atravessada no jantar, e quem era tudo pra você vira alguém que nunca prestou.
+Bloquear, se trancar, mandar textão, se afastar antes que te deixem. Quem vê de fora chama tudo isso de drama.
 
-Isso tem nome: splitting. É ver tudo bom ou tudo ruim, sem meio-termo. No carrossel estão cinco formas em que ele aparece no borderline.
+O nome clínico é splitting: ver tudo bom ou tudo ruim, sem meio-termo. No carrossel estão cinco formas em que ele aparece no borderline.
 
 O que foi dito na hora continua valendo pra quem ouviu. Voltar e reparar faz parte do treino, e esse treino acontece na terapia.
 
@@ -37,3 +37,9 @@ Conteúdo educativo. Não substitui avaliação individual.
 - Saíram travessão, aspas, BPD, cérebro, não é X é Y, fundo preto, três minutos (número sem fonte), cortar tudo e desaparecer (leitura de risco), ver se ela fica, pico.
 - Capa com borderline como maior palavra e pessoa na imagem.
 - Silêncio, desespero e antecipação não são splitting no sentido estrito; foram amarrados pela certeza de tudo ou nada (ninguém vai entender, já acabou, vai dar errado).
+
+## Capa refeita e data (24/11)
+
+- Capa v2 (job 9e2380fc, edição sobre a 987aea58): linha 2 virou SEU SPLITTING, 5 FORMAS. para fechar o destinatário (C4). P 100 na base técnica. Menor linha com 7,3% da altura; margens de 6,6% a 9,5%.
+- G1 conferido no Windsor (89 posts de 25/10 a 24/11): o Reel de 18/11 (De manhã ele era o melhor homem do mundo. À noite, nunca tinha prestado., 307 views) tem a mesma tese e é o 17º mais recente. Sai da janela dos 30 depois de mais 14 posts, por volta de 29/11. O Reel de 12/11 (amor da vida a pior pessoa, 3.007 views) é o 36º, já fora.
+- Legenda: abertura trocada porque a primeira repetia as legendas de 12/11 e 18/11.
