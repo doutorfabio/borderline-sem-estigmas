@@ -12,6 +12,7 @@ import { MitoApego } from "./MitoApego";
 import { MitoRindo } from "./MitoRindo";
 import { IrEmbora, IrEmboraTexto } from "./IrEmbora/IrEmbora";
 import { IrEmboraCapa } from "./IrEmbora/Capa";
+import { Sticker } from "./IrEmbora/Sticker";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -50,6 +51,24 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
+      />
+      <Composition
+        id="StickerBorderline"
+        component={Sticker}
+        durationInFrames={1}
+        fps={30}
+        width={2048}
+        height={1024}
+        defaultProps={{ texto: "BORDERLINE", vermelho: true, id: 11 }}
+      />
+      <Composition
+        id="StickerBipolar"
+        component={Sticker}
+        durationInFrames={1}
+        fps={30}
+        width={2048}
+        height={1024}
+        defaultProps={{ texto: "BIPOLAR", vermelho: false, id: 23 }}
       />
       <Composition
         id="IrEmboraCapa"
