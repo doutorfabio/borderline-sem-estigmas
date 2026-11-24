@@ -159,3 +159,14 @@ Ordem dele: "Então refaça todas para nota 100", "Aplicando tudo que falta", "D
 Teses trocadas para quebrar o teto: primeiro encontro (cena de casal) virou contar tudo cedo demais, em cena de família; porcos-espinhos virou perto ou longe, com mãe e filha; a Carta ganhou tese nova (cansar não é abandonar); fraude virou recusa do elogio; você é borderline virou também tem razão na briga; estátua virou ama demais ou idealiza; impulso virou dor ou falta de freio; gaiola virou proteção ou liberdade; carinho e defeito ganhou o rótulo corrigido (ingratidão).
 
 Mais próxima de 100, para postar em 24/11 ("Pode ser hoje"): BORDERLINE OU SÓ DIFÍCIL?. Miolo em [[carrossel-borderline-ou-so-dificil]]. Veredito do Claude: feed. Risco escrito antes: vizinha da avó nervosa (mãe difícil); pergunta de dois polos foi de 87 mil a 5 mil na conta; a régua não tem resultado próprio.
+
+### Conferência de fora das refeitas (24/11/2026, depois do "Errado" e do "Errou sim" dele)
+
+A nota 100 das refeitas não se sustentou. Duas leituras chegaram; duas do painel cego morreram no limite de uso da conta (erro 429).
+
+- Leitura cega de alcance e envio (viu os 17 pares, original dele contra refeita, sem saber qual era qual): a refeita venceu nos 17 pares. Maior nota: BORDERLINE OU SÓ DIFÍCIL? com 91, teto 95. As 6 melhores das 34: difícil, não explode do nada, 256 jeitos, carta pra quem cansou, quieto não é calmo, desconfia do carinho. Aviso: o molde cansa em sequência (mesma mulher de cabelo cacheado e mesma mãe grisalha em quase todas; negação em 6; pergunta de dois polos em 7; porta com mãe em 3; fotos coloridas com cara de banco de imagem).
+- Vamos (só texto e descrição, 8 créditos): 9 refeitas piores que as originais, 8 melhores; conjunto repetitivo. As 6 melhores das 34: gaiola, porcos-espinhos e primeiro encontro (originais dele), carta pra quem cansou (refeita), medo de melhorar (original), também tem razão na briga (refeita). Aviso clínico: 256 combinações de critérios não são 256 tipos de borderline.
+- Única capa nas duas listas: BORDERLINE: CARTA PRA QUEM CANSOU. CANSAR NÃO É ABANDONAR.
+- Defeito apontado pelas duas na capa indicada para o dia: na DIFÍCIL, a filha de braço cruzado e cara fechada mostra a difícil; a imagem repete o rótulo. Foto refeita por edição (job fbfc9a6d sobre o 9abb014e): ela no centro, tentando sorrir, mãos apertadas no colo. Limite da versão nova, dito a ele: a tensão ficou discreta e some na miniatura.
+
+Regra tirada daqui: nenhuma refeita é chamada de 100 nem de melhor que a original dele sem uma leitura de fora; e toda capa indicada para o dia passa antes pelo teste da tese dele de 29/10 em [[capas-gigantes]] (o que todo mundo viu, o que era de verdade, e imagem e texto sem dizer a mesma coisa).
