@@ -70,6 +70,7 @@ Regras de uso:
 - Dizer ao lado da nota qual motor a capa mira: alcance, envio ou os dois. A conta separa os dois (quieta na mesa contra Carta).
 - Metáfora rápida com objeto já deu envio alto (cacto, semente, caranguejo-eremita). Objeto sem pessoa perde ponto em I, não barra.
 - Nota alta não é argumento para feed. O veredito sai do funil inteiro.
+- Teto sempre 100 (ordem dele em 24/11: "Teto sempre 100"). Quando a tese segura o teto, trocar a frase e a cena até a régua fechar 100, em vez de devolver teto menor. Se só falta sair da janela dos 30 posts, dizer a data em que a capa fecha 100.
 
 Ajustes pedidos pelo painel de 24/11 e já postos acima: repetição segura a capa em vez de só tirar pontos; lista com número pontua em T; deboche e estigma no texto descontam em E; limite de 10 palavras (a capa da avó tem 12 e fez 4.122 envios).
 
@@ -130,3 +131,31 @@ Medidas da leitura de arte que mudam a correção (por código; menor linha em %
 Ajustes de régua pedidos pela leitura de arte, para o próximo lote: em B, medir o que o olho pega primeiro, não só o tamanho; em E, primeira pessoa com destinatário embutido não zera (a Carta fez 38,5 envios por mil); pergunta de dois polos não perde ponto em L.
 
 Resultado (preencher quando ele postar): capa | data | alcance | envios | envios por mil | a nota ordenou certo?
+
+### Refação de 24/11/2026: as 17 capas refeitas para nota 100
+
+Ordem dele: "Então refaça todas para nota 100", "Aplicando tudo que falta", "Dispare", "Teto sempre 100". GPT Image 2.6 (`gpt_image_2_6`), alta, 2k, 4:5, 1792 x 2240. 18 gerações (a do abraço saiu com um braço a mais e foi refeita). Custo real: 81 créditos, 4,5 por imagem (em 14/11 era 2,75; o Claude avisou 47 sem pedir a estimativa). Texto conferido letra por letra nas 17; mãos e braços contados; menor linha e margens medidas por código; 11 capas recolhidas de 90% a 98% sobre papel da própria imagem para fechar 5% de margem. A nota 100 destas versões é conta do Claude pela régua da seção 4; o painel não reviu.
+
+| Ordem | Capa de origem | Frase final (destaque em vermelho entre colchetes) | Cena | Job | Menor linha | Fecha 100 a partir de |
+|---|---|---|---|---|---|---|
+| 1 | 16 | BORDERLINE / OU SÓ [DIFÍCIL?] | retrato de família sorrindo, a filha adulta séria de braços cruzados | 9abb014e | 8,7% | já |
+| 2 | 7 | BORDERLINE / ESCONDE 6 SINAIS / POR [VERGONHA.] | amarelo; mulher de três quartos, mão apertando o próprio pulso atrás das costas | 7b5874da | 6,2% | já |
+| 3 | 6 | BORDERLINE / CONTA TUDO CEDO DEMAIS. / [MEDO] OU FALTA DE FILTRO? | almoço de família, ela falando com a visita, a mãe olhando de lado | dd0e0919 | 6,2% | já |
+| 4 | 11 | O BORDERLINE / PRECISA DE [MAIS] / QUE REMÉDIO. | gravura; mãe estende o copo d'água à filha na cozinha | 8c325031 | 8,9% | cerca de 27/11 (Reels de 15 e 16/11 saem da janela) |
+| 5 | 15 | BORDERLINE: / CARTA PRA QUEM CANSOU. / CANSAR NÃO É [ABANDONAR.] | folha creme em fundo vermelho; filha empurra o papel dobrado para a mãe cansada | 6533458f | 6,9% | já (tese nova; o formato é o da Carta) |
+| 6 | 1 | A CRISE DO / BORDERLINE / NÃO É [FALSIDADE.] | ela sozinha na pia, família de costas vendo TV | c0d7c204 | 8,6% | cerca de 04/12 (duas caras saiu em 24/11) |
+| 7 | 14 | NÃO PARECE / BORDERLINE? / EXISTEM [256] JEITOS. | três mulheres bem diferentes na sala de espera, mesma senha em branco | c440c43a | 8,0% | cerca de 28/11 (Reel de 17/11 sai da janela) |
+| 8 | 3 | O BORDERLINE / NÃO EXPLODE [DO NADA.] | jantar de família, punho dela fechado embaixo da mesa | b2df643a | 7,3% | já (tese já usada em 03/09, 19/09 e 07/11, fora dos 30) |
+| 9 | 17 | O BORDERLINE / QUER VOCÊ PERTO / OU [LONGE?] | amarelo; mãe de braços abertos, filha com a mão na maçaneta | 40cf1ae1 | 7,0% | já |
+| 10 | 8 | BORDERLINE QUIETO / NÃO É BORDERLINE [CALMO.] | família rindo no sofá, ela apertando a almofada | 931145e0 | 8,1% | já |
+| 11 | 9 | BORDERLINE / NÃO QUER MELHORAR / OU TEM [MEDO] DE MELHORAR? | pais de costas vendo TV, ela na porta olhando para trás | 09fc5c97 | 6,0% | já (sem fonte no cofre para o miolo) |
+| 12 | 12 | BORDERLINE / TAMBÉM TEM [RAZÃO] / NA BRIGA. | filha falando com calma à mesa, mãe de braços cruzados de costas | 3f2ebaff | 8,0% | já |
+| 13 | 13 | O BORDERLINE / DESCONFIA DO CARINHO. / NÃO É [INGRATIDÃO.] | rosa; mãe abraça, filha de olhos abertos e braço parado | b0da0da7 (refeita; a 28056f20 tinha um braço a mais) | 6,1% | já |
+| 14 | 10 | O BORDERLINE / RECUSA O ELOGIO. / NÃO É [FALSA MODÉSTIA.] | mãe orgulhosa com a mão no ombro, filha olhando para baixo | bfc7771d | 6,7% | já |
+| 15 | 2 | O BORDERLINE / PRECISA DE PROTEÇÃO / OU DE [LIBERDADE?] | mãe ajeita a gola da filha adulta na porta | 4aa76548 | 6,1% | já (a foto sangra na base; não deu para recolher sem baixar a letra de 6%) |
+| 16 | 5 | BORDERLINE / AGE POR IMPULSO. / [DOR] OU FALTA DE FREIO? | banheiro; franja recém-cortada, fios na pia | 901354e8 | 6,7% | já |
+| 17 | 4 | O BORDERLINE / AMA DEMAIS / OU [IDEALIZA?] | mulher com caixa de presente enorme na porta | b680864d | 8,7% | cerca de 04/12 (splitting saiu em 24/11); vizinha do gigante love bombing |
+
+Teses trocadas para quebrar o teto: primeiro encontro (cena de casal) virou contar tudo cedo demais, em cena de família; porcos-espinhos virou perto ou longe, com mãe e filha; a Carta ganhou tese nova (cansar não é abandonar); fraude virou recusa do elogio; você é borderline virou também tem razão na briga; estátua virou ama demais ou idealiza; impulso virou dor ou falta de freio; gaiola virou proteção ou liberdade; carinho e defeito ganhou o rótulo corrigido (ingratidão).
+
+Mais próxima de 100, para postar em 24/11 ("Pode ser hoje"): BORDERLINE OU SÓ DIFÍCIL?. Miolo em [[carrossel-borderline-ou-so-dificil]]. Veredito do Claude: feed. Risco escrito antes: vizinha da avó nervosa (mãe difícil); pergunta de dois polos foi de 87 mil a 5 mil na conta; a régua não tem resultado próprio.

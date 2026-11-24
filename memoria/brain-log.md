@@ -94,3 +94,9 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: nenhuma até a entrega.
 - Correção: ranking único das 17 entregue com nota e o que falta para 100.
 - Regra prática: com painel e Vamos, dizer 15 minutos por lote de até 10 capas; em até 5 minutos mandar o ranking do próprio Claude como primeira versão, avisando que painel e Vamos ainda estão rodando.
+
+## 2026-11-24, regra 9 (custo avisado errado)
+- O que aconteceu: antes de disparar as 17 capas, avisei cerca de 47 créditos (2,75 por capa, preço de 14/11). A rodada custou 81 (4,5 por imagem, 18 gerações). Não pedi a estimativa ao Higgsfield antes de dizer o valor.
+- Frase dele: nenhuma até a entrega.
+- Correção: custo real dito na entrega e gravado em `escrutinio-capas.md`.
+- Regra prática: chamar a estimativa de custo antes de qualquer disparo e dizer o número que ela devolver.
