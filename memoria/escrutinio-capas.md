@@ -170,3 +170,35 @@ A nota 100 das refeitas não se sustentou. Duas leituras chegaram; duas do paine
 - Defeito apontado pelas duas na capa indicada para o dia: na DIFÍCIL, a filha de braço cruzado e cara fechada mostra a difícil; a imagem repete o rótulo. Foto refeita por edição (job fbfc9a6d sobre o 9abb014e): ela no centro, tentando sorrir, mãos apertadas no colo. Limite da versão nova, dito a ele: a tensão ficou discreta e some na miniatura.
 
 Regra tirada daqui: nenhuma refeita é chamada de 100 nem de melhor que a original dele sem uma leitura de fora; e toda capa indicada para o dia passa antes pelo teste da tese dele de 29/10 em [[capas-gigantes]] (o que todo mundo viu, o que era de verdade, e imagem e texto sem dizer a mesma coisa).
+
+### Lote de 25/11/2026: 13 capas enviadas por ele no chat ("Passe pelo funil e notas ranking")
+
+Como foi feito: funil da seção 3; repetição no Windsor (38 posts de 11 a 24/11) e no histórico de 180 dias; três leituras que abriram as imagens sem ver a nota do Claude (E alcance e envio, K quem vive e quem convive, A arte com medidas por código) e a leitura do Claude (C), feita antes de ver o painel. Nota = média de E, K, A e C nos itens T, B, E, I e L (máximo 90) + N dado pelo Claude pelo Windsor. Vamos (chat dc8ad059, 12 créditos, só texto) na coluna V. Nada gerado. Arquivos não guardados no repositório.
+
+O lote inteiro: nenhuma capa tem borderline (B = 0 nas 13) e 12 das 13 abrem em primeira pessoa. Motor do formato: alcance, não envio (quieta na mesa).
+
+| Ordem | Nº | Capa (texto) | E | K | A | C | N | Nota | V | Situação |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 4 | BRIGO POR JUSTIÇA ATÉ PERDER QUEM ESTAVA DO MEU LADO. (corredor, gente de costas) | 40 | 33 | 40 | 48 | 10 | 50 | 1º | corrige; teste (sem vizinho com dado) |
+| 2 | 8 | EU NÃO ESTOU DESCANSANDO PORQUE ESTOU ME ESCONDENDO. (bolha) | 43 | 40 | 48 | 34 | 5 | 46 | 9º | corrige; feed com os ajustes |
+| 3 | 10 | TODA FRASE VIRA UM FIO. e eu passo a noite amarrando. (quadro de fios) | 33 | 35 | 30 | 32 | 10 | 43 | 5º | corrige; teste; mesma tese da 1 |
+| 4 | 12 | EU VEJO TUDO MENOS QUE ESTÁ TUDO BEM. (olho) | 32 | 28 | 30 | 35 | 10 | 41 | 6º | corrige (olho lê vigiar o parceiro) |
+| 5 | 1 | Cheguei da festa às 3h. TRÊS HORAS DE CONVERSA, TRÊS DIAS REPASSANDO... (fita cassete) | 32 | 30 | 28 | 32 | 10 | 41 | 3º | corrige; lê ansiedade social; mesma tese da 10 |
+| 6 | 3 | VI QUE IA TRANSBORDAR E NÃO DESLIGUEI O FOGO. (amarelo) | 20 | 31 | 31 | 38 | 5 | 35 | 2º | corrige (não desliguei lê de propósito) |
+| 7 | 5 | EU DESLIGO ANTES DE TERMINAR. E CHAMO DE CANSAÇO. (plugue) | 28 | 31 | 32 | 30 | 5 | 35 | 10º | corrige; como está é vizinha do gigante abandona antes |
+| 8 | 13 | MEU LIMITE É SIMPLES. NÃO PISE AQUI. (homem e cones) | 23 | 27 | 24 | 26 | 10 | 35 | 12º | refaz a frase (envio para quem pisou, a7) |
+| 9 | 7 | COMEÇO ALGO. LARGO ALGO. não termino nada. (fundo preto, martelo) | 23 | 28 | 20 | 26 | 10 | 34 | 13º | refaz a arte; lê TDAH |
+| 10 | 9 | Aprendi a fazer a cara. QUE NÃO PREOCUPA NINGUÉM. (máscara) | 32 | 33 | 30 | 30 | 0 | 31 | 8º | segura (fingir que está bem: 13, 17, 19 e 20/11) |
+| 11 | 2 | Vi que ia transbordar e não desliguei o fogo. (foto escura) | 14 | 26 | 25 | 29 | 5 | 29 | 7º | descarta; mesma frase da 3 com arte pior |
+| 12 | 11 | ACABEI de fingir que estou bem. (colagem) | 23 | 25 | 19 | 29 | 0 | 24 | 11º | segura; ACABEI com pessoa de bruços lê desistência |
+| 13 | 6 | NÃO VEJO AS COISAS. COMO SÃO. VEJO COMO EU ESTOU. (linhas) | 13 | 18 | 10 | 20 | 5 | 20 | 4º | refaz do zero (frase conhecida, fórmula, ponto quebra a frase) |
+
+Frases propostas (hipótese editorial; nenhuma aprovada por ele): 4 BORDERLINE BRIGA POR JUSTIÇA ATÉ PERDER QUEM ESTAVA DO LADO.; 8 BORDERLINE NO SOFÁ O DIA INTEIRO ESTÁ SE ESCONDENDO.; 10 UMA FRASE À TOA NO ALMOÇO. BORDERLINE PASSA A NOITE AMARRANDO.; 12 BORDERLINE VÊ TUDO, MENOS QUE ESTÁ TUDO BEM.; 1 BORDERLINE CONVERSA TRÊS HORAS E REPASSA TRÊS DIAS.; 3 BORDERLINE VÊ TRANSBORDAR E NÃO CONSEGUE DESLIGAR O FOGO.; 5 BORDERLINE DESLIGA NO MEIO DA BRIGA E CHAMA DE CANSAÇO.; 13 O LIMITE DO BORDERLINE SÓ APARECE QUANDO PISAM.; 7 BORDERLINE COMEÇA ALGO, LARGA ALGO E OUVE QUE É PREGUIÇA.; 9 BORDERLINE APRENDE A FAZER A CARA QUE NÃO PREOCUPA NINGUÉM.
+
+Medidas da leitura de arte (menor linha em % da altura; menor margem em % da largura; o recorte 3:4 pede 7,8% no arquivo para ficar a 5% na grade): 1, 3,1% e 6,8%; 2, 4,1%, foto com 51% dos pixels quase pretos; 3, 17,1% e 2,0% (ponto de FOGO. sai da grade); 4, 12,5% e 3,3%; 5, 13,4% e 1,8%, o cabo sobre o E lê DÉSLIGO; 6, 2,1%; 7, fundo com 60% dos pixels quase pretos; 8, 6,7% e 2,7%, bolha sem chão; 9, balão 1,4%; 10, etiquetas 1,0%; 11, margem 0,8%, ACABEI cortado na grade; 12, 2,0%; 13, 2,7%.
+
+Divergência: as três leituras puseram a 8 em primeiro; o Vamos a pôs em 9º (bolha genérica, lê depressão, perto do Reel de 18/11). O Vamos pôs a 6 em 4º; as três leituras e o Claude, em último.
+
+Veredito do Claude (25/11, antes de postar): nenhuma vai para o feed como está. Com os ajustes: 8 feed; 4 teste (sem vizinho com dado); 10 ou 1 teste (escolher uma); 3 depois que o transbordar do Piora em casa (19/11) sair da janela. 9 e 11 seguram até 25 posts entrarem depois de 20/11. Risco escrito: o formato do lote (primeira pessoa, sem borderline) mira alcance; no dado dele, 1 gigante e 10 flops.
+
+Resultado (preencher quando ele postar): capa | data | alcance | envios | envios por mil | a nota ordenou certo?
