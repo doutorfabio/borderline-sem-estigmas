@@ -204,7 +204,7 @@ shot(72,100,root=>{const s={};
   return s;},(f,F,s)=>{
   const cx=540,cy=540;
   // icon size
-  let size=f<=86?kf(f,[[72,276],[86,178]],'out'):kf(f,[[86,178],[88,176],[100,40]],'in');
+  let size=f<=86?kf(f,[[72,276],[86,178]],'out'):(f<=88?lerp(178,176,(f-86)/2):176-136*E.in(Math.max(0,(f-88)/12)));
   // end position glides toward menu-bar slot
   const tEnd=E.in(clamp((f-88)/12,0,1));
   const icx=lerp(cx,557.5,tEnd),icy=lerp(cy,507.5,tEnd);
@@ -225,7 +225,7 @@ shot(72,100,root=>{const s={};
     if(f>88){const t=E.in(clamp((f-88)/12,0,1));x=lerp(x,ends[i][0],t);y=lerp(y,ends[i][1],t);sz=lerp(92,i===0?30:36,t);}
     S(s.sq[i],{left:px(x-sz/2),top:px(y-sz/2),width:px(sz),height:px(sz),borderRadius:px(sz*26/92),transform:`rotate(${rot.toFixed(3)}deg)`,opacity:op.toFixed(3),zIndex:i===0&&f>88?0:2});}
   S(s.icon,{zIndex:3});S(s.halo,{zIndex:0});
-  const b=f<88?kf(f,[[72,2.4],[76,.6],[80,.3]],'out'):kf(f,[[88,.3],[100,6]],'in');
+  const b=f<88?kf(f,[[72,2.4],[76,.6],[80,.3]],'out'):.3+5.7*E.in((f-88)/12);
   S(s.fx,{filter:`blur(${b.toFixed(2)}px)`});
 });
 
@@ -310,7 +310,7 @@ shot(159,186,root=>{const s={};
   s.bg=el(root,'width:1080px;height:1080px;background:#FDFDFB');
   s.flash=el(root,'width:1080px;height:1080px;background:#E2F4FE');
   s.page=el(root,'width:1080px;height:1080px;filter:url(#fb4)');
-  s.col=el(s.page,'left:120px;top:0;width:840px');
+  s.col=el(s.page,'left:120px;top:0;width:840px;will-change:transform');
   el(s.col,'left:0;top:212px;font:500 27px Inter;color:#8E97A6;white-space:nowrap','Protocolo 7 Dias <span style="color:#C4CAD3;margin:0 8px">/</span> Dia 2');
   el(s.col,'left:0;top:262px;width:860px;font:700 62px/1.1 Inter;color:#111;letter-spacing:-1.2px;white-space:nowrap','Dia 2 · Antes de responder');
   s.body=el(s.col,'left:0;top:386px;width:840px;font:400 47px/58px Inter;color:#BCBCBA;letter-spacing:-.4px',
@@ -318,7 +318,7 @@ shot(159,186,root=>{const s={};
   s.cursor=makeCursor(root);
   return s;},(f,F,s)=>{
   const off=lut(f,159,[420,315,210,170,140,116,96,81,67,55.5,46,38,31.3,25.5,20.6,14]); // f159..f175 (f175=14)
-  let o=f<=174?off:(f<=180?lerp(14,0,E.out2((f-175)/5)):kf(f,[[180,0],[186,-6]],'sine'));
+  let o=f<=174?off:(f<=180?lerp(14,0,E.out2((f-175)/5)):(f<=186?kf(f,[[180,0],[186,-6]],'sine'):-6-(f-186)*1.6));
   if(f<175&&f>174)o=lerp(lut(174,159,[420,315,210,170,140,116,96,81,67,55.5,46,38,31.3,25.5,20.6,14]),14,f-174);
   S(s.col,{transform:`translateY(${px(o)})`});
   const b=mc(f,[[159,24],[162,8],[165,1.5],[168,0]]);
@@ -339,7 +339,7 @@ shot(187,214,root=>{const s={};
   s.all=el(root,'width:1080px;height:1080px;filter:url(#fb5)');
   // the lesson page behind (copy)
   s.page=el(s.all,'width:1080px;height:1080px');
-  s.col=el(s.page,'left:120px;top:0;width:840px');
+  s.col=el(s.page,'left:120px;top:0;width:840px;will-change:transform');
   el(s.col,'left:0;top:212px;font:500 27px Inter;color:#8E97A6;white-space:nowrap','Protocolo 7 Dias <span style="color:#C4CAD3;margin:0 8px">/</span> Dia 2');
   el(s.col,'left:0;top:262px;width:860px;font:700 62px/1.1 Inter;color:#111;letter-spacing:-1.2px;white-space:nowrap','Dia 2 · Antes de responder');
   el(s.col,'left:0;top:386px;width:840px;font:400 47px/58px Inter;color:#BCBCBA;letter-spacing:-.4px','Na crise, a pessoa não está escolhendo como gritar. A sua primeira tarefa não é vencer a discussão. É <span style="color:#000;font-weight:600">baixar o volume</span> da sua resposta e manter o limite combinado.');
@@ -407,7 +407,7 @@ shot(245,300,root=>{const s={};
   el(s.d,'left:11px;top:11px;width:146px;height:146px').className='abs logo';
   return s;},(f,F,s)=>{
   const top=mc(f,[[245,569],[250,491],[255,468],[262,459],[269,456]]);
-  let d=168;if(f>287)d=kf(f,[[287,168],[300,123]],'in');
+  let d=168;if(f>287)d=168-45*E.in((f-287)/13);
   const cy=f<=269?top+84:540;
   S(s.d,{left:px(540-84),top:px(cy-84),transform:`scale(${(d/168).toFixed(5)})`,transformOrigin:'84px 84px'});
   const v=Math.abs(mc(f,[[245,569],[250,491],[255,468],[262,459],[269,456]])-mc(f-1,[[245,569],[250,491],[255,468],[262,459],[269,456]]));
@@ -417,7 +417,7 @@ shot(245,300,root=>{const s={};
 });
 
 /* ===== S8 f301–359 end card ===== */
-shot(301,359,root=>{const s={};
+shot(301,362,root=>{const s={};
   el(root,'width:1080px;height:1080px;background:radial-gradient(circle at 50% 50%,#272729 0%,#121214 45%,#020204 100%)');
   s.halo=el(root,'left:240px;top:390px;width:600px;height:300px;border-radius:50%;background:radial-gradient(closest-side,rgba(243,243,245,.16),rgba(243,243,245,0))');
   s.wrap=el(root,'width:1080px;height:1080px;filter:url(#fb8)');
@@ -425,8 +425,8 @@ shot(301,359,root=>{const s={};
   s.word=el(s.wrap,'left:540px;top:540px;font:600 100px Inter;color:#F3F3F5;white-space:nowrap;transform-origin:0 0;text-shadow:0 0 6px rgba(243,243,245,.55),0 0 34px rgba(200,220,255,.28)','Protocolo 7 Dias');
   return s;},(f,F,s)=>{
   const W=[[301,1650],[302,1350],[303,1110],[304,1049],[309,734],[311,678],[320,563],[342,516],[350,492],[355,450],[359,267]];
-  const w=f<=350?mc(f,W.slice(0,10)):kf(f,[[350,492],[355,450,'in'],[359,267,'in']],'in');
-  const w1=f<=350?mc(f-1,W.slice(0,10)):kf(f-1,[[350,492],[355,450,'in'],[359,267,'in']],'in');
+  const WW=ff=>ff<=359?mc(ff,W):267-(ff-359)*50;const w=WW(f);
+  const w1=WW(f-1);
   const sc=w/M.word.w;
   const place=(e,k,op)=>{const ss=sc*k;S(e,{transform:`translate(${px(-M.word.w*ss/2)},${px(-M.word.h*ss/2)}) scale(${ss.toFixed(5)})`,opacity:op.toFixed(4)});};
   place(s.word,1,1);
@@ -434,7 +434,7 @@ shot(301,359,root=>{const s={};
   for(let i=0;i<s.streaks.length;i++){const k=1+rel*1.4*(i+1)/s.streaks.length;place(s.streaks[i],k,rel>0.004?0.10*(1-i/s.streaks.length)*clamp(rel*8,0,1):0);}
   S(s.halo,{transform:`scale(${(w/516).toFixed(4)},${(0.6+0.4*w/516).toFixed(4)})`,transformOrigin:'300px 150px',opacity:kf(f,[[301,.6],[306,1]],'out').toFixed(3)});
   const hb=f<305?kf(f,[[301,14],[305,0]],'out'):0;
-  const cb=f>350?kf(f,[[350,0],[359,3.5]],'in'):0;
+  const cb=f>350?kf(f,[[350,0],[359,3.5],[362,5]],'in'):0;
   setBlur('fb8g',Math.max(hb,cb),Math.max(cb,hb*0.12));
 });
 
