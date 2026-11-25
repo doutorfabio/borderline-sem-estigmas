@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        src: url("assets/Montserrat.ttf") format("truetype");
+        font-weight: 100 900;
+        font-style: normal;
+      }
+      :root {
+        --ground: #000;
+        --ink: #ffffff;
+        --cream: #e2d8c9;
+        --font-display: "Montserrat", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden; background: var(--ground);
+      }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background: var(--ground); font-family: var(--font-display);
+      }
+      .full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+      /* Legenda pequena: topo do bloco fixo em 68% da altura, margem de 12% nas laterais */
+      .cap {
+        position: absolute; left: 130px; width: 820px; top: 1306px;
+        color: var(--ink); font-weight: 700; font-size: 50px; line-height: 1.22;
+        text-align: center; text-wrap: balance;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.35);
+        display: flex; flex-wrap: wrap; justify-content: center; column-gap: 0.26em;
+      }
+      .cap .w { display: inline-block; clip-path: inset(0 100% 0 0); padding: 0 0.04em 0.12em; }
+
+      /* Ênfase no centro (movimento do headline-slam do catálogo, adaptado para várias linhas) */
+      #emph-wrap {
+        position: absolute; left: 130px; width: 820px; top: 0; height: 1920px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      #emph-stage { width: 100%; }
+      #emph .ln { display: block; white-space: nowrap; }
+      #emph {
+        color: var(--ink); font-weight: 800; font-size: 70px; line-height: 1.08;
+        letter-spacing: -0.01em; text-align: center; text-wrap: balance;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.55), 0 0 3px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Cartão: título no espaço preto acima do selo (12% do topo até antes do selo em y 536) */
+      #head-wrap {
+        position: absolute; left: 130px; width: 820px; top: 272px; height: 240px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .hf-catalog-staggered-fade-up {
+        color: var(--cream); font-family: var(--font-display); font-weight: 800;
+        font-size: 69px; line-height: 1.08; letter-spacing: -0.005em;
+        display: flex; flex-wrap: wrap; justify-content: center; column-gap: 0.26em;
+        text-align: center; width: 100%;
+      }
+      .hf-catalog-staggered-fade-up span {
+        display: inline-block;
+        transform: translate(0px, var(--hf-word-y, 0px)) scale(var(--hf-word-scale, 1));
+        filter: blur(var(--hf-word-blur, 0px));
+      }
+      .brk { flex-basis: 100%; height: 0; }
+
+      #cta-wrap {
+        position: absolute; left: 130px; width: 820px; top: 1372px;
+        display: flex; justify-content: center;
+      }
+      #cta {
+        color: var(--cream); font-weight: 500; font-size: 36px; letter-spacing: 0.01em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="24.2"
+         data-width="1080" data-height="1920">
+
+      <video id="v-cena" class="full clip" src="assets/cena.mp4" muted playsinline
+             data-start="0" data-duration="15.2667" data-track-index="0"></video>
+      <video id="v-cartao" class="full clip" src="assets/cartao.mp4" muted playsinline
+             data-start="15.2667" data-duration="8.9333" data-track-index="1"></video>
+
+      <audio id="a-mix" src="assets/mix.wav" data-start="0" data-duration="24.2" data-track-index="2"></audio>
+
+      <div id="cap1" class="cap clip" data-start="0.200" data-duration="1.020" data-track-index="3"><span class="w">São</span><span class="w">três</span><span class="w">da</span><span class="w">manhã</span></div>
+      <div id="cap2" class="cap clip" data-start="1.220" data-duration="0.880" data-track-index="3"><span class="w">e</span><span class="w">você</span><span class="w">está</span></div>
+      <div id="cap3" class="cap clip" data-start="2.100" data-duration="0.500" data-track-index="3"><span class="w">na</span><span class="w">cozinha</span></div>
+      <div id="cap4" class="cap clip" data-start="2.600" data-duration="1.690" data-track-index="3"><span class="w">esperando</span><span class="w">a</span><span class="w">porta</span><span class="w">abrir,</span></div>
+      <div id="cap5" class="cap clip" data-start="4.460" data-duration="1.540" data-track-index="3"><span class="w">sem</span><span class="w">saber</span><span class="w">se</span><span class="w">liga,</span></div>
+      <div id="cap6" class="cap clip" data-start="6.000" data-duration="0.680" data-track-index="3"><span class="w">se</span><span class="w">espera</span></div>
+      <div id="cap7" class="cap clip" data-start="6.680" data-duration="1.270" data-track-index="3"><span class="w">ou</span><span class="w">se</span><span class="w">sai</span><span class="w">atrás.</span></div>
+      <div id="cap8" class="cap clip" data-start="8.500" data-duration="1.120" data-track-index="3"><span class="w">Lá</span><span class="w">fora</span><span class="w">também</span><span class="w">tem</span></div>
+      <div id="cap9" class="cap clip" data-start="9.620" data-duration="1.060" data-track-index="3"><span class="w">alguém</span><span class="w">sofrendo,</span></div>
+      <div id="cap10" class="cap clip" data-start="10.680" data-duration="0.860" data-track-index="3"><span class="w">e</span><span class="w">quando</span><span class="w">ela</span><span class="w">entrar</span></div>
+
+      <div id="emph-wrap" class="clip" data-start="11.54" data-duration="3.7267" data-track-index="4">
+        <div id="emph-stage"><div id="emph"><span class="ln">NENHUMA DAS DUAS</span><span class="ln">SABE POR ONDE</span><span class="ln">COMEÇAR</span></div></div>
+      </div>
+
+      <div id="head-wrap" class="clip" data-start="18.2667" data-duration="5.9333" data-track-index="5">
+        <div class="hf-catalog-staggered-fade-up" id="head">
+          <span>CURSO</span><span>ONLINE</span><span>PARA</span><i class="brk"></i><span>FAMILIARES</span><span>DE</span><span>QUEM</span><i class="brk"></i><span>TEM</span><span>BORDERLINE</span>
+        </div>
+      </div>
+
+      <div id="cta-wrap" class="clip" data-start="21.30" data-duration="2.90" data-track-index="6">
+        <div id="cta">Toque em Saiba mais</div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // headline-slam (catálogo): entra de 1.6 para 1 com expo.out, tremor de três quadros, deriva leve
+      const E = 11.54, F = 1 / 30;
+      tl.fromTo("#emph", { scale: 1.04, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, E);
+      tl.fromTo("#emph-stage", { x: 0, y: 0 }, { x: 6, y: -6, duration: F, ease: "power2.out" }, E + 0.58);
+      tl.to("#emph-stage", { x: -4, y: 4, duration: F, ease: "power2.out" }, E + 0.58 + F);
+      tl.to("#emph-stage", { x: 0, y: 0, duration: F, ease: "power2.out" }, E + 0.58 + 2 * F);
+      tl.fromTo("#emph", { y: 0 }, { y: -10, duration: 3.0, ease: "sine.inOut", immediateRender: false }, E + 0.72);
+
+      // staggered-fade-up (catálogo): palavras sobem através de um leve desfoque
+      tl.fromTo("#head span",
+        { opacity: 0, "--hf-word-y": "22px", "--hf-word-scale": 0.92, "--hf-word-blur": "5px" },
+        { opacity: 1, "--hf-word-y": "0px", "--hf-word-scale": 1, "--hf-word-blur": "0px", duration: 0.34, stagger: 0.07, ease: "power3.out" },
+        18.2667);
+
+      // Toque em Saiba mais: entrada curta e discreta
+      tl.fromTo("#cta", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 21.30);
+
+
+      // caption-clip-wipe (catálogo): cada palavra é revelada da esquerda para a direita no tempo da fala
+      const CAPS = [{"id": "cap1", "t": [0.2, 0.48, 0.8, 0.9], "exit": null}, {"id": "cap2", "t": [1.22, 1.52, 1.8], "exit": null}, {"id": "cap3", "t": [2.1, 2.22], "exit": null}, {"id": "cap4", "t": [2.6, 2.98, 3.22, 3.62], "exit": 4.04}, {"id": "cap5", "t": [4.46, 4.94, 5.22, 5.36], "exit": null}, {"id": "cap6", "t": [6.0, 6.26], "exit": null}, {"id": "cap7", "t": [6.68, 7.04, 7.16, 7.36], "exit": 7.7}, {"id": "cap8", "t": [8.5, 8.74, 8.96, 9.4], "exit": null}, {"id": "cap9", "t": [9.62, 9.8], "exit": null}, {"id": "cap10", "t": [10.68, 10.96, 11.14, 11.28], "exit": null}];
+      CAPS.forEach((c) => {
+        const ws = document.querySelectorAll("#" + c.id + " .w");
+        ws.forEach((w, j) => {
+          tl.fromTo(w, { clipPath: "inset(0 100% 0 0)", y: 10 }, { clipPath: "inset(0 0% 0 0)", y: 0, duration: 0.28, ease: "power2.out" }, c.t[j]);
+        });
+        if (c.exit !== null) tl.to(ws, { clipPath: "inset(0 0% 0 100%)", duration: 0.22, stagger: 0.03, ease: "power2.in" }, c.exit);
+      });
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
