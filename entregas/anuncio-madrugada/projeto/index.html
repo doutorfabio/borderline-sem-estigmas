@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        src: url("assets/Montserrat.ttf") format("truetype");
+        font-weight: 100 900;
+        font-style: normal;
+      }
+      :root {
+        --ground: #000;
+        --ink: #ffffff;
+        --cream: #e2d8c9;
+        --font-display: "Montserrat", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden; background: var(--ground);
+      }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background: var(--ground); font-family: var(--font-display);
+      }
+      .full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+      /* Legenda pequena: topo do bloco fixo em 68% da altura, margem de 12% nas laterais */
+      .cap {
+        position: absolute; left: 130px; width: 820px; top: 1306px;
+        color: var(--ink); font-weight: 600; font-size: 46px; line-height: 1.22;
+        text-align: center; text-wrap: balance;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.35);
+      }
+
+      /* Ênfase no centro (movimento do headline-slam do catálogo, adaptado para várias linhas) */
+      #emph-wrap {
+        position: absolute; left: 130px; width: 820px; top: 0; height: 1920px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      #emph-stage { width: 100%; }
+      #emph .ln { display: block; white-space: nowrap; }
+      #emph {
+        color: var(--ink); font-weight: 800; font-size: 70px; line-height: 1.08;
+        letter-spacing: -0.01em; text-align: center; text-wrap: balance;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.55), 0 0 3px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Cartão: título no espaço preto acima do selo (12% do topo até antes do selo em y 536) */
+      #head-wrap {
+        position: absolute; left: 130px; width: 820px; top: 272px; height: 240px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .hf-catalog-staggered-fade-up {
+        color: var(--cream); font-family: var(--font-display); font-weight: 800;
+        font-size: 69px; line-height: 1.08; letter-spacing: -0.005em;
+        display: flex; flex-wrap: wrap; justify-content: center; column-gap: 0.26em;
+        text-align: center; width: 100%;
+      }
+      .hf-catalog-staggered-fade-up span {
+        display: inline-block;
+        transform: translate(0px, var(--hf-word-y, 0px)) scale(var(--hf-word-scale, 1));
+        filter: blur(var(--hf-word-blur, 0px));
+      }
+      .brk { flex-basis: 100%; height: 0; }
+
+      #cta-wrap {
+        position: absolute; left: 130px; width: 820px; top: 1372px;
+        display: flex; justify-content: center;
+      }
+      #cta {
+        color: var(--cream); font-weight: 500; font-size: 36px; letter-spacing: 0.01em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="24.7"
+         data-width="1080" data-height="1920">
+
+      <video id="v-cena" class="full clip" src="assets/cena.mp4" muted playsinline
+             data-start="0" data-duration="15.4667" data-track-index="0"></video>
+      <video id="v-cartao" class="full clip" src="assets/cartao.mp4" muted playsinline
+             data-start="15.4667" data-duration="9.2333" data-track-index="1"></video>
+
+      <audio id="a-mix" src="assets/mix.wav" data-start="0" data-duration="24.7" data-track-index="2"></audio>
+
+      <div id="cap1" class="cap clip" data-start="0.20" data-duration="2.40" data-track-index="3">São três da manhã e você está na cozinha</div>
+      <div id="cap2" class="cap clip" data-start="2.60" data-duration="1.44" data-track-index="3">esperando a porta abrir,</div>
+      <div id="cap3" class="cap clip" data-start="4.04" data-duration="1.38" data-track-index="3">sem saber se liga,</div>
+      <div id="cap4" class="cap clip" data-start="5.42" data-duration="2.66" data-track-index="3">se espera ou se sai atrás.</div>
+      <div id="cap5" class="cap clip" data-start="8.08" data-duration="3.30" data-track-index="3">Lá fora também tem alguém sofrendo, e quando ela entrar</div>
+
+      <div id="emph-wrap" class="clip" data-start="11.38" data-duration="4.0867" data-track-index="4">
+        <div id="emph-stage"><div id="emph"><span class="ln">NENHUMA DAS DUAS</span><span class="ln">SABE POR ONDE</span><span class="ln">COMEÇAR</span></div></div>
+      </div>
+
+      <div id="head-wrap" class="clip" data-start="18.4667" data-duration="6.2333" data-track-index="5">
+        <div class="hf-catalog-staggered-fade-up" id="head">
+          <span>CURSO</span><span>ONLINE</span><span>PARA</span><i class="brk"></i><span>FAMILIARES</span><span>DE</span><span>QUEM</span><i class="brk"></i><span>TEM</span><span>BORDERLINE</span>
+        </div>
+      </div>
+
+      <div id="cta-wrap" class="clip" data-start="21.50" data-duration="3.20" data-track-index="6">
+        <div id="cta">Toque em Saiba mais</div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // headline-slam (catálogo): entra de 1.6 para 1 com expo.out, tremor de três quadros, deriva leve
+      const E = 11.38, F = 1 / 30;
+      tl.fromTo("#emph", { scale: 1.04, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, E);
+      tl.fromTo("#emph-stage", { x: 0, y: 0 }, { x: 6, y: -6, duration: F, ease: "power2.out" }, E + 0.58);
+      tl.to("#emph-stage", { x: -4, y: 4, duration: F, ease: "power2.out" }, E + 0.58 + F);
+      tl.to("#emph-stage", { x: 0, y: 0, duration: F, ease: "power2.out" }, E + 0.58 + 2 * F);
+      tl.fromTo("#emph", { y: 0 }, { y: -10, duration: 3.3, ease: "sine.inOut", immediateRender: false }, E + 0.72);
+
+      // staggered-fade-up (catálogo): palavras sobem através de um leve desfoque
+      tl.fromTo("#head span",
+        { opacity: 0, "--hf-word-y": "22px", "--hf-word-scale": 0.92, "--hf-word-blur": "5px" },
+        { opacity: 1, "--hf-word-y": "0px", "--hf-word-scale": 1, "--hf-word-blur": "0px", duration: 0.34, stagger: 0.07, ease: "power3.out" },
+        18.4667);
+
+      // Toque em Saiba mais: entrada curta e discreta
+      tl.fromTo("#cta", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 21.50);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
