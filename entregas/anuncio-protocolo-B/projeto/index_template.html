@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/CustomEase.min.js"></script>
+    <style>
+      @font-face { font-family: "MontSemi"; src: url("assets/Montserrat-SemiBold.ttf") format("truetype"); font-weight: 600; }
+      @font-face { font-family: "MontXB"; src: url("assets/Montserrat-ExtraBold.ttf") format("truetype"); font-weight: 800; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      #base { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      /* caption-clip-wipe, adapted: small, white, light shadow, 2 lines max at 68% */
+      #cw-layer { position: absolute; inset: 0; pointer-events: none; }
+      .cw-group { position: absolute; left: 142px; width: 796px; top: 1306px; transform: translateY(-50%);
+        text-align: center; font-family: "MontSemi", sans-serif; font-weight: 600; font-size: 54px; line-height: 1.2;
+        color: #fff; visibility: hidden; }
+      .cw-word { display: inline-block; margin: 0 0.12em; text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+        clip-path: inset(-30px 100% -30px -30px); will-change: clip-path; }
+      /* kinetic-center-build, adapted to two lines */
+      #kcb-layer { position: absolute; inset: 0; pointer-events: none; }
+      .kcb-word { position: absolute; left: 540px; top: 0; font-family: "MontXB", sans-serif; font-weight: 800;
+        color: #fff; line-height: 1; white-space: nowrap; letter-spacing: -0.01em; opacity: 0;
+        text-shadow: 0 4px 14px rgba(0,0,0,0.6); will-change: transform, opacity, filter; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__DUR__" data-width="1080" data-height="1920">
+      <video id="base" class="clip" src="assets/base.mp4" muted data-start="0" data-duration="__DUR__" data-track-index="0"></video>
+      <div id="cw-layer" class="clip" data-start="0" data-duration="__DUR__" data-track-index="1"></div>
+      <div id="kcb-layer" class="clip" data-start="0" data-duration="__DUR__" data-track-index="2"></div>
+    </div>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        var GROUPS = __GROUPS__;
+        var CENTER = __CENTER__;
+        var T_CARD = __TCARD__;
+        var tl = gsap.timeline({ paused: true });
+
+        // ---- caption-clip-wipe (catalog) ----
+        var layer = document.getElementById("cw-layer");
+        GROUPS.forEach(function (g, gi) {
+          var grp = document.createElement("div");
+          grp.className = "cw-group"; grp.id = "cw-grp-" + gi;
+          g.words.forEach(function (w, i) {
+            if (w.br) grp.appendChild(document.createElement("br"));
+            var sp = document.createElement("span");
+            sp.className = "cw-word"; sp.id = "cw-w-" + gi + "-" + i; sp.textContent = w.t;
+            grp.appendChild(sp);
+          });
+          layer.appendChild(grp);
+          tl.set(grp, { visibility: "visible" }, g.start);
+          g.words.forEach(function (w, i) {
+            tl.to("#cw-w-" + gi + "-" + i, { clipPath: "inset(-30px -30px -30px -30px)", duration: 0.3, ease: "power2.out" }, w.s);
+          });
+          var els = grp.querySelectorAll(".cw-word");
+          tl.to(els, { clipPath: "inset(-30px -30px -30px 100%)", duration: 0.18, stagger: 0.02, ease: "power2.in" }, g.end - 0.2);
+          tl.set(grp, { visibility: "hidden" }, g.end);
+        });
+
+        // ---- kinetic-center-build (catalog), two lines ----
+        gsap.registerPlugin(CustomEase);
+        var ease = CustomEase.create("kcb-entry-ease", "M0,0 C0.2,0.8 0.2,1 1,1");
+        var kl = document.getElementById("kcb-layer");
+        var lines = [[], []];
+        CENTER.forEach(function (w, i) {
+          var el = document.createElement("span");
+          el.className = "kcb-word"; el.id = "kcb-w-" + i; el.textContent = w.t;
+          kl.appendChild(el); lines[w.line].push({ el: el, s: w.s });
+        });
+        // font size: widest full line fits 796px
+        var cv = document.createElement("canvas").getContext("2d");
+        var size = 120, gapR = 0.25;
+        function lineWidth(line, fs) { cv.font = "800 " + fs + "px MontXB"; var t = 0;
+          line.forEach(function (o, k) { t += cv.measureText(o.el.textContent).width + (k ? fs * gapR : 0); }); return t; }
+        while (size > 40 && Math.max(lineWidth(lines[0], size), lineWidth(lines[1], size)) > 780) size -= 2;
+        var lh = size * 1.15;
+        var ys = [960 - lh / 2, 960 + lh / 2];
+        lines.forEach(function (line, li) {
+          cv.font = "800 " + size + "px MontXB";
+          var widths = line.map(function (o) { o.el.style.fontSize = size + "px"; return cv.measureText(o.el.textContent).width; });
+          var gap = size * gapR;
+          function posAt(count) { var tot = gap * (count - 1); for (var k = 0; k < count; k++) tot += widths[k];
+            var c = -tot / 2, out = []; for (var k = 0; k < count; k++) { out.push(c + widths[k] / 2); c += widths[k] + gap; } return out; }
+          line.forEach(function (o, idx) {
+            var target = posAt(idx + 1)[idx];
+            var dur = idx === 0 ? 10 / 30 : 13 / 30;
+            tl.fromTo(o.el, { x: idx === 0 ? target : target + 88, y: ys[li] + (idx === 0 ? 6 : 0), xPercent: -50, yPercent: -50, opacity: 0, filter: "blur(3.5px)", scale: 0.992 },
+              { x: target, y: ys[li], xPercent: -50, yPercent: -50, opacity: 1, filter: "blur(0px)", scale: 1, duration: dur, ease: ease, immediateRender: true }, o.s);
+            for (var p = 0; p < idx; p++) {
+              tl.to(line[p].el, { x: posAt(idx + 1)[p], duration: dur, ease: ease }, o.s);
+            }
+          });
+        });
+        tl.set(".kcb-word", { opacity: 0 }, T_CARD);
+        tl.seek(0);
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
