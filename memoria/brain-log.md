@@ -112,3 +112,5 @@ Formato: `- AAAA-MM-DD · id · o que aconteceu · frase dele (se houver) · com
 - Frase dele: "Errou sim".
 - Correção: sem novos painéis; resposta fechada com as duas leituras que chegaram.
 - Regra prática: um painel de três por pedido, com o custo dito antes; reavaliação depois da entrega usa no máximo uma leitura de fora.
+
+- 2026-11-25 · a1 (fórmula de contraste) · No ranking refeito das 13 capas, o Claude propôs para a capa 8 EU NÃO ESTOU DESCANSANDO. / ESTOU ME ESCONDENDO., que é não é X, é Y. Pego pelo próprio Claude antes de gerar, quando ele pediu para disparar as 4 primeiras. Correção: ACHAM QUE ESTOU DESCANSANDO. / ESTOU ME ESCONDENDO.
