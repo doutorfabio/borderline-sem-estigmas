@@ -14,7 +14,7 @@ Leia, nesta ordem:
 3. `memoria/conta.md`: oferta, preços e dados.
 4. `memoria/ja-produzido.md`: gigantes e teses já usadas.
 5. `memoria/a-decidir.md`: contradições ainda abertas.
-6. Para vídeo: `memoria/efeitos-video-aprovados.md`.
+6. Para vídeo: `memoria/efeitos-video-aprovados.md`. Para carrossel: skill `carrossel-composicao` (composição e estilos visuais).
 7. Skill `historico-borderline-180d` para não repetir tese.
 8. Para tema, ideia ou formato que já funcionou fora: skill `pesquisa-validados` (Vamos + memória + histórico).
 
