@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Fredoka;font-weight:700;src:url(fredoka-latin-700-normal.woff2)}
+@font-face{font-family:Fredoka;font-weight:400;src:url(fredoka-latin-400-normal.woff2)}
+@font-face{font-family:ISerif;font-style:normal;src:url(YoungSerif-Regular.ttf)}
+@font-face{font-family:ISerif;font-style:italic;src:url(IBMPlexSerif-Italic.ttf)}
+:root{
+  --sage:#A4C597; --panel:#CAE6B0; --burg:#6E0B2E; --teal:#0F3A3A; --olive:#6E8B22; --ink:#0F3A3A;
+  --W:1792px; --H:2240px; --m:168px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888}
+.s{width:var(--W);height:var(--H);position:relative;overflow:hidden;background:var(--sage);margin-bottom:40px;
+   font-family:Fredoka;font-weight:700;color:var(--ink);text-transform:uppercase}
+/* paper grain, very fine, background only */
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+.serif{font-variant-numeric:lining-nums;font-feature-settings:'lnum' 1;font-family:ISerif;font-weight:400;text-transform:none;letter-spacing:0}
+.it{font-style:italic}
+.ell{position:relative;display:inline-block;z-index:0}
+.ell::after{content:"";position:absolute;left:-.3em;right:-.3em;top:-.16em;bottom:-.1em;border:.07em solid var(--olive);border-radius:50%;z-index:-1}
+.burg{color:var(--burg)}
+.abs{position:absolute}
+</style>
+</head>
+<body>
+
+<!-- 2: cena. Figura no terço esquerdo, conselhos voando à direita, em planos diferentes -->
+<section class="s" id="s2">
+  <div class="abs" style="left:var(--m);top:180px;right:var(--m)">
+    <div style="font-size:176px;line-height:1.12">VOCÊ FALOU<br>TUDO CERTO.</div>
+    <div style="font-size:176px;line-height:1.12;margin-top:40px">A CRISE <span class="ell burg">CRESCEU.</span></div>
+  </div>
+  <svg class="abs" style="left:0;top:0" width="1792" height="2240" viewBox="0 0 1792 2240">
+    <!-- chão -->
+    <rect x="0" y="1930" width="1792" height="310" fill="#93B886"/>
+    <!-- figura sentada, abraçando os joelhos, no terço esquerdo -->
+    <g transform="translate(560,1930)">
+      <path d="M-250,0 C-260,-150 -220,-330 -120,-420 C-40,-490 90,-480 160,-420 C230,-360 250,-200 240,0 Z" fill="#6E0B2E"/>
+      <!-- joelhos -->
+      <path d="M40,-40 C60,-260 170,-330 260,-300 C330,-275 330,-120 300,0 L40,0 Z" fill="#5C0926"/>
+      <!-- braços em volta dos joelhos -->
+      <path d="M-60,-300 C40,-330 200,-300 285,-230 C300,-215 290,-190 270,-195 C190,-220 60,-240 -40,-240 Z" fill="#7E1638"/>
+      <!-- cabeça baixa encostada nos joelhos -->
+      <circle cx="150" cy="-470" r="118" fill="#6E0B2E"/>
+      <path d="M40,-520 C60,-640 250,-650 280,-520 C290,-470 270,-420 250,-400 C230,-470 120,-500 40,-520 Z" fill="#5C0926"/>
+      <path d="M110,-440 q25,15 50,0 M190,-445 q22,13 44,0" stroke="#CAE6B0" stroke-width="9" fill="none" stroke-linecap="round"/>
+    </g>
+    <!-- conselhos: perto (grande) e longe (pequeno) -->
+    <g font-family="ISerif" style="text-transform:none" font-style="italic" fill="#0F3A3A">
+      <g transform="translate(1000,1150) rotate(-4)">
+        <rect x="0" y="0" width="560" height="170" rx="40" fill="#CAE6B0"/>
+        <text x="280" y="118" font-size="104" text-anchor="middle">Respira.</text>
+      </g>
+      <g transform="translate(860,1420) rotate(3)">
+        <rect x="0" y="0" width="760" height="190" rx="44" fill="#CAE6B0"/>
+        <text x="380" y="132" font-size="112" text-anchor="middle">Isso passa.</text>
+      </g>
+      <g transform="translate(980,1690) rotate(-2)">
+        <rect x="0" y="0" width="640" height="150" rx="36" fill="#CAE6B0" opacity=".92"/>
+        <text x="320" y="104" font-size="84" text-anchor="middle">Amanhã você vê.</text>
+      </g>
+    </g>
+  </svg>
+</section>
+
+<!-- 3: tipografia, cartão levantado com sombra leve, bloco à esquerda -->
+<section class="s" id="s3">
+  <div class="abs" style="left:130px;right:130px;top:250px;bottom:250px;background:var(--panel);border-radius:36px;box-shadow:0 18px 40px rgba(15,58,58,.16)"></div>
+  <div class="abs" style="left:var(--m);right:240px;top:430px">
+    <div style="font-size:140px;line-height:1.16">NA CRISE,<br>A CABEÇA NÃO<br>TEM ESPAÇO PARA</div>
+    <div style="font-size:210px;line-height:1.1;margin-top:40px" class="burg"><span class="ell">SOLUÇÃO.</span></div>
+    <div class="serif" style="font-size:92px;line-height:1.25;margin-top:120px">O que a pessoa sente<br>ocupa tudo. O conselho<br>chega como mais uma<br>coisa para dar conta.</div>
+  </div>
+</section>
+
+<!-- 4: infográfico em duas faixas -->
+<section class="s" id="s4">
+  <div class="abs" style="left:var(--m);right:var(--m);top:440px">
+    <div style="display:inline-block;background:var(--burg);color:var(--panel);font-size:124px;line-height:1;padding:34px 50px 28px;border-radius:28px">VIRA BARULHO</div>
+    <div class="serif" style="font-size:86px;line-height:1.2;margin-top:60px">
+      <div class="li">Dizer que não é para tanto.</div>
+      <div class="li">Resolver o problema na hora.</div>
+      <div class="li">Lembrar da última crise.</div>
+    </div>
+    <div style="height:6px;background:var(--ink);opacity:.25;margin:130px 0 130px"></div>
+    <div style="display:inline-block;background:var(--ink);color:var(--panel);font-size:124px;line-height:1;padding:34px 50px 28px;border-radius:28px">AJUDA</div>
+    <div class="serif" style="font-size:86px;line-height:1.2;margin-top:60px">
+      <div class="li ok">Sentar perto, sem pressa.</div>
+      <div class="li ok">Falar pouco e devagar.</div>
+      <div class="li ok">Deixar menos gente em volta.</div>
+    </div>
+  </div>
+  <style>
+    .li{position:relative;padding-left:100px;margin:34px 0}
+    .li::before{content:"";position:absolute;left:0;top:.36em;width:44px;height:44px;border-radius:50%;border:9px solid var(--burg)}
+    .li.ok::before{background:var(--ink);border-color:var(--ink)}
+  </style>
+</section>
+
+<!-- 5: interativo, três frases em placas -->
+<section class="s" id="s5">
+  <div class="abs" style="left:var(--m);right:var(--m);top:200px">
+    <div style="font-size:156px;line-height:1.14">TRÊS FRASES<br>QUE <span class="burg">CABEM</span><br>NA CRISE</div>
+    <div style="margin-top:90px;display:flex;flex-direction:column;gap:54px">
+      <div class="pl" style="align-self:flex-start">ESTOU AQUI.</div>
+      <div class="pl" style="align-self:flex-end">POSSO SENTAR<br>DO SEU LADO?</div>
+      <div class="pl" style="align-self:flex-start">QUANDO QUISER,<br>A GENTE CONVERSA.</div>
+    </div>
+    <div class="serif it" style="font-size:96px;margin-top:100px">Salva para lembrar na hora.</div>
+  </div>
+  <style>.pl{background:var(--panel);border-radius:44px;padding:50px 64px 44px;font-size:104px;line-height:1.16;box-shadow:0 10px 24px rgba(15,58,58,.14)}</style>
+</section>
+
+<!-- 6: centro de propósito, duas pessoas no sofá, depois da crise -->
+<section class="s" id="s6">
+  <div class="abs" style="left:var(--m);right:var(--m);top:190px;text-align:center">
+    <div style="font-size:140px;line-height:1.14">O CONSELHO<br>TEM HORA:</div>
+    <div style="font-size:210px;line-height:1.1;margin-top:30px" class="burg"><span class="ell">DEPOIS.</span></div>
+  </div>
+  <svg class="abs" style="left:0;top:-40px" width="1792" height="2240" viewBox="0 0 1792 2240">
+    <rect x="0" y="1640" width="1792" height="700" fill="#93B886"/>
+    <!-- sofá -->
+    <rect x="356" y="1180" width="1080" height="300" rx="70" fill="#3C5C49"/>
+    <rect x="300" y="1380" width="1192" height="230" rx="60" fill="#2F4D3C"/>
+    <rect x="390" y="1600" width="40" height="70" fill="#2F4D3C"/><rect x="1362" y="1600" width="40" height="70" fill="#2F4D3C"/>
+    <!-- pessoa da esquerda, virada para a outra -->
+    <g>
+      <path d="M560,1420 C540,1250 600,1120 700,1100 C800,1080 860,1180 860,1300 L860,1420 Z" fill="#6E0B2E"/>
+      <circle cx="720" cy="1010" r="100" fill="#6E0B2E"/>
+      <path d="M625,985 C630,880 800,870 820,980 C780,950 690,945 625,985 Z" fill="#5C0926"/>
+      <path d="M735,1010 q20,12 40,0" stroke="#CAE6B0" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M640,1500 C700,1440 820,1440 880,1500 L880,1560 L640,1560 Z" fill="#5C0926"/>
+      <!-- braço no encosto -->
+      <path d="M820,1180 C900,1150 990,1150 1050,1180 L1040,1215 C980,1195 900,1200 830,1225 Z" fill="#7E1638"/>
+    </g>
+    <!-- pessoa da direita, de cabeça um pouco baixa, calma -->
+    <g>
+      <path d="M940,1420 C930,1260 990,1140 1090,1125 C1190,1110 1240,1210 1235,1320 L1235,1420 Z" fill="#6E0B2E"/>
+      <circle cx="1090" cy="1035" r="100" fill="#6E0B2E"/>
+      <path d="M990,1030 C980,900 1190,890 1195,1020 C1150,980 1050,975 990,1030 Z" fill="#5C0926"/>
+      <path d="M1050,1050 q18,10 36,0 M1110,1050 q18,10 36,0" stroke="#CAE6B0" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M940,1500 C1000,1440 1120,1440 1180,1500 L1180,1560 L940,1560 Z" fill="#5C0926"/>
+    </g>
+  </svg>
+  <div class="abs serif" style="left:var(--m);right:var(--m);top:1700px;font-size:84px;line-height:1.22;text-align:center">Com a respiração de volta,<br>a mesma frase chega diferente.<br>Aí dá para combinar<br>o que fazer na próxima.</div>
+</section>
+
+<!-- 7: quebra de tom, fundo bordô (não preto) -->
+<section class="s" id="s7" style="background:var(--burg);color:var(--panel)">
+  <div class="abs" style="left:var(--m);right:var(--m);top:300px">
+    <div style="font-size:176px;line-height:1.12">SENTAR<br>PERTO TEM<br><span class="ell" style="--olive:#CAE6B0">LIMITE.</span></div>
+    <div class="serif" style="font-size:92px;line-height:1.25;margin-top:130px">
+      Se houver agressão,<br>saia e se proteja.<br><br>
+      Risco de vida: SAMU 192.<br>Para conversar: CVV 188.<br><br>
+      Quem senta perto também<br>precisa de alguém.
+    </div>
+  </div>
+</section>
+
+<!-- 8: fecho, a figura da capa abraça o quadro -->
+<section class="s" id="s8">
+  <svg class="abs" style="left:0;top:0" width="1792" height="2240" viewBox="0 0 1792 2240">
+    <!-- cabeça -->
+    <path d="M896,120 C760,120 690,220 700,330 C705,400 740,450 790,470 L1002,470 C1052,450 1087,400 1092,330 C1102,220 1032,120 896,120 Z" fill="#6E0B2E"/>
+    <ellipse cx="896" cy="360" rx="112" ry="122" fill="#A4C597"/>
+    <path d="M800,300 C830,220 960,210 1000,290 C950,260 860,262 800,300 Z" fill="#6E0B2E"/>
+    <path d="M840,360 q22,16 44,0 M908,360 q22,16 44,0" stroke="#6E0B2E" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M872,425 q24,16 48,0" stroke="#6E0B2E" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <!-- braços longos formando o quadro -->
+    <path d="M150,620 C150,520 240,480 330,480 L1462,480 C1552,480 1642,520 1642,620 L1642,1980 C1642,2060 1590,2100 1520,2100 L272,2100 C202,2100 150,2060 150,1980 Z" fill="#6E0B2E"/>
+    <rect x="290" y="600" width="1212" height="1390" rx="60" fill="#CAE6B0"/>
+    <!-- mãos -->
+    <g fill="#6E0B2E">
+      <path d="M230,1960 C300,1900 420,1890 470,1930 C500,1955 470,1990 430,1985 L520,1990 C560,1995 560,2040 520,2045 L300,2060 Z"/>
+      <path d="M1562,1960 C1492,1900 1372,1890 1322,1930 C1292,1955 1322,1990 1362,1985 L1272,1990 C1232,1995 1232,2040 1272,2045 L1492,2060 Z"/>
+    </g>
+  </svg>
+  <div class="abs" style="left:360px;right:360px;top:700px;text-align:center">
+    <div style="font-size:100px;line-height:1.18">SE A CRISE É SUA,<br>MANDA PRA QUEM<br>SENTA DO SEU <span class="burg">LADO.</span></div>
+    <div style="height:6px;background:var(--ink);opacity:.25;margin:90px 120px"></div>
+    <div style="font-size:100px;line-height:1.18">SE É VOCÊ<br>QUEM SENTA,<br>SALVA PARA<br>A PRÓXIMA.</div>
+  </div>
+</section>
+
+</body>
+</html>
