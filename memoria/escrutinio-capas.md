@@ -202,3 +202,26 @@ Divergência: as três leituras puseram a 8 em primeiro; o Vamos a pôs em 9º (
 Veredito do Claude (25/11, antes de postar): nenhuma vai para o feed como está. Com os ajustes: 8 feed; 4 teste (sem vizinho com dado); 10 ou 1 teste (escolher uma); 3 depois que o transbordar do Piora em casa (19/11) sair da janela. 9 e 11 seguram até 25 posts entrarem depois de 20/11. Risco escrito: o formato do lote (primeira pessoa, sem borderline) mira alcance; no dado dele, 1 gigante e 10 flops.
 
 Resultado (preencher quando ele postar): capa | data | alcance | envios | envios por mil | a nota ordenou certo?
+
+### Lote de 27/11/2026: 16 capas enviadas por ele no chat (primeira leva; "Tem mais")
+
+Pedido: "Vou mandar capas e vc considera tudo que vimos / O que vem funcionando no meu perfil / O que para scroll / O que tem sido falado / Conexão genial / E faz o ranking com as notas". Régua da seção 4 (T, B, E, I, L, N). Leitura do Claude: 9 das 16 são a mesma tese (constância vale mais que declaração), vizinha do Reel de 27/11 (desistir aos poucos, 1.285 envios em 11 mil de alcance) e do Reel de 23/10 (você não me ama, não listar provas); só uma pode sair. As outras 7 são pôster de autoajuda sem borderline.
+
+| Ordem | Arquivo | Capa | T | B | E | I | L | N | Nota | Teto | Situação |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | IMG_7409 | QUEM AMA UM BORDERLINE ACHA QUE PRECISA PROVAR. BASTA REPETIR. (colagem vermelha, casa no alto da trilha) | 30 | 10 | 15 | 8 | 9 | 5 | 77 | 95 | corrige |
+| 2 | IMG_7410 | DEPOIS DA BRIGA, O BORDERLINE NÃO PRECISA DE DECLARAÇÃO. PRECISA DO JANTAR DE SEMPRE. (mesa posta, cadeiras vazias, balão murcho) | 20 | 10 | 15 | 3 | 12 | 5 | 65 | 85 | corrige (fórmula de contraste, cadeira vazia) |
+| 3 | IMG_7408 | BORDERLINE NÃO SE ACALMA COM PROMESSA. SE ACALMA COM ROTINA. (farol, fundo escuro) | 20 | 10 | 15 | 3 | 12 | 5 | 65 | 85 | corrige (fórmula, fundo escuro) |
+| 4 | IMG_7411 | PARA O BORDERLINE, O DE SEMPRE VALE MAIS QUE O PARA SEMPRE. (canecas gastas, coração de cristal quebrado) | 20 | 10 | 15 | 3 | 6 | 5 | 59 | 85 | corrige; melhor frase do lote |
+| 5 | IMG_7404 | NO BORDERLINE, O EU TE AMO PASSA. O CAFÉ DE TODO DIA FICA. (foto, rosas secas e duas canecas) | 10 | 10 | 8 | 8 | 6 | 5 | 47 | 75 | corrige (lê o amor do borderline passa) |
+| 6 | IMG_7405 | mesma frase (rosas murchas e planta regada) | 10 | 10 | 8 | 8 | 6 | 5 | 47 | 75 | corrige |
+| 7 | IMG_7394 | EU TE AMO E ESTOU ESGOTADA (cabeça, fundo preto) | 20 | 0 | 8 | 0 | 12 | 5 | 45 | 80 | refaz (sem borderline; imagem de sessão de terapia; vizinha da Carta pra quem cansou) |
+| 8 | IMG_7395 | EVITAR ALIVIA AGORA E AUMENTA DEPOIS (dedos apontando) | 20 | 0 | 8 | 0 | 12 | 5 | 45 | 70 | refaz (dedos contam julgamento; mesmo mecanismo da compulsão funciona) |
+| 9 | IMG_7396 | VOCÊ NÃO DEVE UM MOTIVO PRA SE PROTEGER (mão rosa) | 10 | 0 | 8 | 3 | 12 | 10 | 43 | 70 | refaz (sem borderline; proteger de quê) |
+| 10 | IMG_7407 | NO BORDERLINE, O EU TE AMO PASSA. O CAFÉ DE TODO DIA FICA. (farol, fundo escuro) | 10 | 10 | 8 | 3 | 6 | 5 | 42 | 70 | corrige |
+| 11 | IMG_7403 | mesma frase sem vírgula (farol ilustrado) | 10 | 10 | 8 | 3 | 4 | 5 | 40 | 70 | corrige (vírgula) |
+| 12 | IMG_7391 | A APROVAÇÃO DOS OUTROS NÃO SUBSTITUI A SUA (orelha) | 10 | 0 | 8 | 3 | 12 | 5 | 38 | 60 | refaz (autoajuda) |
+| 13 | IMG_7393 | QUANTO MAIS VOCÊ SE ESCUTA, MENOS PRECISA QUE CONFIRMEM (orelha) | 10 | 0 | 8 | 3 | 9 | 5 | 35 | 60 | refaz (autoajuda) |
+| 14 | IMG_7399 | DUAS COISAS PODEM SER VERDADE AO MESMO TEMPO (cabeça, fundo preto) | 10 | 0 | 8 | 3 | 12 | 0 | 33 | 55 | refaz (frase conhecida, modal) |
+| 15 | IMG_7392 | VOCÊ NÃO PRECISA TER TUDO RESOLVIDO PRA COMEÇAR (quebra-cabeça) | 10 | 0 | 8 | 0 | 9 | 0 | 27 | 50 | descarta (frase de coach, clichê) |
+| 16 | IMG_7397 | QUANTO MAIS VOCÊ FAZ, MENOS DÓI (dedos apontando) | - | - | - | - | - | - | barra | - | barra (segurança: lê autolesão) |
