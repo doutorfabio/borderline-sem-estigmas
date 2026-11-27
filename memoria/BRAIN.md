@@ -86,7 +86,8 @@ O detalhe fica nos arquivos de `memoria/`. Aqui só o que muda decisão. Linhas 
 - Contraste na capa: 3 dos 5 gigantes usam contraste explícito, contra a regra de 24/10. Trava capa nova. (a-decidir.md:25-27)
 - Fundo preto e neurobiologia no feed: gigantes escuros e o do cérebro (109 mil) contra as regras dele. Regra provisória: seguir a regra e perguntar. (a-decidir.md:7-17)
 - Nome do livro: "Quem sofre não escolhe como gritar" ou "Quando Escolher Não É Possível". Trava qualquer peça que cite o livro. (a-decidir.md:19-23)
-- Rosto dele nos Reels: os dados não separam Reel com e sem rosto. Perguntar antes de propor. (aprendizados.md:114, aprendizados.md:126)
+- Rosto dele nos Reels: resolvido em 27/11 para Reel falado, que abre com o rosto dele na câmera e só depois entra b-roll. Outros formatos sem fala dele: perguntar. (correcoes.md, 27/11)
+- Sistema A (fundo #0d0d0d) em carrossel contra fundo preto proibido no carrossel: perguntado em 27/11. Provisório: Sistema A só em vídeo e Stories. (aprendizados.md:124, correcoes.md, 27/11)
 - Métricas: última leitura registrada em `conta.md` é de 26/10. O que vier sem número novo fica "não validado". (conta.md:43)
 
 ## PONTEIROS

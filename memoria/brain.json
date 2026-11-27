@@ -1,6 +1,6 @@
 {
   "versao": 1,
-  "atualizado": "2026-11-24",
+  "atualizado": "2026-11-27",
   "regras": [
     {
       "id": "r1",
@@ -372,7 +372,8 @@
     "Contraste na capa: 3 dos 5 gigantes usam contraste explícito, contra a regra de 24/10 (a-decidir.md:25-27).",
     "Fundo preto e neurobiologia no feed: gigantes contra as regras dele. Provisório: seguir a regra e perguntar (a-decidir.md:7-17).",
     "Nome do livro: Quem sofre não escolhe como gritar ou Quando Escolher Não É Possível (a-decidir.md:19-23).",
-    "Rosto dele nos Reels: dados não separam Reel com e sem rosto. Perguntar antes de propor (aprendizados.md:126).",
+    "Rosto dele nos Reels: resolvido em 27/11 para Reel falado, que abre com o rosto dele na câmera e só depois entra b-roll. Outros formatos sem fala dele: perguntar (correcoes.md, 27/11).",
+    "Sistema A (fundo #0d0d0d) em carrossel contra fundo preto proibido no carrossel: perguntado em 27/11. Provisório: Sistema A só em vídeo e Stories (aprendizados.md:124).",
     "Métricas: última leitura em conta.md é de 26/10 (conta.md:43). Sem número novo, marcar não validado.",
     "Idioma do prompt de imagem: não há regra registrada. O default en é hipótese, não validado."
   ],
