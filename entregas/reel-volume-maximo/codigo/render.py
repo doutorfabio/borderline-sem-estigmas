@@ -61,6 +61,15 @@ for n in range(1,7):
         if q['kind']=='num': q.update(t0=t,dur=0.18)
     hold={1:1.7,2:1.4,3:1.5,4:1.4,5:1.5,6:2.2}[n]
     D=t+0.2+hold
+    import os
+    if os.path.exists('targets.json'):
+        TD=json.load(open('targets.json'))[n-1]
+        tend=t+0.2
+        f=min(1.0,(TD-0.45)/tend)
+        for q in pcs:
+            if 't0' in q: q['t0']*=f; q['dur']*=max(f,0.8)
+        events=[(e,tt*f) for e,tt in events]
+        D=TD
     cards.append(dict(n=n,base=base,pcs=pcs,D=D,events=events))
 # global times
 T=0; 
