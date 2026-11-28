@@ -250,3 +250,28 @@ Leitura só do Claude, sem painel e sem Vamos (resposta rápida, lição de 25/1
 | 8 | IMG_7937 | VOCÊ FICOU ACORDADO ESPERANDO ELA DORMIR. O BORDERLINE NEM SABE. (fundo preto, mar) | 10 | 4 | 8 | 3 | 6 | 5 | 36 | refaz (letra pequena, fundo preto, homem, vizinha de Quem cuida perde nesta ordem) |
 
 Resultado entregue: nenhuma para o feed como está; a mais perto é IMG_7928. Aguardando a reação dele.
+
+### Lote de 28/11/2026, segundo envio: 16 capas no molde BORDERLINE gigante no topo
+
+Sem pedido escrito; mesma régua do envio anterior. Leitura só do Claude, sem painel e sem Vamos, letra estimada a olho. Quatro capas são as refações sugeridas pelo Claude no envio anterior (7945, 7944, 7943, 7942): a nota alta delas é a régua do Claude julgando frase do Claude, sem leitura de fora (lição de 27/11: nota 100 não segura frase sem força).
+
+| Ordem | Arquivo | Capa | T | B | E | I | L | N | Nota | O que falta |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | IMG_7942 | NÃO TE LIGOU NA CRISE. NÃO É REJEIÇÃO. (encolhida no chão, porta com luz) | 30 | 15 | 15 | 15 | 15 | 5 | 95 | N: miolo com motivo diferente do sumiço (vergonha de incomodar) e CVV 188; fundo azul-escuro em risco com a regra do fundo preto |
+| 2 | IMG_7944 | FICOU CALMO OU FICOU APAGADO? (família rindo, ela parada) | 30 | 15 | 15 | 15 | 15 | 5 | 95 | N: vizinha de BORDERLINE QUIETO NÃO É BORDERLINE CALMO (24/11); risos exagerados beiram comédia; miolo manda ao médico, nunca mexer sozinho |
+| 3 | IMG_7945 | MÃE DE BORDERLINE NÃO É EXAGERADA. (corredor às 3h, luz sob a porta) | 30 | 10 | 15 | 15 | 15 | 5 | 90 | B: EXAGERADA maior que BORDERLINE; N: vizinha do Reel Quem cuida (sono); relógio com números pequenos; cena escura |
+| 4 | IMG_7943 | MELHOROU. NÃO É HORA DE PARAR O TRATAMENTO. (porta do consultório) | 30 | 15 | 15 | 8 | 12 | 10 | 90 | I e L: cadeira vazia vermelha em destaque (símbolo vetado) e placa CONSULTÓRIO SAÚDE MENTAL em letra pequena |
+| 5 | IMG_7949 | VOCÊ APRENDEU A NÃO PEDIR NADA. (come em pé na cozinha) | 20 | 10 | 8 | 15 | 15 | 5 | 73 | T sem crença corrigida; borderline como causa implícita; vizinha de Quem cuida |
+| 6 | IMG_7952 | ELA MELHOROU. VOCÊ SENTIU FALTA DE SER PRECISO. (mulher na porta do quarto) | 20 | 10 | 8 | 8 | 12 | 10 | 68 | preciso masculino com mulher na cena; cama vazia lê ausência; 4 linhas |
+| 7 | IMG_7956 | O IRMÃO SEM DIAGNÓSTICO TAMBÉM ADOECEU. (prato cheio e prato vazio) | 20 | 10 | 8 | 0 | 15 | 5 | 58 | cadeiras vazias; vizinha de família adoece e do irmão quieto ("Tiramos o foco do borderline", 29/10) |
+| 8 | IMG_7950 | VOCÊ DORMIU NO SOFÁ PRA NÃO BRIGAR. VIROU REGRA. | 20 | 10 | 8 | 3 | 12 | 5 | 58 | cena de casal; sofá sem pessoa; vizinha visual de BORDERLINE NO SOFÁ (25/11) |
+| 9 | IMG_7947 | VOCÊ VIROU A TERAPEUTA DE CASA. (caneca de alça quebrada) | 20 | 10 | 8 | 0 | 15 | 5 | 58 | caneca quebrada como a pessoa com borderline lê estigma |
+| 10 | IMG_7946 | VOCÊ VIROU A PESSOA FAVORITA. NÃO É PROMOÇÃO. | 20 | 10 | 8 | 3 | 12 | 5 | 58 | sem pessoa; pessoa favorita já teve 4 posts |
+| 11 | IMG_7957 | O SEU SILÊNCIO TAMBÉM VIROU SINTOMA. (louça) | 10 | 10 | 8 | 8 | 15 | 5 | 56 | sintoma patologiza quem convive; tese abstrata |
+| 12 | IMG_7951 | VOCÊ NÃO TEM MAIS ASSUNTO QUE NÃO SEJA ELA. | 20 | 10 | 8 | 0 | 12 | 5 | 55 | celular no centro; dupla negação |
+| 13 | IMG_7954 | VOCÊ PREPAROU A CRISE. ELA NÃO VEIO. | 10 | 10 | 8 | 0 | 12 | 10 | 50 | cartela de comprimido e copo (vetado, risco); preparou a crise lê provocou |
+| 14 | IMG_7955 | VOCÊ APRENDEU A MENTIR PRA SUA FAMÍLIA. | 10 | 10 | 0 | 3 | 15 | 10 | 48 | acusa quem convive; telefone na mão; esconder da família pode ser sinal de violência |
+| 15 | IMG_7953 | VOCÊ COMEÇOU A TERAPIA. ELA FICOU COM RAIVA. | 10 | 10 | 0 | 0 | 15 | 10 | 45 | acusa quem tem borderline; poltrona vazia |
+| 16 | IMG_7948 | VOCÊ LEU SOBRE. VIROU FISCAL. | 10 | 10 | 0 | 8 | 12 | 0 | 40 | repete a tese do FRÁGIL (31/10, conduta da família depois do diagnóstico), que flopou |
+
+Leitura do Claude: 12 das 16 são a mesma tese (quem convive se apaga para dar conta); no máximo uma por semana, e a melhor delas é a 7949. Aguardando a reação dele.
