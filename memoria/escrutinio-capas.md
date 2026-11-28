@@ -233,3 +233,20 @@ Ele: "Pronto agora foi tudo manda ranking final". Notas pela régua da seção 4
 Segunda e terceira levas: 7365 BORDERLINE NÃO É EXCESSO. É o seu alerta sempre aceso. (quarto, abajur aceso de dia) 85; 7382 A DISCUSSÃO NÃO É SOBRE A LOUÇA (duas mulheres gritando, raio) 75; 7362 CRISE OU CANSAÇO? (mulher na escada) 75; 7385 EU NÃO SUMI, SÓ PRECISEI DE SILÊNCIO 67; 7379 EU NÃO QUERO BRIGAR, QUERO SER OUVIDA 67; 7361 CANSAÇO E PREGUIÇA TÊM SINTOMAS DIFERENTES (bota e chinelo) 67; 7366 BORDERLINE NÃO É CONFUSO (bandeja, pano vermelho lê sangue) 67; 7363 DUAS HORAS DE CRISE DERRUBAM O SEU DIA INTEIRO 58; 7383 ME DEIXA VOLTAR SOZINHA, EU VOLTO 57 (contradiz o senta perto de 26/11); 7376 NOTIFICAÇÃO TOCA 53; 7390 A MESMA PESSOA, DOIS ESTADOS 48 (repete duas caras de 24/11); 7360 QUATRO SINAIS DE CANSAÇO (poltrona vazia) 47; 7358 O CHORO QUE VEM ANTES DA CRISE TEM UM HORÁRIO 46 (sem fonte); 7384 APEGO NÃO É CARÊNCIA 45 (Reel de 26/11); 7387 VOCÊ PODE DESABAR SEM EXPLICAR 43; 7359 LEVANTAR DA CAMA JÁ CONTA COMO TRATAMENTO 43; 7378 CONFIANÇA SE CONSTRÓI 43; 7377 PROMETER POUCO 43; 7381 SE OLHAR NÃO É VAIDADE 35; 7380 APRENDER A SE VER 35; 7375 O QUE VOCÊ DIRIA PRA UMA AMIGA 33. Barradas: 7388 NÃO É PERSONALIDADE, É OSCILAÇÃO (falso: borderline é transtorno de personalidade); 7389 CHORAR NA FRENTE DOS OUTROS (assinatura 2023 © AnotherDepartment, arte de terceiro); 7386 PODEM ME VER GRUDADA, NÃO É FRACASSE (erro de grafia).
 
 Ranking final, as 4 primeiras: 1 IMG_7365 excesso 85 (teto 95: tirar a segunda frase da capa, pessoa na cena; vizinha do Reel exagerada de 26/11); 2 IMG_7409 basta repetir 77 (teto 95); 3 IMG_7382 louça 75 (teto 100 com BORDERLINE na frase e a louça na cena); 4 IMG_7362 crise ou cansaço 75 (teto 100 com BORDERLINE e sem subtítulo pequeno). Leitura do Claude: 40 capas em 3 teses repetidas (constância, autoajuda sem borderline, cansaço e crise); no máximo uma por tese.
+
+### Lote de 28/11/2026: 8 capas enviadas por ele no chat ("Fale a nota de 0-100 e o que faltaria pra atingir")
+
+Leitura só do Claude, sem painel e sem Vamos (resposta rápida, lição de 25/11). Repetição conferida na memória, não no Windsor desse dia. Altura das letras estimada a olho, sem medir por código.
+
+| Ordem | Arquivo | Capa | T | B | E | I | L | N | Nota | Situação |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | IMG_7928 | O BORDERLINE NÃO TE LIGOU NA CRISE. NÃO É REJEIÇÃO. (porta aberta com luz, balão de pensamento) | 30 | 10 | 15 | 3 | 12 | 5 | 75 | corrige (BORDERLINE menor que NA CRISE, sem pessoa, sem destaque de cor; vizinha do sumiço) |
+| 2 | IMG_7898 | A FASE BOA DO BORDERLINE NÃO É A CURA (riscado). É A LINHA DE BASE ERRADA. (creme, montanhas, equilibrista) | 20 | 10 | 8 | 8 | 3 | 10 | 59 | corrige (fórmula não é X, é Y; jargão; duas leituras; subtítulo pequeno) |
+| 3 | IMG_7935 | mesma frase (fundo preto, mar, mulher de costas) | 20 | 10 | 8 | 8 | 0 | 10 | 56 | corrige (mais fundo preto) |
+| 4 | IMG_7931 | A CASA SE EQUILIBRA EM CIMA DE VOCÊ. E NINGUÉM VÊ. (gangorra) | 20 | 0 | 8 | 15 | 6 | 5 | 54 | corrige (sem borderline; melhor imagem do lote; vizinha de Mãe no meio e parentificação) |
+| 5 | IMG_7927 | O BORDERLINE VOLTOU A DISCUTIR. COMEMORE. BRIGA É ENGAJAMENTO. SILÊNCIO NÃO. (multidão, homem vermelho) | 20 | 10 | 0 | 0 | 6 | 10 | 46 | corrige (deboche, romantiza briga, protagonista homem; colide com BORDERLINE QUIETO NÃO É BORDERLINE CALMO de 24/11) |
+| 6 | IMG_7936 | BORDERLINE: A DOSE QUE ESTABILIZA PODE APAGAR. (vaso caindo) | 10 | 10 | 8 | 0 | 12 | 5 | 45 | barra (segurança: pode levar a mexer no remédio sozinho; modal pode) |
+| 7 | IMG_7932 | BORDERLINE PEDE O IMPOSSÍVEL. VOCÊ TENTA ENTREGAR. (escada até a lua) | 0 | 15 | 0 | 8 | 12 | 5 | 40 | barra (acusa quem tem borderline; protagonista homem; vizinha de basta repetir, 27/11) |
+| 8 | IMG_7937 | VOCÊ FICOU ACORDADO ESPERANDO ELA DORMIR. O BORDERLINE NEM SABE. (fundo preto, mar) | 10 | 4 | 8 | 3 | 6 | 5 | 36 | refaz (letra pequena, fundo preto, homem, vizinha de Quem cuida perde nesta ordem) |
+
+Resultado entregue: nenhuma para o feed como está; a mais perto é IMG_7928. Aguardando a reação dele.
