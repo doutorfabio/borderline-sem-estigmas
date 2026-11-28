@@ -23,7 +23,27 @@ O que sai do original: selo ALTO FUNCIONAMENTO? e subtítulo pequeno; aspas; Iss
 7. Quebra de tom, fundo vermelho, letra creme. QUEM IMPLODE / OUVE QUE ESTÁ TUDO BEM / E CHEGA TARDE NA AJUDA. Segundo bloco: O tratamento é o mesmo. E funciona. Terceiro bloco: Se a crise de porta fechada inclui se machucar, fale com alguém hoje. CVV 188.
 8. Imagem, envio. A mesma mulher à mesa da cozinha à noite, falando; uma amiga sentada perto, ouvindo, sem celular. Texto: MANDA PRA QUEM / SÓ CONHECE A SUA / VERSÃO QUE FUNCIONA. Destaque: FUNCIONA.
 
-Legenda: Nem todo borderline explode. Alguns entregam tudo, fazem piada e desmontam de porta fechada. Na internet isso aparece como borderline silencioso. Não é um subtipo oficial: o diagnóstico é o mesmo, e o tratamento também. Se a crise inclui se machucar, ligue 188 (CVV) ou procure uma emergência. Manda pra quem só conhece a sua versão que funciona.
+Legenda (versão de 28/11, pedida como "Legenda descrição"):
+
+Nem todo borderline explode.
+
+Alguns entregam tudo no prazo, fazem a piada da reunião e respondem que está tudo bem.
+Depois chegam em casa e desmontam de porta fechada.
+
+A intensidade é a mesma. Só muda a direção.
+A raiva vira autocrítica.
+O medo de ser deixado vira vigilância.
+A dor vira silêncio.
+
+Por isso tanta gente demora a perceber. Às vezes, nem a própria pessoa percebe.
+
+Na internet isso ganhou o nome de borderline silencioso. O nome ajuda a se reconhecer, mas não existe como subtipo no manual. O diagnóstico é o mesmo, e o tratamento também funciona.
+
+Se a crise de porta fechada inclui se machucar, fale com alguém hoje. CVV 188, a qualquer hora, ou procure uma emergência.
+
+Manda pra quem só conhece a sua versão que funciona.
+
+Conteúdo educativo. Não substitui avaliação individual.
 
 Execução proposta: capa e slides 2, 3 e 8 no gpt_image_2_6 (alta, 2k, 4:5, texto embutido), 2 créditos cada; slides 4 a 7 em código (HTML e Playwright, 1792 x 2240), como no carrossel de 26/11. Margem de 5% e menor letra medidas por código em todos antes de entregar.
 
